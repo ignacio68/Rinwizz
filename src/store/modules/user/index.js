@@ -71,7 +71,7 @@ export default {
               // Añadimos los datos del nuevo usuario
               id: firebaseUser.user.uid,
               email: firebaseUser.user.email,
-              name: payload.userName
+              name: payload.name
             }
             commit('setUser', newUser) // Llamamos a 'setUser' para añadir nuevas propiedades al user
             console.log('Hay un nuevo usuario: ' + newUser.name)
@@ -100,6 +100,7 @@ export default {
           () => {
             console.log('Guardo el email: ' + firebaseUserEmail + ('en email'))
             commit('shared/setLoading', false, { root: true })
+            // NOTA: Utilizar LokiJS para almacenar los datos
             window.localStorage.setItem('email', firebaseUserEmail)
             /* NativeStorage.setItem('emailForSingIn', firebaseUserEmail)
               .then((result) => {
@@ -193,24 +194,24 @@ export default {
     },
 
     /**
-    * Creamos la base de datos del usuario
-    */
-    createUserDb ({ commit }, newUser) {
+     * Creamos la base de datos del usuario
+     */
+    createUserDb ({ commit, dispatch }, newUser) {
       commit('shared/setLoading', true, { root: true })
       commit('shared/clearError', null, { root: true })
       console.log('Estoy en createUserDb')
-      // console.log(newUser)
-      /* const user = {
-        email: newUser.email
-      } */
       const userId = newUser.id
       console.log('el id del usuario es: ' + userId)
       firebase.database().ref('users/' + userId).set({ email: newUser.email, name: newUser.name })
         .then(() => {
           commit('shared/setLoading', false, { root: true })
+          // Comprueba si el nombre de usuario existe
+          dispatch('checkUserName',newUser.name)
+          // Añade el nombre de usuario a la base de datos
+          dispatch('userNameDb', newUser.name)
           // Actualizamos los datos en Local Storage
-          // NOTA: Actualizar a indexDb
-          // NOTA: crear base de datos
+          // NOTA: Actualizar a LokiJS
+          // utilizar un commit localUserDb (newUser)
           window.localStorage.setItem('id', userId)
           window.localStorage.setItem('email', newUser.email)
           window.localStorage.setItem('userName', newUser.name)
@@ -223,10 +224,50 @@ export default {
           console.log(error)
         })
     },
+    /**
+     *
+     * Comprobamos que el nombre de usuario no existe en la base de datos
+     * de nombre de usuarios -> /usersNames
+     * NOTA: Refinar para hacer la comprobación en el server
+     *       no en el cliente.
+     */
+    checkUserName ({ commit }, userName) {
+      console.log('Estoy en checkUserName')
+      /*
+      commit('shared/setLoading', true, { root: true })
+      commit('shared/clearError', null, { root: true })
+      let ref = firebase.database().ref('usersName')
+      ref.orderByValue().equalTo(userName).on('value', (snapshot) => {
+        console.log('El valor es: ' + snapshot.val())
+      }, (error) => {
+        commit('shared/setLoading', false, { root: true })
+        commit('shared/setError', error, { root: true })
+        console.log(error)
+      }) */
+    },
+    /**
+     *
+     * Añadimos el nombre la base de datos /usersNames
+     */
+    userNameDb ({ commit }, userName) {
+      commit('shared/setLoading', true, { root: true })
+      commit('shared/clearError', null, { root: true })
+      console.log('Estoy en userNameDb')
+      firebase.database().ref('usersName/').set({ userName })
+        .then(() => {
+          commit('shared/setLoading', false, { root: true })
+        })
+        .catch((error) => {
+          commit('shared/setLoading', false, { root: true })
+          commit('shared/setError', error, { root: true })
+          console.log(error)
+        })
+    },
 
     /**
-    * Log Out de Usuario
-    */
+     *
+     * Log Out de Usuario
+     */
     signUserOut ({ commit }) {
       commit('shared/setLoading', true, { root: true })
       commit('shared/clearError', null, { root: true })
@@ -250,8 +291,8 @@ export default {
     },
 
     /**
-    * Comprueba si hay algún usuario conectado
-    */
+     * Comprueba si hay algún usuario conectado
+     */
     isActiveUser ({ commit }) {
       const activeUser = firebase.auth().currentUser
       if (activeUser != null) {

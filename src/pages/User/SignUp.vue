@@ -85,7 +85,7 @@
                 class="list-item__icon"
                 @click.prevent="togglePassword">
               </v-ons-icon>
-              <v-ons-icon v-if="passwordVisible"
+              <v-ons-icon v-else
                 icon="ion-eye, material:zmdi-eye"
                 class="list-item__icon"
                 @click.prevent="togglePassword">
@@ -209,7 +209,7 @@
     },
     data () {
       return {
-        isActive: false, // Activa el PreLoaderS
+        // isActive: false, // Activa el PreLoaders
         name: '',
         email: '',
         password: '',
@@ -241,6 +241,7 @@
         return this.$store.getters['shared/loading']
       },
       actionPass () {
+        /* comprueba si existe actionPass para lanzar la alert de confirmación de password */
         // NOTA: revisar para llamar directamente al state
         return this.$store.getters['shared/actionPass']
       },
@@ -260,6 +261,9 @@
       },
       onSignUp () {
         console.log('Estoy en onSignUp')
+        console.log('name es: ' + this.name)
+        console.log('email es: ' + this.email)
+        console.log('password es: ' + this.password)
         // enviamos los datos del usuario para su registro
         this.$store.dispatch('user/signUpUser', {
           name: this.name,
