@@ -72,8 +72,8 @@
     timers: {
       loadDate: {
         time: 1000,
-        autostart: true,
-        repeat: true
+        autostart: false,
+        repeat: false
       }
     },
     data () {
@@ -126,6 +126,7 @@
       },
       // Establece la fecha de referencia según la configuración del timer
       loadDate () {
+        // Si no hay alertas o todas están caducadas parar el timer o no arrancar
         this.referenceDate = Date.now()
         console.log('La fecha de referencia es:' + this.referenceDate)
       }
