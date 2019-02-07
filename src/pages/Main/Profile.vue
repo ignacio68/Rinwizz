@@ -88,21 +88,24 @@
     computed: {
       userEmail () {
         // let userEmail = this.$store.getters['user/user']
-        let userEmail = window.localStorage.getItem('email')
-        console.log('el email el usuario es: ' + userEmail)
-        return userEmail
+        this.$store.dispatch('localDataBase/getUserData', email)
+        // let userEmail = window.localStorage.getItem('email')
+        // console.log('el email el usuario es: ' + userEmail)
+        // return userEmail
       },
       userName () {
         // let userName = this.$store.getters['user/user']
-        let userName = window.localStorage.getItem('userName')
-        console.log('el nombre de usuario es: ' + userName)
-        return userName
+        this.$store.dispatch('localDataBase/getUserData', name)
+        // let userName = window.localStorage.getItem('userName')
+        // console.log('el nombre de usuario es: ' + userName)
+        // return userName
       },
       userLocation () {
         // let userLocation = this.$store.getters['user/user']
-        let userLocation = window.localStorage.getItem('location')
-        console.log('la localización del usuario es: ' + userLocation.location)
-        return userLocation
+        this.$store.dispatch('localDataBase/getUserData', location)
+        // let userLocation = window.localStorage.getItem('location')
+        // console.log('la localización del usuario es: ' + userLocation.location)
+        // return userLocation
       }
     },
     methods: {
