@@ -1,13 +1,22 @@
 import loki from '@lokidb/loki'
+import indexedStorage from '@lokidb/indexed-storage'
+import lokiPartitioningAdapter from '@lokidb/partitioning-adapter'
 
-/* const db = new loki('rinwizz.db', {
+const db = new loki('rinwizz.db', {
+  adapter: pa,
+  env: 'CORDOVA',
   autoload: true,
   autosave: true,
   autosaveInterval: 4000,
-  persistenceMethod: 'local-storage'
-}) */
+  method: indStorage
+}) 
 
-const db = new loki('rinwizz.db')
+// const idbAdapter = new LokiIndexedAdapter()
+const pa = new lokiPartitioningAdapter()
+
+const indStorage = new indexedStorage()
+
+// const db = new loki('rinwizz.db')
 
 const userData = db.addCollection('userData')
 

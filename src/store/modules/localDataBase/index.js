@@ -3,6 +3,7 @@
  * se ejecutan EXCLUSIVAMENTE desde aquí
  */
 import loki from '@lokidb/loki'
+import indexedStorage from '@lokidb/indexed-storage'
 import { db, userData } from '../../../components/loki/lokiConfig'
 
 export default {
@@ -15,12 +16,14 @@ export default {
   actions: {
     createLocalUserDb (newUser) {
       console.log('estoy en createLocalUserDb')
+      /*
       db.initializePersistence({
+        env: 'CORDOVA',
         autoload: true,
         autosave: true,
         autosaveInterval: 4000,
-        method: 'local-storage'
-      })
+        method: 'indexedStorage'
+      }) */
       userData.insert({
         id: newUser.id,
         email: newUser.email,
@@ -31,7 +34,7 @@ export default {
       if (!db.getCollection('userData')) {
         console.log('No existe la colección "userData"')
       } else {
-        console.log('Existe la colección "userData')
+        console.log('Existe la colección "userData"')
       }
     },
     // REVISAR -- UTILIZAR USER/user
