@@ -17,8 +17,8 @@ import firebaseConfig from './components/Firebase/firebaseConfig'
 // const fb = require('./components/Firebase/firebaseConfig')
 
 // import LokiJS
-import loki from 'lokijs'
-import { db, userData } from './loki'
+// import loki from 'lokijs'
+// import { db, userData } from './loki'
 
 // import store from Vuex
 import { store } from './store'
@@ -85,8 +85,6 @@ firebase.auth().onAuthStateChanged(user => {
       el: "#app",
       i18n,
       store,
-      db,
-      userData,
       render: h => h(AppNavigator),
       beforeCreate() {
         console.log("main.js:beforeCreate()")
@@ -118,31 +116,6 @@ firebase.auth().onAuthStateChanged(user => {
             console.log("el lenguaje es " + i18n.locale)
           }
         }
-        // Add local database
-        /*
-        const newDb = new loki('rinwizz.db', {
-          autoload: true,
-          autosave: true,
-          autosaveInterval: 10000
-        }) */
-        /*
-        const db2 = new loki()
-        if (db2.loadDatabase('rinwizz')) {
-          console.log ('Existe la base de datos "rimwizz"')
-        } else {
-          const db = new loki('rinwizz.db')
-          db2.deleteDatabase()
-          console.log('Creada la base de datos "rimwizz"')
-        } */
-        /*
-        if (db.databaseActive.find( {'isActive': true })) {
-          console.log('La base de datos ya está creada')
-        } else {
-          const db = new loki('rinwizz.db')
-          let dataBaseActive = db.addCollection('isActive')
-          databaseActive.insert({ isActive: true })
-          console.log('Creada la base de datos')
-        } */
       },
       created() {
         console.log("Estoy en main.js.created")

@@ -20,8 +20,8 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@lokidb/loki": "^2.0.0-beta.8",
     "firebase": "^5.8.2",
-    "lokijs": "^1.5.6",
     "onsenui": "^2.10.6",
     "vue": "^2.5.22",
     "vue-i18n": "^8.0.0",

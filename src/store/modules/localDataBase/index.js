@@ -1,5 +1,9 @@
-import loki from 'lokijs'
-import { db, userData } from '../../../loki'
+/**
+ * Todas las operaciones con la base de datos local
+ * se ejecutan EXCLUSIVAMENTE desde aquí
+ */
+import loki from '@lokidb/loki'
+import { db, userData } from '../../../components/loki/lokiConfig'
 
 export default {
   strict: process.env.NODE_ENV !== 'production',
@@ -10,17 +14,25 @@ export default {
   mutations: {},
   actions: {
     createLocalUserDb (newUser) {
-      // const user = db.addCollection('user')
+      console.log('estoy en createLocalUserDb')
+      db.initializePersistence({
+        autoload: true,
+        autosave: true,
+        autosaveInterval: 4000,
+        method: 'local-storage'
+      })
       userData.insert({
         id: newUser.id,
         email: newUser.email,
         name: newUser.name,
-        location: ''
+        location: newUser.location
       })
-      console.log('estoy en createLocalUserDb')
-      let userName
-      userName = userData.get('name')
-      console.log('el usuario es: ' + userName)
+      // userData.insert(newUser)
+      if (!db.getCollection('userData')) {
+        console.log('No existe la colección "userData"')
+      } else {
+        console.log('Existe la colección "userData')
+      }
     },
     // REVISAR -- UTILIZAR USER/user
     updateUserEmail (userEmail) {
@@ -37,7 +49,7 @@ export default {
     },
     getUserData (data) {
       let userData
-      userData = "'" + userData + "'"
+      userData = "'" + data + "'"
       return db.getCollection(userData)
     },
     removeUser () {
