@@ -3,32 +3,33 @@
  * import './onsen-css-components.css'
  * Onsen UI CSS components source for custom themes (requires cssnext)
  */
-import "onsenui/css/onsenui.css"
-import "onsenui/css/onsen-css-components.css"
+import 'onsenui/css/onsenui.css'
+import 'onsenui/css/onsen-css-components.css'
 
 // Import Dependency
-import Vue from "vue"
-import VueOnsen from "vue-onsenui"
+import Vue from 'vue'
+import VueOnsen from 'vue-onsenui'
 
 // import Firebase
-import firebase from "firebase/app"
-import "firebase/auth"
-import firebaseConfig from "./components/Firebase/firebaseConfig"
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import firebaseConfig from './components/Firebase/firebaseConfig'
 // const fb = require('./components/Firebase/firebaseConfig')
 
 // import LokiJS
-// import loki from "lokijs"
+import loki from 'lokijs'
+import { db, userData } from './loki'
 
 // import store from Vuex
-import { store } from "./store"
+import { store } from './store'
 
 // import languages
 // NOTA: ¡¡¡¡¡¡¡UPDATE!!!!!!!!
 // import i18n from './i18n'
-import i18n from "./locales/index"
+import i18n from './locales/index'
 
 // import Timer
-import VueTimers from "vue-timers"
+import VueTimers from 'vue-timers'
 
 /* Cuando se utiliza ESM
 import VueOnsen from 'vue-onsenui/esm'
@@ -78,12 +79,14 @@ let app
 
 firebase.initializeApp(firebaseConfig)
 firebase.auth().onAuthStateChanged(user => {
-  console.log("Estoy en firebase.auth().onAuthStateChanged");
+  console.log("Estoy en firebase.auth().onAuthStateChanged")
   if (!app) {
     app = new Vue({
       el: "#app",
       i18n,
       store,
+      db,
+      userData,
       render: h => h(AppNavigator),
       beforeCreate() {
         console.log("main.js:beforeCreate()")
@@ -98,11 +101,8 @@ firebase.auth().onAuthStateChanged(user => {
 
         // Set iPhoneX flag based on URL
         if (window.location.search.match(/iphonex/i)) {
-          document.documentElement.setAttribute("onsflag-iphonex-portrait", "")
-          document.documentElement.setAttribute(
-            "onsflag-iphonex-landscape",
-            ""
-          );
+          document.documentElement.setAttribute("onsflag-iphonex-portrait", '')
+          document.documentElement.setAttribute("onsflag-iphonex-landscape", '')
         }
 
         // Check if we can use the internationalization API
@@ -118,6 +118,31 @@ firebase.auth().onAuthStateChanged(user => {
             console.log("el lenguaje es " + i18n.locale)
           }
         }
+        // Add local database
+        /*
+        const newDb = new loki('rinwizz.db', {
+          autoload: true,
+          autosave: true,
+          autosaveInterval: 10000
+        }) */
+        /*
+        const db2 = new loki()
+        if (db2.loadDatabase('rinwizz')) {
+          console.log ('Existe la base de datos "rimwizz"')
+        } else {
+          const db = new loki('rinwizz.db')
+          db2.deleteDatabase()
+          console.log('Creada la base de datos "rimwizz"')
+        } */
+        /*
+        if (db.databaseActive.find( {'isActive': true })) {
+          console.log('La base de datos ya está creada')
+        } else {
+          const db = new loki('rinwizz.db')
+          let dataBaseActive = db.addCollection('isActive')
+          databaseActive.insert({ isActive: true })
+          console.log('Creada la base de datos')
+        } */
       },
       created() {
         console.log("Estoy en main.js.created")

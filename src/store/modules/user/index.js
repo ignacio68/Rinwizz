@@ -1,13 +1,9 @@
 import firebase from "firebase/app"
 import "firebase/auth"
-import loki from "lokijs"
 
 import HomePage from "../../../pages/HomePage"
 import SignUp from "../../../pages/User/SignUp"
 // const fb = require('../../../components/Firebase/firebaseConfig')
-
-const db = new loki("rinwizz.db")
-const user = db.addCollection("user")
 
 export default {
   strict: process.env.NODE_ENV !== "production",
