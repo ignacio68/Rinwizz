@@ -11,10 +11,11 @@ const db = new loki('rinwizz.db', {
   method: indStorage
 }) 
 
-// const idbAdapter = new LokiIndexedAdapter()
-const pa = new lokiPartitioningAdapter()
+let idbAdapter = new LokiIndexedAdapter()
 
-const indStorage = new indexedStorage()
+let pa = new lokiPartitioningAdapter(idbAdapter, { paging: true })
+
+let indStorage = new indexedStorage()
 
 // const db = new loki('rinwizz.db')
 

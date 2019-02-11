@@ -265,7 +265,7 @@
         console.log('email es: ' + this.email)
         console.log('password es: ' + this.password)
         // enviamos los datos del usuario para su registro
-        this.$store.dispatch('user/signUpUser', {
+        this.$store.dispatch('user/checkUserName', {
           name: this.name,
           email: this.email,
           password: this.password
