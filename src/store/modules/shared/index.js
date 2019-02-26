@@ -7,39 +7,59 @@ export default {
     actionPass: false
   },
   getters: {
-    loading (state) {
+    loading(state) {
       return state.loading
     },
-    error (state) {
+    error(state) {
       return state.error
     },
-    actionPass (state) {
+    actionPass(state) {
       return state.actionPass
     }
   },
   mutations: {
-    /* Control de la carga de los datos */
-    setLoading (state, payload) {
+    /**
+     * Control de la carga de los datos
+     *
+     * @param {Boolean} payload
+     */
+    setLoading(state, payload) {
       state.loading = payload
       console.log('Loading es ' + state.loading)
     },
-    /* Control de errores */
-    setError (state, payload) {
+    /**
+     * Control de errores
+     *
+     * @param {String} payload - mensaje de error
+     */
+    setError(state, payload) {
       state.error = payload
       console.log('el error es: ' + state.error.message)
     },
-    /* Resetea los errores , el payload debe ser 'null' */
-    clearError (state, payload) {
+    /**
+     * Resetea los errores , el payload debe ser 'null'
+     *
+     * @param {*} payload
+     */
+    clearError(state, payload) {
       state.error = payload
       console.log('Limpio el error')
     },
-    setActionPass (state, payload) {
+    /**
+     * Comprueba si la acción ha sido ejecutada
+     *
+     * @param {Boolean} payload
+     */
+    setActionPass(state, payload) {
       state.actionPass = payload
       console.log('La acción ha sido ejecutada: ' + state.actionPass)
     }
   },
   actions: {
-    clearError ({ commit }) {
+    /**
+     * Limpia el error
+     */
+    clearError({ commit }) {
       commit('clearError')
     }
   }
