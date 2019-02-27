@@ -25,3 +25,6 @@ yarn-error.log*
 /src-cordova/plugins
 /src-cordova/node_modules
 /public/cordova.js
+
+# Private dates
+/src/components/Firebase/firebaseConfig.js

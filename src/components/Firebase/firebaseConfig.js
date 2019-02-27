@@ -40,7 +40,7 @@ const alertsCollection = db.collection('alerts')
 export {
   auth,
   currentUser,
-  db, 
+  db,
   alertsCollection
 }
 */

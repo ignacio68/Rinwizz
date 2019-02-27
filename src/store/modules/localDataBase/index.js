@@ -14,13 +14,14 @@ export default {
   // db: new PouchDB('rinwizz'),
 
   state: {
-    dataToJSON: {}
+    dataToJSON: {},
+    userData: {} // dummy userData
   },
   getters: {},
   mutations: {
     /* toJSON (data) {
       function replacer (key, value) {
-        // Filtrando propiedades 
+        // Filtrando propiedades
         if (typeof value === 'string') {
           return '"' + value + '"'
         }
@@ -34,7 +35,7 @@ export default {
     /**
      * Crea la base de datos local del usuario
      *
-     * @param {Object} newUser - Datos del usuario
+     * @param {Object} newUser  Datos del usuario
      */
     createLocalUserDb(newUser) {
       console.log('estoy en createLocalUserDb')
@@ -63,21 +64,21 @@ export default {
     /**
      * Actualiza el email del usuario en la base de datos local
      *
-     * @param {String} userEmail
+     * @param {String} userEmail Email del usuario
      */
     // REVISAR -- UTILIZAR USER/user
     updateUserEmail(userEmail) {
-      userData.update({
+      this.userData.update({
         email: userEmail
       })
     },
     /**
      *
-     * @param {Object} updateUser - Actualiza el usuario de la base de datos local
+     * @param {Object} updateUser  Actualiza el usuario de la base de datos local
      */
     // REVISAR -- UTILIZAR USER/user
     updateUser(updateUser) {
-      userData.update({
+      this.userData.update({
         name: updateUser.name,
         location: updateUser.location
       })
@@ -86,7 +87,8 @@ export default {
     /**
      * Recupera los datos del usuario de la base de datos local
      *
-     * @param {Object} data
+     * @param {Object} data Dato del usuario solicitado
+     * @returns {String} Devuelve el dato del usuario solicitado
      */
     getUserData(data) {
       // let userData

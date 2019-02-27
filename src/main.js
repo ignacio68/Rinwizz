@@ -34,8 +34,8 @@ import { store } from './store'
 
 // import languages
 // NOTA: ¡¡¡¡¡¡¡UPDATE!!!!!!!!
-// import i18n from './i18n'
-import i18n from './locales/index'
+import i18n from './i18n'
+//import i18n from './locales/index'
 
 // import Timer
 import VueTimers from 'vue-timers'
@@ -63,6 +63,7 @@ import AppNavigator from './AppNavigator'
  */
 // import ThePreloader from './components/Shared/ThePreloader' // NOTA: Revisar su uso (a eliminar)
 import TheCustomtoolbar from './components/Shared/TheCustomToolbar' // NOTA: Rediseñar
+
 // import AlertCmp from './components/Shared/Alert'
 
 /**

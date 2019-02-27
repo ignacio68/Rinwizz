@@ -200,6 +200,11 @@
   // import SignUpButton from '../../components/Shared/SignUpButton'
   import CircleButton from '../../components/Shared/CircleButton'
   // import UserInputPassword from '../../components/Shared/UserInputPassword'
+  /**
+   * @description Página de registro de la aplicación
+   * @version 1.0.0
+   * @author Ignacio López-Amor <ignaciolopezamor@gmail.com>
+   */
   export default {
     name: 'sign-up',
     components: {
@@ -208,6 +213,9 @@
       // UserInputPassword
     },
     data () {
+      /**
+       * Datos del usuario
+       */
       return {
         // isActive: false, // Activa el PreLoaders
         name: '',
@@ -259,6 +267,11 @@
       toLogIn () {
         this.$store.commit('navigator/replace', LogIn)
       },
+      /**
+       * Comprueba si el usuario está registrado
+       * 
+       * @public
+       */
       onSignUp () {
         console.log('Estoy en onSignUp')
         console.log('name es: ' + this.name)

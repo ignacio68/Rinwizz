@@ -1,11 +1,8 @@
 <template>
   <v-ons-page>
     <div class="container">
-
       <div class="picture">
-        
-          <img src="../../assets/user_icon.png" alt="user icon" class="picture__frame-photo"/>
-        
+        <img src="../../assets/user_icon.png" alt="user icon" class="picture__frame-photo">
       </div>
 
       <form>
@@ -31,14 +28,7 @@
               <label for="textImput">{{ $t('lang.pages.profile.main.list.input.email') }}</label>
             </div>
             <div class="center profileList__item-input">
-              <v-ons-input
-                id="email"
-                type="email"
-                :placeholder="userEmail"
-                float
-                
-                disabled
-              />
+              <v-ons-input id="email" type="email" :placeholder="userEmail" float disabled/>
             </div>
           </v-ons-list-item>
           <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
@@ -56,68 +46,73 @@
               />
             </div>
           </v-ons-list-item>
-          <v-ons-list-header class="profileList__header">
-            {{ $t('lang.pages.profile.main.list.header1') }}
-          </v-ons-list-header>
+          <v-ons-list-header
+            class="profileList__header"
+          >{{ $t('lang.pages.profile.main.list.header1') }}</v-ons-list-header>
         </v-ons-list>
       </form>
-      
-       <v-ons-button
+
+      <v-ons-button
         name="onClick"
         class="profileButton"
         modifier="large"
         :disabled="false"
         ripple="true"
         @click.prevent="onSave"
-      >
-        {{ $t('lang.pages.profile.main.button')}}
-      </v-ons-button>
+      >{{ $t('lang.pages.profile.main.button') }}</v-ons-button>
     </div>
   </v-ons-page>
 </template>
 
 <script>
-  export default {
-    name: 'profile',
-    data () {
-      return {
-        name: '',
-        location: ''
-      }
+export default {
+  name: 'profile',
+  data() {
+    return {
+      name: '',
+      email: '',
+      location: ''
+    }
+  },
+  computed: {
+    userEmail() {
+      // let userEmail = this.$store.getters['user/user']
+      this.$store.dispatch('localDataBase/getUserData', email)
+      // let userEmail = window.localStorage.getItem('email')
+      // console.log('el email el usuario es: ' + userEmail)
+      let userEmail
+      return userEmail
     },
-    computed: {
-      userEmail () {
-        // let userEmail = this.$store.getters['user/user']
-        this.$store.dispatch('localDataBase/getUserData', email)
-        // let userEmail = window.localStorage.getItem('email')
-        // console.log('el email el usuario es: ' + userEmail)
-        // return userEmail
-      },
-      userName () {
-        // let userName = this.$store.getters['user/user']
-        this.$store.dispatch('localDataBase/getUserData', name)
-        // let userName = window.localStorage.getItem('userName')
-        // console.log('el nombre de usuario es: ' + userName)
-        // return userName
-      },
-      userLocation () {
-        // let userLocation = this.$store.getters['user/user']
-        this.$store.dispatch('localDataBase/getUserData', location)
-        // let userLocation = window.localStorage.getItem('location')
-        // console.log('la localización del usuario es: ' + userLocation.location)
-        // return userLocation
-      }
+    userName() {
+      // let userName = this.$store.getters['user/user']
+      this.$store.dispatch('localDataBase/getUserData', name)
+      // let userName = window.localStorage.getItem('userName')
+      // console.log('el nombre de usuario es: ' + userName)
+      let userName
+      return userName
     },
-    methods: {
-      onSave () {
-        const user = {}
-        user.userName = this.userName
-        user.location = this.userLocation
-        this.$store.dispatch('user/updatedUserInfo', user)
-        console.log('Guardo los cambios')
-      }
+    userLocation() {
+      // let userLocation = this.$store.getters['user/user']
+      this.$store.dispatch('localDataBase/getUserData', location)
+      // let userLocation = window.localStorage.getItem('location')
+      // console.log('la localización del usuario es: ' + userLocation.location)
+      let userLocation
+      return userLocation
+    }
+  },
+  methods: {
+    /**
+     * Al salvar guarda los cambios en los datos del usuario (nombre y localización)
+     */
+    onSave() {
+      const user = {}
+      user.userName = this.userName
+      user.location = this.userLocation
+      this.$store.dispatch('user/updatedUserInfo', user)
+      console.log('Guardo los cambios')
     }
   }
+}
 </script>
 <style scoped>
 .picture {
@@ -134,7 +129,7 @@
   border: 2px solid white;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%);
 }
 .profileList__item {
   border: 1px solid red;
@@ -146,13 +141,13 @@
   padding-bottom: 5px;
   border: 1px solid green;
 }
-.profileList__item-input{
+.profileList__item-input {
   padding-left: 10px;
   padding-top: 5px;
   padding-bottom: 3px;
   border: 1px solid blue;
 }
-.profileList__item-input[type="email"]{
+.profileList__item-input[type='email'] {
   color: green;
   font-size: 100px;
   background-color: yellow;
@@ -162,5 +157,4 @@
   margin-left: 5%;
   margin-right: 5%;
 }
-
 </style>

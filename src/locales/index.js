@@ -37,6 +37,7 @@ Vue.use(VueI18n)
 /**
  * Export
  */
+
 export default new VueI18n({
   fallbackLocale: 'en',
   messages,

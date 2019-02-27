@@ -1,15 +1,15 @@
 <template>
-	<v-ons-toolbar inline>
-		<div class="left">
-			<slot name="left">
-				<v-ons-back-button v-if="backLabel">
-					{{ backLabel }}
-				</v-ons-back-button>
-			</slot>
-		</div>
-		<div class="center"><slot>{{ pageTitle }}</slot></div>
-		<div class="rigth"><slot></slot></div>
-	</v-ons-toolbar>
+  <v-ons-toolbar inline>
+    <div class="left">
+      <slot name="left">
+        <v-ons-back-button v-if="backLabel">
+          {{ backLabel }}
+        </v-ons-back-button>
+      </slot>
+    </div>
+    <div class="center"><slot>{{ pageTitle }}</slot></div>
+    <div class="rigth"><slot></slot></div>
+  </v-ons-toolbar>
 </template>
 
 <script>

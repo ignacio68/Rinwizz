@@ -1,32 +1,32 @@
 <template>
   <v-ons-page>
-    <the-custom-toolbar
-      :pageTitle="toolbarTitle" >
-    </the-custom-toolbar>
+    <the-custom-toolbar :pageTitle="toolbarTitle"></the-custom-toolbar>
     <div class="container">
       <form class="configurationForm">
         <v-ons-list class="configurationForm__list">
           <v-ons-list-item class="configurationForm__list-item">
             <label for="textInput" class="left configurationForm__list-item-label">nombre</label>
-            <v-ons-input 
+            <v-ons-input
               class="center configurationForm__list-input"
               id="name"
               type="name"
               float
               modifier="transparent"
               v-model="name"
-              required></v-ons-input>
+              required
+            ></v-ons-input>
           </v-ons-list-item>
           <v-ons-list-item class="configurationForm__list-item">
             <label for="textInput" class="left configurationForm__list-item-label">Ubicación</label>
-            <v-ons-input 
+            <v-ons-input
               class="center configurationForm__list-input"
               id="location"
               type="text"
               float
               modifier="transparent"
               v-model="location"
-              required></v-ons-input>
+              required
+            ></v-ons-input>
           </v-ons-list-item>
         </v-ons-list>
       </form>
@@ -37,42 +37,39 @@
         :disabled="false"
         ripple="true"
         @click.prevent="onSave"
-      >
-        {{ $t('lang.pages.configuration.button')}}
-      </v-ons-button>
+      >{{ $t('lang.pages.configuration.button')}}</v-ons-button>
     </div>
   </v-ons-page>
 </template>
 
 <script>
-  import HomePage from '../HomePage'
-  export default {
-    name: 'configuration',
-    data () {
-      return {
-        isActive: false,
-        volver: '',
-        name: '',
-        location: ''
-      }
-    },
-    computed: {
-      toolbarTitle () {
-        return this.$t('lang.pages.configuration.toolbar')
-      }
-    },
-    methods: {
-      onSave () {
-        const user = {}
-        user.userName = this.name
-        user.location = this.location
-        this.$store.dispatch('user/updatedUserInfo', user)
-        this.$store.commit('navigator/push', HomePage)
-      }
+import HomePage from '../HomePage'
+export default {
+  name: 'configuration',
+  data() {
+    return {
+      isActive: false,
+      volver: '',
+      name: '',
+      location: ''
+    }
+  },
+  computed: {
+    toolbarTitle() {
+      return this.$t('lang.pages.configuration.toolbar')
+    }
+  },
+  methods: {
+    onSave() {
+      const user = {}
+      user.userName = this.name
+      user.location = this.location
+      this.$store.dispatch('user/updatedUserInfo', user)
+      this.$store.commit('navigator/push', HomePage)
     }
   }
+}
 </script>
 
 <style scoped>
-
 </style>
