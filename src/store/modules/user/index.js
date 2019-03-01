@@ -34,6 +34,8 @@ export default {
   getters: {
     /**
      * Devuelve el usuario desde state. ELIMINAR
+     * 
+     * @param {*} state
      */
     user(state) {
       return state.user
@@ -43,6 +45,7 @@ export default {
     /**
      * Añade a user las propiedades del usuario registrado
      *
+     * @param {*} state
      * @param {Object} newUser - Parámetros a añadir al usuario
      */
     setUser(state, newUser) {
@@ -56,6 +59,7 @@ export default {
     /**
      * Resetea el usuario
      *
+     * @param {*} state
      */
     clearUser(state) {
       state.user = null
@@ -65,6 +69,8 @@ export default {
     /**
      * Nuevo usuario
      *
+     * @param {*} commit
+     * @param {*} dispatch
      * @param {Object} userDates - datos a añadir al nuevo usuario
      */
     signUpUser({ commit, dispatch }, userDates) {
@@ -122,6 +128,8 @@ export default {
     /**
      * Envía un email de confirmación de password
      *
+     * @param {*} commit
+     * @param {*} state
      * @param {String} firebaseUserEmail - email del usuario donde se le envía el mensaje de confirmación
      */
     confirmPassword({ commit, state }, firebaseUserEmail) {
@@ -153,6 +161,7 @@ export default {
     /**
      * Log In de Usuario existente
      *
+     * @param {*} commit
      * @param {String} user
      */
     logInUser({ commit }, user) {
@@ -195,6 +204,7 @@ export default {
     /**
      * Autoautenticación, el usuario ya está registrado
      *
+     * @param {*} commit
      * @param {String} user - id y email del usuario
      */
     autoSignIn({ commit }, user) {
@@ -208,6 +218,8 @@ export default {
     /**
      * Actualizamos la información del usuario y la base de datos
      *
+     * @param {*} commit
+     * @param {*} state
      * @param {Object} user - datos del usuario para actualizar
      */
     updatedUserInfo({ commit, state }, user) {
@@ -258,6 +270,8 @@ export default {
     /**
      * Creamos la base de datos del usuario
      *
+     * @param {*} commit
+     * @param {*} dispatch
      * @param {Object} newUser - datos del usuario
      */
     createUserDb({ commit, dispatch }, newUser) {
@@ -298,6 +312,7 @@ export default {
      * NOTA: Refinar para hacer la comprobación en el server
      *       no en el cliente
      *
+     * @param {*} dispatch
      * @param {String} userName
      */
     checkUserName({ dispatch }, userName) {
@@ -310,6 +325,7 @@ export default {
      * Añade el nombre la base de datos /usersNames
      * NOTA: REVISAR
      *
+     * @param {*} commit
      * @param {String} userName
      */
     userNameDb({ commit }, userName) {
@@ -343,9 +359,9 @@ export default {
     },
 
     /**
-     *
      * Log Out de Usuario
      *
+     * @param {*} commit
      */
     signUserOut({ commit }) {
       commit('shared/setLoading', true, {
