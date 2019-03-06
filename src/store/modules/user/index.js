@@ -1,7 +1,7 @@
 import { firebaseAuth, firebaseDb, currentUser } from '../../../firebase'
 
 import HomePage from '../../../pages/HomePage'
-import SignUp from '../../../pages/User/SignUp'
+// import SignUp from '../../../pages/User/SignUp'
 import LogIn from '../../../pages/User/LogIn'
 
 export default {
@@ -135,7 +135,7 @@ export default {
      *
      * @param {*} commit
      */
-    signUserOut({ commit }) {
+    userLogOut({ commit }) {
       firebaseAuth
        .signOut()
        .then(result => {
@@ -143,7 +143,7 @@ export default {
          console.log(result)
        })
        .then(
-         commit('navigator/push', SignUp, { root: true })
+         commit('navigator/push', LogIn, { root: true })
        )
        .catch(error => {
          console.log('signUserOut error: ' + error)
