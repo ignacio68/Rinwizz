@@ -1,5 +1,4 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { firebaseAuth, firebaseDb, currentUser } from '../../../firebase'
 
 export default {
   strict: process.env.NODE_ENV !== 'production',
@@ -46,21 +45,21 @@ export default {
       console.log('la red social elegida es: ' + name)
       switch (name) {
         case 'Facebook': {
-          const provider = new firebase.auth.FacebookAuthProvider()
+          const provider = new firebaseAuth.FacebookAuthProvider()
           // provider.addScope()
           dispatch('socialSignUp', provider)
           console.log('La red social elegida es Facebook')
           break
         }
         case 'Google': {
-          const provider = new firebase.auth.GoogleAuthProvider()
+          const provider = new firebaseAuth.GoogleAuthProvider()
           // provider.addScope()
           dispatch('socialSignUp', provider)
           console.log('La red social elegida es Google')
           break
         }
         case 'Twitter': {
-          const provider = new firebase.auth.TwitterAuthProvider()
+          const provider = new firebaseAuth.TwitterAuthProvider()
           // provider.addScope()
           dispatch('socialSignUp', provider)
           console.log('La red social elegida es Twitter')
@@ -76,15 +75,13 @@ export default {
      */
     socialSignUp({ commit }, provider) {
       // provider.addScope('public_profile')
-      firebase.auth().useDeviceLanguage()
+      firebaseAuth.useDeviceLanguage()
       // NOTA: desarrollar un método para según el device elegir un método de acceso
       // firebase.auth().signInWithPopup(provider) // Utilizamos esta forma de acceso en producción en web
-      firebase
-        .auth()
+      firebaseAuth
         .signInWithRedirect(provider) // Utilizamos esta forma de acceso en móviles
         .then(() => {
-          firebase
-            .auth()
+          firebaseAuth
             .getRedirectResult()
             .then(result => {
               commit('shared/setLoading', false, { root: true })

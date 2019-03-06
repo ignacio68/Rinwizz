@@ -2,7 +2,7 @@
  * @file Rinwizz es una app multilenguaje para emitir alertas
  *
  * @copyright Ignacio López-Amor Pinillos 2019
- * @author Ignacio López-AmorPinillos <ignaciolopezamor@gmail.com>
+ * @author Ignacio López-Amor Pinillos <ignaciolopezamor@gmail.com>
  * @license MIT
  * @version 0.1.0
  */
@@ -15,29 +15,37 @@
 import 'onsenui/css/onsenui.css'
 import 'onsenui/css/onsen-css-components.css'
 
-// Import Dependency
+/**
+ * Import Dependencies
+ */
 import Vue from 'vue'
 import VueOnsen from 'vue-onsenui'
 
-// import Firebase
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import firebaseConfig from './components/Firebase/firebaseConfig'
-// const fb = require('./components/Firebase/firebaseConfig')
+/**
+ * Import Firebase
+ */
+import { firebaseAuth } from './firebase'
 
 // import LokiJS
 // import loki from 'lokijs'
 // import { db, userData } from './loki'
 
-// import store from Vuex
+/**
+ *  Import Vuex
+ */ 
 import { store } from './store'
 
-// import languages
-// NOTA: ¡¡¡¡¡¡¡UPDATE!!!!!!!!
+/**
+ *  Import languages
+ * NOTA: ¡¡¡¡¡¡¡UPDATE!!!!!!!!
+ */
 import i18n from './i18n'
 //import i18n from './locales/index'
 
-// import Timer
+/**
+ * Import Timer
+ * NOTA: Revisar si importar directamente en el componente
+ */
 import VueTimers from 'vue-timers'
 
 /* Cuando se utiliza ESM
@@ -71,10 +79,14 @@ import TheCustomtoolbar from './components/Shared/TheCustomToolbar' // NOTA: Red
  */
 Vue.config.productionTip = false
 
-// Load Onsen
+/**
+ * Load Onsen 
+ */
 Vue.use(VueOnsen)
 
-// Load  Vue-Timer
+/**
+ * Load  Vue-Timer
+ */
 Vue.use(VueTimers)
 
 /**
@@ -87,8 +99,7 @@ Vue.component('the-custom-toolbar', TheCustomtoolbar) // Toolbar común
 
 let app
 
-firebase.initializeApp(firebaseConfig)
-firebase.auth().onAuthStateChanged(user => {
+firebaseAuth.onAuthStateChanged(user => {
   console.log('Estoy en firebase.auth().onAuthStateChanged')
   if (!app) {
     app = new Vue({
@@ -97,10 +108,6 @@ firebase.auth().onAuthStateChanged(user => {
       store,
       render: h => h(AppNavigator),
       beforeCreate() {
-        console.log('main.js:beforeCreate()')
-        /** this.$ons.ready(() => {
-            }) */
-
         // Shortcut for Material Design, IOS & web
         Vue.prototype.md = this.$ons.platform.isAndroid()
         Vue.prototype.ios = this.$ons.platform.isIOS()
@@ -128,7 +135,6 @@ firebase.auth().onAuthStateChanged(user => {
         }
       },
       created() {
-        console.log('Estoy en main.js.created')
         if (user) {
           this.$store.dispatch('user/autoSignIn', user)
           /**

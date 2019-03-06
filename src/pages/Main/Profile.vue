@@ -77,7 +77,7 @@ export default {
   computed: {
     userEmail() {
       // let userEmail = this.$store.getters['user/user']
-      this.$store.dispatch('localDataBase/getUserData', email)
+      // this.$store.dispatch('localDataBase/getUserData', email)
       // let userEmail = window.localStorage.getItem('email')
       // console.log('el email el usuario es: ' + userEmail)
       let userEmail
@@ -85,7 +85,7 @@ export default {
     },
     userName() {
       // let userName = this.$store.getters['user/user']
-      this.$store.dispatch('localDataBase/getUserData', name)
+      // this.$store.dispatch('localDataBase/getUserData', name)
       // let userName = window.localStorage.getItem('userName')
       // console.log('el nombre de usuario es: ' + userName)
       let userName
@@ -93,7 +93,7 @@ export default {
     },
     userLocation() {
       // let userLocation = this.$store.getters['user/user']
-      this.$store.dispatch('localDataBase/getUserData', location)
+      // this.$store.dispatch('localDataBase/getUserData', location)
       // let userLocation = window.localStorage.getItem('location')
       // console.log('la localización del usuario es: ' + userLocation.location)
       let userLocation

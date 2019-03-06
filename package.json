@@ -17,6 +17,8 @@
     "cordova-serve-browser": "vue-cli-service cordova-serve-browser",
     "cordova-serve-ios": "vue-cli-service cordova-serve-ios",
     "cordova-serve-osx": "vue-cli-service cordova-serve-osx",
+    "styleguide": "vue-cli-service styleguidist",
+    "styleguide:build": "vue-cli-service styleguidist:build",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
@@ -45,6 +47,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "vue-cli-plugin-cordova": "^2.1.1",
     "vue-cli-plugin-i18n": "^0.5.2",
+    "vue-cli-plugin-styleguidist": "^1.1.2",
     "vue-loader": "^15.6.4",
     "vue-onsenui": "^2.6.2",
     "vue-template-compiler": "^2.6.7"

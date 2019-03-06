@@ -1,9 +1,7 @@
 /**
  * Metodos utilizados para el uso de las alertas
  */
-import firebase from 'firebase/app'
-
-import 'firebase/database'
+import { firebaseDb } from '../../../firebase'
 
 export default {
   strict: process.env.NODE_ENV !== 'production',
@@ -63,8 +61,7 @@ export default {
       }
       let key
       // Genera una nueva alerta en la base de datos
-      firebase
-        .database()
+      firebaseDb
         .ref('alerts')
         .push(alert)
         .then(data => {
@@ -107,8 +104,7 @@ export default {
       commit('shared/setLoading', true, { root: true })
       commit('shared/clearError', null, { root: true })
       console.log('Estoy en action:loadAlerts')
-      firebase
-        .database()
+      firebaseDb
         .ref('alerts')
         .once('value')
         .then(data => {

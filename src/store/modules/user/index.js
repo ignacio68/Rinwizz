@@ -1,16 +1,15 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { firebaseAuth, firebaseDb, currentUser } from '../../../firebase'
 
 import HomePage from '../../../pages/HomePage'
 import SignUp from '../../../pages/User/SignUp'
-// import fb from('../../../components/Firebase/firebaseConfig')
+import LogIn from '../../../pages/User/LogIn'
 
 export default {
   strict: process.env.NODE_ENV !== 'production',
   namespaced: true,
 
   state: {
-    user: null, // el usuario inicial siempre está vacio
+    user: null,
     /**
      * Creamos el objeto ActionCodeSettings que proporciona instrucciones a Firebase
      * para comunicarse por email con el usuario
@@ -43,18 +42,13 @@ export default {
   },
   mutations: {
     /**
-     * Añade a user las propiedades del usuario registrado
+     * Crea un nuevo usuario
      *
      * @param {*} state
      * @param {Object} newUser - Parámetros a añadir al usuario
      */
     setUser(state, newUser) {
       state.user = newUser
-      console.log('Estoy en setUser')
-      console.log('El nombre del usuario es: ' + state.user.name)
-      console.log('El id del usuario es: ' + state.user._id)
-      console.log('El email del usuario es: ' + state.user.email)
-      console.log(state.user)
     },
     /**
      * Resetea el usuario
@@ -71,43 +65,32 @@ export default {
      *
      * @param {*} commit
      * @param {*} dispatch
-     * @param {Object} userDates - datos a añadir al nuevo usuario
+     * @param {Object} registerUser - datos a añadir al nuevo usuario
      */
     signUpUser({ commit, dispatch }, userDates) {
       console.log('Estoy en signUserUp')
-      commit('shared/setActionPass', false, {
-        root: true
-      })
-      commit('shared/clearError', null, {
-        root: true
-      })
+      commit('shared/setActionPass', false, { root: true })
       /**
        * Crea el nuevo usuario en Firebase
        * prett
-       * @param {String} userDates.email - email del usuario
-       * @param {String} user.password - password del usuario
+       * @param {String} registerUser.email - email del usuario
+       * @param {String} registerUser.password - password del usuario
        */
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(userDates.email, userDates.password)
+      firebaseAuth
+        .createUserWithEmailAndPassword(registerUser.email, registerUser.password)
         .then(firebaseUser => {
           console.log('Estoy dentro de createUserWithEmailAndPassword')
           console.log(firebaseUser)
-          commit('shared/clearError', null, {
-            root: true
-          })
-          commit('shared/setActionPass', true, {
-            root: true
-          })
+          commit('shared/setActionPass', true, { root: true })
 
           // Añadimos los datos del nuevo usuario
           let newUser = {
             _id: firebaseUser.user.uid,
             email: firebaseUser.user.email,
-            name: userDates.name
+            name: registerUser.name
           }
 
-          // Llamamos a 'setUser' para añadir nuevas propiedades al user
+          // Llamamos a 'setUser' para crear el nuevo usuario localmente
           commit('setUser', newUser)
           console.log('Hay un nuevo usuario con id: ' + newUser._id)
 
@@ -116,71 +99,24 @@ export default {
           // dispatch('createUserDb', newUser)
         })
         .catch(error => {
-          console.log('Estoy en el catch de errores de signUserUp')
-          commit('shared/setActionPass', false, {
-            root: true
-          })
-          commit('shared/setError', error, {
-            root: true
-          })
-        })
-    },
-    /**
-     * Envía un email de confirmación de password
-     *
-     * @param {*} commit
-     * @param {*} state
-     * @param {String} firebaseUserEmail - email del usuario donde se le envía el mensaje de confirmación
-     */
-    confirmPassword({ commit, state }, firebaseUserEmail) {
-      commit('shared/clearError', null, {
-        root: true
-      })
-      console.log(
-        'Estoy enviando el email de comprobacion de password a: ' +
-          firebaseUserEmail
-      )
-      firebase
-        .auth()
-        .sendSignInLinkToEmail(firebaseUserEmail, state.actionCodeSettings)
-        // REVISAR
-        .then(() => {
-          console.log('Guardo el email: ' + firebaseUserEmail + 'en email')
-          // NOTA: Utilizar LokiJS para almacenar los datos
-          // dispatch('localDataBase/updateUserEmail', firebaseUserEmail,  { root: true } )
-        })
-        .catch(error => {
-          console.log('confirmPassword error')
-          commit('shared/setError', error, {
-            root: true
-          })
-          console.log(error)
+          console.log('signUserUp error: ' + error)
+          commit('shared/setActionPass', false, { root: true })
         })
     },
 
     /**
-     * Log In de Usuario existente
+     * Log In de usuario existente
      *
      * @param {*} commit
      * @param {String} user
      */
     logInUser({ commit }, user) {
-      commit('shared/setLoading', true, {
-        root: true
-      })
-      commit('shared/clearError', null, {
-        root: true
-      })
       console.log('Estoy en signUserIn')
       /* Comprueba que el usuario existe en Firebase */
-      firebase
-        .auth()
+      firebaseAuth
         .signInWithEmailAndPassword(user.email, user.password)
         .then(user => {
           console.log('signUserIn user')
-          commit('shared/setLoading', false, {
-            root: true
-          })
           const newUser = {
             id: user.uid
           }
@@ -190,14 +126,77 @@ export default {
           })
         })
         .catch(error => {
-          console.log('logUserIn error')
-          commit('shared/setLoading', false, {
-            root: true
-          })
-          commit('shared/setError', error, {
-            root: true
-          })
-          console.log(error)
+          console.log('logUserIn error: ' + error)
+        })
+    },
+    
+    /**
+     * Log Out de Usuario
+     *
+     * @param {*} commit
+     */
+    signUserOut({ commit }) {
+      firebaseAuth
+       .signOut()
+       .then(result => {
+         commit('clearUser')
+         console.log(result)
+       })
+       .then(
+         commit('navigator/push', SignUp, { root: true })
+       )
+       .catch(error => {
+         console.log('signUserOut error: ' + error)
+       })
+   },
+   
+
+   /**
+    * Elimina el usuario
+    */
+   deleteUser ({ commit, dispatch }) {
+    const user = firebaseAuth.currentUser
+    user
+     .delete()
+     .then(() => {
+        console.log ('Usuario eliminado')
+        commit('clearUser')
+        dispatch('signUserOut')
+     })
+     .catch(function(error) {
+       console.log ('deleteUser error: ' + error)
+     })
+   },
+   
+   /**
+    * Fake User se utiliza para pruebas
+    */
+   fakeUser () {
+     console.log('Estoy en Fake User')
+   },
+
+ /**
+     * Envía un email de confirmación de password
+     *
+     * @param {*} commit
+     * @param {*} state
+     * @param {String} firebaseUserEmail - email del usuario donde se le envía el mensaje de confirmación
+     */
+    confirmPassword({ commit, state }, firebaseUserEmail) {
+      console.log(
+        'Estoy enviando el email de comprobacion de password a: ' +
+          firebaseUserEmail
+      )
+      firebaseAuth
+        .sendSignInLinkToEmail(firebaseUserEmail, state.actionCodeSettings)
+        // REVISAR
+        .then(() => {
+          console.log('Guardo el email: ' + firebaseUserEmail + 'en email')
+          // NOTA: Utilizar LokiJS para almacenar los datos
+          // dispatch('localDataBase/updateUserEmail', firebaseUserEmail,  { root: true } )
+        })
+        .catch(error => {
+          console.log('confirmPassword error: ' + error)
         })
     },
 
@@ -224,12 +223,6 @@ export default {
      */
     updatedUserInfo({ commit, state }, user) {
       console.log('Estoy en updatedUserInfo')
-      commit('shared/setLoading', true, {
-        root: true
-      })
-      commit('shared/clearError', null, {
-        root: true
-      })
       const userUpdated = {
         // userIcon: user.userIcon, // por el momento utilizar direcciones URL
         userName: user.userName,
@@ -240,30 +233,18 @@ export default {
       // commit('setUser', userUpdated)
       const userId = state.user.id
       // Actualizamos los datos en Firebase Realtime Database
-      firebase
-        .database()
+      firebaseDb
         .ref('users/' + userId)
         .update(userUpdated)
         .then(() => {
-          commit('shared/setLoading', false, {
-            root: true
-          })
           console.log(
             'Actualizada en Firebase la base de datos del usuario: ' + user
           )
           // Actualizamos los datos en LokiJS
-          dispatch('localDataBase/updateUser', userUpdated, {
-            root: true
-          })
+          // dispatch('localDataBase/updateUser', userUpdated, { root: true })
         })
         .catch(error => {
-          commit('shared/setLoading', false, {
-            root: true
-          })
-          commit('shared/setError', error, {
-            root: true
-          })
-          console.log(error)
+          console.log('updatedUserInfo: ' + error)
         })
     },
 
@@ -281,8 +262,7 @@ export default {
       console.log('Estoy en createUserDb')
       const userId = newUser._id
       console.log('el id del usuario es: ' + userId)
-      firebase
-        .database()
+      firebaseDb
         .ref('users/' + userId)
         .set({
           email: newUser.email,
@@ -329,71 +309,17 @@ export default {
      * @param {String} userName
      */
     userNameDb({ commit }, userName) {
-      commit('shared/setLoading', true, {
-        root: true
-      })
-      commit('shared/clearError', null, {
-        root: true
-      })
       console.log('Estoy en userNameDb')
-      firebase
-        .database()
+      firebaseDb
         .ref('usersName/')
         .set({
           userName
         })
         .then(() => {
-          commit('shared/setLoading', false, {
-            root: true
-          })
+          console.log('Añadido el nombre de usuario a la base de datos "UserNames"')
         })
         .catch(error => {
-          commit('shared/setLoading', false, {
-            root: true
-          })
-          commit('shared/setError', error, {
-            root: true
-          })
-          console.log(error)
-        })
-    },
-
-    /**
-     * Log Out de Usuario
-     *
-     * @param {*} commit
-     */
-    signUserOut({ commit }) {
-      commit('shared/setLoading', true, {
-        root: true
-      })
-      commit('shared/clearError', null, {
-        root: true
-      })
-      firebase
-        .auth()
-        .signOut()
-        .then(result => {
-          commit('shared/setLoading', false, {
-            root: true
-          })
-          commit('shared/clearUser', null, {
-            root: true
-          })
-        })
-        .then(
-          commit('navigator/push', SignUp, {
-            root: true
-          })
-        )
-        .catch(error => {
-          commit('shared/setLoading', false, {
-            root: true
-          })
-          commit('shared/setError', error, {
-            root: true
-          })
-          console.log(error)
+          console.log('userNameDb error: ' + error)
         })
     },
 
@@ -401,9 +327,9 @@ export default {
      * Comprueba si hay algún usuario conectado
      */
     isActiveUser() {
-      const activeUser = firebase.auth().currentUser
+      const activeUser = FirebaseAuth.currentUser
       if (activeUser != null) {
-        console.log(activeUser.email + ' está conectado')
+        console.log(activeUser.displayName + ' está conectado')
       } else {
         console.log('No hay ningún usuario conectado')
       }
