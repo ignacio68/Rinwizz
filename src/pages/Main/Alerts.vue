@@ -41,6 +41,17 @@
       </template>
     </v-ons-alert-dialog>
 
+    <div class="logOutButton">
+      <v-ons-button
+        class="logOutButton__button"
+        name="logOutButton"
+        modifier="large"
+        :disabled="false"
+        ripple="true"
+        @click.prevent="logOutUser"
+      >Logout User</v-ons-button>
+    </div>
+
     <div class="deleteButton">
       <v-ons-button
         class="deleteButton__button"
@@ -135,6 +146,9 @@ export default {
       this.referenceDate = Date.now()
       console.log('La fecha de referencia es:' + this.referenceDate)
     },
+    logOutUser() {
+      this.$store.dispatch('user/logOutUser')
+    },
     deleteUser() {
       this.$store.dispatch('user/deleteUser')
     }
@@ -154,5 +168,9 @@ export default {
 }
 .alertScript__icon {
   color: white;
+}
+.logOutButton {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 </style>

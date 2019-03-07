@@ -1,7 +1,7 @@
-import { firebaseAuth, firebaseDb, currentUser } from '../../../firebase'
+import { firebaseAuth, firebaseDb, currentUser, firebase } from '../../../firebase'
 
 import HomePage from '../../../pages/HomePage'
-// import SignUp from '../../../pages/User/SignUp'
+// timport SignUp from '../../../pages/User/SignUp'
 import LogIn from '../../../pages/User/LogIn'
 
 export default {
@@ -10,6 +10,7 @@ export default {
 
   state: {
     user: null,
+    credential: '',
     /**
      * Creamos el objeto ActionCodeSettings que proporciona instrucciones a Firebase
      * para comunicarse por email con el usuario
@@ -57,6 +58,12 @@ export default {
      */
     clearUser(state) {
       state.user = null
+    },
+    /**
+     * Establece la crdencial del usuario
+     */
+    setCredential(state, credential) {
+      state,credential = credential
     }
   },
   actions: {
@@ -67,7 +74,7 @@ export default {
      * @param {*} dispatch
      * @param {Object} registerUser - datos a añadir al nuevo usuario
      */
-    signUpUser({ commit, dispatch }, userDates) {
+    signUpUser({ commit, dispatch }, registerUser) {
       console.log('Estoy en signUserUp')
       commit('shared/setActionPass', false, { root: true })
       /**
@@ -135,47 +142,127 @@ export default {
      *
      * @param {*} commit
      */
-    userLogOut({ commit }) {
+    logOutUser({ commit }) {
       firebaseAuth
-       .signOut()
-       .then(result => {
-         commit('clearUser')
-         console.log(result)
-       })
-       .then(
-         commit('navigator/push', LogIn, { root: true })
-       )
-       .catch(error => {
-         console.log('signUserOut error: ' + error)
-       })
-   },
-   
+        .signOut()
+        .then(result => {
+          commit('clearUser')
+          console.log(result)
+        })
+        .then(
+          commit('navigator/push', LogIn, { root: true })
+        )
+        .catch(error => {
+          console.log('signUserOut error: ' + error)
+        })
+    },
+    
+    /**
+     * Ponemos un observador
+     */
+    onAuthStateChanges() {
+      firebaseAuth.onAuthstateChange((user) => {
+        if (user) {
+          console.log (user)
+        }
+      })
+    },
 
-   /**
-    * Elimina el usuario
-    */
-   deleteUser ({ commit, dispatch }) {
-    const user = firebaseAuth.currentUser
-    user
-     .delete()
-     .then(() => {
-        console.log ('Usuario eliminado')
-        commit('clearUser')
-        dispatch('signUserOut')
-     })
-     .catch(function(error) {
-       console.log ('deleteUser error: ' + error)
-     })
-   },
-   
-   /**
-    * Fake User se utiliza para pruebas
-    */
-   fakeUser () {
-     console.log('Estoy en Fake User')
-   },
+    /**
+     * Elimina el usuario
+     */
+    deleteUser ({ dispatch }) {
+      console.log('Estoy en deleteUser')
+      dispatch('getCredential')
+    },
 
- /**
+    /**
+     * Recupera la credencial del usuario
+     */
+    getCredential ({ commit }) {
+      console.log('Estoy en getCredential')
+      let providerId = firebaseAuth.currentUser.providerData[0].providerId
+      console.log("el provider es: " + providerId)
+      if ( firebaseAuth.OAuthProvider === undefined ) {
+        console.log('emailAuthProvider NO está definido')
+      } else {
+        console.log('emailAuthProvider SI está definido')
+      }
+      /*
+      if (providerId === 'password') {
+        let credential = firebaseAuth.EmailAuthProvider.credential(email, password)
+        return credential
+        console.log("la credencial es: " + credential)
+      } else {
+        console.log("el provider es 0Auth ")
+      }
+      */
+      /*
+      switch (providerId) {
+        case "facebook.com":
+          console.log ("el provider es: " + providerId)
+          break
+
+        case "google.com":
+          console.log ("el provider es: " + providerId)
+          break
+        
+        case "twitter.com":
+          console.log ("el provider es: " + providerId)
+          break
+
+        case "password":
+          console.log ("el provider es: " + providerId)
+          break
+      }*/
+    },
+
+    /**
+     * Resuténticiòn del usuario
+     * Se utiliza para poder elimnar la cuenta de usuario
+     */
+    reauthenticateUser ({ state, dispatch }) {
+      console.log('Estoy en reauthenticateUser')
+      const user = firebaseAuth.currentUser
+      dispatch(`getCredential`)
+      let myCredential = state.credential
+      user.reauthenticateAndRetrieveDataWithCredential(myCredential)
+        .then(() =>{
+          dispatch('deleteUser')
+          console.log('Usuario eliminado')
+        })
+        .catch((error) => {
+          console.log('reauthenticateUser error: ' + error)
+        })
+    },
+
+    /**
+     * Elimina la cuenta de usuario de Firebase
+     */
+    deleteFirebaseUserAccount () {
+      console.log('Estoy en deleteFirebaseUserAccount')
+      const user = firebaseAuth.currentUser
+      // dispatch('getCredential')
+      user
+        .delete()
+        .then(() => {
+          console.log ('Usuario eliminado')
+          commit('clearUser')
+          dispatch('signUserOut')
+        })
+        .catch((error) => {
+          console.log('deleteUser error: ' + error)
+        })
+    },
+   
+    /**
+     * Fake User se utiliza en Dev para pruebas
+     */
+    fakeUser () {
+      console.log('Estoy en Fake User')
+    },
+
+    /**
      * Envía un email de confirmación de password
      *
      * @param {*} commit
