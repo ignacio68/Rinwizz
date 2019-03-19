@@ -1,4 +1,4 @@
-import { firebaseAuth, firebaseDb, currentUser } from '../../../firebase'
+import { firebaseAuth } from '../../../firebase'
 
 export default {
   strict: process.env.NODE_ENV !== 'production',
@@ -75,13 +75,13 @@ export default {
      */
     socialSignUp({ commit }, provider) {
       // provider.addScope('public_profile')
-      firebaseAuth.useDeviceLanguage()
+      firebaseAuth().useDeviceLanguage
       // NOTA: desarrollar un método para según el device elegir un método de acceso
       // firebase.auth().signInWithPopup(provider) // Utilizamos esta forma de acceso en producción en web
-      firebaseAuth
+      firebaseAuth()
         .signInWithRedirect(provider) // Utilizamos esta forma de acceso en móviles
         .then(() => {
-          firebaseAuth
+          firebaseAuth()
             .getRedirectResult()
             .then(result => {
               commit('shared/setLoading', false, { root: true })

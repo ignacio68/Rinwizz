@@ -1,13 +1,14 @@
-import { firebaseAuth, firebaseDb, currentUser, firebase } from '../../../firebase'
+import { firebaseAuth, firebaseDb } from '../../../firebase'
 
 import HomePage from '../../../pages/HomePage'
-// timport SignUp from '../../../pages/User/SignUp'
+import Welcome from '../../../pages/Shared/Welcome'
 import LogIn from '../../../pages/User/LogIn'
+
+// const currentUser = firebaseAuth().currentUser
 
 export default {
   strict: process.env.NODE_ENV !== 'production',
   namespaced: true,
-
   state: {
     user: null,
     credential: '',
@@ -34,7 +35,7 @@ export default {
   getters: {
     /**
      * Devuelve el usuario desde state. ELIMINAR
-     * 
+     *
      * @param {*} state
      */
     user(state) {
@@ -63,7 +64,8 @@ export default {
      * Establece la crdencial del usuario
      */
     setCredential(state, credential) {
-      state,credential = credential
+      state.credential = credential
+      console.log('credential es: ' + credential)
     }
   },
   actions: {
@@ -74,7 +76,7 @@ export default {
      * @param {*} dispatch
      * @param {Object} registerUser - datos a añadir al nuevo usuario
      */
-    signUpUser({ commit, dispatch }, registerUser) {
+    signUpUser({ commit, dispatch, state }, registerUser) {
       console.log('Estoy en signUserUp')
       commit('shared/setActionPass', false, { root: true })
       /**
@@ -83,8 +85,11 @@ export default {
        * @param {String} registerUser.email - email del usuario
        * @param {String} registerUser.password - password del usuario
        */
-      firebaseAuth
-        .createUserWithEmailAndPassword(registerUser.email, registerUser.password)
+      firebaseAuth()
+        .createUserWithEmailAndPassword(
+          registerUser.email,
+          registerUser.password
+        )
         .then(firebaseUser => {
           console.log('Estoy dentro de createUserWithEmailAndPassword')
           console.log(firebaseUser)
@@ -94,19 +99,31 @@ export default {
           let newUser = {
             _id: firebaseUser.user.uid,
             email: firebaseUser.user.email,
-            name: registerUser.name
+            password: registerUser.password,
+            name: registerUser.name,
+            phone: firebaseUser.user.phoneNumber,
+            isVerified: firebaseUser.user.emailVerified,
+            isAnonymous: firebaseUser.user.isAnonymous,
+            avatar: firebaseUser.user.photoURL,
+            providerData: firebaseUser.user.providerData,
+            providerId: firebaseUser.user.providerData[0].providerId,
+            creationDate: firebaseUser.user.metadata.creationTime,
+            lastSignInDate: firebaseUser.user.metadata.LastSignInTime
           }
 
           // Llamamos a 'setUser' para crear el nuevo usuario localmente
           commit('setUser', newUser)
-          console.log('Hay un nuevo usuario con id: ' + newUser._id)
+          console.log('Hay un nuevo usuario: ' + state.user.name)
+          console.log('Password: ' + state.user.password)
+          console.log('Se unió el: ' + state.user.creationDate)
+          console.log('El provider es: ' + state.user.providerId)
 
           // Añadimos los datos a la base de datos (Realtime Database)
           // NOTA: Por el momento se desactiva
           // dispatch('createUserDb', newUser)
         })
         .catch(error => {
-          console.log('signUserUp error: ' + error)
+          console.log('signUserUp error' + error)
           commit('shared/setActionPass', false, { root: true })
         })
     },
@@ -120,7 +137,7 @@ export default {
     logInUser({ commit }, user) {
       console.log('Estoy en signUserIn')
       /* Comprueba que el usuario existe en Firebase */
-      firebaseAuth
+      firebaseAuth()
         .signInWithEmailAndPassword(user.email, user.password)
         .then(user => {
           console.log('signUserIn user')
@@ -136,34 +153,32 @@ export default {
           console.log('logUserIn error: ' + error)
         })
     },
-    
+
     /**
      * Log Out de Usuario
      *
      * @param {*} commit
      */
     logOutUser({ commit }) {
-      firebaseAuth
+      firebaseAuth()
         .signOut()
         .then(result => {
           commit('clearUser')
           console.log(result)
         })
-        .then(
-          commit('navigator/push', LogIn, { root: true })
-        )
+        .then(commit('navigator/push', LogIn, { root: true }))
         .catch(error => {
           console.log('signUserOut error: ' + error)
         })
     },
-    
+
     /**
      * Ponemos un observador
      */
     onAuthStateChanges() {
-      firebaseAuth.onAuthstateChange((user) => {
+      firebaseAuth().onAuthstateChange(user => {
         if (user) {
-          console.log (user)
+          console.log(user)
         }
       })
     },
@@ -171,67 +186,82 @@ export default {
     /**
      * Elimina el usuario
      */
-    deleteUser ({ dispatch }) {
+    async deleteUser({ dispatch, state }) {
       console.log('Estoy en deleteUser')
-      dispatch('getCredential')
+      await dispatch(`getCredential`)
+      let currentUser = firebaseAuth().currentUser
+      let credential = state.credential
+      console.log('myCredential es:' + credential)
+      currentUser
+        .reauthenticateAndRetrieveDataWithCredential(credential)
+        .then(() => {
+          dispatch('deleteFirebaseUserAccount')
+        })
+        .catch(error => {
+          console.log('reauthenticateUser error: ' + error)
+        })
     },
 
     /**
      * Recupera la credencial del usuario
      */
-    getCredential ({ commit }) {
+    getCredential({ commit, state }) {
       console.log('Estoy en getCredential')
-      let providerId = firebaseAuth.currentUser.providerData[0].providerId
-      console.log("el provider es: " + providerId)
-      if ( firebaseAuth.OAuthProvider === undefined ) {
-        console.log('emailAuthProvider NO está definido')
-      } else {
-        console.log('emailAuthProvider SI está definido')
-      }
-      /*
-      if (providerId === 'password') {
-        let credential = firebaseAuth.EmailAuthProvider.credential(email, password)
-        return credential
-        console.log("la credencial es: " + credential)
-      } else {
-        console.log("el provider es 0Auth ")
-      }
-      */
-      /*
+      let currentUser = firebaseAuth().currentUser
+      const idToken = currentUser.getIdToken()
+      console.log ('El idToken es: ' + idToken)
+      const providerId = state.user.providerId
+
       switch (providerId) {
-        case "facebook.com":
-          console.log ("el provider es: " + providerId)
+        case 'facebook.com':
+          console.log('el provider es: ' + providerId)
+          const facebook = firebaseAuth.FacebookAuthProvider.credential(idToken)
+          commit('setCredential', facebook)
           break
 
-        case "google.com":
-          console.log ("el provider es: " + providerId)
-          break
-        
-        case "twitter.com":
-          console.log ("el provider es: " + providerId)
+        case 'google.com':
+          console.log('el provider es: ' + providerId)
+          const google = 'google'
+          commit('setCredential', google)
           break
 
-        case "password":
-          console.log ("el provider es: " + providerId)
+        case 'twitter.com':
+          console.log('el provider es: ' + providerId)
+          const twitter = 'twitter'
+          commit('setCredential', twitter)
           break
-      }*/
+
+        case 'password':
+          console.log('el provider es: ' + providerId)
+          let email = state.user.email
+          let userPassword = state.user.password
+          const password = firebaseAuth.EmailAuthProvider.credential(
+            email,
+            userPassword
+          )
+          console.log('la credencial es: ' + password)
+          commit('setCredential', password)
+          break
+
+        default:
+          console.log('No hay providerId: ' + providerId)
+      }
     },
 
     /**
-     * Resuténticiòn del usuario
+     * Reautenticación automática del usuario
      * Se utiliza para poder elimnar la cuenta de usuario
      */
-    reauthenticateUser ({ state, dispatch }) {
+    reauthenticateUser({ state, dispatch }) {
       console.log('Estoy en reauthenticateUser')
-      const user = firebaseAuth.currentUser
-      dispatch(`getCredential`)
-      let myCredential = state.credential
-      user.reauthenticateAndRetrieveDataWithCredential(myCredential)
-        .then(() =>{
-          dispatch('deleteUser')
-          console.log('Usuario eliminado')
+      let currentUser = firebaseAuth().currentUser
+      let credential = state.credential
+      currentUser
+        .reauthenticateAndRetrieveDataWithCredential(credential)
+        .then(() => {
+          dispatch('deleteFirebaseUserAccount')
         })
-        .catch((error) => {
+        .catch(error => {
           console.log('reauthenticateUser error: ' + error)
         })
     },
@@ -239,26 +269,28 @@ export default {
     /**
      * Elimina la cuenta de usuario de Firebase
      */
-    deleteFirebaseUserAccount () {
+    deleteFirebaseUserAccount({ commit }) {
       console.log('Estoy en deleteFirebaseUserAccount')
-      const user = firebaseAuth.currentUser
+      let currentUser = firebaseAuth().currentUser
       // dispatch('getCredential')
-      user
+      currentUser
         .delete()
         .then(() => {
-          console.log ('Usuario eliminado')
+          console.log('Usuario eliminado')
           commit('clearUser')
-          dispatch('signUserOut')
+          commit('navigator/replace', Welcome, {
+            root: true
+          })
         })
-        .catch((error) => {
+        .catch(error => {
           console.log('deleteUser error: ' + error)
         })
     },
-   
+
     /**
      * Fake User se utiliza en Dev para pruebas
      */
-    fakeUser () {
+    fakeUser() {
       console.log('Estoy en Fake User')
     },
 
@@ -274,7 +306,7 @@ export default {
         'Estoy enviando el email de comprobacion de password a: ' +
           firebaseUserEmail
       )
-      firebaseAuth
+      firebaseAuth()
         .sendSignInLinkToEmail(firebaseUserEmail, state.actionCodeSettings)
         // REVISAR
         .then(() => {
@@ -297,7 +329,10 @@ export default {
       console.log('Estoy en autoSignIn')
       commit('setUser', {
         id: user.uid,
-        email: user.email
+        email: user.email,
+        isVerified: user.emailVerified,
+        creationDate: user.metadata.creationTime,
+        lastSignInDate: user.metadata.LastSignInTime
       })
     },
 
@@ -403,7 +438,9 @@ export default {
           userName
         })
         .then(() => {
-          console.log('Añadido el nombre de usuario a la base de datos "UserNames"')
+          console.log(
+            'Añadido el nombre de usuario a la base de datos "UserNames"'
+          )
         })
         .catch(error => {
           console.log('userNameDb error: ' + error)
@@ -414,12 +451,21 @@ export default {
      * Comprueba si hay algún usuario conectado
      */
     isActiveUser() {
-      const activeUser = FirebaseAuth.currentUser
+      let activeUser = firebaseAuth().currentUser
       if (activeUser != null) {
         console.log(activeUser.displayName + ' está conectado')
       } else {
         console.log('No hay ningún usuario conectado')
       }
+    },
+
+    /**
+     * Mostramos los datos del usuario en formato JSON
+     */
+    toJSON ({ state }) {
+      let currentUser = firebaseAuth().currentUser
+      const userDato = currentUser.toJSON()
+      console.log ('Dato del usuario: ' + state.user.lastSignInDate)
     }
   }
 }

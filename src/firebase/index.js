@@ -22,7 +22,7 @@ try {
 }
 
 // - Storage reference
-export let storageRef = firebase.storage().ref()
+export const storageRef = firebase.storage().ref()
 
 // Initialize Database through Firebase Database
 export const firebaseDb = firebase.database()
@@ -35,8 +35,8 @@ export { db }
 */
 
 // - Database authorize
-export let firebaseAuth = firebase.auth()
-// export const currentUser = firebaseAuth.currentUser
+export let firebaseAuth = firebase.auth
+export let currentUser = firebaseAuth().currentUser
 // export let functions = firebase.functions()
 // export let firebaseRef = firebaseDb().ref()
 

@@ -63,6 +63,17 @@
       >Delete User</v-ons-button>
     </div>
 
+    <div class="toJSONButton">
+      <v-ons-button
+        class="toJSON__button"
+        name="toJSONButton"
+        modifier="large"
+        :disabled="false"
+        ripple="true"
+        @click.prevent="toJSON"
+      >User JSON</v-ons-button>
+    </div>
+
     <v-ons-fab
       class="alertScript"
       position="bottom right"
@@ -151,6 +162,9 @@ export default {
     },
     deleteUser() {
       this.$store.dispatch('user/deleteUser')
+    },
+    toJSON() {
+      this.$store.dispatch('user/toJSON')
     }
   }
 }
@@ -170,6 +184,10 @@ export default {
   color: white;
 }
 .logOutButton {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.toJSONButton {
   margin-top: 10px;
   margin-bottom: 10px;
 }

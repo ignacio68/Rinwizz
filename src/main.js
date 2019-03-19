@@ -99,7 +99,7 @@ Vue.component('the-custom-toolbar', TheCustomtoolbar) // Toolbar común
 
 let app
 
-firebaseAuth.onAuthStateChanged(user => {
+firebaseAuth().onAuthStateChanged(user => {
   console.log('Estoy en firebase.auth().onAuthStateChanged')
   if (!app) {
     app = new Vue({

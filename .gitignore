@@ -20,11 +20,11 @@ yarn-error.log*
 *.sln
 *.sw*
 
+# Private dates
+/src/components/Firebase/firebaseConfig.js
+
 # Cordova
 /src-cordova/platforms
 /src-cordova/plugins
-/src-cordova/node_modules
 /public/cordova.js
-
-# Private dates
-/src/components/Firebase/firebaseConfig.js
+/src-cordova/node_modules
