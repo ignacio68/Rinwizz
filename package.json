@@ -47,7 +47,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "vue-cli-plugin-cordova": "^2.1.2",
     "vue-cli-plugin-i18n": "^0.5.2",
-    "vue-cli-plugin-styleguidist": "^1.1.2",
+    "vue-cli-plugin-styleguidist": "^3.10.2",
     "vue-loader": "^15.6.4",
     "vue-onsenui": "^2.6.2",
     "vue-template-compiler": "^2.6.7"

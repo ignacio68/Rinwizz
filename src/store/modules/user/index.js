@@ -76,7 +76,7 @@ export default {
      * @param {*} dispatch
      * @param {Object} registerUser - datos a añadir al nuevo usuario
      */
-    signUpUser({ commit, dispatch, state }, registerUser) {
+    async signUpUser({ commit, dispatch, state }, registerUser) {
       console.log('Estoy en signUserUp')
       commit('shared/setActionPass', false, { root: true })
       /**
@@ -85,18 +85,20 @@ export default {
        * @param {String} registerUser.email - email del usuario
        * @param {String} registerUser.password - password del usuario
        */
-      firebaseAuth()
-        .createUserWithEmailAndPassword(
+      try {
+        const result = await firebaseAuth().createUserWithEmailAndPassword(
           registerUser.email,
           registerUser.password
         )
-        .then(firebaseUser => {
+        console.log('El resultado de la autenticación es: ' + result)
+        const { firebaseUser } = result
+        if (firebaseUser) {
           console.log('Estoy dentro de createUserWithEmailAndPassword')
           console.log(firebaseUser)
           commit('shared/setActionPass', true, { root: true })
 
           // Añadimos los datos del nuevo usuario
-          let newUser = {
+          const newUser = {
             _id: firebaseUser.user.uid,
             email: firebaseUser.user.email,
             password: registerUser.password,
@@ -110,7 +112,6 @@ export default {
             creationDate: firebaseUser.user.metadata.creationTime,
             lastSignInDate: firebaseUser.user.metadata.LastSignInTime
           }
-
           // Llamamos a 'setUser' para crear el nuevo usuario localmente
           commit('setUser', newUser)
           console.log('Hay un nuevo usuario: ' + state.user.name)
@@ -121,11 +122,13 @@ export default {
           // Añadimos los datos a la base de datos (Realtime Database)
           // NOTA: Por el momento se desactiva
           // dispatch('createUserDb', newUser)
-        })
-        .catch(error => {
-          console.log('signUserUp error' + error)
-          commit('shared/setActionPass', false, { root: true })
-        })
+        } else {
+          console.log('Error de autenticación')
+        }
+      } catch (error) {
+        console.log('signUserUp error' + error)
+        commit('shared/setActionPass', false, { root: true })
+      }
     },
 
     /**
@@ -462,10 +465,10 @@ export default {
     /**
      * Mostramos los datos del usuario en formato JSON
      */
-    toJSON ({ state }) {
+    toJSON({ state }) {
       let currentUser = firebaseAuth().currentUser
       const userDato = currentUser.toJSON()
-      console.log ('Dato del usuario: ' + state.user.lastSignInDate)
+      console.log('Dato del usuario: ' + state.user.lastSignInDate)
     }
   }
 }
