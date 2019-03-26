@@ -68,6 +68,11 @@ export default {
       console.log('credential es: ' + credential)
     }
   },
+  /**
+   * TODO:
+   * 1. Convertir todas las acciones con firebasea async/await
+   * 2. El resto de acciones convertirlas en Promise
+   */
   actions: {
     /**
      * Nuevo usuario
@@ -76,12 +81,14 @@ export default {
      * @param {*} dispatch
      * @param {Object} registerUser - datos a añadir al nuevo usuario
      */
-    async signUpUser({ commit, dispatch, state }, registerUser) {
+
+    // FIXME: desarrollar correctamente async y el catcher de errores.
+    async signUpUser ({ commit, dispatch, state }, registerUser) {
       console.log('Estoy en signUserUp')
       commit('shared/setActionPass', false, { root: true })
       /**
        * Crea el nuevo usuario en Firebase
-       * prett
+       *
        * @param {String} registerUser.email - email del usuario
        * @param {String} registerUser.password - password del usuario
        */
@@ -212,7 +219,7 @@ export default {
       console.log('Estoy en getCredential')
       let currentUser = firebaseAuth().currentUser
       const idToken = currentUser.getIdToken()
-      console.log ('El idToken es: ' + idToken)
+      console.log('El idToken es: ' + idToken)
       const providerId = state.user.providerId
 
       switch (providerId) {
@@ -472,3 +479,65 @@ export default {
     }
   }
 }
+
+/**
+ * Nuevo usuario
+ *
+ * @param {*} commit
+ * @param {*} dispatch
+ * @param {Object} registerUser - datos a añadir al nuevo usuario
+ */
+/*
+    signUpUser({ commit, dispatch, state }, registerUser) {
+      console.log('Estoy en signUserUp')
+      commit('shared/setActionPass', false, { root: true })
+      */
+/**
+ * Crea el nuevo usuario en Firebase
+ * prett
+ * @param {String} registerUser.email - email del usuario
+ * @param {String} registerUser.password - password del usuario
+ */
+/*
+      firebaseAuth()
+        .createUserWithEmailAndPassword(
+          registerUser.email,
+          registerUser.password
+        )
+        .then(firebaseUser => {
+          console.log('Estoy dentro de createUserWithEmailAndPassword')
+          console.log(firebaseUser)
+          commit('shared/setActionPass', true, { root: true })
+
+          // Añadimos los datos del nuevo usuario
+          let newUser = {
+            _id: firebaseUser.user.uid,
+            email: firebaseUser.user.email,
+            password: registerUser.password,
+            name: registerUser.name,
+            phone: firebaseUser.user.phoneNumber,
+            isVerified: firebaseUser.user.emailVerified,
+            isAnonymous: firebaseUser.user.isAnonymous,
+            avatar: firebaseUser.user.photoURL,
+            providerData: firebaseUser.user.providerData,
+            providerId: firebaseUser.user.providerData[0].providerId,
+            creationDate: firebaseUser.user.metadata.creationTime,
+            lastSignInDate: firebaseUser.user.metadata.LastSignInTime
+          }
+
+          // Llamamos a 'setUser' para crear el nuevo usuario localmente
+          commit('setUser', newUser)
+          console.log('Hay un nuevo usuario: ' + state.user.name)
+          console.log('Password: ' + state.user.password)
+          console.log('Se unió el: ' + state.user.creationDate)
+          console.log('El provider es: ' + state.user.providerId)
+
+          // Añadimos los datos a la base de datos (Realtime Database)
+          // NOTA: Por el momento se desactiva
+          // dispatch('createUserDb', newUser)
+        })
+        .catch(error => {
+          console.log('signUserUp error' + error)
+          commit('shared/setActionPass', false, { root: true })
+        })
+    },*/
