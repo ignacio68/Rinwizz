@@ -72,6 +72,7 @@ export default {
    * TODO:
    * 1. Convertir todas las acciones con firebasea async/await
    * 2. El resto de acciones convertirlas en Promise
+   * 3. Desarrollar la acción authError en el módulo "errors/auth"
    */
   actions: {
     /**
@@ -127,13 +128,16 @@ export default {
           console.log('El provider es: ' + state.user.providerId)
 
           // Añadimos los datos a la base de datos (Realtime Database)
-          // NOTA: Por el momento se desactiva
+          // FIXME: Por el momento se desactiva
           // dispatch('createUserDb', newUser)
         } else {
-          console.log('Error de autenticación')
+          console.log('Error: el usuario está vacio')
+          dispatch('errorsAuth/authError', 'auth/user empty', {root: true})
         }
       } catch (error) {
-        console.log('signUserUp error' + error)
+        // FIXME: errores en el mensaje de error
+        console.log('signUserUp error: ' + error)
+        dispatch('errorsAuth/authError', error, { root: true } )
         commit('shared/setActionPass', false, { root: true })
       }
     },
@@ -421,7 +425,7 @@ export default {
      * Comprueba que el nombre de usuario no existe en la base de datos
      * de nombre de usuarios -> /usersNames
      *
-     * NOTA: Refinar para hacer la comprobación en el server
+     * TODO: Hacer la comprobación en el server
      *       no en el cliente
      *
      * @param {*} dispatch
@@ -435,7 +439,7 @@ export default {
     /**
      *
      * Añade el nombre la base de datos /usersNames
-     * NOTA: REVISAR
+     * TODO: REVISAR
      *
      * @param {*} commit
      * @param {String} userName
@@ -494,7 +498,7 @@ export default {
       */
 /**
  * Crea el nuevo usuario en Firebase
- * prett
+ * 
  * @param {String} registerUser.email - email del usuario
  * @param {String} registerUser.password - password del usuario
  */

@@ -3,7 +3,8 @@ export default {
   namespaced: true,
   state: {
     loading: false,
-    error: null,
+    error: false,
+    errorMessage: '',
     actionPass: false
   },
   getters: {
@@ -32,9 +33,10 @@ export default {
      *
      * @param {String} payload - mensaje de error
      */
-    setError(state, payload) {
-      state.error = payload
-      console.log('el error es: ' + state.error.message)
+    setError(state, errorMessage) {
+      state.error = true
+      state.errorMessage = errorMessage
+      console.log('el error es: ' + state.errorMessage)
     },
     /**
      * Resetea los errores , el payload debe ser 'null'
