@@ -11,6 +11,7 @@ export default {
   namespaced: true,
   state: {
     user: null,
+    authError: {},
     credential: '',
     /**
      * Creamos el objeto ActionCodeSettings que proporciona instrucciones a Firebase
@@ -87,6 +88,7 @@ export default {
     async signUpUser ({ commit, dispatch, state }, registerUser) {
       console.log('Estoy en signUserUp')
       commit('shared/setActionPass', false, { root: true })
+      commit('shared/clearError', false, { root: true })
       /**
        * Crea el nuevo usuario en Firebase
        *
@@ -131,13 +133,16 @@ export default {
           // FIXME: Por el momento se desactiva
           // dispatch('createUserDb', newUser)
         } else {
-          console.log('Error: el usuario está vacio')
-          dispatch('errorsAuth/authError', 'auth/user empty', {root: true})
+          state.authError.errorCode = error.code
+          state.authError.errorMessage = error.message
+          console.log('createUserWithEmailAndPassword error: ' + state.authError.errorMessage)
+          dispatch('authErrors/authError', 'auth/user-empty', {root: true})
         }
       } catch (error) {
-        // FIXME: errores en el mensaje de error
-        console.log('signUserUp error: ' + error)
-        dispatch('errorsAuth/authError', error, { root: true } )
+        state.authError.errorCode = error.code
+        state.authError.errorMessage = error.message
+        console.log('signUserUp error: ' + state.authError.errorMessage)
+        dispatch('authErrors/authError', state.authError, { root: true } )
         commit('shared/setActionPass', false, { root: true })
       }
     },

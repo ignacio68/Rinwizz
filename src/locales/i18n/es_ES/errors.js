@@ -1,12 +1,17 @@
 export default {
   auth: {
-    invalidDisplayName: 'texto no válido',
-    invalidEmail: 'email no válido',
-    invalidPassword: 'password no válido',
-    invalidPhoneNumber: 'número de teléfono no válido',
-    invalidPhotoUrl: 'nombre de imágen no válido',
-    emailAlreadyExist: 'el email ya existe',
-    phoneNumberAlreadyExist: 'el número de teléfono ya existe',
-    userNotFound: 'usuario no encontrado'
-  }
+    emailAlreadyInUse: 'El email ya existe',
+    invalidEmail: 'El email no es válido',
+    weakPassword: 'El password debe de tener 6 caracteres mínimo',
+    userEmpty: 'Los datos del usuario están vacíos',
+    internalError: 'Error interno'
+  },
+  user: {
+    invalidDisplayName: 'invalid text',
+    invalidPhoneNumber: 'invalid phone number',
+    invalidPhotoUrl: 'invalid file name',
+    phoneNumberAlreadyExist: 'phone munber already exist',
+    userNotFound: 'user not found'
+  },
+  alerts: {}
 }

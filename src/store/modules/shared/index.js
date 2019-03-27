@@ -33,10 +33,11 @@ export default {
      *
      * @param {String} payload - mensaje de error
      */
-    setError(state, errorMessage) {
-      state.error = true
-      state.errorMessage = errorMessage
-      console.log('el error es: ' + state.errorMessage)
+    setError(state, payload) {
+      state.error = payload
+      console.log('El error es: ' + state.error)
+      // state.errorMessage = errorMessage
+      // console.log('el error es: ' + state.errorMessage)
     },
     /**
      * Resetea los errores , el payload debe ser 'null'
@@ -45,7 +46,7 @@ export default {
      */
     clearError(state, payload) {
       state.error = payload
-      console.log('Limpio el error')
+      console.log('El error es: ' + state.error)
     },
     /**
      * Comprueba si la acción ha sido ejecutada

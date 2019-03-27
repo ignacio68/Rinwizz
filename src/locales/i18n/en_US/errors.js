@@ -1,12 +1,17 @@
 export default {
   auth: {
+    emailAlreadyInUse: 'Email already exist',
+    invalidEmail: 'Email adrress is not valid',
+    weakPassword: 'Password should be at 6 characters',
+    userEmpty: 'User is empty',
+    internalError: 'Internal error'
+  },
+  user: {
     invalidDisplayName: 'invalid text',
-    invalidEmail: 'invalid email',
-    invalidPassword: 'invalid password',
     invalidPhoneNumber: 'invalid phone number',
     invalidPhotoUrl: 'invalid file name',
-    emailAlreadyExist: 'email already exist',
     phoneNumberAlreadyExist: 'phone munber already exist',
     userNotFound: 'user not found'
-  }
+  },
+  alerts: {}
 }
