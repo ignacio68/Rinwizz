@@ -3,21 +3,29 @@
     <the-custom-toolbar
       class="customToolbar"
       :pageTitle="$t('lang.pages.login.toolbar.title')"
-      :backLabel="volver">
+      :backLabel="volver"
+    >
     </the-custom-toolbar>
     <div class="container">
 
-<!-------------------- LOG IN FORM ------------------------------------------------>
+      <!-------------------- LOG IN FORM ------------------------------------------------>
 
-      <form class="form" autocomplete="off">
+      <form
+        class="form"
+        autocomplete="off"
+      >
         <v-ons-list class="form-list">
           <!-- EMAIL INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
               <v-ons-icon
                 icon="ion-ios-email, material:zmdi-email"
-                class="list-item__icon">
+                class="list-item__icon"
+              >
               </v-ons-icon>
             </div>
             <div class="center">
@@ -34,13 +42,17 @@
             </div>
           </v-ons-list-item>
 
-           <!-- PASSWORD INPUT -->
-           
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <!-- PASSWORD INPUT -->
+
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
               <v-ons-icon
                 icon="ion-locked, material:zmdi-lock"
-                class="list-item__icon">
+                class="list-item__icon"
+              >
               </v-ons-icon>
             </div>
             <div class="center">
@@ -58,38 +70,47 @@
               >
               </v-ons-input>
               <div class="right">
-              <v-ons-icon v-if="!passwordVisible"
-                icon="ion-eye-disabled, material:zmdi-eye-off"
-                class="list-item__icon"
-                @click.prevent="togglePassword">
-              </v-ons-icon>
-              <v-ons-icon v-if="passwordVisible"
-                icon="ion-eye, material:zmdi-eye"
-                class="list-item__icon"
-                @click.prevent="togglePassword">
-              </v-ons-icon>
+                <v-ons-icon
+                  v-if="!passwordVisible"
+                  icon="ion-eye-disabled, material:zmdi-eye-off"
+                  class="list-item__icon"
+                  @click.prevent="togglePassword"
+                >
+                </v-ons-icon>
+                <v-ons-icon
+                  v-if="passwordVisible"
+                  icon="ion-eye, material:zmdi-eye"
+                  class="list-item__icon"
+                  @click.prevent="togglePassword"
+                >
+                </v-ons-icon>
+              </div>
             </div>
-            </div>
+          </v-ons-list-item>
+
+          <!-- ERROR -->
+
+          <v-ons-list-item>
+            <p
+              v-if="isError"
+              class="error"
+            >{{ errorMessage }}</p>
           </v-ons-list-item>
 
           <!-- FORGOT PASSWORD -->
 
           <v-ons-list-item class="text__button">
-            <p class="forgotPassword"
-              @click.prevent="onForgotPassword">
+            <p
+              class="forgotPassword"
+              @click.prevent="onForgotPassword"
+            >
               {{ $t('lang.pages.login.main.text1') }}
             </p>
-          </v-ons-list-item>
-
-        <!-- ERROR -->
-
-          <v-ons-list-item>
-            <p v-if="error" class="error">{{ $t('lang.errors.auth.invalidDisplayName') }}</p>
           </v-ons-list-item>
         </v-ons-list>
       </form>
 
-<!---------------------------END FORM -------------------------------------------------->
+      <!---------------------------END FORM -------------------------------------------------->
 
       <!-- BUTTON LOGIN -->
 
@@ -103,10 +124,38 @@
         {{ $t('lang.pages.login.button')}}
       </v-ons-button>
 
+      <!------ LOGIN WITH SOCIAL BUTTONS ------>
+
+      <div class="socialText">
+        <p class="socialButtons__text">{{ $t('lang.pages.login.main.socialText') }}</p>
+        <v-ons-row class="socialButtons__list">
+          <!--sign-up-button
+	          class="socialButtonsList__item-button"
+	          :name="socialButton.name"
+	          :index="$index"
+	          :icon="socialButton.icons"
+	          :style="{ backgroundColor: socialButton.color }"
+	          @socialButtonEvent="socialLogIn($index)"
+          /-->
+          <circle-button
+            v-for="(socialButton, $index) in socialButtons"
+            :key="socialButton.id"
+            class="socialButtons__list-button"
+            :name="socialButton.name"
+            :index="$index"
+            :icon="socialButton.icons"
+            :style="{ backgroundColor: socialButton.color }"
+            @socialButtonEvent="socialLogIn($index)"
+          />
+        </v-ons-row>
+      </div>
+
       <!-- SIGNUP BUTTON -->
       <div>
-        <p class="text__button"
-          @click.prevent="toSignUp">
+        <p
+          class="text__button"
+          @click.prevent="toSignUp"
+        >
           {{ $t('lang.pages.login.main.text2') }}
         </p>
       </div>
@@ -116,64 +165,99 @@
 </template>
 
 <script>
-  import SignUp from './SignUp'
-  export default {
-    name: 'log-in',
-    data () {
-      return {
-        volver: '',
-        email: '',
-        password: '',
-        type: 'password',
-        passwordVisible: false
-      }
-    }, 
-    created () {
-      console.log('Estoy en LogIn.created')
-      // this.$store.commit('navigator/pop')
+import SignUp from './SignUp'
+import CircleButton from '../../components/Shared/CircleButton'
+export default {
+  name: 'log-in',
+  components: {
+    CircleButton
+  },
+  data() {
+    return {
+      volver: '',
+      email: '',
+      password: '',
+      type: 'password',
+      passwordVisible: false
+    }
+  },
+  created() {
+    console.log('Estoy en LogIn.created')
+    // this.$store.commit('navigator/pop')
+  },
+  mounted() {
+    console.log('Estoy en LogIn.mounted')
+  },
+  computed: {
+    socialButtons() {
+      // TODO: revisar para llamar directamente al state
+      return this.$store.getters['social/socialButtons']
     },
-    mounted () {
-      console.log('Estoy en LogIn.mounted')
+    isError() {
+      // TODO: revisar para llamar directamente al state
+      return this.$store.getters['shared/error']
     },
-    computed: {
-      error () {
-        return this.$store.getters['shared/error']
-      },
-      buttonActive () {
-        if (this.email.length >= 6 && this.password.length >= 8) {
-          return false
-        } else {
-          return true
-        }
-      }
+    errorMessage() {
+      return this.$store.getters['authErrors/errorMessage']
     },
-    methods: {
-      onLognIn () {
-        console.log('Estoy en onLognIn')
-        this.$store.dispatch('user/logInUser', {
-          email: this.email,
-          password: this.password
-        })
-      },
-      togglePassword () {
-        this.type = this.type === 'password' ? 'text' : 'password'
-        // IMPORTANTE: añadir $el para que funcione setAttribute
-        this.$refs.passwordInput.$el.setAttribute('type', this.type)
-        this.passwordVisible = !this.passwordVisible
-      },
-      onForgotPassword () {
-        console.log('He olvidado la contraseña')
-      },
-      toSignUp () {
-        this.$store.commit('navigator/replace', SignUp)
+    buttonActive() {
+      if (this.email.length >= 6 && this.password.length >= 8) {
+        return false
+      } else {
+        return true
       }
     }
+  },
+  methods: {
+    onLognIn() {
+      console.log('Estoy en onLognIn')
+      this.$store.dispatch('user/logInUser', {
+        email: this.email,
+        password: this.password
+      })
+    },
+    togglePassword() {
+      this.type = this.type === 'password' ? 'text' : 'password'
+      // IMPORTANTE: añadir $el para que funcione setAttribute
+      this.$refs.passwordInput.$el.setAttribute('type', this.type)
+      this.passwordVisible = !this.passwordVisible
+    },
+    onForgotPassword() {
+      console.log('He olvidado la contraseña')
+    },
+    toSignUp() {
+      this.$store.commit('navigator/replace', SignUp)
+    },
+    socialLogIn(index) {
+      this.$store.dispatch('social/dispatchLogUp', index)
+    }
   }
+}
 </script>
 
 <style scoped>
-  .text__button {
-    border: 1px solid pink;
-    height: 50px;
-  }
+.text__button {
+  border: 1px solid pink;
+  height: 50px;
+}
+.socialButtons__text {
+  text-align: center;
+}
+.socialButtons__list {
+  background-color: #eee;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+  border: 1px, solid, blue;
+}
+.socialButtons__list-button {
+  display: inline;
+  padding: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px, solid, red;
+}
+.error {
+  color: red;
+}
 </style>

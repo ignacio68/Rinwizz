@@ -45,7 +45,8 @@ export default {
       text2: 'Necesito una cuenta',
       text3: 'Al registrarte aceptas nuestros {terms} y la {privacy}',
       terms: 'Términos de Uso',
-      privacy: 'Política de Privacidad'
+      privacy: 'Política de Privacidad',
+      socialText: 'Prefiero entrar con'
     },
     input: {
       email: 'email',

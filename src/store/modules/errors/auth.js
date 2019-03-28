@@ -56,6 +56,21 @@ export default {
           commit('setErrorMessage', message)
           break
         }
+        case 'auth/user-disabled': {
+          const message = i18n.t('lang.errors.auth.userDisabled')
+          commit('setErrorMessage', message)
+          break
+        }
+        case 'auth/user-not-found': {
+          const message = i18n.t('lang.errors.auth.userNotFound')
+          commit('setErrorMessage', message)
+          break
+        }
+        case 'auth/wrong-password': {
+          const message = i18n.t('lang.errors.auth.wrongPassword')
+          commit('setErrorMessage', message)
+          break
+        }
         default: {
           const message = i18n.t('lang.errors.auth.internalError')
           commit('setErrorMessage', message)

@@ -4,6 +4,9 @@ export default {
     invalidEmail: 'El email no es válido',
     weakPassword: 'El password debe de tener 6 caracteres mínimo',
     userEmpty: 'Los datos del usuario están vacíos',
+    userDisabled: 'El usuario está desactivado',
+    userNotFound: 'El email no corresponde a mimgún usuario',
+    wrongPassword: 'Error en el password',
     internalError: 'Error interno'
   },
   user: {

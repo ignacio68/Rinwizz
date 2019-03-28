@@ -188,7 +188,6 @@ export default {
      * Datos del usuario
      */
     return {
-      // isActive: false, // Activa el PreLoaders
       name: '',
       email: '',
       password: '',

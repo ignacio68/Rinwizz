@@ -1,7 +1,8 @@
 export default {
   welcome: {
     header: 'WELCOME TO RINWIZZ',
-    text: 'in RINWIZZ You can receive advices and alerts from your favorites sites!',
+    text:
+      'in RINWIZZ You can receive advices and alerts from your favorites sites!',
     text1: 'Tickets for events',
     text2: 'Free tables in restaurans',
     text3: 'Specials prices in stores',
@@ -45,7 +46,8 @@ export default {
       text2: 'I need a user account',
       text3: 'When you sign up you accept our {terms} & {privacy}',
       terms: 'Terms of use',
-      privacy: 'Privacy Policity'
+      privacy: 'Privacy Policity',
+      socialText: 'I prefer login with'
     },
     button: 'LOG IN'
   },

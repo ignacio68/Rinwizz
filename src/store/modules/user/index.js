@@ -12,7 +12,7 @@ export default {
   state: {
     user: null,
     authError: {},
-    credential: '',
+    credential: {},
     /**
      * Creamos el objeto ActionCodeSettings que proporciona instrucciones a Firebase
      * para comunicarse por email con el usuario
@@ -100,27 +100,26 @@ export default {
           registerUser.email,
           registerUser.password
         )
-        console.log('El resultado de la autenticación es: ' + result)
-        const { firebaseUser } = result
-        if (firebaseUser) {
+        const { user } = result
+        if (user) {
           console.log('Estoy dentro de createUserWithEmailAndPassword')
-          console.log(firebaseUser)
+          console.log(user)
           commit('shared/setActionPass', true, { root: true })
 
           // Añadimos los datos del nuevo usuario
           const newUser = {
-            _id: firebaseUser.user.uid,
-            email: firebaseUser.user.email,
+            id: user.uid,
+            email: user.email,
             password: registerUser.password,
             name: registerUser.name,
-            phone: firebaseUser.user.phoneNumber,
-            isVerified: firebaseUser.user.emailVerified,
-            isAnonymous: firebaseUser.user.isAnonymous,
-            avatar: firebaseUser.user.photoURL,
-            providerData: firebaseUser.user.providerData,
-            providerId: firebaseUser.user.providerData[0].providerId,
-            creationDate: firebaseUser.user.metadata.creationTime,
-            lastSignInDate: firebaseUser.user.metadata.LastSignInTime
+            phone: user.phoneNumber,
+            isVerified: user.emailVerified,
+            isAnonymous: user.isAnonymous,
+            avatar: user.photoURL,
+            providerData: user.providerData,
+            providerId: user.providerData[0].providerId,
+            creationDate: user.metadata.creationTime,
+            lastSignInDate: user.metadata.LastSignInTime
           }
           // Llamamos a 'setUser' para crear el nuevo usuario localmente
           commit('setUser', newUser)
@@ -133,16 +132,13 @@ export default {
           // FIXME: Por el momento se desactiva
           // dispatch('createUserDb', newUser)
         } else {
-          state.authError.errorCode = error.code
-          state.authError.errorMessage = error.message
-          console.log('createUserWithEmailAndPassword error: ' + state.authError.errorMessage)
-          dispatch('authErrors/authError', 'auth/user-empty', {root: true})
+          dispatch('authErrors/authError', 'auth/user-empty', { root: true })
         }
       } catch (error) {
         state.authError.errorCode = error.code
         state.authError.errorMessage = error.message
         console.log('signUserUp error: ' + state.authError.errorMessage)
-        dispatch('authErrors/authError', state.authError, { root: true } )
+        dispatch('authErrors/authError', state.authError, { root: true })
         commit('shared/setActionPass', false, { root: true })
       }
     },
@@ -153,24 +149,33 @@ export default {
      * @param {*} commit
      * @param {String} user
      */
-    logInUser({ commit }, user) {
+    async logInUser({ state, commit, dispatch }, logInUser) {
       console.log('Estoy en signUserIn')
+      commit('shared/clearError', false, { root: true })
       /* Comprueba que el usuario existe en Firebase */
-      firebaseAuth()
-        .signInWithEmailAndPassword(user.email, user.password)
-        .then(user => {
+      try {
+        const result = await firebaseAuth().signInWithEmailAndPassword(
+          logInUser.email,
+          logInUser.password
+        )
+        const { user } = result
+        if (user) {
           console.log('signUserIn user')
           const newUser = {
             id: user.uid
           }
           commit('setUser', newUser)
-          commit('navigator/push', HomePage, {
+          commit('navigator/replace', HomePage, {
             root: true
           })
-        })
-        .catch(error => {
-          console.log('logUserIn error: ' + error)
-        })
+        }
+      } catch (error) {
+        console.log('logUserIn error: ' + error)
+        state.authError.errorCode = error.code
+        state.authError.errorMessage = error.message
+        console.log('signUserUp error: ' + state.authError.errorMessage)
+        dispatch('authErrors/authError', state.authError, { root: true })
+      }
     },
 
     /**
@@ -179,8 +184,7 @@ export default {
      * @param {*} commit
      */
     logOutUser({ commit }) {
-      firebaseAuth()
-        .signOut()
+      firebaseAuth().signOut()
         .then(result => {
           commit('clearUser')
           console.log(result)
@@ -192,7 +196,7 @@ export default {
     },
 
     /**
-     * Ponemos un observador
+     * Ponemos un observador 
      */
     onAuthStateChanges() {
       firebaseAuth().onAuthstateChange(user => {
@@ -327,7 +331,7 @@ export default {
       )
       firebaseAuth()
         .sendSignInLinkToEmail(firebaseUserEmail, state.actionCodeSettings)
-        // REVISAR
+        // TODO: REVISAR
         .then(() => {
           console.log('Guardo el email: ' + firebaseUserEmail + 'en email')
           // NOTA: Utilizar LokiJS para almacenar los datos
@@ -373,7 +377,7 @@ export default {
       // console.log(userUpdated)
       // commit('setUser', userUpdated)
       const userId = state.user.id
-      // Actualizamos los datos en Firebase Realtime Database
+      // FIXME: Actualizamos los datos en Firebase Realtime Database
       firebaseDb
         .ref('users/' + userId)
         .update(userUpdated)
@@ -488,65 +492,3 @@ export default {
     }
   }
 }
-
-/**
- * Nuevo usuario
- *
- * @param {*} commit
- * @param {*} dispatch
- * @param {Object} registerUser - datos a añadir al nuevo usuario
- */
-/*
-    signUpUser({ commit, dispatch, state }, registerUser) {
-      console.log('Estoy en signUserUp')
-      commit('shared/setActionPass', false, { root: true })
-      */
-/**
- * Crea el nuevo usuario en Firebase
- * 
- * @param {String} registerUser.email - email del usuario
- * @param {String} registerUser.password - password del usuario
- */
-/*
-      firebaseAuth()
-        .createUserWithEmailAndPassword(
-          registerUser.email,
-          registerUser.password
-        )
-        .then(firebaseUser => {
-          console.log('Estoy dentro de createUserWithEmailAndPassword')
-          console.log(firebaseUser)
-          commit('shared/setActionPass', true, { root: true })
-
-          // Añadimos los datos del nuevo usuario
-          let newUser = {
-            _id: firebaseUser.user.uid,
-            email: firebaseUser.user.email,
-            password: registerUser.password,
-            name: registerUser.name,
-            phone: firebaseUser.user.phoneNumber,
-            isVerified: firebaseUser.user.emailVerified,
-            isAnonymous: firebaseUser.user.isAnonymous,
-            avatar: firebaseUser.user.photoURL,
-            providerData: firebaseUser.user.providerData,
-            providerId: firebaseUser.user.providerData[0].providerId,
-            creationDate: firebaseUser.user.metadata.creationTime,
-            lastSignInDate: firebaseUser.user.metadata.LastSignInTime
-          }
-
-          // Llamamos a 'setUser' para crear el nuevo usuario localmente
-          commit('setUser', newUser)
-          console.log('Hay un nuevo usuario: ' + state.user.name)
-          console.log('Password: ' + state.user.password)
-          console.log('Se unió el: ' + state.user.creationDate)
-          console.log('El provider es: ' + state.user.providerId)
-
-          // Añadimos los datos a la base de datos (Realtime Database)
-          // NOTA: Por el momento se desactiva
-          // dispatch('createUserDb', newUser)
-        })
-        .catch(error => {
-          console.log('signUserUp error' + error)
-          commit('shared/setActionPass', false, { root: true })
-        })
-    },*/
