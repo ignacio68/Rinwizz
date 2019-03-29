@@ -147,7 +147,7 @@ export default {
 
     /**
      * Enviamos un email de confirmación de la cuenta de usuario
-     * 
+     *
      * @param {Object} actionCodeSettings - parametros necesarios para enviar el email de confirmación
      */
     sendEmailVerification({ state, commit, dispatch }, actionCodeSettings) {

@@ -25,11 +25,10 @@ export default {
   actions: {
     /**
      * Manejo de los errores de autenticación
-     * TODO:
-     * 1. Terminar de completar e internacionalizar
      *
-     * @param {String} errorCode - Código de error de Firebase
+     * @param {String} errorCode Código de error de Firebase
      */
+    // TODO: Terminar de completar e internacionalizar
     authError({ state, commit }, error) {
       const errorCode = error.errorCode
       console.log('Estoy en authError')
@@ -76,7 +75,6 @@ export default {
           commit('setErrorMessage', message)
         }
       }
-      // const message = state.errorMessage
       commit('shared/setError', true, { root: true })
     }
   }
