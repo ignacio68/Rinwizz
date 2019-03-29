@@ -1,3 +1,3 @@
-export const SETUSER = 'SETUSER'
-export const CLEARUSER = 'CLEARUSER'
-export const SETCREDENTIAL = 'SETCREDENTIAL'
+export const SET_USER = 'SETUSER'
+export const CLEAR_USER = 'CLEARUSER'
+export const SET_CREDENTIAL = 'SETCREDENTIAL'
