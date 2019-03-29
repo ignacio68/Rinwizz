@@ -127,7 +127,9 @@ export default {
           console.log('Password: ' + state.user.password)
           console.log('Se unió el: ' + state.user.creationDate)
           console.log('El provider es: ' + state.user.providerId)
-
+          // Enviamos el email de confirmación
+          const actionCodeSettings = state.actionCodeSettings
+          dispatch('sendEmailVerification', actionCodeSettings)
           // Añadimos los datos a la base de datos (Realtime Database)
           // FIXME: Por el momento se desactiva
           // dispatch('createUserDb', newUser)
@@ -141,6 +143,46 @@ export default {
         dispatch('authErrors/authError', state.authError, { root: true })
         commit('shared/setActionPass', false, { root: true })
       }
+    },
+
+    /**
+     * Enviamos un email de confirmación de la cuenta de usuario
+     * 
+     * @param {Object} actionCodeSettings - parametros necesarios para enviar el email de confirmación
+     */
+    sendEmailVerification({ state, commit, dispatch }, actionCodeSettings) {
+      console.log('Estoy en sendEmailVerification')
+      commit('shared/clearError', false, { root: true })
+      const currentUser = firebaseAuth().currentUser
+      if (currentUser) {
+        currentUser
+          .sendEmailVerification(actionCodeSettings)
+          .then(() => {
+            console.log('email enviado')
+          })
+          .catch(error => {
+            state.authError.errorCode = error.code
+            state.authError.errorMessage = error.message
+            dispatch('authErrors/authError', state.authError, { root: true })
+        })
+      } else {
+        dispatch('authErrors/authError', 'auth/user-empty', { root: true })
+      }
+    },
+
+    applyActionCode({state, commit, dispatch}, code) {
+      console.log('Estoy en sendEmailVerification')
+      commit('shared/clearError', false, { root: true })
+      firebaseAuth.applyActionCode(code)
+        .then(() => {
+          console.log('codigo de verificación')
+        })
+        .catch(error => {
+          // TODO: Revisar los codigos de error y añadir a locales
+          state.authError.errorCode = error.code
+          state.authError.errorMessage = error.message
+          dispatch('authErrors/authError', state.authError, { root: true })
+      })
     },
 
     /**
@@ -196,9 +238,9 @@ export default {
     },
 
     /**
-     * Ponemos un observador 
+     * Ponemos un observador
      */
-    onAuthStateChanges() {
+    onAuthStateChange() {
       firebaseAuth().onAuthstateChange(user => {
         if (user) {
           console.log(user)
@@ -277,7 +319,7 @@ export default {
      */
     reauthenticateUser({ state, dispatch }) {
       console.log('Estoy en reauthenticateUser')
-      let currentUser = firebaseAuth().currentUser
+      const currentUser = firebaseAuth().currentUser
       let credential = state.credential
       currentUser
         .reauthenticateAndRetrieveDataWithCredential(credential)
@@ -294,7 +336,7 @@ export default {
      */
     deleteFirebaseUserAccount({ commit }) {
       console.log('Estoy en deleteFirebaseUserAccount')
-      let currentUser = firebaseAuth().currentUser
+      const currentUser = firebaseAuth().currentUser
       // dispatch('getCredential')
       currentUser
         .delete()
@@ -324,7 +366,7 @@ export default {
      * @param {*} state
      * @param {String} firebaseUserEmail - email del usuario donde se le envía el mensaje de confirmación
      */
-    confirmPassword({ commit, state }, firebaseUserEmail) {
+    confirmPassword({ state }, firebaseUserEmail) {
       console.log(
         'Estoy enviando el email de comprobacion de password a: ' +
           firebaseUserEmail
@@ -357,6 +399,80 @@ export default {
         creationDate: user.metadata.creationTime,
         lastSignInDate: user.metadata.LastSignInTime
       })
+    },
+
+    /**
+     * Resetea el password del usuario
+     *
+     * @param {String} email - email del usuario
+     */
+    resetPassword({ state, commit, dispatch }, email) {
+      console.log('resetPassword')
+      commit('shared/clearError', false, { root: true })
+      firebaseAuth()
+        .sendPasswordResetEmail(email).then(() => {
+          console.log('enviado password al email: ' + email)
+        })
+        .catch(error => {
+          dispatch('authErrors/authError', state.authError, { root: true })
+          console.log('resetPassword: ' + error)
+        })
+    },
+
+    /**
+     * Confirmación del reseteo del password
+     *
+     * @param {String} code - codigo para poder resetear
+     * @param {String} password - nuevo password
+     */
+    // TODO: Añadir los código de errores en locales
+    confirmPasswordReset({ state, commit, dispatch }, { code, password }) {
+      console.log('confirmPasswordReset')
+      commit('shared/clearError', false, { root: true })
+      firebaseAuth()
+        .confirmPasswordReset(code, password).then(() => {
+          console.log('Confirmado el reseteo del password')
+        })
+        .catch(error => {
+          state.authError.errorCode = error.code
+          state.authError.errorMessage = error.message
+          console.log('confirmPasswordReset error: ' + state.authError.errorMessage)
+          dispatch('authErrors/authError', state.authError, { root: true })
+        })
+    },
+
+    /**
+     * Verifica que el código de reseteo es válido
+     * 
+     * @param {String} code Código de verificación
+     */
+    // TODO: Añadir los código de errores en locales
+    verifyPasswordResetCode({ state, commit, dispatch }, code) {
+      console.log('verifyPasswordResetCode')
+      commit('shared/clearError', false, { root: true })
+      firebaseAuth().verifyPasswordResetCode(code)
+        .then(() => {
+          console.log('verificado el código de reseteo del password')
+        })
+        .catch(error => {
+          state.authError.errorCode = error.code
+          state.authError.errorMessage = error.message
+          console.log('verifyPasswordResetCode error: ' + state.authError.errorMessage)
+          dispatch('authErrors/authError', state.authError, { root: true })
+        })
+    },
+
+    // TODO: desarrollar los updates
+    updateEmail(email) {
+      
+    },
+
+    updatePassword(password) {
+
+    },
+    
+    updateProfile({ displayName, photoURL }) {
+      
     },
 
     /**

@@ -7,6 +7,7 @@ import navigator from './modules/navigator'
 import shared from './modules/shared'
 import social from './modules/social'
 import user from './modules/user'
+import userDb from './modules/userDb'
 // import { errors } from './modules/errors'
 
 import authErrors from './modules/errors/auth'
@@ -21,6 +22,7 @@ export const store = new Vuex.Store({
     shared,
     social,
     user,
+    userDb,
     authErrors
   }
 })

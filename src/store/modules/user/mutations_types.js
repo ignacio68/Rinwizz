@@ -1,0 +1,3 @@
+export const SETUSER = 'SETUSER'
+export const CLEARUSER = 'CLEARUSER'
+export const SETCREDENTIAL = 'SETCREDENTIAL'
