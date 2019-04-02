@@ -1,3 +1,4 @@
+<!-- ELIMINAR SI NO SE UTILIZA -->
 <template>
   <p>{{ $t('hello') }}</p>
 </template>

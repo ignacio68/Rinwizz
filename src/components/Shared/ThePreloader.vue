@@ -1,3 +1,4 @@
+<!-- ELIMINAR SI NO SE UTILIZA - BORRAR V-ONS-PROGRESS-BAR DE MAIN.JS -->
 <template>
   <div
     class="loader-wrapper"

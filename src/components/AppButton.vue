@@ -1,3 +1,4 @@
+<!-- REVISAR SI SE UTILIZA PARA CAMBIAR EL TAG A V-ONS-BUTTON -->
 <template>
   <button :style="styles" @click="handleClick">
     <!-- @slot Use this slot to place the button content -->
