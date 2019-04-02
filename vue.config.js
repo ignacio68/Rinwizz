@@ -1,3 +1,6 @@
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
+
 module.exports = {
   publicPath: '',
   pluginOptions: {
@@ -8,5 +11,8 @@ module.exports = {
       localeDir: 'locales',
       enableInSFC: true
     }
+  },
+  configureWebpack: {
+    plugins: [new BundleAnalyzerPlugin()]
   }
 }
