@@ -19,7 +19,7 @@ import 'onsenui/css/onsen-css-components.css'
  * Import Dependencies
  */
 import Vue from 'vue'
-import VueOnsen from 'vue-onsenui'
+// import VueOnsen from 'vue-onsenui'
 
 /**
  * Import Firebase
@@ -48,7 +48,7 @@ import i18n from './i18n'
  */
 import VueTimers from 'vue-timers'
 
-/* Cuando se utiliza ESM
+/* Cuando se utiliza ESM */
 import VueOnsen from 'vue-onsenui/esm'
 import 'onsenui/esm/elements/ons-page'
 import 'onsenui/esm/elements/ons-navigator'
@@ -57,12 +57,18 @@ import 'onsenui/esm/elements/ons-col'
 import 'onsenui/esm/elements/ons-row'
 import 'onsenui/esm/elements/ons-button'
 import 'onsenui/esm/elements/ons-list'
+import 'onsenui/esm/elements/ons-list-header'
 import 'onsenui/esm/elements/ons-list-item'
 import 'onsenui/esm/elements/ons-icon'
 import 'onsenui/esm/elements/ons-input'
 import 'onsenui/esm/elements/ons-alert-dialog'
 import 'onsenui/esm/elements/ons-alert-dialog-button'
-*/
+import 'onsenui/esm/elements/ons-card'
+import 'onsenui/esm/elements/ons-select'
+import 'onsenui/esm/elements/ons-toolbar'
+import 'onsenui/esm/elements/ons-back-button'
+import 'onsenui/esm/elements/ons-fab'
+import 'onsenui/esm/elements/ons-progress-circular' // TODO: REVISAR SU UTILIZACION
 
 import AppNavigator from './AppNavigator'
 
