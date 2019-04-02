@@ -73,7 +73,7 @@ export default {
      *
      * @param {String} provider - Red Social utilizada
      */
-    socialSignUp({ commit }, provider) {
+    socialSignUp({ commit, dispatch }, provider) {
       // provider.addScope('public_profile')
       firebaseAuth().useDeviceLanguage
       // NOTA: desarrollar un método para según el device elegir un método de acceso
@@ -104,9 +104,8 @@ export default {
             .catch(error => {
               commit('shared/setLoading', false, { root: true })
               // commit('setError', error)
-              let errorCode = error.code
-              commit('errors/auth/authError', errorCode)
-              console.log(errorCode)
+              dispatch('authErrors/authError', error.code, { root: true })
+              console.log('socialSignUp error es: ' + error.code)
             })
         })
     }

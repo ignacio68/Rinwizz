@@ -19,7 +19,7 @@ export default {
     actionCodeSettings: {
       // URL you want to redirect back to. The domain (www.example.com) for this
       // URL must be whitelisted in the Firebase Console.
-      url: 'https://localhost:8080',
+      url: 'http://localhost:8080',
       // This must be true.
       handleCodeInApp: true,
       iOS: {
@@ -29,8 +29,14 @@ export default {
         packageName: 'com.rinwizz.android',
         installApp: true,
         minimumVersion: '19'
-      }
-    }
+      },
+      dynamicLinkDomain: 'rinwizz.page.link'
+    },
+    mode: '',
+    oobCode: '',
+    actionCode: '',
+    continueUrl: '',
+    lang: ''
   },
   getters: {
     /**
@@ -84,7 +90,7 @@ export default {
      */
 
     // FIXME: desarrollar correctamente async y el catcher de errores.
-    async signUpUser ({ commit, dispatch, state }, registerUser) {
+    async signUpUser ({ state, commit, dispatch }, registerUser) {
       console.log('Estoy en signUserUp')
       commit('shared/setActionPass', false, { root: true })
       commit('shared/clearError', null, { root: true })
@@ -128,9 +134,9 @@ export default {
           console.log('El provider es: ' + state.user.providerId)
           // Enviamos el email de confirmación
           const actionCodeSettings = state.actionCodeSettings
-          dispatch('sendEmailVerification', actionCodeSettings)
+          await dispatch('sendEmailVerification', actionCodeSettings)
           // Añadimos los datos a la base de datos (Realtime Database)
-          // FIXME: Por el momento se desactiva
+          // FIXME: Por el momento se desactiva:
           // dispatch('createUserDb', newUser)
         } else {
           dispatch('authErrors/authError', 'auth/user-empty', { root: true })
@@ -147,7 +153,7 @@ export default {
      *
      * @param {Object} actionCodeSettings - parametros necesarios para enviar el email de confirmación
      */
-    sendEmailVerification({ state, commit, dispatch }, actionCodeSettings) {
+    sendEmailVerification({ commit, dispatch }, actionCodeSettings) {
       console.log('Estoy en sendEmailVerification')
       commit('shared/clearError', null, { root: true })
       const currentUser = firebaseAuth().currentUser
@@ -159,14 +165,15 @@ export default {
           })
           .catch(error => {
             dispatch('authErrors/authError', error.code, { root: true })
-        })
+            console.log('sendEmailVerification error: ' + error.message)
+          })
       } else {
         dispatch('authErrors/authError', 'auth/user-empty', { root: true })
       }
     },
 
-    applyActionCode({state, commit, dispatch}, code) {
-      console.log('Estoy en sendEmailVerification')
+    applyActionCode({ commit, dispatch }, code) {
+      console.log('Estoy en applyActionCode')
       commit('shared/clearError', null, { root: true })
       firebaseAuth.applyActionCode(code)
         .then(() => {
@@ -175,7 +182,7 @@ export default {
         .catch(error => {
           // TODO: Revisar los codigos de error y añadir a locales
           dispatch('authErrors/authError', error.code, { root: true })
-      })
+        })
     },
 
     /**
@@ -184,7 +191,7 @@ export default {
      * @param {*} commit
      * @param {String} user
      */
-    async logInUser({ state, commit, dispatch }, logInUser) {
+    async logInUser({ commit, dispatch }, logInUser) {
       console.log('Estoy en signUserIn')
       commit('shared/clearError', null, { root: true })
       /* Comprueba que el usuario existe en Firebase */
@@ -234,6 +241,8 @@ export default {
       firebaseAuth().onAuthstateChange(user => {
         if (user) {
           console.log(user)
+        } else {
+          console.log('Error en on-authStateChange()')
         }
       })
     },
@@ -350,31 +359,6 @@ export default {
     },
 
     /**
-     * Envía un email de confirmación de password
-     *
-     * @param {*} commit
-     * @param {*} state
-     * @param {String} firebaseUserEmail - email del usuario donde se le envía el mensaje de confirmación
-     */
-    confirmPassword({ state }, firebaseUserEmail) {
-      console.log(
-        'Estoy enviando el email de comprobacion de password a: ' +
-          firebaseUserEmail
-      )
-      firebaseAuth()
-        .sendSignInLinkToEmail(firebaseUserEmail, state.actionCodeSettings)
-        // TODO: REVISAR
-        .then(() => {
-          console.log('Guardo el email: ' + firebaseUserEmail + 'en email')
-          // NOTA: Utilizar LokiJS para almacenar los datos
-          // dispatch('localDataBase/updateUserEmail', firebaseUserEmail,  { root: true } )
-        })
-        .catch(error => {
-          console.log('confirmPassword error: ' + error)
-        })
-    },
-
-    /**
      * Autoautenticación, el usuario ya está registrado
      *
      * @param {*} commit
@@ -382,12 +366,17 @@ export default {
      */
     autoSignIn({ commit }, user) {
       console.log('Estoy en autoSignIn')
+      // const currentUser = firebaseAuth().currentUser
       commit('setUser', {
         id: user.uid,
         email: user.email,
+        name: user.name,
         isVerified: user.emailVerified,
+        isAnonymous: user.isAnonymous,
         creationDate: user.metadata.creationTime,
-        lastSignInDate: user.metadata.LastSignInTime
+        lastSignInDate: user.metadata.LastSignInTime,
+        providerData: user.providerData,
+        providerId: user.providerData[0].providerId,
       })
     },
 
@@ -396,7 +385,7 @@ export default {
      *
      * @param {String} email - email del usuario
      */
-    resetPassword({ state, commit, dispatch }, email) {
+    resetPassword({ commit, dispatch }, email) {
       console.log('resetPassword')
       commit('shared/clearError', null, { root: true })
       firebaseAuth()
@@ -416,7 +405,7 @@ export default {
      * @param {String} password - nuevo password
      */
     // TODO: Añadir los código de errores en locales
-    confirmPasswordReset({ state, commit, dispatch }, { code, password }) {
+    confirmPasswordReset({ commit, dispatch }, { code, password }) {
       console.log('confirmPasswordReset')
       commit('shared/clearError', null, { root: true })
       firebaseAuth()
@@ -431,11 +420,11 @@ export default {
 
     /**
      * Verifica que el código de reseteo es válido
-     * 
+     *
      * @param {String} code Código de verificación
      */
     // TODO: Añadir los código de errores en locales
-    verifyPasswordResetCode({ state, commit, dispatch }, code) {
+    verifyPasswordResetCode({ commit, dispatch }, code) {
       console.log('verifyPasswordResetCode')
       commit('shared/clearError', null, { root: true })
       firebaseAuth().verifyPasswordResetCode(code)
@@ -450,15 +439,15 @@ export default {
 
     // TODO: desarrollar los updates
     updateEmail(email) {
-      
+
     },
 
     updatePassword(password) {
 
     },
-    
+
     updateProfile({ displayName, photoURL }) {
-      
+
     },
 
     /**
@@ -574,6 +563,8 @@ export default {
 
     /**
      * Comprueba si hay algún usuario conectado
+     * Se utiliza a modo de test
+     * ELIMINAR EN PRODUCCION
      */
     isActiveUser() {
       let activeUser = firebaseAuth().currentUser
@@ -588,8 +579,6 @@ export default {
      * Mostramos los datos del usuario en formato JSON
      */
     toJSON({ state }) {
-      let currentUser = firebaseAuth().currentUser
-      const userDato = currentUser.toJSON()
       console.log('Dato del usuario: ' + state.user.lastSignInDate)
     }
   }

@@ -131,12 +131,16 @@ firebaseAuth().onAuthStateChanged(user => {
           // Assume it's supported, lets localize!
           console.log('Se  puede utilizar la internacionalizacion')
           // Set app language
-          let val = navigator.language
-          if (val) {
-            // let lang = val.replace('-', '')
-            let lang = val.slice(0, 2)
+          const val = navigator.language
+          const lang = val.slice(0, 2)
+          if (lang) {
+            // const lang = val.replace('-', '')
+            // const lang = val.slice(0, 2)
             i18n.locale = lang
+            this.$store.commit('shared/setLanguage', lang)
             console.log('el lenguaje es ' + i18n.locale)
+          } else {
+            console.log('No se encuentra el idioma del navegador')
           }
         }
       },

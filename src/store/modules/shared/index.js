@@ -5,7 +5,9 @@ export default {
     loading: false,
     error: false,
     errorMessage: '',
-    actionPass: false
+    actionPass: false,
+    platform: '',
+    lang: ''
   },
   getters: {
     loading(state) {
@@ -36,8 +38,6 @@ export default {
     setError(state) {
       state.error = true
       console.log('El error es: ' + state.error)
-      // state.errorMessage = errorMessage
-      // console.log('el error es: ' + state.errorMessage)
     },
     /**
      * Resetea los errores , el payload debe ser 'null'
@@ -56,6 +56,24 @@ export default {
     setActionPass(state, payload) {
       state.actionPass = payload
       console.log('La acción ha sido ejecutada: ' + state.actionPass)
+    },
+    /**
+     *Establece la plattaforma en la que corre la app
+     *
+     * @param {String} platform
+     */
+    setPlatform(state, platform) {
+      state.platform = platform
+      console.log('La plataforma de la app es: ' + platform)
+    },
+    /**
+     * Establece el idioma del navegador
+     *
+     * @param {String} lang
+     */
+    setLanguage(state, lang) {
+      state.lang = lang
+      console.log('Se ha establecido el idioma')
     }
   },
   actions: {
@@ -64,6 +82,18 @@ export default {
      */
     clearError({ commit }) {
       commit('clearError')
+    },
+    getPlatform({ commit }) {
+      if (this.$ons.platform.isAndroid()) {
+        const platform = 'md'
+        commit('setPlatform', platform)
+      } else if (this.$ons.platform.isIphone()) {
+        const platform = 'ios'
+        commit('setPlatform', platform)
+      } else {
+        const platform = 'web'
+        commit('setPlatform', platform)
+      }
     }
   }
 }

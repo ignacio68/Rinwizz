@@ -109,14 +109,6 @@
       <div class="socialText">
         <p class="socialButtons__text">{{ $t('lang.pages.signup.main.socialText') }}</p>
         <v-ons-row class="socialButtons__list">
-          <!--sign-up-button
-	          class="socialButtonsList__item-button"
-	          :name="socialButton.name"
-	          :index="$index"
-	          :icon="socialButton.icons"
-	          :style="{ backgroundColor: socialButton.color }"
-	          @socialButtonEvent="socialLogIn($index)"
-          /-->
           <circle-button
             v-for="(socialButton, $index) in socialButtons"
             :key="socialButton.id"
@@ -215,6 +207,7 @@ export default {
       return this.$store.getters['shared/error']
     },
     errorMessage() {
+      // TODO: revisar para llamar directamente al state
       return this.$store.getters['authErrors/errorMessage']
     },
     loading() {
@@ -277,7 +270,7 @@ export default {
       console.log('Estoy en el botón de la alerta de confirmación de password')
       this.$store.commit('shared/setActionPass', false)
       this.$store.commit('navigator/replace', Configuration)
-      this.$store.dispatch('user/confirmPassword', this.email)
+      // this.$store.dispatch('user/confirmPassword', this.email)
     }
   }
 }

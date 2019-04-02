@@ -10,11 +10,12 @@
 </template>
 
 <script>
+// TODO: REVISAR EL COMPONENTE
 export default {
   /**
    * Botón para redes sociales
    */
-  name: 'social-button',
+  name: 'circle-button',
   props: {
     /**
      * Nombre de la red social
@@ -29,7 +30,15 @@ export default {
     index: {
       type: Number,
       default: ''
-    }
+    } /*,
+    color: {
+      type: String,
+      default: ''
+    },
+    background: {
+      type: String,
+      default: ''
+    } */
   },
   methods: {
     parentMethod() {
