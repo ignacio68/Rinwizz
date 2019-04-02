@@ -19,16 +19,16 @@ export default {
     actionCodeSettings: {
       // URL you want to redirect back to. The domain (www.example.com) for this
       // URL must be whitelisted in the Firebase Console.
-      url: 'https://www.lopezamor.com',
+      url: 'https://localhost:8080',
       // This must be true.
       handleCodeInApp: true,
       iOS: {
-        bundleId: 'com.example.ios'
+        bundleId: 'com.rinwizz.ios'
       },
       android: {
-        packageName: 'com.example.android',
+        packageName: 'com.rinwizz.android',
         installApp: true,
-        minimumVersion: '12'
+        minimumVersion: '19'
       }
     }
   },
