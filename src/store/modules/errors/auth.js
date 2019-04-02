@@ -29,8 +29,7 @@ export default {
      * @param {String} errorCode Código de error de Firebase
      */
     // TODO: Terminar de completar e internacionalizar
-    authError({ state, commit }, error) {
-      const errorCode = error.errorCode
+    authError({ commit }, errorCode) {
       console.log('Estoy en authError')
       console.log('authError es: ' + errorCode)
       switch (errorCode) {

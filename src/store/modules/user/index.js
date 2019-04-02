@@ -11,7 +11,6 @@ export default {
   namespaced: true,
   state: {
     user: null,
-    authError: {},
     credential: {},
     /**
      * Creamos el objeto ActionCodeSettings que proporciona instrucciones a Firebase
@@ -62,7 +61,7 @@ export default {
       state.user = null
     },
     /**
-     * Establece la crdencial del usuario
+     * Establece la credencial del usuario
      */
     setCredential(state, credential) {
       state.credential = credential
@@ -88,7 +87,7 @@ export default {
     async signUpUser ({ commit, dispatch, state }, registerUser) {
       console.log('Estoy en signUserUp')
       commit('shared/setActionPass', false, { root: true })
-      commit('shared/clearError', false, { root: true })
+      commit('shared/clearError', null, { root: true })
       /**
        * Crea el nuevo usuario en Firebase
        *
@@ -137,10 +136,8 @@ export default {
           dispatch('authErrors/authError', 'auth/user-empty', { root: true })
         }
       } catch (error) {
-        state.authError.errorCode = error.code
-        state.authError.errorMessage = error.message
-        console.log('signUserUp error: ' + state.authError.errorMessage)
-        dispatch('authErrors/authError', state.authError, { root: true })
+        console.log('signUserUp error: ' + error.message)
+        dispatch('authErrors/authError', error.code, { root: true })
         commit('shared/setActionPass', false, { root: true })
       }
     },
@@ -152,7 +149,7 @@ export default {
      */
     sendEmailVerification({ state, commit, dispatch }, actionCodeSettings) {
       console.log('Estoy en sendEmailVerification')
-      commit('shared/clearError', false, { root: true })
+      commit('shared/clearError', null, { root: true })
       const currentUser = firebaseAuth().currentUser
       if (currentUser) {
         currentUser
@@ -161,9 +158,7 @@ export default {
             console.log('email enviado')
           })
           .catch(error => {
-            state.authError.errorCode = error.code
-            state.authError.errorMessage = error.message
-            dispatch('authErrors/authError', state.authError, { root: true })
+            dispatch('authErrors/authError', error.code, { root: true })
         })
       } else {
         dispatch('authErrors/authError', 'auth/user-empty', { root: true })
@@ -172,16 +167,14 @@ export default {
 
     applyActionCode({state, commit, dispatch}, code) {
       console.log('Estoy en sendEmailVerification')
-      commit('shared/clearError', false, { root: true })
+      commit('shared/clearError', null, { root: true })
       firebaseAuth.applyActionCode(code)
         .then(() => {
           console.log('codigo de verificación')
         })
         .catch(error => {
           // TODO: Revisar los codigos de error y añadir a locales
-          state.authError.errorCode = error.code
-          state.authError.errorMessage = error.message
-          dispatch('authErrors/authError', state.authError, { root: true })
+          dispatch('authErrors/authError', error.code, { root: true })
       })
     },
 
@@ -193,7 +186,7 @@ export default {
      */
     async logInUser({ state, commit, dispatch }, logInUser) {
       console.log('Estoy en signUserIn')
-      commit('shared/clearError', false, { root: true })
+      commit('shared/clearError', null, { root: true })
       /* Comprueba que el usuario existe en Firebase */
       try {
         const result = await firebaseAuth().signInWithEmailAndPassword(
@@ -212,11 +205,8 @@ export default {
           })
         }
       } catch (error) {
-        console.log('logUserIn error: ' + error)
-        state.authError.errorCode = error.code
-        state.authError.errorMessage = error.message
-        console.log('signUserUp error: ' + state.authError.errorMessage)
-        dispatch('authErrors/authError', state.authError, { root: true })
+        console.log('logUserIn error: ' + error.message)
+        dispatch('authErrors/authError', error.code, { root: true })
       }
     },
 
@@ -408,13 +398,13 @@ export default {
      */
     resetPassword({ state, commit, dispatch }, email) {
       console.log('resetPassword')
-      commit('shared/clearError', false, { root: true })
+      commit('shared/clearError', null, { root: true })
       firebaseAuth()
         .sendPasswordResetEmail(email).then(() => {
           console.log('enviado password al email: ' + email)
         })
         .catch(error => {
-          dispatch('authErrors/authError', state.authError, { root: true })
+          dispatch('authErrors/authError', error.code, { root: true })
           console.log('resetPassword: ' + error)
         })
     },
@@ -428,16 +418,14 @@ export default {
     // TODO: Añadir los código de errores en locales
     confirmPasswordReset({ state, commit, dispatch }, { code, password }) {
       console.log('confirmPasswordReset')
-      commit('shared/clearError', false, { root: true })
+      commit('shared/clearError', null, { root: true })
       firebaseAuth()
         .confirmPasswordReset(code, password).then(() => {
           console.log('Confirmado el reseteo del password')
         })
         .catch(error => {
-          state.authError.errorCode = error.code
-          state.authError.errorMessage = error.message
-          console.log('confirmPasswordReset error: ' + state.authError.errorMessage)
-          dispatch('authErrors/authError', state.authError, { root: true })
+          console.log('confirmPasswordReset error: ' + error.message)
+          dispatch('authErrors/authError', error.code, { root: true })
         })
     },
 
@@ -449,16 +437,14 @@ export default {
     // TODO: Añadir los código de errores en locales
     verifyPasswordResetCode({ state, commit, dispatch }, code) {
       console.log('verifyPasswordResetCode')
-      commit('shared/clearError', false, { root: true })
+      commit('shared/clearError', null, { root: true })
       firebaseAuth().verifyPasswordResetCode(code)
         .then(() => {
           console.log('verificado el código de reseteo del password')
         })
         .catch(error => {
-          state.authError.errorCode = error.code
-          state.authError.errorMessage = error.message
-          console.log('verifyPasswordResetCode error: ' + state.authError.errorMessage)
-          dispatch('authErrors/authError', state.authError, { root: true })
+          console.log('verifyPasswordResetCode error: ' + error.message)
+          dispatch('authErrors/authError', error.code, { root: true })
         })
     },
 

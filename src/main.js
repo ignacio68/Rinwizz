@@ -19,7 +19,7 @@ import 'onsenui/css/onsen-css-components.css'
  * Import Dependencies
  */
 import Vue from 'vue'
-// import VueOnsen from 'vue-onsenui'
+import VueOnsen from 'vue-onsenui'
 
 /**
  * Import Firebase
@@ -37,19 +37,19 @@ import { store } from './store'
 
 /**
  *  Import languages
- * NOTA: ¡¡¡¡¡¡¡UPDATE!!!!!!!!
+ * TODO: ¡¡¡¡¡¡¡UPDATE!!!!!!!!
  */
 import i18n from './i18n'
 //import i18n from './locales/index'
 
 /**
  * Import Timer
- * NOTA: Revisar si importar directamente en el componente
+ * TODO: Revisar si importar directamente en el componente
  */
 import VueTimers from 'vue-timers'
 
 /* Cuando se utiliza ESM */
-import VueOnsen from 'vue-onsenui/esm'
+/* import VueOnsen from 'vue-onsenui/esm'
 import 'onsenui/esm/elements/ons-page'
 import 'onsenui/esm/elements/ons-navigator'
 import 'onsenui/esm/elements/ons-tabbar'
@@ -68,7 +68,7 @@ import 'onsenui/esm/elements/ons-select'
 import 'onsenui/esm/elements/ons-toolbar'
 import 'onsenui/esm/elements/ons-back-button'
 import 'onsenui/esm/elements/ons-fab'
-import 'onsenui/esm/elements/ons-progress-circular' // TODO: REVISAR SU UTILIZACION
+import 'onsenui/esm/elements/ons-progress-circular' */ // TODO: REVISAR SU UTILIZACION
 
 import AppNavigator from './AppNavigator'
 

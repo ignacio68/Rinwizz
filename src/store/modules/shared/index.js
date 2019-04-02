@@ -33,8 +33,8 @@ export default {
      *
      * @param {String} payload - mensaje de error
      */
-    setError(state, payload) {
-      state.error = payload
+    setError(state) {
+      state.error = true
       console.log('El error es: ' + state.error)
       // state.errorMessage = errorMessage
       // console.log('el error es: ' + state.errorMessage)
@@ -44,8 +44,8 @@ export default {
      *
      * @param {*} payload
      */
-    clearError(state, payload) {
-      state.error = payload
+    clearError(state) {
+      state.error = false
       console.log('El error es: ' + state.error)
     },
     /**
