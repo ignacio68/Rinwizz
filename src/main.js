@@ -12,7 +12,7 @@
  * import './onsen-css-components.css'
  * Onsen UI CSS components source for custom themes (requires cssnext)
  */
-import 'onsenui/css/onsenui.css'
+import 'onsenui/css/onsenui-core.css'
 import 'onsenui/css/onsen-css-components.css'
 
 /**
@@ -32,7 +32,8 @@ import { firebaseAuth } from './firebase'
 
 /**
  *  Import Vuex
- */ 
+ */
+
 import { store } from './store'
 
 /**
@@ -40,7 +41,7 @@ import { store } from './store'
  * TODO: ¡¡¡¡¡¡¡UPDATE!!!!!!!!
  */
 import i18n from './i18n'
-//import i18n from './locales/index'
+// import i18n from './locales/index'
 
 /**
  * Import Timer
@@ -49,7 +50,8 @@ import i18n from './i18n'
 import VueTimers from 'vue-timers'
 
 /* Cuando se utiliza ESM */
-/* import VueOnsen from 'vue-onsenui/esm'
+/* TODO: ¡¡NO FUNCIONA!!
+import VueOnsen from 'vue-onsenui/esm'
 import 'onsenui/esm/elements/ons-page'
 import 'onsenui/esm/elements/ons-navigator'
 import 'onsenui/esm/elements/ons-tabbar'
@@ -68,7 +70,8 @@ import 'onsenui/esm/elements/ons-select'
 import 'onsenui/esm/elements/ons-toolbar'
 import 'onsenui/esm/elements/ons-back-button'
 import 'onsenui/esm/elements/ons-fab'
-import 'onsenui/esm/elements/ons-progress-circular' */ // TODO: REVISAR SU UTILIZACION
+import 'onsenui/esm/elements/ons-progress-circular' // TODO: REVISAR SU UTILIZACION - A ELIMINAR!
+*/
 
 import AppNavigator from './AppNavigator'
 
@@ -86,7 +89,7 @@ import TheCustomtoolbar from './components/Shared/TheCustomToolbar' // NOTA: Red
 Vue.config.productionTip = false
 
 /**
- * Load Onsen 
+ * Load Onsen
  */
 Vue.use(VueOnsen)
 
