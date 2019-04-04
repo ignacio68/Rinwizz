@@ -39,7 +39,7 @@ Vue.use(VueI18n)
  */
 
 export default new VueI18n({
-  fallbackLocale: 'en',
+  fallbackLocale: 'es',
   messages,
   dateTimeFormats,
   numberFormats

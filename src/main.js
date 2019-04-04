@@ -34,13 +34,13 @@ import { firebaseAuth } from './firebase'
  *  Import Vuex
  */
 
-import { store } from '@/store'
+import { store } from './store'
 
 /**
  *  Import languages
  * TODO: ¡¡¡¡¡¡¡UPDATE!!!!!!!!
  */
-import i18n from '@/i18n'
+import i18n from './i18n'
 // import i18n from './locales/index'
 
 /**
@@ -73,7 +73,7 @@ import 'onsenui/esm/elements/ons-fab'
 import 'onsenui/esm/elements/ons-progress-circular' // TODO: REVISAR SU UTILIZACION - A ELIMINAR!
 */
 
-import AppNavigator from '@/AppNavigator'
+import AppNavigator from './AppNavigator'
 
 /**
  * Import Components
