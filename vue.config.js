@@ -6,8 +6,8 @@ module.exports = {
   pluginOptions: {
     cordovaPath: 'src-cordova',
     i18n: {
-      locale: 'en',
-      fallbackLocale: 'en',
+      locale: 'es',
+      fallbackLocale: 'es',
       localeDir: 'locales',
       enableInSFC: true
     }
