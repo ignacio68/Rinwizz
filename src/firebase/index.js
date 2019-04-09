@@ -2,7 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import 'firebase/storage'
-import { config } from '../config/firebase'
+import { config } from '@config/firebase'
 
 try {
   const firebaseConfig = {
@@ -15,8 +15,7 @@ try {
   }
   firebase.initializeApp(firebaseConfig)
 } catch (error) {
-  console.log('=========Firebase firestore initializer==============')
-  console.log(firebaseConfig.apiKey)
+  console.log('=========Firebase initializer==============')
   console.log('El error de inicialización de Firebase es: ' + error)
   console.log('====================================')
 }
@@ -36,7 +35,7 @@ export { db }
 
 // - Database authorize
 export let firebaseAuth = firebase.auth
-export let currentUser = firebaseAuth().currentUser
+export const currentUser = firebaseAuth().currentUser
 // export let functions = firebase.functions()
 // export let firebaseRef = firebaseDb().ref()
 

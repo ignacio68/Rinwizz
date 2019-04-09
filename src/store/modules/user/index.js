@@ -1,8 +1,8 @@
-import { firebaseAuth, firebaseDb } from '../../../firebase'
+import { firebaseAuth, firebaseDb } from '@/firebase'
 
-import HomePage from '../../../pages/HomePage'
-import Welcome from '../../../pages/Shared/Welcome'
-import LogIn from '../../../pages/User/LogIn'
+import HomePage from '@pages/HomePage'
+import Welcome from '@pages/Shared/Welcome'
+import LogIn from '@pages/User/LogIn'
 
 // const currentUser = firebaseAuth().currentUser
 

@@ -166,7 +166,7 @@
 
 <script>
 import SignUp from './SignUp'
-import CircleButton from '../../components/Shared/CircleButton'
+import CircleButton from '@components/Shared/CircleButton'
 export default {
   name: 'log-in',
   components: {

@@ -28,7 +28,10 @@
       </v-ons-list>
     </div>
 
-    <v-ons-alert-dialog modifier="rowfooter" :visible.sync="isAlertVisible">
+    <v-ons-alert-dialog
+      modifier="rowfooter"
+      :visible.sync="isAlertVisible"
+    >
       <alert-script
         :userIcon="userIcon"
         :altIcon="userName + ' icon'"
@@ -80,14 +83,17 @@
       ripple="true"
       @click.prevent="isAlertVisible = true"
     >
-      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
+      <v-ons-icon
+        class="alertScript__icon"
+        icon="ion-edit, material:zmdi-email-open"
+      ></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
 
 <script>
-import alertMessage from '../../components/Alerts/alertMessage'
-import alertScript from '../../components/Alerts/alertScript'
+import alertMessage from '@components/Alerts/alertMessage'
+import alertScript from '@components/Alerts/alertScript'
 export default {
   name: 'alerts',
   components: {

@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import HomePage from '@/pages/HomePage'
-import Welcome from '@/pages/Shared/Welcome'
+import HomePage from '@pages/HomePage'
+import Welcome from '@pages/Shared/Welcome'
 
 export default {
   name: 'appNavigator',

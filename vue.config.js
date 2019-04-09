@@ -27,11 +27,12 @@ module.exports = {
   },
   chainWebpack: config => {
     config.resolve.alias
-      .set('@', resolve('src'))
+      .set('@', resolve('.'))
+      .set('@src', resolve('src'))
       .set('@assets', resolve('src/assets'))
       .set('@components', resolve('src/components'))
       .set('@config', resolve('src/config'))
-      .set('@firebases', resolve('src/firebase'))
+      .set('@firebase', resolve('src/firebase'))
       .set('@locales', resolve('src/locales'))
       .set('@pages', resolve('src/pages'))
       .set('@stores', resolve('src/store'))

@@ -8,13 +8,22 @@
 
       <!-------SIGNUP WITH EMAIL & PASSWORD ------>
 
-      <form class="form" autocomplete="off">
+      <form
+        class="form"
+        autocomplete="off"
+      >
         <v-ons-list>
           <!-- NAME INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-person, material:zmdi-account" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-person, material:zmdi-account"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -30,9 +39,15 @@
 
           <!-- EMAIL INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-ios-email, material:zmdi-email" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-ios-email, material:zmdi-email"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -49,9 +64,15 @@
 
           <!-- PASSWORD INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-locked, material:zmdi-lock" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-locked, material:zmdi-lock"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -87,7 +108,10 @@
         <!-- ERROR -->
 
         <v-ons-list-item>
-          <p v-if="isError" class="error">{{ errorMessage }}</p>
+          <p
+            v-if="isError"
+            class="error"
+          >{{ errorMessage }}</p>
         </v-ons-list-item>
       </form>
 
@@ -125,15 +149,29 @@
       <!------ TERMS OF USE & POLICY PRIVACITY ------>
 
       <div class="privacy">
-        <i18n class="privacy__text" path="lang.pages.signup.main.text3">
-          <span class="privacy__text-link" @click.prevent="toTerms" place="terms">{{ terms }}</span>
-          <span class="privacy__text-link" @click.prevent="toPrivacy" place="privacy">{{ privacy }}</span>
+        <i18n
+          class="privacy__text"
+          path="lang.pages.signup.main.text3"
+        >
+          <span
+            class="privacy__text-link"
+            @click.prevent="toTerms"
+            place="terms"
+          >{{ terms }}</span>
+          <span
+            class="privacy__text-link"
+            @click.prevent="toPrivacy"
+            place="privacy"
+          >{{ privacy }}</span>
         </i18n>
       </div>
 
       <!-- I HAVE A USER ACCOUNT -->
 
-      <p class="logInText" @click.prevent="toLogIn">{{ $t('lang.pages.signup.main.text2') }}</p>
+      <p
+        class="logInText"
+        @click.prevent="toLogIn"
+      >{{ $t('lang.pages.signup.main.text2') }}</p>
     </div>
 
     <!------ CONFIRM PASSWORD ALERT ------>
@@ -157,11 +195,11 @@
 
 <script>
 import Configuration from './Configuration'
-import TermsOfService from '../Shared/TermsOfService'
-import PrivacyPolicy from '../Shared/PrivacyPolicy'
+import TermsOfService from '@pages/Shared/TermsOfService'
+import PrivacyPolicy from '@pages/Shared/PrivacyPolicy'
 import LogIn from './LogIn'
 // import SignUpButton from '../../components/Shared/SignUpButton'
-import CircleButton from '../../components/Shared/CircleButton'
+import CircleButton from '@components/Shared/CircleButton'
 // import UserInputPassword from '../../components/Shared/UserInputPassword'
 /**
  * @description Página de registro de la aplicación

@@ -1,4 +1,4 @@
-import { firebaseAuth } from '../../../firebase'
+import { firebaseAuth } from '@/firebase'
 
 export default {
   strict: process.env.NODE_ENV !== 'production',

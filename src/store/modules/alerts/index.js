@@ -10,7 +10,7 @@ export default {
     loadedAlerts: []
   },
   getters: {
-    loadedAlerts (state) {
+    loadedAlerts(state) {
       console.log('Estoy en getters:loadedAlerts')
       console.log(state.loadedAlerts)
       return state.loadedAlerts // PENDIENTE: ordenarlas por fechas
@@ -26,7 +26,7 @@ export default {
      *
      * @param {Object} alerts
      */
-    setLoadedAlerts (state, alerts) {
+    setLoadedAlerts(state, alerts) {
       console.log('Estoy en setLoadedAlerts')
       state.loadedAlerts = alerts
       console.log(state.loadedAlerts)
@@ -46,7 +46,7 @@ export default {
      *
      * @param {Object} alertData - Datos de la alerta
      */
-    createAlert ({ commit }, alertData) {
+    createAlert({ commit }, alertData) {
       console.log('Estoy en createAlert')
       commit('shared/setLoading', true, { root: true })
       commit('shared/clearError', null, { root: true })
@@ -100,7 +100,7 @@ export default {
      * cuando se desarrolle el proyecto
      *
      */
-    loadAlerts ({ commit }) {
+    loadAlerts({ commit }) {
       commit('shared/setLoading', true, { root: true })
       commit('shared/clearError', null, { root: true })
       console.log('Estoy en action:loadAlerts')
