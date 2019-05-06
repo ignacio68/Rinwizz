@@ -285,13 +285,13 @@ export default {
 
         case 'google.com':
           console.log('el provider es: ' + providerId)
-          const google = 'google'
+          const google = firebaseAuth.GoogleAuthProvider.credential(idToken)
           commit('setCredential', google)
           break
 
         case 'twitter.com':
           console.log('el provider es: ' + providerId)
-          const twitter = 'twitter'
+          const twitter = firebaseAuth.TwitterAuthProvider.credential(idToken)
           commit('setCredential', twitter)
           break
 

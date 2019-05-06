@@ -40,8 +40,8 @@ export default {
     dispatchLogUp({ commit, dispatch, state }, index) {
       commit('shared/setLoading', true, { root: true })
       commit('shared/clearError', null, { root: true })
-      const mySocialButtons = state.socialButtons
-      let name = mySocialButtons[index].name
+      const socialButtons = state.socialButtons
+      let name = socialButtons[index].name
       console.log('la red social elegida es: ' + name)
       switch (name) {
         case 'Facebook': {

@@ -46,7 +46,7 @@ export default {
      */
     clearError(state) {
       state.error = false
-      console.log('El error es: ' + state.error)
+      console.log('Errores limpio')
     },
     /**
      * Comprueba si la acción ha sido ejecutada
@@ -83,6 +83,9 @@ export default {
     clearError({ commit }) {
       commit('clearError')
     },
+    /**
+     * Establece la plataforma en la que se ejecuta la app
+     */
     getPlatform({ commit }) {
       if (this.$ons.platform.isAndroid()) {
         const platform = 'md'
