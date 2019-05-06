@@ -7,8 +7,8 @@ import VueI18n from 'vue-i18n'
 /**
  * Import Locales
  */
-import enUs from './i18n/en_US/index'
-import esEs from './i18n/es_ES/index'
+import enUs from './i18n/en_US'
+import esEs from './i18n/es_ES'
 
 /**
  * Import number formats
@@ -27,7 +27,8 @@ Vue.use(VueI18n)
 
 function loadLocaleMessages() {
   const locales = require.context(
-    './locales',
+    // './locales',
+    './i18n',
     true,
     /[A-Za-z0-9-_,\s]+\.json$/i
   )
