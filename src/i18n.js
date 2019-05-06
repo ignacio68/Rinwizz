@@ -7,18 +7,18 @@ import VueI18n from 'vue-i18n'
 /**
  * Import Locales
  */
-import enUs from './locales//i18n/en_US/index'
-import esEs from './locales/i18n/es_ES/index'
+import enUs from '@locales/i18n/en_US/index'
+import esEs from '@locales/i18n/es_ES/index'
 
 /**
  * Import number formats
  */
-import { numberFormats } from './locales/i18n/numberFormats'
+import { numberFormats } from '@locales/i18n/numberFormats'
 
 /**
  * Import date formats
  */
-import { dateTimeFormats } from './locales/i18n/dateTimeFormats'
+import { dateTimeFormats } from '@locales/i18n/dateTimeFormats'
 
 /**
  * Config

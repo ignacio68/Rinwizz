@@ -24,7 +24,7 @@ import VueOnsen from 'vue-onsenui'
 /**
  * Import Firebase
  */
-import { firebaseAuth } from '@/firebase'
+import { firebaseAuth } from './firebase'
 
 // import LokiJS
 // import loki from 'lokijs'
@@ -34,13 +34,13 @@ import { firebaseAuth } from '@/firebase'
  *  Import Vuex
  */
 
-import { store } from '@/store'
+import { store } from './store'
 
 /**
  *  Import languages
  * TODO: ¡¡¡¡¡¡¡UPDATE!!!!!!!!
  */
-import i18n from '@/i18n'
+import i18n from './locales'
 // import i18n from './locales/index'
 
 /**
@@ -76,7 +76,7 @@ import 'onsenui/esm/elements/ons-progress-circular' // TODO: REVISAR SU UTILIZAC
 /**
  * Página de navegación
  */
-import AppNavigator from '@/AppNavigator'
+import AppNavigator from './AppNavigator'
 
 /**
  * Import Components
