@@ -73,6 +73,9 @@ import 'onsenui/esm/elements/ons-fab'
 import 'onsenui/esm/elements/ons-progress-circular' // TODO: REVISAR SU UTILIZACION - A ELIMINAR!
 */
 
+/**
+ * Página de navegación
+ */
 import AppNavigator from '@/AppNavigator'
 
 /**
