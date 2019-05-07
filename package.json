@@ -6,7 +6,7 @@
   "author": {
     "name": "Ignacio Lopez-Amor Pinillos",
     "email": "ignaciolopezamor@gmail.com",
-    "url": "www.lopezamor.com"
+    "url": "http://www.lopezamor.com"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -58,7 +58,7 @@
     "vue-template-compiler": "^2.6.10",
     "webpack-bundle-analyzer": "^3.3.2"
   },
-  "homepage": "www.lopezamor.com",
+  "homepage": "http://www.lopezamor.com",
   "keywords": [
     "social",
     "alerts"
