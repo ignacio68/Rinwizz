@@ -3,17 +3,11 @@
   "version": "0.1.2",
   "private": true,
   "description": "rinwizz App",
-  "homepage": "www.lopezamor.com",
   "author": {
     "name": "Ignacio Lopez-Amor Pinillos",
     "email": "ignaciolopezamor@gmail.com",
     "url": "www.lopezamor.com"
   },
-  "keywords": [
-    "social",
-    "alerts"
-  ],
-  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -27,6 +21,7 @@
     "cordova-serve-browser": "vue-cli-service cordova-serve-browser",
     "cordova-serve-ios": "vue-cli-service cordova-serve-ios",
     "cordova-serve-osx": "vue-cli-service cordova-serve-osx",
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
     "styleguide": "vue-cli-service styleguidist",
     "styleguide:build": "vue-cli-service styleguidist:build",
     "test:unit": "vue-cli-service test:unit"
@@ -62,5 +57,11 @@
     "vue-onsenui": "^2.6.2",
     "vue-template-compiler": "^2.6.10",
     "webpack-bundle-analyzer": "^3.3.2"
-  }
+  },
+  "homepage": "www.lopezamor.com",
+  "keywords": [
+    "social",
+    "alerts"
+  ],
+  "license": "MIT"
 }
