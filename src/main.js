@@ -40,8 +40,7 @@ import { store } from './store'
  *  Import languages
  * TODO: ¡¡¡¡¡¡¡UPDATE!!!!!!!!
  */
-import VueI18n from './locales'
-// import i18n from './locales/index'
+import i18n from './locales'
 
 /**
  * Import Timer
@@ -116,7 +115,7 @@ firebaseAuth().onAuthStateChanged(user => {
   if (!app) {
     app = new Vue({
       el: '#app',
-      VueI18n,
+      i18n,
       store,
       render: h => h(AppNavigator),
       beforeCreate() {
@@ -142,9 +141,9 @@ firebaseAuth().onAuthStateChanged(user => {
           if (lang) {
             // const lang = val.replace('-', '')
             // const lang = val.slice(0, 2)
-            VueI18n.locale = lang
+            i18n.locale = lang
             this.$store.commit('shared/setLanguage', lang)
-            console.log('el lenguaje es ' + VueI18n.locale)
+            console.log('el lenguaje es ' + i18n.locale)
           } else {
             console.log('No se encuentra el idioma del navegador')
           }
