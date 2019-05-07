@@ -40,7 +40,8 @@ import { store } from './store'
  *  Import languages
  * TODO: ¡¡¡¡¡¡¡UPDATE!!!!!!!!
  */
-import i18n from './locales'
+// import i18n from './locales'
+import i18n from '@setup/i18n'
 
 /**
  * Import Timer

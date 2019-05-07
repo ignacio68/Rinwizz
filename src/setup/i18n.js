@@ -7,18 +7,18 @@ import VueI18n from 'vue-i18n'
 /**
  * Import Locales
  */
-import enUs from './i18n/en_US'
-import esEs from './i18n/es_ES'
+import enUs from '@locales/i18n/en_US'
+import esEs from '@locales/i18n/es_ES'
 
 /**
  * Import number formats
  */
-import { numberFormats } from './i18n/numberFormats'
+import { numberFormats } from '@locales/i18n/numberFormats'
 
 /**
  * Import date formats
  */
-import { dateTimeFormats } from './i18n/dateTimeFormats'
+import { dateTimeFormats } from '@locales/i18n/dateTimeFormats'
 
 /**
  * Config
@@ -49,7 +49,6 @@ export default new VueI18n({
   locale: process.env.VUE_APP_I18N_LOCALE || 'es',
   fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'es',
   messages: loadLocaleMessages(),
-  // messages,
   dateTimeFormats,
   numberFormats
 })
