@@ -2,7 +2,7 @@ import firebase from '@firebase/app'
 import '@firebase/auth'
 import '@firebase/database'
 import '@firebase/storage'
-import { config } from '@config/firebase'
+import { config } from '@setup/firebase'
 
 try {
   const firebaseConfig = {
@@ -15,7 +15,7 @@ try {
   }
   firebase.initializeApp(firebaseConfig)
 } catch (error) {
-  console.log('=========Firebase initializer==============')
+  console.log('========Firebase initializer=============')
   console.log('El error de inicialización de Firebase es: ' + error)
   console.log('====================================')
 }

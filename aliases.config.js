@@ -7,10 +7,10 @@ const aliases = {
   '@src': 'src',
   '@assets': 'src/assets',
   '@components': 'src/components',
-  '@config': 'src/config',
   // '@firebase': 'src/firebase',
   '@locales': 'src/locales',
   '@pages': 'src/router/pages',
+  '@setup': 'src/setup',
   '@store': 'src/store',
   '@modules': 'src/state/modules',
   '@utils': 'src/utils'
