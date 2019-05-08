@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
-/dist
-/bak
+dist
+bak
 
 # local env files
 .env.local
@@ -25,8 +25,4 @@ yarn-error.log*
 /src/components/Firebase/firebaseConfig.js
 
 # Cordova
-/src-cordova/hooks
-/src-cordova/platforms
-/src-cordova/plugins
-/public/cordova.js
-/src-cordova/node_modules
+src-cordova

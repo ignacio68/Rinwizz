@@ -1,3 +1,5 @@
+import { PUSH } from './mutations_types.js'
+
 export default {
   strict: process.env.NODE_ENV !== 'production',
   namespaced: true,
@@ -23,7 +25,7 @@ export default {
      *
      * @param {String} page
      */
-    push: (state, page) => {
+    [PUSH]: (state, page) => {
       state.stack.push(page)
     },
     /**

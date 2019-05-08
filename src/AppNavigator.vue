@@ -15,10 +15,10 @@ export default {
   beforeMount() {
     console.log('AppNavigator beforeMount()')
     if (!this.userIsAuthenticated) {
-      this.$store.commit('navigator/push', Welcome)
+      this.$store.commit('navigator/PUSH', Welcome)
       console.log('El usuario NO está autenticado')
     } else {
-      this.$store.commit('navigator/push', HomePage)
+      this.$store.commit('navigator/PUSH', HomePage)
       console.log('El usuario SI está autenticado')
     }
   },

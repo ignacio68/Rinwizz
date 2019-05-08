@@ -194,6 +194,8 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+
 import Configuration from './Configuration'
 import TermsOfService from '@pages/Shared/TermsOfService'
 import PrivacyPolicy from '@pages/Shared/PrivacyPolicy'
@@ -201,6 +203,8 @@ import LogIn from './LogIn'
 // import SignUpButton from '../../components/Shared/SignUpButton'
 import CircleButton from '@components/Shared/CircleButton'
 // import UserInputPassword from '../../components/Shared/UserInputPassword'
+
+const { mapState } = createNamespacedHelpers('social')
 /**
  * @description Página de registro de la aplicación
  * @version 1.0.0
@@ -236,10 +240,6 @@ export default {
       // TODO: revisar para llamar directamente al state
       return this.$store.getters['social/socialButtons']
     },
-    user() {
-      // TODO: revisar para llamar directamente al state
-      return this.$store.getters['user/user']
-    },
     isError() {
       // TODO: revisar para llamar directamente al state
       return this.$store.getters['shared/error']
@@ -247,10 +247,6 @@ export default {
     errorMessage() {
       // TODO: revisar para llamar directamente al state
       return this.$store.getters['authErrors/errorMessage']
-    },
-    loading() {
-      // TODO: revisar para llamar directamente al state
-      return this.$store.getters['shared/loading']
     },
     actionPass() {
       /* comprueba si existe actionPass para lanzar la alert de confirmación de password */
@@ -269,7 +265,7 @@ export default {
       this.$store.dispatch('social/dispatchLogUp', index)
     },
     toLogIn() {
-      this.$store.commit('navigator/replace', LogIn)
+      this.$store.commit('navigator/push', LogIn)
     },
     /**
      * Comprueba si el usuario está registrado

@@ -11,7 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Updated mutations to ES6
+- Refactored getters to ES6
+- Refactored mutations to ES6
+
+### Removed
+
+- SignUp.computed.loading()
 
 ## [0.1.2] - 2019-05-07
 
