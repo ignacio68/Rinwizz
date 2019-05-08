@@ -26,7 +26,7 @@ export default {
      *
      * @param {Boolean} payload
      */
-    setLoading(state, payload) {
+    setLoading: (state, payload) => {
       state.loading = payload
       console.log('Loading es ' + state.loading)
     },
@@ -35,7 +35,7 @@ export default {
      *
      * @param {String} payload - mensaje de error
      */
-    setError(state) {
+    setError: state => {
       state.error = true
       console.log('El error es: ' + state.error)
     },
@@ -44,7 +44,7 @@ export default {
      *
      * @param {*} payload
      */
-    clearError(state) {
+    clearError: state => {
       state.error = false
       console.log('Errores limpio')
     },
@@ -53,7 +53,7 @@ export default {
      *
      * @param {Boolean} payload
      */
-    setActionPass(state, payload) {
+    setActionPass: (state, payload) => {
       state.actionPass = payload
       console.log('La acción ha sido ejecutada: ' + state.actionPass)
     },
@@ -62,7 +62,7 @@ export default {
      *
      * @param {String} platform
      */
-    setPlatform(state, platform) {
+    setPlatform: (state, platform) => {
       state.platform = platform
       console.log('La plataforma de la app es: ' + platform)
     },
@@ -71,7 +71,7 @@ export default {
      *
      * @param {String} lang
      */
-    setLanguage(state, lang) {
+    setLanguage: (state, lang) => {
       state.lang = lang
       console.log('Se ha establecido el idioma')
     }

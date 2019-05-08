@@ -18,7 +18,7 @@ export default {
      * @param {void} state
      * @param {String} message
      */
-    setErrorMessage(state, message) {
+    setErrorMessage: (state, message) => {
       state.errorMessage = message
     }
   },

@@ -26,7 +26,7 @@ export default {
      *
      * @param {Object} alerts
      */
-    setLoadedAlerts(state, alerts) {
+    setLoadedAlerts: (state, alerts) => {
       console.log('Estoy en setLoadedAlerts')
       state.loadedAlerts = alerts
       console.log(state.loadedAlerts)
@@ -36,7 +36,7 @@ export default {
      *
      * @param {Object} alert
      */
-    createAlert(state, alert) {
+    createAlert: (state, alert) => {
       state.loadedAlerts.push(alert)
     }
   },

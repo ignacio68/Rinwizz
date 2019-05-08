@@ -23,7 +23,7 @@ export default {
      *
      * @param {String} page
      */
-    push(state, page) {
+    push: (state, page) => {
       state.stack.push(page)
     },
     /**
@@ -31,7 +31,7 @@ export default {
      *
      * @param {String} state
      */
-    pop(state) {
+    pop: state => {
       if (state.stack.length > 1) {
         state.stack.pop()
       }
@@ -44,7 +44,7 @@ export default {
      *
      * @param {String} page
      */
-    replace(state, page) {
+    replace: (state, page) => {
       state.stack.pop()
       state.stack.push(page)
     },
@@ -53,10 +53,10 @@ export default {
      *
      * @param {String} page
      */
-    reset(state, page) {
+    reset: (state, page) => {
       state.stack = [page || state.stack[0]]
     },
-    options(state, newOptions = {}) {
+    options: (state, newOptions = {}) => {
       state.options = newOptions
     },
     /**
@@ -64,7 +64,7 @@ export default {
      *
      * @param {Number} index
      */
-    set(state, index) {
+    set: (state, index) => {
       state.index = index
     }
   },

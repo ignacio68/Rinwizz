@@ -55,7 +55,7 @@ export default {
      * @param {*} state
      * @param {Object} newUser - Parámetros a añadir al usuario
      */
-    setUser(state, newUser) {
+    setUser: (state, newUser) => {
       state.user = newUser
     },
     /**
@@ -63,13 +63,13 @@ export default {
      *
      * @param {*} state
      */
-    clearUser(state) {
+    clearUser: state => {
       state.user = null
     },
     /**
      * Establece la credencial del usuario
      */
-    setCredential(state, credential) {
+    setCredential: (state, credential) => {
       state.credential = credential
       console.log('credential es: ' + credential)
     }
@@ -90,7 +90,7 @@ export default {
      */
 
     // FIXME: desarrollar correctamente async y el catcher de errores.
-    async signUpUser ({ state, commit, dispatch }, registerUser) {
+    async signUpUser({ state, commit, dispatch }, registerUser) {
       console.log('Estoy en signUserUp')
       commit('shared/setActionPass', false, { root: true })
       commit('shared/clearError', null, { root: true })
@@ -175,7 +175,8 @@ export default {
     applyActionCode({ commit, dispatch }, code) {
       console.log('Estoy en applyActionCode')
       commit('shared/clearError', null, { root: true })
-      firebaseAuth.applyActionCode(code)
+      firebaseAuth
+        .applyActionCode(code)
         .then(() => {
           console.log('codigo de verificación')
         })
@@ -223,7 +224,8 @@ export default {
      * @param {*} commit
      */
     logOutUser({ commit }) {
-      firebaseAuth().signOut()
+      firebaseAuth()
+        .signOut()
         .then(result => {
           commit('clearUser')
           console.log(result)
@@ -376,7 +378,7 @@ export default {
         creationDate: user.metadata.creationTime,
         lastSignInDate: user.metadata.LastSignInTime,
         providerData: user.providerData,
-        providerId: user.providerData[0].providerId,
+        providerId: user.providerData[0].providerId
       })
     },
 
@@ -389,7 +391,8 @@ export default {
       console.log('resetPassword')
       commit('shared/clearError', null, { root: true })
       firebaseAuth()
-        .sendPasswordResetEmail(email).then(() => {
+        .sendPasswordResetEmail(email)
+        .then(() => {
           console.log('enviado password al email: ' + email)
         })
         .catch(error => {
@@ -409,7 +412,8 @@ export default {
       console.log('confirmPasswordReset')
       commit('shared/clearError', null, { root: true })
       firebaseAuth()
-        .confirmPasswordReset(code, password).then(() => {
+        .confirmPasswordReset(code, password)
+        .then(() => {
           console.log('Confirmado el reseteo del password')
         })
         .catch(error => {
@@ -427,7 +431,8 @@ export default {
     verifyPasswordResetCode({ commit, dispatch }, code) {
       console.log('verifyPasswordResetCode')
       commit('shared/clearError', null, { root: true })
-      firebaseAuth().verifyPasswordResetCode(code)
+      firebaseAuth()
+        .verifyPasswordResetCode(code)
         .then(() => {
           console.log('verificado el código de reseteo del password')
         })
@@ -438,17 +443,11 @@ export default {
     },
 
     // TODO: desarrollar los updates
-    updateEmail(email) {
+    updateEmail(email) {},
 
-    },
+    updatePassword(password) {},
 
-    updatePassword(password) {
-
-    },
-
-    updateProfile({ displayName, photoURL }) {
-
-    },
+    updateProfile({ displayName, photoURL }) {},
 
     /**
      * Actualizamos la información del usuario y la base de datos
