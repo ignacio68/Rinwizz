@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.2] - 2019-0507
+## [0.1.3] - 2019-05-08
+
+### Changed
+
+- Updated mutations to ES6
+
+## [0.1.2] - 2019-05-07
 
 ### Added
 
@@ -15,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Updated package.json with package's latest versions
+- Updated package.json with package latest versions
 - Updated i18n
 - Rewrite
 - Improve
@@ -25,8 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 
 ### Removed
-
-- Section
 
 ### Fixed
 

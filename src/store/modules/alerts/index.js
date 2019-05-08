@@ -10,7 +10,7 @@ export default {
     loadedAlerts: []
   },
   getters: {
-    loadedAlerts(state) {
+    loadedAlerts: state => {
       console.log('Estoy en getters.loadedAlerts')
       console.log(state.loadedAlerts)
       return state.loadedAlerts // PENDIENTE: ordenarlas por fechas

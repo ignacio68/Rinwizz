@@ -10,13 +10,13 @@ export default {
     lang: ''
   },
   getters: {
-    loading(state) {
+    loading: state => {
       return state.loading
     },
-    error(state) {
+    error: state => {
       return state.error
     },
-    actionPass(state) {
+    actionPass: state => {
       return state.actionPass
     }
   },

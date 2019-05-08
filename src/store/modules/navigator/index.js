@@ -7,13 +7,13 @@ export default {
     index: 1 // Tabbar
   },
   getters: {
-    pageStack(state) {
+    pageStack: state => {
       return state.stack
     },
-    options(state) {
+    options: state => {
       return state.options
     },
-    index(state) {
+    index: state => {
       return state.index
     }
   },

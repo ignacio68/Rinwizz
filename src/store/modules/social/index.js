@@ -23,7 +23,7 @@ export default {
     ]
   },
   getters: {
-    socialButtons(state) {
+    socialButtons: state => {
       console.log('Estoy en getters.socialButtons')
       return state.socialButtons
     }

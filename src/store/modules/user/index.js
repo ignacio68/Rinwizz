@@ -44,7 +44,7 @@ export default {
      *
      * @param {*} state
      */
-    user(state) {
+    user: state => {
       return state.user
     }
   },
