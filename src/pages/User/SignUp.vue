@@ -12,15 +12,9 @@
         <v-ons-list>
           <!-- NAME INPUT -->
 
-          <v-ons-list-item
-            :modifier="md ? 'nodivider' : ''"
-            class="form__input"
-          >
+          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
             <div class="left">
-              <v-ons-icon
-                icon="ion-person, material:zmdi-account"
-                class="list-item__icon"
-              ></v-ons-icon>
+              <v-ons-icon icon="ion-person, material:zmdi-account" class="list-item__icon"></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -36,15 +30,9 @@
 
           <!-- EMAIL INPUT -->
 
-          <v-ons-list-item
-            :modifier="md ? 'nodivider' : ''"
-            class="form__input"
-          >
+          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
             <div class="left">
-              <v-ons-icon
-                icon="ion-ios-email, material:zmdi-email"
-                class="list-item__icon"
-              ></v-ons-icon>
+              <v-ons-icon icon="ion-ios-email, material:zmdi-email" class="list-item__icon"></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -61,15 +49,9 @@
 
           <!-- PASSWORD INPUT -->
 
-          <v-ons-list-item
-            :modifier="md ? 'nodivider' : ''"
-            class="form__input"
-          >
+          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
             <div class="left">
-              <v-ons-icon
-                icon="ion-locked, material:zmdi-lock"
-                class="list-item__icon"
-              ></v-ons-icon>
+              <v-ons-icon icon="ion-locked, material:zmdi-lock" class="list-item__icon"></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -119,16 +101,13 @@
           :disabled="false"
           ripple="true"
           @click.prevent="onSignUp"
-          >{{ $t('lang.pages.signup.button') }}</v-ons-button
-        >
+        >{{ $t('lang.pages.signup.button') }}</v-ons-button>
       </div>
 
       <!------ LOGIN WITH SOCIAL BUTTONS ------>
 
       <div class="socialText">
-        <p class="socialButtons__text">
-          {{ $t('lang.pages.signup.main.socialText') }}
-        </p>
+        <p class="socialButtons__text">{{ $t('lang.pages.signup.main.socialText') }}</p>
         <v-ons-row class="socialButtons__list">
           <circle-button
             v-for="(socialButton, $index) in socialButtons"
@@ -147,26 +126,14 @@
 
       <div class="privacy">
         <i18n class="privacy__text" path="lang.pages.signup.main.text3">
-          <span
-            class="privacy__text-link"
-            @click.prevent="toTerms"
-            place="terms"
-            >{{ terms }}</span
-          >
-          <span
-            class="privacy__text-link"
-            @click.prevent="toPrivacy"
-            place="privacy"
-            >{{ privacy }}</span
-          >
+          <span class="privacy__text-link" @click.prevent="toTerms" place="terms">{{ terms }}</span>
+          <span class="privacy__text-link" @click.prevent="toPrivacy" place="privacy">{{ privacy }}</span>
         </i18n>
       </div>
 
       <!-- I HAVE A USER ACCOUNT -->
 
-      <p class="logInText" @click.prevent="toLogIn">
-        {{ $t('lang.pages.signup.main.text2') }}
-      </p>
+      <p class="logInText" @click.prevent="toLogIn">{{ $t('lang.pages.signup.main.text2') }}</p>
     </div>
 
     <!------ CONFIRM PASSWORD ALERT ------>
@@ -182,10 +149,11 @@
           class="alertDialog_button"
           ripple="true"
           @click.prevent="onClickAlertButton()"
-          >{{
-            $t('lang.components.alertConfirmPassword.buttonText')
-          }}</v-ons-alert-dialog-button
         >
+          {{
+          $t('lang.components.alertConfirmPassword.buttonText')
+          }}
+        </v-ons-alert-dialog-button>
       </template>
     </v-ons-alert-dialog>
   </v-ons-page>
@@ -263,7 +231,7 @@ export default {
       this.$store.dispatch('social/dispatchLogUp', index)
     },
     toLogIn() {
-      this.$store.commit('navigator/push', LogIn)
+      this.$store.commit('navigator/PUSH', LogIn)
     },
     /**
      * Comprueba si el usuario está registrado
@@ -287,10 +255,10 @@ export default {
       this.$store.dispatch('shared/clearError', null)
     },
     toTerms() {
-      this.$store.commit('navigator/push', TermsOfService)
+      this.$store.commit('navigator/PUSH', TermsOfService)
     },
     toPrivacy() {
-      this.$store.commit('navigator/push', PrivacyPolicy)
+      this.$store.commit('navigator/PUSH', PrivacyPolicy)
     },
     togglePassword() {
       this.type = this.type === 'password' ? 'text' : 'password'
@@ -301,7 +269,7 @@ export default {
     onClickAlertButton() {
       console.log('Estoy en el botón de la alerta de confirmación de password')
       this.$store.commit('shared/setActionPass', false)
-      this.$store.commit('navigator/replace', Configuration)
+      this.$store.commit('navigator/REPLACE', Configuration)
       // this.$store.dispatch('user/confirmPassword', this.email)
     }
   }

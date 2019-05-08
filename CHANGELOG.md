@@ -13,10 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Refactored getters to ES6
 - Refactored mutations to ES6
+- Several mimor changes
 
 ### Removed
 
-- SignUp.computed.loading()
+- Unused actions in Vuex
 
 ## [0.1.2] - 2019-05-07
 

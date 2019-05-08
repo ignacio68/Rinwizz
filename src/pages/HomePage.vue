@@ -11,12 +11,7 @@
       </v-ons-toolbar-button-->
     </the-custom-toolbar>
 
-    <v-ons-tabbar
-      position="bottom"
-      swipeable
-      :tabs="tabs"
-      :index.sync="index"
-    ></v-ons-tabbar>
+    <v-ons-tabbar position="bottom" swipeable :tabs="tabs" :index.sync="index"></v-ons-tabbar>
   </v-ons-page>
 </template>
 
@@ -56,7 +51,7 @@ export default {
         return this.$store.getters['navigator/index']
       },
       set(newValue) {
-        this.$store.commit('navigator/set', newValue)
+        this.$store.commit('navigator/SET', newValue)
       }
     }
   },

@@ -5,11 +5,7 @@
       <form class="configurationForm">
         <v-ons-list class="configurationForm__list">
           <v-ons-list-item class="configurationForm__list-item">
-            <label
-              for="textInput"
-              class="left configurationForm__list-item-label"
-              >nombre</label
-            >
+            <label for="textInput" class="left configurationForm__list-item-label">nombre</label>
             <v-ons-input
               class="center configurationForm__list-input"
               id="name"
@@ -21,11 +17,7 @@
             ></v-ons-input>
           </v-ons-list-item>
           <v-ons-list-item class="configurationForm__list-item">
-            <label
-              for="textInput"
-              class="left configurationForm__list-item-label"
-              >Ubicación</label
-            >
+            <label for="textInput" class="left configurationForm__list-item-label">Ubicación</label>
             <v-ons-input
               class="center configurationForm__list-input"
               id="location"
@@ -45,8 +37,7 @@
         :disabled="false"
         ripple="true"
         @click.prevent="onSave"
-        >{{ $t('lang.pages.configuration.button') }}</v-ons-button
-      >
+      >{{ $t('lang.pages.configuration.button') }}</v-ons-button>
     </div>
   </v-ons-page>
 </template>
@@ -74,7 +65,7 @@ export default {
       user.userName = this.name
       user.location = this.location
       this.$store.dispatch('user/updatedUserInfo', user)
-      this.$store.commit('navigator/push', HomePage)
+      this.$store.commit('navigator/PUSH', HomePage)
     }
   }
 }

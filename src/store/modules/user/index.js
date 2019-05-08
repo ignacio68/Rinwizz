@@ -208,7 +208,7 @@ export default {
             id: user.uid
           }
           commit('setUser', newUser)
-          commit('navigator/replace', HomePage, {
+          commit('navigator/REPLACE', HomePage, {
             root: true
           })
         }
@@ -230,7 +230,7 @@ export default {
           commit('clearUser')
           console.log(result)
         })
-        .then(commit('navigator/push', LogIn, { root: true }))
+        .then(commit('navigator/PUSH', LogIn, { root: true }))
         .catch(error => {
           console.log('signUserOut error: ' + error)
         })
@@ -344,7 +344,7 @@ export default {
         .then(() => {
           console.log('Usuario eliminado')
           commit('clearUser')
-          commit('navigator/replace', Welcome, {
+          commit('navigator/REPLACE', Welcome, {
             root: true
           })
         })

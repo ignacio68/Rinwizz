@@ -1,9 +1,5 @@
 <template id="App">
-  <v-ons-navigator
-    :page-stack="pageStack"
-    :pop-page="storePop"
-    :options="options"
-  ></v-ons-navigator>
+  <v-ons-navigator :page-stack="pageStack" :pop-page="storePop" :options="options"></v-ons-navigator>
 </template>
 
 <script>
@@ -45,7 +41,7 @@ export default {
   },
   methods: {
     storePop() {
-      this.$store.commit('navigator/pop')
+      this.$store.commit('navigator/POP')
     }
   }
 }
