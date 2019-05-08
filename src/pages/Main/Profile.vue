@@ -2,14 +2,23 @@
   <v-ons-page>
     <div class="container">
       <div class="picture">
-        <img src="../../assets/user_icon.png" alt="user icon" class="picture__frame-photo">
+        <img
+          src="../../assets/user_icon.png"
+          alt="user icon"
+          class="picture__frame-photo"
+        />
       </div>
 
       <form>
         <v-ons-list class="profileList">
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="profileList__item"
+          >
             <div class="left profileList__item-label">
-              <label for="textImput">{{ $t('lang.pages.profile.main.list.input.name') }}</label>
+              <label for="textImput">{{
+                $t('lang.pages.profile.main.list.input.name')
+              }}</label>
             </div>
             <div class="center profileList__item-input">
               <v-ons-input
@@ -23,17 +32,33 @@
               />
             </div>
           </v-ons-list-item>
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="profileList__item"
+          >
             <div class="left profileList__item-label">
-              <label for="textImput">{{ $t('lang.pages.profile.main.list.input.email') }}</label>
+              <label for="textImput">{{
+                $t('lang.pages.profile.main.list.input.email')
+              }}</label>
             </div>
             <div class="center profileList__item-input">
-              <v-ons-input id="email" type="email" :placeholder="userEmail" float disabled/>
+              <v-ons-input
+                id="email"
+                type="email"
+                :placeholder="userEmail"
+                float
+                disabled
+              />
             </div>
           </v-ons-list-item>
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="profileList__item"
+          >
             <div class="left profileList__item-label">
-              <label for="textImput">{{ $t('lang.pages.profile.main.list.input.location') }}</label>
+              <label for="textImput">{{
+                $t('lang.pages.profile.main.list.input.location')
+              }}</label>
             </div>
             <div class="center profileList__item-input">
               <v-ons-input
@@ -46,9 +71,9 @@
               />
             </div>
           </v-ons-list-item>
-          <v-ons-list-header
-            class="profileList__header"
-          >{{ $t('lang.pages.profile.main.list.header1') }}</v-ons-list-header>
+          <v-ons-list-header class="profileList__header">{{
+            $t('lang.pages.profile.main.list.header1')
+          }}</v-ons-list-header>
         </v-ons-list>
       </form>
 
@@ -59,7 +84,8 @@
         :disabled="false"
         ripple="true"
         @click.prevent="onSave"
-      >{{ $t('lang.pages.profile.main.button') }}</v-ons-button>
+        >{{ $t('lang.pages.profile.main.button') }}</v-ons-button
+      >
     </div>
   </v-ons-page>
 </template>

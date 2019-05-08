@@ -4,7 +4,7 @@ module.exports = {
     node: true,
     browser: true
   },
-  'extends': [
+  extends: [
     'plugin:vue/essential',
     'plugin:prettier/recommended',
     '@vue/standard'

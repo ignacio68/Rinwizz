@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 dist
-bak
+src/bak
 
 # local env files
 .env.local
@@ -22,7 +22,8 @@ yarn-error.log*
 *.sw*
 
 # Private dates
-/src/components/Firebase/firebaseConfig.js
+src/components/Firebase/firebaseConfig.js
+src/setup/firebase.js
 
 # Cordova
 src-cordova

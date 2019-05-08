@@ -7,7 +7,9 @@
         </v-ons-back-button>
       </slot>
     </div>
-    <div class="center"><slot>{{ pageTitle }}</slot></div>
+    <div class="center">
+      <slot>{{ pageTitle }}</slot>
+    </div>
     <div class="rigth"><slot></slot></div>
   </v-ons-toolbar>
 </template>
@@ -29,5 +31,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

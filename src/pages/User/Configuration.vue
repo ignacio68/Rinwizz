@@ -8,7 +8,8 @@
             <label
               for="textInput"
               class="left configurationForm__list-item-label"
-            >nombre</label>
+              >nombre</label
+            >
             <v-ons-input
               class="center configurationForm__list-input"
               id="name"
@@ -23,7 +24,8 @@
             <label
               for="textInput"
               class="left configurationForm__list-item-label"
-            >Ubicación</label>
+              >Ubicación</label
+            >
             <v-ons-input
               class="center configurationForm__list-input"
               id="location"
@@ -43,7 +45,8 @@
         :disabled="false"
         ripple="true"
         @click.prevent="onSave"
-      >{{ $t('lang.pages.configuration.button')}}</v-ons-button>
+        >{{ $t('lang.pages.configuration.button') }}</v-ons-button
+      >
     </div>
   </v-ons-page>
 </template>
@@ -77,5 +80,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

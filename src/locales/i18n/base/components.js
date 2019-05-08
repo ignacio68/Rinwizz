@@ -2,10 +2,7 @@
 
 export default {
   input: {
-    placeholder: [
-      { email: 'email' },
-      { password: 'password' }
-    ]
+    placeholder: [{ email: 'email' }, { password: 'password' }]
   },
   button: [
     { submit: 'Submit' },

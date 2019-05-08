@@ -20,7 +20,7 @@
 
       <v-ons-row>
         <v-ons-col width="21%">
-          <img :src="userIcon" :alt="altIcon" class="alertCard__userIcon">
+          <img :src="userIcon" :alt="altIcon" class="alertCard__userIcon" />
         </v-ons-col>
         <v-ons-col>
           <h3 class="alertCard__userName">{{ userName }}</h3>
@@ -41,14 +41,16 @@
             class="alertCard__button"
             ripple="true"
             @click.prevent="onPhoneClick()"
-          >{{ phoneButton }}</v-ons-button>
+            >{{ phoneButton }}</v-ons-button
+          >
           <v-ons-button
             class="alertCard__button"
             ripple="true"
             @click.prevent="onLinkClick()"
-          >{{ linkButton }}</v-ons-button>
+            >{{ linkButton }}</v-ons-button
+          >
           <v-ons-button class="alertCard__button" ripple="true">
-            <v-ons-icon icon="ion-share, material:md-share"/>
+            <v-ons-icon icon="ion-share, material:md-share" />
           </v-ons-button>
         </div>
       </v-ons-row>

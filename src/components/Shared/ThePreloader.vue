@@ -2,12 +2,12 @@
 <template>
   <div
     class="loader-wrapper"
-    :style="{backgroundColor: loaderBackgroundColor, opacity: loaderOpacity}"
+    :style="{ backgroundColor: loaderBackgroundColor, opacity: loaderOpacity }"
   >
     <div class="loader">
       <v-ons-progress-circular
         class="loader loader__ripple"
-        :style="{width: loaderRippleWidth, heigth: loaderRipperHeigth}"
+        :style="{ width: loaderRippleWidth, heigth: loaderRipperHeigth }"
         indeterminate
       ></v-ons-progress-circular>
     </div>

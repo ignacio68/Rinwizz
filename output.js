@@ -24,7 +24,7 @@
       '@assets': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\assets',
       '@components': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\components',
       '@config': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\config',
-      '@firebases': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\firebase',
+      // '@firebases': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\firebase',
       '@locales': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\locales',
       '@pages': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\pages',
       '@stores': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\store',

@@ -1,18 +1,17 @@
 export const numberFormats = {
-  'enUS': {
+  enUS: {
     currency: {
       style: 'currency',
       currency: 'USD',
       currencyDisplay: 'symbol'
     }
   },
-  'esES': {
+  esES: {
     currency: {
       style: 'currency',
       currency: 'EUR',
       currencyDisplay: 'symbol'
     },
-    decimal: {
-    }
+    decimal: {}
   }
 }

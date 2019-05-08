@@ -9,7 +9,7 @@ const db = new loki('rinwizz.db', {
   autosave: true,
   autosaveInterval: 4000,
   method: indStorage
-}) 
+})
 
 let idbAdapter = new LokiIndexedAdapter()
 

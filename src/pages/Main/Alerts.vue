@@ -1,13 +1,13 @@
 <template>
   <v-ons-page>
     <div class="container">
-      <h1>{{ $t('lang.pages.alerts.main.text')}}</h1>
+      <h1>{{ $t('lang.pages.alerts.main.text') }}</h1>
       <!-- Alerts list -->
       <v-ons-list class="alertsList">
         <v-ons-list-item
           :modifier="md ? 'nodivider' : ''"
           class="alertsList__item"
-          v-for="(alert) in alerts"
+          v-for="alert in alerts"
           :key="alert.id"
         >
           <alert-message
@@ -28,10 +28,7 @@
       </v-ons-list>
     </div>
 
-    <v-ons-alert-dialog
-      modifier="rowfooter"
-      :visible.sync="isAlertVisible"
-    >
+    <v-ons-alert-dialog modifier="rowfooter" :visible.sync="isAlertVisible">
       <alert-script
         :userIcon="userIcon"
         :altIcon="userName + ' icon'"
@@ -39,8 +36,12 @@
         ref="scriptAlert"
       ></alert-script>
       <template slot="footer">
-        <v-ons-alert-dialog-button @click.prevent="isAlertVisible = false">Cancel</v-ons-alert-dialog-button>
-        <v-ons-alert-dialog-button @click.prevent="createAlert">Ok</v-ons-alert-dialog-button>
+        <v-ons-alert-dialog-button @click.prevent="isAlertVisible = false"
+          >Cancel</v-ons-alert-dialog-button
+        >
+        <v-ons-alert-dialog-button @click.prevent="createAlert"
+          >Ok</v-ons-alert-dialog-button
+        >
       </template>
     </v-ons-alert-dialog>
 
@@ -52,7 +53,8 @@
         :disabled="false"
         ripple="true"
         @click.prevent="logOutUser"
-      >Logout User</v-ons-button>
+        >Logout User</v-ons-button
+      >
     </div>
 
     <div class="deleteButton">
@@ -63,7 +65,8 @@
         :disabled="false"
         ripple="true"
         @click.prevent="deleteUser"
-      >Delete User</v-ons-button>
+        >Delete User</v-ons-button
+      >
     </div>
 
     <div class="toJSONButton">
@@ -74,7 +77,8 @@
         :disabled="false"
         ripple="true"
         @click.prevent="toJSON"
-      >User JSON</v-ons-button>
+        >User JSON</v-ons-button
+      >
     </div>
 
     <v-ons-fab

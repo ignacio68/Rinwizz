@@ -1,6 +1,9 @@
 <template>
   <v-ons-page>
-    <the-custom-toolbar :backLabel="volver" :pageTitle="toolbarTitle"></the-custom-toolbar>
+    <the-custom-toolbar
+      :backLabel="volver"
+      :pageTitle="toolbarTitle"
+    ></the-custom-toolbar>
     <div class="container"></div>
   </v-ons-page>
 </template>
@@ -22,5 +25,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
