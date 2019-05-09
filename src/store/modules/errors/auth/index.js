@@ -5,9 +5,7 @@ import actions from './actions'
 export default {
   strict: process.env.NODE_ENV !== 'production',
   namespaced: true,
-  state: {
-    errorMessage: ''
-  },
+  state: {},
   getters,
   mutations,
   actions

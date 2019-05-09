@@ -11,11 +11,12 @@ import social from '@modules/social'
 import user from '@modules/user'
 import userDb from '@modules/userDb'
 
-// import authErrors from '@modules/errors/auth'
-
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
+  // state: {
+  //   errorMessage: ''
+  // },
   modules: {
     alerts,
     auth,

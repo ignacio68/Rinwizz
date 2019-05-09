@@ -6,7 +6,7 @@ export default {
    * @param {void} state
    * @param {String} message
    */
-  [SET_ERROR_MESSAGE]: (state, message) => {
-    state.errorMessage = message
+  [SET_ERROR_MESSAGE]: (state, message, rootState) => {
+    rootState.errorMessage = message
   }
 }

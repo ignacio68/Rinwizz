@@ -1,11 +1,5 @@
-// import alert from './alert'
-import actions from './error_actions'
-// import shared from './shared'
-// import user from './user'
+import AUTH_ERRORS from './auth/actions'
 
 export default {
-  // alert,
-  actions
-  // shared,
-  // user
+  AUTH_ERRORS
 }

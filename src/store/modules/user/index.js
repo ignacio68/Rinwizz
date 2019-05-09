@@ -76,7 +76,7 @@ export default {
    * TODO:
    * 1. Convertir todas las acciones con firebasea async/await
    * 2. El resto de acciones convertirlas en Promise
-   * 3. Desarrollar la acción AUTH_ERROR en el módulo "errors/auth"
+   * 3. Desarrollar la acción authError en el módulo "errors/auth"
    */
   actions: {
     /**
@@ -167,7 +167,7 @@ export default {
             console.log('sendEmailVerification error: ' + error.message)
           })
       } else {
-        dispatch('authErrors/AUTH_ERROR', 'auth/user-empty', { root: true })
+        dispatch('authErrors/authError', 'auth/user-empty', { root: true })
       }
     },
 
@@ -213,7 +213,7 @@ export default {
         }
       } catch (error) {
         console.log('logUserIn error: ' + error.message)
-        dispatch('authErrors/AUTH_ERROR', error.code, { root: true })
+        dispatch('authErrors/authError', error.code, { root: true })
       }
     },
 
@@ -395,7 +395,7 @@ export default {
           console.log('enviado password al email: ' + email)
         })
         .catch(error => {
-          dispatch('authErrors/AUTH_ERROR', error.code, { root: true })
+          dispatch('authErrors/authError', error.code, { root: true })
           console.log('resetPassword: ' + error)
         })
     },
@@ -417,7 +417,7 @@ export default {
         })
         .catch(error => {
           console.log('confirmPasswordReset error: ' + error.message)
-          dispatch('authErrors/AUTH_ERROR', error.code, { root: true })
+          dispatch('authErrors/authError', error.code, { root: true })
         })
     },
 
@@ -437,7 +437,7 @@ export default {
         })
         .catch(error => {
           console.log('verifyPasswordResetCode error: ' + error.message)
-          dispatch('authErrors/AUTH_ERROR', error.code, { root: true })
+          dispatch('authErrors/authError', error.code, { root: true })
         })
     },
 
