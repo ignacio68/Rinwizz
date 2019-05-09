@@ -1,27 +1,9 @@
-/*
-export const pageStack = state => {
-  return state.stack
-}
-
-export const options = state => {
-  return state.options
-}
-
-export const index = state => {
-  return state.index
-}
-*/
+import { PAGE_STACK, OPTIONS, INDEX } from '../../types/getters_types'
 
 export default {
-  pageStack: state => {
-    return state.stack
-  },
+  [PAGE_STACK]: state => state.stack,
 
-  options: state => {
-    return state.options
-  },
+  [OPTIONS]: state => state.options,
 
-  index: state => {
-    return state.index
-  }
+  [INDEX]: state => state.index
 }

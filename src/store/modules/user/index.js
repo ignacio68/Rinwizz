@@ -44,9 +44,7 @@ export default {
      *
      * @param {*} state
      */
-    user: state => {
-      return state.user
-    }
+    user: state => state.user
   },
   mutations: {
     /**

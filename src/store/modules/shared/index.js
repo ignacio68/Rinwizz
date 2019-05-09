@@ -10,15 +10,9 @@ export default {
     lang: ''
   },
   getters: {
-    loading: state => {
-      return state.loading
-    },
-    error: state => {
-      return state.error
-    },
-    actionPass: state => {
-      return state.actionPass
-    }
+    loading: state => state.loading,
+    error: state => state.error,
+    actionPass: state => state.actionPass
   },
   mutations: {
     /**

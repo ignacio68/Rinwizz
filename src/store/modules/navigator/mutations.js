@@ -1,4 +1,11 @@
-import { PUSH, POP, REPLACE, RESET, OPTIONS, SET } from '../../mutations_types'
+import {
+  PUSH,
+  POP,
+  REPLACE,
+  RESET,
+  OPTIONS,
+  SET
+} from '../../types/mutations_types'
 
 export default {
   /**

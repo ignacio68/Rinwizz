@@ -7,9 +7,7 @@ export default {
     errorMessage: ''
   },
   getters: {
-    errorMessage: state => {
-      return state.errorMessage
-    }
+    errorMessage: state => state.errorMessage
   },
   mutations: {
     /**

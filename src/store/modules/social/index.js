@@ -23,10 +23,7 @@ export default {
     ]
   },
   getters: {
-    socialButtons: state => {
-      console.log('Estoy en getters.socialButtons')
-      return state.socialButtons
-    }
+    socialButtons: state => state.socialButtons
   },
   mutations: {},
   actions: {

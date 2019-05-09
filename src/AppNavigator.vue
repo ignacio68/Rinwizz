@@ -21,7 +21,7 @@ export default {
       this.PUSH(Welcome)
       console.log('El usuario NO está autenticado')
     } else {
-      this.$store.commit('navigator/PUSH', HomePage)
+      // this.$store.commit('navigator/PUSH', HomePage)
       this.PUSH(HomePage)
       console.log('El usuario SI está autenticado')
     }
@@ -33,15 +33,15 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters('navigator', ['pageStack, options']),
+    // ...mapGetters('navigator', ['PAGE_STACK, OPTIONS']),
 
     pageStack() {
-      return this.$store.getters['navigator/pageStack']
-      // return this.pageStack
+      return this.$store.getters['navigator/PAGE_STACK']
+      // return this.PAGE_STACK
     },
 
     options() {
-      return this.$store.getters['navigator/options']
+      return this.$store.getters['navigator/OPTIONS']
       // return this.options
     },
 
@@ -54,7 +54,7 @@ export default {
     }
   },
   methods: {
-    // ...mapGetters('navigator', ['pageStack, options']),
+    ...mapGetters('navigator', ['PAGE_STACK, OPTIONS']),
     ...mapMutations('navigator', ['PUSH', 'POP']),
     storePop() {
       this.$store.commit('navigator/POP')
