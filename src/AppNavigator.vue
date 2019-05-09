@@ -1,8 +1,14 @@
 <template id="App">
-  <v-ons-navigator :page-stack="pageStack" :pop-page="storePop" :options="options"></v-ons-navigator>
+  <v-ons-navigator
+    :page-stack="pageStack"
+    :pop-page="storePop"
+    :options="options"
+  ></v-ons-navigator>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
+
 import HomePage from '@pages/HomePage'
 import Welcome from '@pages/Shared/Welcome'
 
@@ -11,10 +17,12 @@ export default {
   beforeMount() {
     console.log('AppNavigator beforeMount()')
     if (!this.userIsAuthenticated) {
-      this.$store.commit('navigator/PUSH', Welcome)
+      // this.$store.commit('navigator/PUSH', Welcome)
+      this.PUSH(Welcome)
       console.log('El usuario NO está autenticado')
     } else {
       this.$store.commit('navigator/PUSH', HomePage)
+      this.PUSH(HomePage)
       console.log('El usuario SI está autenticado')
     }
   },
@@ -25,12 +33,18 @@ export default {
     return {}
   },
   computed: {
+    ...mapGetters('navigator', ['pageStack, options']),
+
     pageStack() {
       return this.$store.getters['navigator/pageStack']
+      // return this.pageStack
     },
+
     options() {
       return this.$store.getters['navigator/options']
+      // return this.options
     },
+
     userIsAuthenticated() {
       console.log('Comprobando si el usuario está autenticado')
       return (
@@ -40,8 +54,11 @@ export default {
     }
   },
   methods: {
+    // ...mapGetters('navigator', ['pageStack, options']),
+    ...mapMutations('navigator', ['PUSH', 'POP']),
     storePop() {
       this.$store.commit('navigator/POP')
+      // this.POP()
     }
   }
 }

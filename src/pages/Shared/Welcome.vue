@@ -4,7 +4,10 @@
       <v-ons-col class="col">
         <h1 class="header">{{ $t('lang.pages.welcome.header') }}</h1>
         <p class="secondary-text">{{ $t('lang.pages.welcome.text') }}</p>
-        <v-ons-list class="list" modifier>
+        <v-ons-list
+          class="list"
+          modifier
+        >
           <v-ons-list-item
             class="list__item"
             modifier="nodivider"
@@ -36,6 +39,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 import SignUp from '@pages/User/SignUp'
 
 export default {
@@ -44,8 +49,9 @@ export default {
     console.log('estoy en Welcome.mounted')
   },
   methods: {
+    ...mapMutations('navigator', ['PUSH']),
     toSignUp() {
-      this.$store.commit('navigator/PUSH', SignUp)
+      this.PUSH(SignUp)
     }
   }
 }

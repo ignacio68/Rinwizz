@@ -4,11 +4,22 @@
       :backLabel="volver"
       :pageTitle="toolbarTitle"
     ></the-custom-toolbar>
-    <div class="container"></div>
+    <div class="container">
+      <v-ons-button
+        name="returnButton"
+        class="return__button"
+        modifier="large"
+        :disabled="false"
+        ripple="true"
+        @click.prevent="onReturn"
+      >{{ $t('lang.components.button.OK') }}</v-ons-button>
+    </div>
   </v-ons-page>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'privacy-policy',
   data() {
@@ -20,6 +31,12 @@ export default {
   computed: {
     toolbarTitle() {
       return this.$t('lang.pages.privacy.toolbar.title')
+    }
+  },
+  methods:{
+    ...mapMutations('navigator', ['POP']),
+    onReturn() {
+      this.POP()
     }
   }
 }

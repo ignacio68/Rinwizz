@@ -10,7 +10,8 @@ export default {
     sigup: 'Sign Up',
     login: 'Sign In',
     signout: 'Sign Out',
-    reset: 'Reset'
+    reset: 'Reset',
+    OK: 'OK'
   },
   alertConfirmPassword: {
     alertText: 'We have sent you an email to confirm the password',

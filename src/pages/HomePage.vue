@@ -11,11 +11,18 @@
       </v-ons-toolbar-button-->
     </the-custom-toolbar>
 
-    <v-ons-tabbar position="bottom" swipeable :tabs="tabs" :index.sync="index"></v-ons-tabbar>
+    <v-ons-tabbar
+      position="bottom"
+      swipeable
+      :tabs="tabs"
+      :index.sync="index"
+    ></v-ons-tabbar>
   </v-ons-page>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 import Alerts from './Main/Alerts'
 import Profile from './Main/Profile'
 import Search from './Main/Search'
@@ -51,11 +58,13 @@ export default {
         return this.$store.getters['navigator/index']
       },
       set(newValue) {
-        this.$store.commit('navigator/SET', newValue)
+        this.SET(newValue)
       }
     }
   },
-  methods: {}
+  methods: {
+    ...mapMutations('navigator', ['SET'])
+  }
 }
 </script>
 

@@ -10,7 +10,8 @@ export default {
     sigup: 'Registrar',
     login: 'Entrar',
     signout: 'Desconectar',
-    reset: 'Reset'
+    reset: 'Reset',
+    OK: 'OK'
   },
   alertConfirmPassword: {
     alertText: 'Te hemos enviado un email para confirmar la contraseña',

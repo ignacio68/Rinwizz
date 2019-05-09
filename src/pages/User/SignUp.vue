@@ -8,13 +8,22 @@
 
       <!-------SIGNUP WITH EMAIL & PASSWORD ------>
 
-      <form class="form" autocomplete="off">
+      <form
+        class="form"
+        autocomplete="off"
+      >
         <v-ons-list>
           <!-- NAME INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-person, material:zmdi-account" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-person, material:zmdi-account"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -30,9 +39,15 @@
 
           <!-- EMAIL INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-ios-email, material:zmdi-email" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-ios-email, material:zmdi-email"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -49,9 +64,15 @@
 
           <!-- PASSWORD INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-locked, material:zmdi-lock" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-locked, material:zmdi-lock"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -87,7 +108,10 @@
         <!-- ERROR -->
 
         <v-ons-list-item>
-          <p v-if="isError" class="error">{{ errorMessage }}</p>
+          <p
+            v-if="isError"
+            class="error"
+          >{{ errorMessage }}</p>
         </v-ons-list-item>
       </form>
 
@@ -125,15 +149,29 @@
       <!------ TERMS OF USE & POLICY PRIVACITY ------>
 
       <div class="privacy">
-        <i18n class="privacy__text" path="lang.pages.signup.main.text3">
-          <span class="privacy__text-link" @click.prevent="toTerms" place="terms">{{ terms }}</span>
-          <span class="privacy__text-link" @click.prevent="toPrivacy" place="privacy">{{ privacy }}</span>
+        <i18n
+          class="privacy__text"
+          path="lang.pages.signup.main.text3"
+        >
+          <span
+            class="privacy__text-link"
+            @click.prevent="toTerms"
+            place="terms"
+          >{{ terms }}</span>
+          <span
+            class="privacy__text-link"
+            @click.prevent="toPrivacy"
+            place="privacy"
+          >{{ privacy }}</span>
         </i18n>
       </div>
 
       <!-- I HAVE A USER ACCOUNT -->
 
-      <p class="logInText" @click.prevent="toLogIn">{{ $t('lang.pages.signup.main.text2') }}</p>
+      <p
+        class="logInText"
+        @click.prevent="toLogIn"
+      >{{ $t('lang.pages.signup.main.text2') }}</p>
     </div>
 
     <!------ CONFIRM PASSWORD ALERT ------>
@@ -160,7 +198,7 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
+import { mapMutations } from 'vuex'
 
 import Configuration from './Configuration'
 import TermsOfService from '@pages/Shared/TermsOfService'
@@ -170,7 +208,6 @@ import LogIn from './LogIn'
 import CircleButton from '@components/Shared/CircleButton'
 // import UserInputPassword from '../../components/Shared/UserInputPassword'
 
-const { mapState } = createNamespacedHelpers('social')
 /**
  * @description Página de registro de la aplicación
  * @version 1.0.0
@@ -227,11 +264,13 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('navigator', ['PUSH', 'REPLACE']),
+
     socialLogIn(index) {
       this.$store.dispatch('social/dispatchLogUp', index)
     },
     toLogIn() {
-      this.$store.commit('navigator/PUSH', LogIn)
+      this.PUSH(LogIn)
     },
     /**
      * Comprueba si el usuario está registrado
@@ -255,10 +294,10 @@ export default {
       this.$store.dispatch('shared/clearError', null)
     },
     toTerms() {
-      this.$store.commit('navigator/PUSH', TermsOfService)
+      this.PUSH(TermsOfService)
     },
     toPrivacy() {
-      this.$store.commit('navigator/PUSH', PrivacyPolicy)
+      this.PUSH(PrivacyPolicy)
     },
     togglePassword() {
       this.type = this.type === 'password' ? 'text' : 'password'
@@ -269,7 +308,7 @@ export default {
     onClickAlertButton() {
       console.log('Estoy en el botón de la alerta de confirmación de password')
       this.$store.commit('shared/setActionPass', false)
-      this.$store.commit('navigator/REPLACE', Configuration)
+      this.REPLACE(Configuration)
       // this.$store.dispatch('user/confirmPassword', this.email)
     }
   }
