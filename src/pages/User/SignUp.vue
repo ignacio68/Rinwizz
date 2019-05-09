@@ -211,7 +211,7 @@ export default {
     },
     errorMessage() {
       // TODO: revisar para llamar directamente al state
-      return this.$store.getters['authErrors/errorMessage']
+      return this.$store.getters['authErrors/ERROR_MESSAGE']
     },
     actionPass() {
       /* comprueba si existe actionPass para lanzar la alert de confirmación de password */

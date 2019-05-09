@@ -1,3 +1,10 @@
+// alerts
+export const CREATE_ALERT = 'CREATE_ALERT'
+export const LOAD_ALERTS = 'LOAD_ALERTS'
+
+// errors
+export const AUTH_ERROR = 'AUTH_ERROR'
+
 // user
 export const USER_SIGNUP = 'USER_SIGNUP'
 export const USER_LOGIN = 'USER_LOGIN'
@@ -9,7 +16,7 @@ export const USER_FAKE = 'USER_FAKE'
 export const USER_DELETE_FIREBASE_ACCOUNT = 'USER_DELETE_FIREBASE_ACCOUNT'
 
 export const ON_AUTH_STATE_CHANGE = 'ON_AUTH_STATE_CHANGE'
-export const AUTOSIGNIN = 'AUTOSIGNIN'
+export const AUTO_SIGNIN = 'AUTO_SIGNIN'
 
 export const PASSWORD_CONFIRM = 'PASSWORD_CONFIRM'
 export const PASSWORD_RESET = 'PASSWORD_RESET'

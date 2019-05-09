@@ -164,7 +164,7 @@ export default {
       return this.$store.getters['shared/error']
     },
     errorMessage() {
-      return this.$store.getters['authErrors/errorMessage']
+      return this.$store.getters['authErrors/ERROR_MESSAGE']
     },
     buttonActive() {
       if (this.email.length >= 6 && this.password.length >= 8) {
@@ -176,6 +176,7 @@ export default {
   },
   methods: {
     ...mapMutations('navigator', ['REPLACE']),
+
     onLognIn() {
       console.log('Estoy en onLognIn')
       this.$store.dispatch('user/logInUser', {
