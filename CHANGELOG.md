@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] - 2019-05-09
+
+### Changed
+
+- Refactoring errors handlers
+- Several mimor changes
+
+### Added
+
+- store tree modules
+
 ## [0.1.3] - 2019-05-08
 
 ### Changed

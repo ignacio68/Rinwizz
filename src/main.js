@@ -4,7 +4,7 @@
  * @copyright Ignacio López-Amor Pinillos 2019
  * @author Ignacio López-Amor Pinillos <ignaciolopezamor@gmail.com>
  * @license MIT
- * @version 0.1.3
+ * @version 0.1.4
  */
 
 /*
