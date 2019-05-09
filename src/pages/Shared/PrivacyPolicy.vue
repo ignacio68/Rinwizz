@@ -33,7 +33,7 @@ export default {
       return this.$t('lang.pages.privacy.toolbar.title')
     }
   },
-  methods:{
+  methods: {
     ...mapMutations('navigator', ['POP']),
     onReturn() {
       this.POP()
