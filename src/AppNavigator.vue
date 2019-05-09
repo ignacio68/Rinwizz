@@ -34,7 +34,12 @@ export default {
     ...mapState('user', {
       user: state => state.user
     }),
-    ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
+    ...mapState('navigator', {
+      pageStack: state => state.stack,
+      options: state => state.options
+    }),
+    // TODO: revisar la utilización de getters simples
+    // ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
     userIsAuthenticated() {
       console.log('Comprobando si el usuario está autenticado')
@@ -49,8 +54,7 @@ export default {
     ...mapMutations('navigator', ['PUSH', 'POP']),
 
     storePop() {
-      this.$store.commit('navigator/POP')
-      // this.POP()
+      this.POP()
     }
   }
 }
