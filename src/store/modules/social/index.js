@@ -101,7 +101,7 @@ export default {
             .catch(error => {
               commit('shared/setLoading', false, { root: true })
               // commit('setError', error)
-              dispatch('authErrors/authError', error.code, { root: true })
+              dispatch('errors/AUTH_ERROR', error.code, { root: true })
               console.log('socialSignUp error es: ' + error.code)
             })
         })

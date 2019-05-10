@@ -1,6 +1,6 @@
 import getters from './getters'
 import mutations from './mutations'
-import actions from './actions'
+import * as actions from './actions'
 
 export default {
   strict: process.env.NODE_ENV !== 'production',

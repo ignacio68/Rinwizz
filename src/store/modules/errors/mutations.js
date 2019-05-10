@@ -6,7 +6,8 @@ export default {
    * @param {void} state
    * @param {String} message
    */
-  [SET_ERROR_MESSAGE]: (state, message, rootState) => {
-    rootState.errorMessage = message
+  [SET_ERROR_MESSAGE]: (state, message) => {
+    console.log('Estoy en SET_ERROR_MESSAGE y el error es: ' + message)
+    state.errorMessage = message
   }
 }

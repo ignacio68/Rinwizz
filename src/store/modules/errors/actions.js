@@ -1,5 +1,2 @@
-import AUTH_ERRORS from './auth/actions'
-
-export default {
-  AUTH_ERRORS
-}
+export { AUTH_ERROR } from './errors_actions/auth'
+export { USER_ERROR } from './errors_actions/user'

@@ -76,7 +76,7 @@ export default {
    * TODO:
    * 1. Convertir todas las acciones con firebasea async/await
    * 2. El resto de acciones convertirlas en Promise
-   * 3. Desarrollar la acción authError en el módulo "errors/auth"
+   * 3. Desarrollar la acción AUTH_ERROR en el módulo "errors/auth"
    */
   actions: {
     /**
@@ -138,11 +138,11 @@ export default {
           // dispatch('createUserDb', newUser)
         } else {
           console.log('Hay un error')
-          dispatch('authErrors/AUTH_ERROR', 'auth/user-empty', { root: true })
+          dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
         }
       } catch (error) {
         console.log('signUserUp error: ' + error.message)
-        dispatch('authErrors/AUTH_ERROR', error.code, { root: true })
+        dispatch('errors/AUTH_ERROR', error.code, { root: true })
         commit('shared/setActionPass', false, { root: true })
       }
     },
@@ -163,11 +163,11 @@ export default {
             console.log('email enviado')
           })
           .catch(error => {
-            dispatch('authErrors/AUTH_ERROR', error.code, { root: true })
+            dispatch('errors/AUTH_ERROR', error.code, { root: true })
             console.log('sendEmailVerification error: ' + error.message)
           })
       } else {
-        dispatch('authErrors/authError', 'auth/user-empty', { root: true })
+        dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
       }
     },
 
@@ -181,7 +181,7 @@ export default {
         })
         .catch(error => {
           // TODO: Revisar los codigos de error y añadir a locales
-          dispatch('authErrors/AUTH_ERROR', error.code, { root: true })
+          dispatch('errors/AUTH_ERROR', error.code, { root: true })
         })
     },
 
@@ -213,7 +213,7 @@ export default {
         }
       } catch (error) {
         console.log('logUserIn error: ' + error.message)
-        dispatch('authErrors/authError', error.code, { root: true })
+        dispatch('errors/AUTH_ERROR', error.code, { root: true })
       }
     },
 
@@ -395,7 +395,7 @@ export default {
           console.log('enviado password al email: ' + email)
         })
         .catch(error => {
-          dispatch('authErrors/authError', error.code, { root: true })
+          dispatch('errors/AUTH_ERROR', error.code, { root: true })
           console.log('resetPassword: ' + error)
         })
     },
@@ -417,7 +417,7 @@ export default {
         })
         .catch(error => {
           console.log('confirmPasswordReset error: ' + error.message)
-          dispatch('authErrors/authError', error.code, { root: true })
+          dispatch('errors/AUTH_ERROR', error.code, { root: true })
         })
     },
 
@@ -437,7 +437,7 @@ export default {
         })
         .catch(error => {
           console.log('verifyPasswordResetCode error: ' + error.message)
-          dispatch('authErrors/authError', error.code, { root: true })
+          dispatch('errors/AUTH_ERROR', error.code, { root: true })
         })
     },
 

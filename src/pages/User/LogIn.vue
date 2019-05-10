@@ -8,13 +8,22 @@
     <div class="container">
       <!-------------------- LOG IN FORM ------------------------------------------------>
 
-      <form class="form" autocomplete="off">
+      <form
+        class="form"
+        autocomplete="off"
+      >
         <v-ons-list class="form-list">
           <!-- EMAIL INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-ios-email, material:zmdi-email" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-ios-email, material:zmdi-email"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -31,9 +40,15 @@
 
           <!-- PASSWORD INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-locked, material:zmdi-lock" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-locked, material:zmdi-lock"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -68,7 +83,10 @@
           <!-- ERROR -->
 
           <v-ons-list-item>
-            <p v-if="isError" class="error">{{ errorMessage }}</p>
+            <p
+              v-if="isError"
+              class="error"
+            >{{ errorMessage }}</p>
           </v-ons-list-item>
 
           <!-- FORGOT PASSWORD -->
@@ -122,14 +140,17 @@
 
       <!-- SIGNUP BUTTON -->
       <div>
-        <p class="text__button" @click.prevent="toSignUp">{{ $t('lang.pages.login.main.text2') }}</p>
+        <p
+          class="text__button"
+          @click.prevent="toSignUp"
+        >{{ $t('lang.pages.login.main.text2') }}</p>
       </div>
     </div>
   </v-ons-page>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 import SignUp from './SignUp'
 import CircleButton from '@components/Shared/CircleButton'
@@ -155,6 +176,8 @@ export default {
     console.log('Estoy en LogIn.mounted')
   },
   computed: {
+    ...mapGetters('errors', { errorMessage: 'ERROR_MESSAGE' }),
+
     socialButtons() {
       // TODO: revisar para llamar directamente al state
       return this.$store.getters['social/socialButtons']
@@ -162,9 +185,6 @@ export default {
     isError() {
       // TODO: revisar para llamar directamente al state
       return this.$store.getters['shared/error']
-    },
-    errorMessage() {
-      return this.$store.getters['authErrors/ERROR_MESSAGE']
     },
     buttonActive() {
       if (this.email.length >= 6 && this.password.length >= 8) {

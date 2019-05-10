@@ -8,13 +8,22 @@
 
       <!-------SIGNUP WITH EMAIL & PASSWORD ------>
 
-      <form class="form" autocomplete="off">
+      <form
+        class="form"
+        autocomplete="off"
+      >
         <v-ons-list>
           <!-- NAME INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-person, material:zmdi-account" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-person, material:zmdi-account"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -30,9 +39,15 @@
 
           <!-- EMAIL INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-ios-email, material:zmdi-email" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-ios-email, material:zmdi-email"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -49,9 +64,15 @@
 
           <!-- PASSWORD INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-locked, material:zmdi-lock" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-locked, material:zmdi-lock"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -87,7 +108,10 @@
         <!-- ERROR -->
 
         <v-ons-list-item>
-          <p v-if="isError" class="error">{{ errorMessage }}</p>
+          <p
+            v-if="isError"
+            class="error"
+          >{{ errorMessage }}</p>
         </v-ons-list-item>
       </form>
 
@@ -125,15 +149,29 @@
       <!------ TERMS OF USE & POLICY PRIVACITY ------>
 
       <div class="privacy">
-        <i18n class="privacy__text" path="lang.pages.signup.main.text3">
-          <span class="privacy__text-link" @click.prevent="toTerms" place="terms">{{ terms }}</span>
-          <span class="privacy__text-link" @click.prevent="toPrivacy" place="privacy">{{ privacy }}</span>
+        <i18n
+          class="privacy__text"
+          path="lang.pages.signup.main.text3"
+        >
+          <span
+            class="privacy__text-link"
+            @click.prevent="toTerms"
+            place="terms"
+          >{{ terms }}</span>
+          <span
+            class="privacy__text-link"
+            @click.prevent="toPrivacy"
+            place="privacy"
+          >{{ privacy }}</span>
         </i18n>
       </div>
 
       <!-- I HAVE A USER ACCOUNT -->
 
-      <p class="logInText" @click.prevent="toLogIn">{{ $t('lang.pages.signup.main.text2') }}</p>
+      <p
+        class="logInText"
+        @click.prevent="toLogIn"
+      >{{ $t('lang.pages.signup.main.text2') }}</p>
     </div>
 
     <!------ CONFIRM PASSWORD ALERT ------>
@@ -160,7 +198,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 import Configuration from './Configuration'
 import TermsOfService from '@pages/Shared/TermsOfService'
@@ -201,6 +239,8 @@ export default {
     console.log('Estoy en SignUp.mounted')
   },
   computed: {
+    ...mapGetters('errors', { errorMessage: 'ERROR_MESSAGE' }),
+
     socialButtons() {
       // TODO: revisar para llamar directamente al state
       return this.$store.getters['social/socialButtons']
@@ -208,10 +248,6 @@ export default {
     isError() {
       // TODO: revisar para llamar directamente al state
       return this.$store.getters['shared/error']
-    },
-    errorMessage() {
-      // TODO: revisar para llamar directamente al state
-      return this.$store.getters['authErrors/ERROR_MESSAGE']
     },
     actionPass() {
       /* comprueba si existe actionPass para lanzar la alert de confirmación de password */

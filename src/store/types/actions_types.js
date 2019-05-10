@@ -4,6 +4,7 @@ export const LOAD_ALERTS = 'LOAD_ALERTS'
 
 // errors
 export const AUTH_ERROR = 'AUTH_ERROR'
+export const USER_ERROR = 'USER_ERROR'
 
 // user
 export const USER_SIGNUP = 'USER_SIGNUP'
