@@ -89,7 +89,7 @@ import TheCustomtoolbar from '@components/Shared/TheCustomToolbar' // NOTA: Redi
 /**
  * Global Config
  */
-Vue.config.productionTip = false
+Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
 /**
  * Load Onsen
