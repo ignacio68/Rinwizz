@@ -31,15 +31,17 @@ export default {
     return {}
   },
   computed: {
+    /*
     ...mapState('user', {
       user: state => state.user
-    }),
+    }),*/
+    /*
     ...mapState('navigator', {
       pageStack: state => state.stack,
       options: state => state.options
-    }),
-    // TODO: revisar la utilización de getters simples
-    // ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
+    }),*/
+    ...mapGetters('user', ['user']),
+    ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
     userIsAuthenticated() {
       console.log('Comprobando si el usuario está autenticado')
