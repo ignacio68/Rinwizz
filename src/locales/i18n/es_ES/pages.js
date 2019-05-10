@@ -1,7 +1,7 @@
 export default {
   welcome: {
     header: 'RINWIZZ TE DA LA BIENVENIDA',
-    text: 'En RINWIZZ podras recibir avisos y alertas de tus sitios preferidos',
+    text: 'Recibe alertas y noticias de tus sitios preferidos',
     text1: 'Entradas para acontecimientos',
     text2: 'Mesas libres en restaurantes',
     text3: 'Precios especiales en tiendas',
