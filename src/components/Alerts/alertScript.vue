@@ -1,14 +1,12 @@
 <template>
   <v-ons-card class="alertCard">
     <div class="title">
-      <p class="title__text">
-        {{ $t('lang.components.alertScript.pageTitle') }}
-      </p>
+      <p class="title__text">{{ $t('lang.components.alertScript.pageTitle') }}</p>
     </div>
 
     <div class="content">
       <v-ons-col class="columnLeft">
-        <img class="alertCard__userIcon" :src="userIcon" :alt="altIcon" />
+        <img class="alertCard__userIcon" :src="userIcon" :alt="altIcon">
       </v-ons-col>
       <v-ons-col class="columnRight">
         <v-ons-list class="alertList">
@@ -21,7 +19,7 @@
               id="alertTitle"
               :placeholder="$t('lang.components.alertScript.title')"
               v-model="alertTitle"
-            />
+            >
           </v-ons-list-item>
           <v-ons-list-item class="alertList__item">
             <!--label for="alertName" class="alertList__item-label">{{ $t('lang.components.alertScript.text') }}</label-->
@@ -38,9 +36,11 @@
             ></textarea>
           </v-ons-list-item>
           <v-ons-list-item class="alertList__item">
-            <label for="endDate" class="alertList__item-label">{{
+            <label for="endDate" class="alertList__item-label">
+              {{
               $t('lang.components.alertScript.end')
-            }}</label>
+              }}
+            </label>
             <v-ons-select
               class="alertList__item-endDate"
               name="endDate"
@@ -51,9 +51,7 @@
                 v-for="option in options"
                 :value="option.value"
                 :key="option.id"
-              >
-                {{ option.text }}
-              </option>
+              >{{ option.text }}</option>
             </v-ons-select>
           </v-ons-list-item>
           <v-ons-list-item class="alertList__item">
@@ -65,7 +63,7 @@
               id="alertLink"
               :placeholder="$t('lang.components.alertScript.link')"
               v-model="alertLink"
-            />
+            >
           </v-ons-list-item>
         </v-ons-list>
       </v-ons-col>
@@ -74,6 +72,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'alert-script',
   props: {
@@ -141,6 +141,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions('alerts', ['CREATE_ALERT']),
+
     /**
      * Este método hay que llamarlo desde el padre
      * sirve para crear la alerta cuando se hace click en OK
@@ -162,7 +164,7 @@ export default {
       }
       console.log(alertData)
       // Escribimos la alerta en la base de datos de Firebase
-      this.$store.dispatch('alerts/createAlert', alertData)
+      this.CREATE_ALERT(alertData)
       // this.$router.push('/meetups')
       this.$emit('onCreateAlert')
       // ¡¡¡¡DA ERROR!!!!

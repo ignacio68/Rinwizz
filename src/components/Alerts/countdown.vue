@@ -22,6 +22,7 @@
         <div>Seg</div>
       </div>
       <div v-if="finish" class="finish">
+        <!-- TODO: INTERNACIONALIZAR -->
         <h3>FINALIZADA</h3>
       </div>
     </v-ons-row>
@@ -35,7 +36,7 @@ export default {
     referenceDate: [Number, String],
     startDate: [Number, String],
     endDate: [Number, String],
-    trans: []
+    trans: {}
   },
   timers: {
     timerCount: {
