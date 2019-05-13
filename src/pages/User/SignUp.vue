@@ -162,7 +162,7 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 
-import Configuration from './Configuration'
+import Personal from '@pages/Preferences/Personal'
 import TermsOfService from '@pages/Shared/TermsOfService'
 import PrivacyPolicy from '@pages/Shared/PrivacyPolicy'
 import LogIn from './LogIn'
@@ -242,10 +242,6 @@ export default {
         password: this.password
       })
     },
-    onDismissed() {
-      console.log('estoy en onDismissed!!')
-      this.CLEAR_ERROR(null)
-    },
     toTerms() {
       this.PUSH(TermsOfService)
     },
@@ -261,7 +257,7 @@ export default {
     onClickAlertButton() {
       console.log('Estoy en el botón de la alerta de confirmación de password')
       this.SET_ACTION_PASS(false)
-      this.REPLACE(Configuration)
+      this.REPLACE(Personal)
       // this.$store.dispatch('user/confirmPassword', this.email)
     }
   }
