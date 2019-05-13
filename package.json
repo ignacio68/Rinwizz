@@ -1,6 +1,6 @@
 {
   "name": "rinwizz",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "private": true,
   "description": "rinwizz App",
   "author": {
@@ -28,11 +28,13 @@
   },
   "dependencies": {
     "firebase": "^6.0.0",
+    "leaflet": "^1.5.1",
     "onsenui": "^2.10.8",
     "pouchdb": "^7.0.0",
     "vue": "^2.6.10",
     "vue-i18n": "^8.11.2",
     "vue-timers": "^2.0.2",
+    "vue2-leaflet": "^2.1.1",
     "vuex": "^3.1.0"
   },
   "devDependencies": {

@@ -20,4 +20,5 @@ module.exports = {
       alias: require('./aliases.config').webpack
     }
   }
-// extensions: ['.js', '.jsx', '.vue', '.css', '.png', '.jpg', '.gif', '.jpeg']
+  // extensions: ['.js', '.jsx', '.vue', '.css', '.png', '.jpg', '.gif', '.jpeg']
+}
