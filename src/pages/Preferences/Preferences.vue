@@ -28,8 +28,8 @@ export default {
   methods: {
     ...mapMutations('navigator', ['PUSH']),
 
-    toUserLocation() {
-      this.PUSH(toHomePage)
+    toHomePage() {
+      this.PUSH(HomePage)
     }
   }
 }
