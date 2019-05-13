@@ -22,11 +22,13 @@ import { mapMutations } from 'vuex'
 import Preferences from './Preferences'
 export default {
   name: 'location',
-  data: () => {},
+  data() {
+    return {}
+  },
   methods: {
     ...mapMutations('navigator', ['PUSH']),
 
-    toUserLocation() {
+    toPreferences() {
       this.PUSH(Preferences)
     }
   }

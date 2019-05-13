@@ -22,7 +22,9 @@ import { mapMutations } from 'vuex'
 import HomePage from '@pages/HomePage'
 export default {
   name: 'preferences',
-  data: () => {},
+  data() {
+    return {}
+  },
   methods: {
     ...mapMutations('navigator', ['PUSH']),
 

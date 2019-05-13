@@ -22,7 +22,9 @@ import { mapMutations } from 'vuex'
 import Location from './Location'
 export default {
   name: 'personal',
-  data: () => {},
+  data() {
+    return {}
+  },
   methods: {
     ...mapMutations('navigator', ['REPLACE']),
 
