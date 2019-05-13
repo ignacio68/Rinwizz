@@ -1,6 +1,6 @@
 import { firebaseDb } from '../../../firebase'
 
-import { CREATE_ALERT, LOAD_ALERTS } from '../../types/actions_types'
+import { CREATE_ALERT, LOAD_ALERTS } from '@store/types/actions_types'
 
 export default {
   /**
@@ -10,8 +10,7 @@ export default {
    */
   [CREATE_ALERT]: (commit, alertData) => {
     console.log('Estoy en createAlert')
-    commit('shared/setLoading', true, { root: true })
-    commit('shared/clearError', null, { root: true })
+    commit('shared/CLEAR_ERROR', null, { root: true })
     // console.log(this.$store.user.state.user)
     const alert = {
       // creatorId: this.$store.getters['user/user'],
@@ -27,7 +26,6 @@ export default {
       .ref('alerts')
       .push(alert)
       .then(data => {
-        commit('shared/setLoading', false, { root: true })
         key = data.key
         return key
       })
@@ -49,8 +47,7 @@ export default {
         console.log(key)
       })
       .catch(error => {
-        commit('shared/setLoading', false, { root: true })
-        commit('shared/setError', error)
+        commit('shared/SET_ERROR', error)
         console.log(error)
       })
   },
@@ -62,8 +59,7 @@ export default {
    *
    */
   [LOAD_ALERTS]: commit => {
-    commit('shared/setLoading', true, { root: true })
-    commit('shared/clearError', null, { root: true })
+    commit('shared/CLEAR_ERROR', null, { root: true })
     console.log('Estoy en action:loadAlerts')
     firebaseDb
       .ref('alerts')
@@ -88,11 +84,9 @@ export default {
           })
         }
         commit('SET_LOADED_ALERTS', alerts)
-        commit('shared/setLoading', false, { root: true })
       })
       .catch(error => {
-        commit('shared/setLoading', false, { root: true })
-        commit('shared/setError', error, { root: true })
+        commit('shared/SET_ERROR', error, { root: true })
         console.log(error)
       })
   }

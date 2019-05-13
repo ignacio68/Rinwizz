@@ -4,6 +4,7 @@ export const CREATE_ALERT = 'CREATE_ALERT'
 
 // errors
 export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
+
 // navigator
 export const PUSH = 'PUSH'
 export const POP = 'POP'
@@ -11,6 +12,13 @@ export const REPLACE = 'REPLACE'
 export const RESET = 'RESET'
 export const OPTIONS = 'OPTIONS'
 export const SET = 'SET'
+
+// shared
+export const SET_ERROR = 'SET_ERROR'
+export const CLEAR_ERROR = 'CLEAR_ERROR'
+export const SET_ACTION_PASS = 'SET_ACTION_PASS'
+export const SET_PLATFORM = 'SET_PLATFORM'
+export const SET_LANGUAGE = 'SET_LANGUAGE'
 
 // user
 export const SET_USER = 'SET_USER'

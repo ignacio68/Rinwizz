@@ -14,6 +14,9 @@ export const UPDATE_USER_LOCAL_DB = 'UPDATE_USER_LOCAL_DB' // TODO: revisar uso
 export const GET_USER_DATA_LOCAL_DB = 'GET_USER_DATA_LOCAL_DB'
 export const REMOVE_USER_LOCAL_DB = 'REMOVE_USER_LOCAL_DB'
 
+// shared
+export const SET_PLATFORM = 'SET_PLATFORM'
+
 // social
 export const DISPATCH_SIGNUP = 'DISPATCH_SIGNUP'
 export const SOCIAL_SIGNUP = 'SOCIAL_SIGNUP'
@@ -43,3 +46,5 @@ export const GET_CREDENTIAL = 'GET_CREDENTIAL'
 
 export const CREATE_USER_DB = 'CREATE_USER_DB'
 export const USER_NAME_DB = 'USER_NAME_DB'
+
+export const TO_JSON = 'TO_JSON'

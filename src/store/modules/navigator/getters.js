@@ -1,4 +1,4 @@
-import { PAGE_STACK, OPTIONS, INDEX } from '../../types/getters_types'
+import { PAGE_STACK, OPTIONS, INDEX } from '@store/types/getters_types'
 
 export default {
   [PAGE_STACK]: state => state.stack,

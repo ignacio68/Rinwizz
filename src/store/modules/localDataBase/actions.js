@@ -6,7 +6,7 @@ import {
   UPDATE_USER_LOCAL_DB,
   GET_USER_DATA_LOCAL_DB,
   REMOVE_USER_LOCAL_DB
-} from '../../types/actions_types'
+} from '@store/types/actions_types'
 
 const db = new PouchDB('rinwizz')
 

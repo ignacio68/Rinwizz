@@ -1,4 +1,4 @@
-import { LOADED_ALERTS } from '../../types/getters_types'
+import { LOADED_ALERTS } from '@store/types/getters_types'
 
 export default {
   [LOADED_ALERTS]: state => {

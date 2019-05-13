@@ -1,6 +1,6 @@
 import { firebaseAuth } from '../../../firebase'
 
-import { DISPATCH_SIGNUP, SOCIAL_SIGNUP } from '../../types/actions_types'
+import { DISPATCH_SIGNUP, SOCIAL_SIGNUP } from '@store/types/actions_types'
 
 export default {
   /**
@@ -11,8 +11,7 @@ export default {
    * @param {*} index - Índice del array correspondiente a la red social
    */
   [DISPATCH_SIGNUP]: ({ commit, dispatch, state }, index) => {
-    commit('shared/setLoading', true, { root: true })
-    commit('shared/clearError', null, { root: true })
+    commit('shared/CLEAR_ERROR', null, { root: true })
     const socialButtons = state.socialButtons
     let name = socialButtons[index].name
     console.log('la red social elegida es: ' + name)
@@ -57,7 +56,6 @@ export default {
         firebaseAuth()
           .getRedirectResult()
           .then(result => {
-            commit('shared/setLoading', false, { root: true })
             if (result.credential) {
               // Accedemos Access Token, ahora podemos utilizarlo para acceder a la API de la red social
               const token = result.credential.accessToken
@@ -69,14 +67,13 @@ export default {
               email: result.user.email,
               name: result.user.displayName
             }
-            commit('user/setUser', newUser, { root: true })
+            commit('user/SET_USER', newUser, { root: true })
             console.log('El id del usuario es: ' + newUser.id)
             console.log('El email del usuario es: ' + newUser.email)
             console.log('El nombre del usuario es: ' + newUser.displayName)
           })
           .catch(error => {
-            commit('shared/setLoading', false, { root: true })
-            // commit('setError', error)
+            commit('shared/SET_ERROR', error)
             dispatch('errors/AUTH_ERROR', error.code, { root: true })
             console.log('SOCIAL_SIGNUP error es: ' + error.code)
           })

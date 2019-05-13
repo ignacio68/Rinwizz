@@ -1,7 +1,8 @@
 import i18n from '@locales'
 
 // TODO: revisar la importación de constantes para ser utilizadas como funciones
-// import { AUTH_ERROR } from '../../../types/actions_types'
+// TODO: por el momento no se importan -> fake const!!
+// import { AUTH_ERROR } from '@store/types/actions_types'
 
 /**
  * Manejo de los errores de autenticación
@@ -55,5 +56,5 @@ export function AUTH_ERROR({ commit }, errorCode) {
       commit('SET_ERROR_MESSAGE', message)
     }
   }
-  commit('shared/setError', true, { root: true })
+  commit('shared/SET_ERROR', true, { root: true })
 }

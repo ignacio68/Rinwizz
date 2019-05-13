@@ -5,7 +5,7 @@ import {
   RESET,
   OPTIONS,
   SET
-} from '../../types/mutations_types'
+} from '@store/types/mutations_types'
 
 export default {
   /**

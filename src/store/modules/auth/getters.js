@@ -1,5 +1,5 @@
 /**
-import { GETTER } from '../../types/getters_types'
+import { GETTER } from '@store/types/getters_types'
 
 export default {
   [GETTER]: () => {

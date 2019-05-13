@@ -1,5 +1,5 @@
 /**
-import { ACTION } from '../../types/actions_types'
+import { ACTION } from '@store/types/actions_types'
 
 export default {
   [ACTION]: () => {

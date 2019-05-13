@@ -21,7 +21,7 @@ import {
   USER_NAME_DB,
   IS_USER_ACTIVE,
   TO_JSON
-} from '../../types/actions_types'
+} from '@store/types/actions_types'
 
 import HomePage from '@pages/HomePage'
 import Welcome from '@pages/Shared/Welcome'
@@ -46,8 +46,8 @@ export default {
   // FIXME: desarrollar correctamente async y el catcher de errores.
   async [SIGNUP_USER]({ state, commit, dispatch }, registerUser) {
     console.log('Estoy en signUserUp')
-    commit('shared/setActionPass', false, { root: true })
-    commit('shared/clearError', null, { root: true })
+    commit('shared/SET_ACTION_PASS', false, { root: true })
+    commit('shared/CLEAR_ERROR', null, { root: true })
     /**
      * Crea el nuevo usuario en Firebase
      *
@@ -63,7 +63,7 @@ export default {
       if (user) {
         console.log('Estoy dentro de createUserWithEmailAndPassword')
         console.log(user)
-        commit('shared/setActionPass', true, { root: true })
+        commit('shared/SET_ACTION_PASS', true, { root: true })
 
         // Añadimos los datos del nuevo usuario
         const newUser = {
@@ -94,12 +94,14 @@ export default {
         // dispatch('createUserDb', newUser)
       } else {
         console.log('Hay un error')
+        commit('shared/SET_ERROR', null, { root: true })
         dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
       }
     } catch (error) {
       console.log('signUserUp error: ' + error.message)
+      commit('shared/SET_ERROR', null, { root: true })
       dispatch('errors/AUTH_ERROR', error.code, { root: true })
-      commit('shared/setActionPass', false, { root: true })
+      commit('shared/SET_ACTION_PASS', false, { root: true })
     }
   },
 
@@ -110,7 +112,7 @@ export default {
    */
   [SEND_EMAIL_VERIFICATION]: ({ commit, dispatch }, actionCodeSettings) => {
     console.log('Estoy en sendEmailVerification')
-    commit('shared/clearError', null, { root: true })
+    commit('shared/CLEAR_ERROR', null, { root: true })
     const currentUser = firebaseAuth().currentUser
     if (currentUser) {
       currentUser
@@ -123,19 +125,21 @@ export default {
           console.log('sendEmailVerification error: ' + error.message)
         })
     } else {
+      commit('shared/SET_ERROR', null, { root: true })
       dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
     }
   },
 
   [APPLY_ACTION_CODE]: ({ commit, dispatch }, code) => {
     console.log('Estoy en applyActionCode')
-    commit('shared/clearError', null, { root: true })
+    commit('shared/CLEAR_ERROR', null, { root: true })
     firebaseAuth
       .applyActionCode(code)
       .then(() => {
         console.log('codigo de verificación')
       })
       .catch(error => {
+        commit('shared/SET_ERROR', null, { root: true })
         // TODO: Revisar los codigos de error y añadir a locales
         dispatch('errors/AUTH_ERROR', error.code, { root: true })
       })
@@ -149,7 +153,7 @@ export default {
    */
   async [LOGIN_USER]({ commit, dispatch }, logInUser) {
     console.log('Estoy en signUserIn')
-    commit('shared/clearError', null, { root: true })
+    commit('shared/CLEAR_ERROR', null, { root: true })
     /* Comprueba que el usuario existe en Firebase */
     try {
       const result = await firebaseAuth().signInWithEmailAndPassword(
@@ -169,6 +173,7 @@ export default {
       }
     } catch (error) {
       console.log('logUserIn error: ' + error.message)
+      commit('shared/SET_ERROR', null, { root: true })
       dispatch('errors/AUTH_ERROR', error.code, { root: true })
     }
   },
@@ -179,6 +184,7 @@ export default {
    * @param {*} commit
    */
   [LOGOUT_USER]: ({ commit }) => {
+    commit('shared/CLEAR_ERROR', null, { root: true })
     firebaseAuth()
       .signOut()
       .then(result => {
@@ -188,18 +194,21 @@ export default {
       .then(commit('navigator/PUSH', LogIn, { root: true }))
       .catch(error => {
         console.log('LOGOUT_USER error: ' + error)
+        commit('shared/SET_ERROR', null, { root: true })
       })
   },
 
   /**
    * Ponemos un observador
    */
-  [ON_AUTH_STATE_CHANGE]: () => {
+  [ON_AUTH_STATE_CHANGE]: ({ commit }) => {
+    commit('shared/CLEAR_ERROR', null, { root: true })
     firebaseAuth().onAuthstateChange(user => {
       if (user) {
         console.log(user)
       } else {
-        console.log('Error en oN_AUTH_STATE_CHANGE()')
+        console.log('Error en ON_AUTH_STATE_CHANGE()')
+        commit('shared/SET_ERROR', null, { root: true })
       }
     })
   },
@@ -207,8 +216,9 @@ export default {
   /**
    * Elimina el usuario
    */
-  async [DELETE_USER]({ dispatch, state }) {
+  async [DELETE_USER]({ commit, dispatch, state }) {
     console.log('Estoy en deleteUser')
+    commit('shared/CLEAR_ERROR', null, { root: true })
     await dispatch('GET_CREDENTIAL')
     let currentUser = firebaseAuth().currentUser
     let credential = state.credential
@@ -220,6 +230,7 @@ export default {
       })
       .catch(error => {
         console.log('DELETE_USER error: ' + error)
+        commit('shared/SET_ERROR', null, { root: true })
       })
   },
 
@@ -228,44 +239,49 @@ export default {
    */
   [GET_CREDENTIAL]: ({ commit, state }) => {
     console.log('Estoy en getCredential')
+    commit('shared/CLEAR_ERROR', null, { root: true })
     let currentUser = firebaseAuth().currentUser
     const idToken = currentUser.getIdToken()
     console.log('El idToken es: ' + idToken)
     const providerId = state.user.providerId
+    if (providerId) {
+      switch (providerId) {
+        case 'facebook.com':
+          console.log('el provider es: ' + providerId)
+          const facebook = firebaseAuth.FacebookAuthProvider.credential(idToken)
+          commit('SET_CREDENTIAL', facebook)
+          break
 
-    switch (providerId) {
-      case 'facebook.com':
-        console.log('el provider es: ' + providerId)
-        const facebook = firebaseAuth.FacebookAuthProvider.credential(idToken)
-        commit('SET_CREDENTIAL', facebook)
-        break
+        case 'google.com':
+          console.log('el provider es: ' + providerId)
+          const google = firebaseAuth.GoogleAuthProvider.credential(idToken)
+          commit('SET_CREDENTIAL', google)
+          break
 
-      case 'google.com':
-        console.log('el provider es: ' + providerId)
-        const google = firebaseAuth.GoogleAuthProvider.credential(idToken)
-        commit('SET_CREDENTIAL', google)
-        break
+        case 'twitter.com':
+          console.log('el provider es: ' + providerId)
+          const twitter = firebaseAuth.TwitterAuthProvider.credential(idToken)
+          commit('SET_CREDENTIAL', twitter)
+          break
 
-      case 'twitter.com':
-        console.log('el provider es: ' + providerId)
-        const twitter = firebaseAuth.TwitterAuthProvider.credential(idToken)
-        commit('SET_CREDENTIAL', twitter)
-        break
+        case 'password':
+          console.log('el provider es: ' + providerId)
+          let email = state.user.email
+          let userPassword = state.user.password
+          const password = firebaseAuth.EmailAuthProvider.credential(
+            email,
+            userPassword
+          )
+          console.log('la credencial es: ' + password)
+          commit('SET_CREDENTIAL', password)
+          break
 
-      case 'password':
-        console.log('el provider es: ' + providerId)
-        let email = state.user.email
-        let userPassword = state.user.password
-        const password = firebaseAuth.EmailAuthProvider.credential(
-          email,
-          userPassword
-        )
-        console.log('la credencial es: ' + password)
-        commit('SET_CREDENTIAL', password)
-        break
-
-      default:
-        console.log('No hay providerId: ' + providerId)
+        default:
+          console.log('No hay providerId: ' + providerId)
+      }
+    } else {
+      commit('shared/SET_ERROR', null, { root: true })
+      console.log('Error: No hay credencial')
     }
   },
 
@@ -273,8 +289,9 @@ export default {
    * Reautenticación automática del usuario
    * Se utiliza para poder elimnar la cuenta de usuario
    */
-  [REAUTHENTICATE_USER]: ({ state, dispatch }) => {
+  [REAUTHENTICATE_USER]: ({ state, commit, dispatch }) => {
     console.log('Estoy en reauthenticateUser')
+    commit('shared/CLEAR_ERROR', null, { root: true })
     const currentUser = firebaseAuth().currentUser
     let credential = state.credential
     currentUser
@@ -284,6 +301,7 @@ export default {
       })
       .catch(error => {
         console.log('REAUTHENTICATE_USER error: ' + error)
+        commit('shared/SET_ERROR', null, { root: true })
       })
   },
 
@@ -292,6 +310,7 @@ export default {
    */
   [DELETE_FIREBASE_USER_ACCOUNT]: ({ commit }) => {
     console.log('Estoy en deleteFirebaseUserAccount')
+    commit('shared/CLEAR_ERROR', null, { root: true })
     const currentUser = firebaseAuth().currentUser
     // dispatch('getCredential')
     currentUser
@@ -305,6 +324,7 @@ export default {
       })
       .catch(error => {
         console.log('DELETE_FIREBASE_USER_ACCOUNT error: ' + error)
+        commit('shared/SET_ERROR', null, { root: true })
       })
   },
 
@@ -323,6 +343,7 @@ export default {
    */
   [AUTO_SIGN_IN]: ({ commit }, user) => {
     console.log('Estoy en autoSignIn')
+    commit('shared/CLEAR_ERROR', null, { root: true })
     // const currentUser = firebaseAuth().currentUser
     commit('SET_USER', {
       id: user.uid,
@@ -344,13 +365,14 @@ export default {
    */
   [RESET_PASSWORD]: ({ commit, dispatch }, email) => {
     console.log('Estoy en RESET_PASSWORD')
-    commit('shared/clearError', null, { root: true })
+    commit('shared/CLEAR_ERROR', null, { root: true })
     firebaseAuth()
       .sendPasswordResetEmail(email)
       .then(() => {
         console.log('enviado password al email: ' + email)
       })
       .catch(error => {
+        commit('shared/SET_ERROR', null, { root: true })
         dispatch('errors/AUTH_ERROR', error.code, { root: true })
         console.log('error en RESET_PASSWORD: ' + error)
       })
@@ -365,7 +387,7 @@ export default {
   // TODO: Añadir los código de errores en locales
   [CONFIRM_RESET_PASSWORD]: ({ commit, dispatch }, { code, password }) => {
     console.log('Estoy en CONFIRM_RESET_PASSWORD')
-    commit('shared/clearError', null, { root: true })
+    commit('shared/CLEAR_ERROR', null, { root: true })
     firebaseAuth()
       .confirmPasswordReset(code, password)
       .then(() => {
@@ -373,6 +395,7 @@ export default {
       })
       .catch(error => {
         console.log('CONFIRM_RESET_PASSWORD error: ' + error.message)
+        commit('shared/SET_ERROR', null, { root: true })
         dispatch('errors/AUTH_ERROR', error.code, { root: true })
       })
   },
@@ -385,7 +408,7 @@ export default {
   // TODO: Añadir los código de errores en locales
   [VERIFY_RESET_PASSWORD_CODE]: ({ commit, dispatch }, code) => {
     console.log('Estoy en VERIFY_RESET_PASSWORD_CODE')
-    commit('shared/clearError', null, { root: true })
+    commit('shared/CLEAR_ERROR', null, { root: true })
     firebaseAuth()
       .verifyPasswordResetCode(code)
       .then(() => {
@@ -393,6 +416,7 @@ export default {
       })
       .catch(error => {
         console.log('VERIFY_RESET_PASSWORD_CODE error: ' + error.message)
+        commit('shared/SET_ERROR', null, { root: true })
         dispatch('errors/AUTH_ERROR', error.code, { root: true })
       })
   },
@@ -406,6 +430,7 @@ export default {
    */
   [UPDATED_USER_INFO]: ({ commit, state }, user) => {
     console.log('Estoy en UPDATED_USER_INFO')
+    commit('shared/CLEAR_ERROR', null, { root: true })
     const userUpdated = {
       // userIcon: user.userIcon, // por el momento utilizar direcciones URL
       userName: user.userName,
@@ -428,6 +453,7 @@ export default {
       })
       .catch(error => {
         console.log('error en UPDATED_USER_INFO: ' + error)
+        commit('shared/SET_ERROR', null, { root: true })
       })
   },
 
@@ -439,7 +465,7 @@ export default {
    * @param {Object} newUser - datos del usuario
    */
   [CREATE_USER_DB]: ({ commit, dispatch }, newUser) => {
-    commit('shared/clearError', null, {
+    commit('shared/CLEAR_ERROR', null, {
       root: true
     })
     console.log('Estoy en CREATE_USER_DB')
@@ -461,9 +487,7 @@ export default {
         console.log(newUser.email)
       })
       .catch(error => {
-        commit('shared/setError', error, {
-          root: true
-        })
+        commit('shared/SET_ERROR', null, { root: true })
         console.log(error)
       })
   },
@@ -478,6 +502,7 @@ export default {
    */
   [USER_NAME_DB]: ({ commit }, userName) => {
     console.log('Estoy en USER_NAME_DB')
+    commit('shared/CLEAR_ERROR', null, { root: true })
     firebaseDb
       .ref('usersName/')
       .set({
@@ -490,6 +515,7 @@ export default {
       })
       .catch(error => {
         console.log('USER_NAME_DB error: ' + error)
+        commit('shared/SET_ERROR', null, { root: true })
       })
   },
 
@@ -498,12 +524,14 @@ export default {
    * Se utiliza a modo de test
    * ELIMINAR EN PRODUCCION
    */
-  [IS_USER_ACTIVE]: () => {
+  [IS_USER_ACTIVE]: ({ commit }) => {
+    commit('shared/CLEAR_ERROR', null, { root: true })
     const userActive = firebaseAuth().currentUser
     if (userActive != null) {
       console.log(userActive.displayName + ' está conectado')
     } else {
       console.log('No hay ningún usuario conectado')
+      commit('shared/SET_ERROR', null, { root: true })
     }
   },
 

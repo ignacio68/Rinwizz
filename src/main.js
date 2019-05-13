@@ -143,7 +143,7 @@ firebaseAuth().onAuthStateChanged(user => {
             // const lang = val.replace('-', '')
             // const lang = val.slice(0, 2)
             i18n.locale = lang
-            this.$store.commit('shared/setLanguage', lang)
+            this.$store.commit('shared/SET_LANGUAGE', lang)
             console.log('el lenguaje es ' + i18n.locale)
           } else {
             console.log('No se encuentra el idioma del navegador')

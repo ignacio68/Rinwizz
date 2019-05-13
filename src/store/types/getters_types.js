@@ -9,10 +9,13 @@ export const PAGE_STACK = 'PAGE_STACK'
 export const OPTIONS = 'OPTIONS'
 export const INDEX = 'INDEX'
 
-// social
+// shared
+export const LOADING = 'LOADING'
+export const ERROR = 'ERROR'
+export const ACTION_PASS = 'ACTION_PASS'
 
+// social
 export const SOCIAL_BUTTONS = 'SOCIAL_BUTTONS'
 
 // user
-
 export const USER = 'USER'

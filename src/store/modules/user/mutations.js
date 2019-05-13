@@ -2,7 +2,7 @@ import {
   SET_USER,
   CLEAR_USER,
   SET_CREDENTIAL
-} from '../../types/mutations_types'
+} from '@store/types/mutations_types'
 
 export default {
   /**

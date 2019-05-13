@@ -177,12 +177,9 @@ export default {
   },
   computed: {
     ...mapGetters('errors', { errorMessage: 'ERROR_MESSAGE' }),
+    ...mapGetters('shared', { isError: 'ERROR' }),
     ...mapGetters('social', { socialButtons: 'SOCIAL_BUTTONS' }),
 
-    isError() {
-      // TODO: revisar para llamar directamente al state
-      return this.$store.getters['shared/error']
-    },
     buttonActive() {
       if (this.email.length >= 6 && this.password.length >= 8) {
         return false

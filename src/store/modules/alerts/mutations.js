@@ -1,4 +1,4 @@
-import { SET_LOADED_ALERTS, CREATE_ALERT } from '../../types/mutations_types'
+import { SET_LOADED_ALERTS, CREATE_ALERT } from '@store/types/mutations_types'
 
 export default {
   /**
