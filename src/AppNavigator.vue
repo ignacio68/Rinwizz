@@ -1,9 +1,5 @@
 <template id="App">
-  <v-ons-navigator
-    :page-stack="pageStack"
-    :pop-page="storePop"
-    :options="options"
-  ></v-ons-navigator>
+  <v-ons-navigator :page-stack="pageStack" :pop-page="storePop" :options="options"></v-ons-navigator>
 </template>
 
 <script>
@@ -31,16 +27,15 @@ export default {
     return {}
   },
   computed: {
-    /*
     ...mapState('user', {
       user: state => state.user
-    }),*/
+    }),
     /*
     ...mapState('navigator', {
       pageStack: state => state.stack,
       options: state => state.options
     }),*/
-    ...mapGetters('user', ['USER']),
+    // ...mapGetters('user', ['USER']),
     ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
     userIsAuthenticated() {

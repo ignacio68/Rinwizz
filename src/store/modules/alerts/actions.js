@@ -8,12 +8,10 @@ export default {
    *
    * @param {Object} alertData - Datos de la alerta
    */
-  [CREATE_ALERT]: (commit, alertData) => {
+  [CREATE_ALERT]: ({ commit }, alertData) => {
     console.log('Estoy en createAlert')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    // console.log(this.$store.user.state.user)
     const alert = {
-      // creatorId: this.$store.getters['user/user'],
       endDate: alertData.endDate,
       title: alertData.title,
       text: alertData.text,
@@ -58,7 +56,7 @@ export default {
    * cuando se desarrolle el proyecto
    *
    */
-  [LOAD_ALERTS]: commit => {
+  [LOAD_ALERTS]: ({ commit }) => {
     commit('shared/CLEAR_ERROR', null, { root: true })
     console.log('Estoy en action:loadAlerts')
     firebaseDb

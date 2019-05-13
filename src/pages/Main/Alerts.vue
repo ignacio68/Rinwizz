@@ -28,10 +28,7 @@
       </v-ons-list>
     </div>
 
-    <v-ons-alert-dialog
-      modifier="rowfooter"
-      :visible.sync="isAlertVisible"
-    >
+    <v-ons-alert-dialog modifier="rowfooter" :visible.sync="isAlertVisible">
       <alert-script
         :userIcon="userIcon"
         :altIcon="userName + ' icon'"
@@ -83,10 +80,7 @@
       ripple="true"
       @click.prevent="isAlertVisible = true"
     >
-      <v-ons-icon
-        class="alertScript__icon"
-        icon="ion-edit, material:zmdi-email-open"
-      ></v-ons-icon>
+      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -168,7 +162,7 @@ export default {
       this.LOGOUT_USER()
     },
     deleteUser() {
-      this.DELETEUSER()
+      this.DELETE_USER()
     },
     toJSON() {
       this.TO_JSON()
