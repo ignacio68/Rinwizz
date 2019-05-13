@@ -194,10 +194,11 @@ export default {
   methods: {
     ...mapMutations('navigator', ['REPLACE']),
     ...mapActions('social', ['DISPATCH_SIGNUP']),
+    ...mapActions('user', ['LOGIN_USER']),
 
     onLognIn() {
       console.log('Estoy en onLognIn')
-      this.$store.dispatch('user/logInUser', {
+      this.LOGIN_USER({
         email: this.email,
         password: this.password
       })

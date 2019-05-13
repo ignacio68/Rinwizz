@@ -152,7 +152,7 @@ firebaseAuth().onAuthStateChanged(user => {
       },
       created() {
         if (user) {
-          this.$store.dispatch('user/autoSignIn', user)
+          this.$store.dispatch('user/AUTO_SIGN_IN', user)
           /**
            * Recuperamos los datos del usuario
            */
@@ -164,7 +164,7 @@ firebaseAuth().onAuthStateChanged(user => {
            * 2ª Fase: sólo las que están activas
            * 3ª Fase: las subscritas por el usuario
            */
-          this.$store.dispatch('alerts/loadAlerts')
+          this.$store.dispatch('alerts/LOAD_ALERTS')
         } else {
           console.log('No existe user')
         }

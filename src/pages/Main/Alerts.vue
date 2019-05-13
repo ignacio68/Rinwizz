@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import alertMessage from '@components/Alerts/alertMessage'
 import alertScript from '@components/Alerts/alertScript'
 export default {
@@ -145,6 +145,8 @@ export default {
     ...mapGetters('alerts', { alerts: 'LOADED_ALERTS' })
   },
   methods: {
+    ...mapActions('user', ['LOGOUT_USER', 'DELETE_USER', 'TO_JSON']),
+
     toPhone(phone) {
       console.log('phone to: ' + phone)
     },
@@ -163,13 +165,13 @@ export default {
       console.log('La fecha de referencia es:' + this.referenceDate)
     },
     logOutUser() {
-      this.$store.dispatch('user/logOutUser')
+      this.LOGOUT_USER()
     },
     deleteUser() {
-      this.$store.dispatch('user/deleteUser')
+      this.DELETEUSER()
     },
     toJSON() {
-      this.$store.dispatch('user/toJSON')
+      this.TO_JSON()
     }
   }
 }

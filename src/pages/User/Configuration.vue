@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 
 import HomePage from '@pages/HomePage'
 
@@ -70,11 +70,12 @@ export default {
   },
   methods: {
     ...mapMutations('navigator', ['PUSH']),
+    ...mapActions('user', ['UPDATED_USER_INFO']),
     onSave() {
       const user = {}
       user.userName = this.name
       user.location = this.location
-      this.$store.dispatch('user/updatedUserInfo', user)
+      this.UPDATED_USER_INFO(user)
       this.PUSH(HomePage)
     }
   }

@@ -260,9 +260,9 @@ export default {
   methods: {
     ...mapMutations('navigator', ['PUSH', 'REPLACE']),
     ...mapActions('social', ['DISPATCH_SIGNUP']),
+    ...mapActions('user', ['SIGNUP_USER']),
 
     socialLogIn(index) {
-      // this.$store.dispatch('social/dispatchLogUp', index)
       this.DISPATCH_SIGNUP(index)
     },
     toLogIn() {
@@ -279,7 +279,7 @@ export default {
       console.log('email es: ' + this.email)
       console.log('password es: ' + this.password)
       // enviamos los datos del usuario para su registro
-      this.$store.dispatch('user/checkUserName', {
+      this.SIGNUP_USER({
         name: this.name,
         email: this.email,
         password: this.password

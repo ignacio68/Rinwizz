@@ -15,4 +15,4 @@ export const SOCIAL_BUTTONS = 'SOCIAL_BUTTONS'
 
 // user
 
-export const SER = 'USER'
+export const USER = 'USER'

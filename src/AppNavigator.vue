@@ -40,7 +40,7 @@ export default {
       pageStack: state => state.stack,
       options: state => state.options
     }),*/
-    ...mapGetters('user', ['user']),
+    ...mapGetters('user', ['USER']),
     ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
     userIsAuthenticated() {

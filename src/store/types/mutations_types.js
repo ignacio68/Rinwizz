@@ -13,6 +13,6 @@ export const OPTIONS = 'OPTIONS'
 export const SET = 'SET'
 
 // user
-export const USER_SET = 'USER_SET'
-export const USER_CLEAR = 'USER_CLEAR'
+export const SET_USER = 'SET_USER'
+export const CLEAR_USER = 'CLEAR_USER'
 export const SET_CREDENTIAL = 'SET_CREDENTIAL'
