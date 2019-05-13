@@ -150,7 +150,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 import SignUp from './SignUp'
 import CircleButton from '@components/Shared/CircleButton'
@@ -177,11 +177,8 @@ export default {
   },
   computed: {
     ...mapGetters('errors', { errorMessage: 'ERROR_MESSAGE' }),
+    ...mapGetters('social', { socialButtons: 'SOCIAL_BUTTONS' }),
 
-    socialButtons() {
-      // TODO: revisar para llamar directamente al state
-      return this.$store.getters['social/socialButtons']
-    },
     isError() {
       // TODO: revisar para llamar directamente al state
       return this.$store.getters['shared/error']
@@ -196,6 +193,7 @@ export default {
   },
   methods: {
     ...mapMutations('navigator', ['REPLACE']),
+    ...mapActions('social', ['DISPATCH_SIGNUP']),
 
     onLognIn() {
       console.log('Estoy en onLognIn')
@@ -217,7 +215,7 @@ export default {
       this.REPLACE(SignUp)
     },
     socialLogIn(index) {
-      this.$store.dispatch('social/dispatchLogUp', index)
+      this.DISPATCH_SIGNUP(index)
     }
   }
 }

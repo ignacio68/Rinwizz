@@ -41,7 +41,7 @@ export default {
       })
       // Añadimos el resto de la alerta a la base de datos
       .then(() => {
-        commit('createAlert', {
+        commit('CREATE_ALERT', {
           ...alert,
           id: key
         })
@@ -87,7 +87,7 @@ export default {
             alertPhone: obj[key].phone
           })
         }
-        commit('setLoadedAlerts', alerts)
+        commit('SET_LOADED_ALERTS', alerts)
         commit('shared/setLoading', false, { root: true })
       })
       .catch(error => {

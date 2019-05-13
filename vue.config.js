@@ -1,5 +1,5 @@
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+//  .BundleAnalyzerPlugin
 
 const path = require('path')
 function resolve(dir) {
@@ -19,7 +19,7 @@ module.exports = {
   },
   configureWebpack: {
     plugins: [
-      new BundleAnalyzerPlugin()
+      // new BundleAnalyzerPlugin()
     ] /* ,
     resolve: {
       alias: require('./aliases.config').webpack

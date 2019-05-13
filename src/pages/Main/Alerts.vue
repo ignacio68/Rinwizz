@@ -28,7 +28,10 @@
       </v-ons-list>
     </div>
 
-    <v-ons-alert-dialog modifier="rowfooter" :visible.sync="isAlertVisible">
+    <v-ons-alert-dialog
+      modifier="rowfooter"
+      :visible.sync="isAlertVisible"
+    >
       <alert-script
         :userIcon="userIcon"
         :altIcon="userName + ' icon'"
@@ -36,12 +39,8 @@
         ref="scriptAlert"
       ></alert-script>
       <template slot="footer">
-        <v-ons-alert-dialog-button @click.prevent="isAlertVisible = false"
-          >Cancel</v-ons-alert-dialog-button
-        >
-        <v-ons-alert-dialog-button @click.prevent="createAlert"
-          >Ok</v-ons-alert-dialog-button
-        >
+        <v-ons-alert-dialog-button @click.prevent="isAlertVisible = false">Cancel</v-ons-alert-dialog-button>
+        <v-ons-alert-dialog-button @click.prevent="createAlert">Ok</v-ons-alert-dialog-button>
       </template>
     </v-ons-alert-dialog>
 
@@ -53,8 +52,7 @@
         :disabled="false"
         ripple="true"
         @click.prevent="logOutUser"
-        >Logout User</v-ons-button
-      >
+      >Logout User</v-ons-button>
     </div>
 
     <div class="deleteButton">
@@ -65,8 +63,7 @@
         :disabled="false"
         ripple="true"
         @click.prevent="deleteUser"
-        >Delete User</v-ons-button
-      >
+      >Delete User</v-ons-button>
     </div>
 
     <div class="toJSONButton">
@@ -77,8 +74,7 @@
         :disabled="false"
         ripple="true"
         @click.prevent="toJSON"
-        >User JSON</v-ons-button
-      >
+      >User JSON</v-ons-button>
     </div>
 
     <v-ons-fab
@@ -96,6 +92,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import alertMessage from '@components/Alerts/alertMessage'
 import alertScript from '@components/Alerts/alertScript'
 export default {
@@ -145,9 +142,7 @@ export default {
     console.log('montado Alerts.vue')
   },
   computed: {
-    alerts() {
-      return this.$store.getters['alerts/loadedAlerts']
-    }
+    ...mapGetters('alerts', { alerts: 'LOADED_ALERTS' })
   },
   methods: {
     toPhone(phone) {

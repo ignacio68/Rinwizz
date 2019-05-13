@@ -1,7 +1,7 @@
-import { LOADEDALERTS } from '../../types/getters_types'
+import { LOADED_ALERTS } from '../../types/getters_types'
 
 export default {
-  [LOADEDALERTS]: state => {
+  [LOADED_ALERTS]: state => {
     console.log('Estoy en getters.loadedAlerts')
     console.log(state.loadedAlerts)
     return state.loadedAlerts // PENDIENTE: ordenarlas por fechas

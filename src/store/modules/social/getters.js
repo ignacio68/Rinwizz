@@ -1,9 +1,5 @@
-/**
-import { GETTER } from '../../types/getters_types'
+import { SOCIAL_BUTTONS } from '../../types/getters_types'
 
 export default {
-  [GETTER]: () => {
-
-  }
+  [SOCIAL_BUTTONS]: state => state.socialButtons
 }
-**/

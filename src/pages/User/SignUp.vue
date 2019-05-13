@@ -198,7 +198,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 import Configuration from './Configuration'
 import TermsOfService from '@pages/Shared/TermsOfService'
@@ -240,11 +240,7 @@ export default {
   },
   computed: {
     ...mapGetters('errors', { errorMessage: 'ERROR_MESSAGE' }),
-
-    socialButtons() {
-      // TODO: revisar para llamar directamente al state
-      return this.$store.getters['social/socialButtons']
-    },
+    ...mapGetters('social', { socialButtons: 'SOCIAL_BUTTONS' }),
     isError() {
       // TODO: revisar para llamar directamente al state
       return this.$store.getters['shared/error']
@@ -263,9 +259,11 @@ export default {
   },
   methods: {
     ...mapMutations('navigator', ['PUSH', 'REPLACE']),
+    ...mapActions('social', ['DISPATCH_SIGNUP']),
 
     socialLogIn(index) {
-      this.$store.dispatch('social/dispatchLogUp', index)
+      // this.$store.dispatch('social/dispatchLogUp', index)
+      this.DISPATCH_SIGNUP(index)
     },
     toLogIn() {
       this.PUSH(LogIn)
