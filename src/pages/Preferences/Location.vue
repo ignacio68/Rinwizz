@@ -1,28 +1,31 @@
 <template>
   <v-ons-page>
     <div class="container">
-      <h3>Aquí van la localización del usuario</h3>
-      <br>
-      <l-map
-        style="height: 80%; width: 100%"
-        :zoom="zoom"
-        :center="center"
-        @updateate:zoom="zoomUpdated"
-        @update:center="centerUpdated"
-        @update:bounds="boundsUpdated"
-      >
-        <l-tile-layer :url="url"></l-tile-layer>
-      </l-map>
-      <div class="preferencesButton">
-        <v-ons-button
-          class="preferencesButton__button"
-          name="preferencesButton"
-          modifier="large"
-          :disabled="false"
-          ripple="true"
-          @click.prevent="toPreferences"
-        >Continuar</v-ons-button>
-      </div>
+      <v-ons-col class="col">
+        <h3>Aquí va la localización del usuario</h3>
+        <div class="map">
+          <l-map
+            class="map__map"
+            :zoom="zoom"
+            :center="center"
+            @updateate:zoom="zoomUpdated"
+            @update:center="centerUpdated"
+            @update:bounds="boundsUpdated"
+          >
+            <l-tile-layer :url="url"></l-tile-layer>
+          </l-map>
+        </div>
+        <div class="preferencesButton">
+          <v-ons-button
+            class="preferencesButton__button"
+            name="preferencesButton"
+            modifier="large"
+            :disabled="false"
+            ripple="true"
+            @click.prevent="toPreferences"
+          >Continuar</v-ons-button>
+        </div>
+      </v-ons-col>
     </div>
   </v-ons-page>
 </template>
@@ -34,11 +37,16 @@ import Preferences from './Preferences'
 
 export default {
   name: 'location',
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker
+  },
   data() {
     return {
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-      zoom: 3,
-      center: [47.41322, -1.219482],
+      zoom: 16,
+      center: [40.455761, -3.680087],
       bounds: null
     }
   },
@@ -63,4 +71,18 @@ export default {
 </script>
 
 <style scoped>
+.col {
+  border: 1px, solid, green;
+}
+.map {
+  display: block;
+  width: 300px;
+  height: 500px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px, solid, red;
+}
+.map__map {
+  border: 1px, solid, blue;
+}
 </style>
