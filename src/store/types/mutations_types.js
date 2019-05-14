@@ -5,6 +5,10 @@ export const CREATE_ALERT = 'CREATE_ALERT'
 // errors
 export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
 
+// location
+// location
+export const SET_USER_LOCATION = 'SET_USER_LOCATION'
+
 // navigator
 export const PUSH = 'PUSH'
 export const POP = 'POP'

@@ -35,6 +35,7 @@
     "vue-i18n": "^8.11.2",
     "vue-timers": "^2.0.2",
     "vue2-leaflet": "^2.1.1",
+    "vue2-leaflet-locatecontrol": "^1.0.1",
     "vuex": "^3.1.0"
   },
   "devDependencies": {

@@ -14,6 +14,10 @@ export const UPDATE_USER_LOCAL_DB = 'UPDATE_USER_LOCAL_DB' // TODO: revisar uso
 export const GET_USER_DATA_LOCAL_DB = 'GET_USER_DATA_LOCAL_DB'
 export const REMOVE_USER_LOCAL_DB = 'REMOVE_USER_LOCAL_DB'
 
+// location
+// location
+export const GET_USER_LOCATION = 'GET_USER_LOCATION'
+
 // shared
 export const SET_PLATFORM = 'SET_PLATFORM'
 

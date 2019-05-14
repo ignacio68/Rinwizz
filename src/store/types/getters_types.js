@@ -4,6 +4,9 @@ export const LOADED_ALERTS = 'LOADED_ALERTS'
 // errors
 export const ERROR_MESSAGE = 'ERROR_MESSAGE'
 
+// location
+export const USER_LOCATION = 'USER_LOCATION'
+
 // navigator
 export const PAGE_STACK = 'PAGE_STACK'
 export const OPTIONS = 'OPTIONS'

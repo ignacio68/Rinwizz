@@ -44,6 +44,11 @@ import { store } from './store'
 import i18n from '@setup/i18n'
 
 /**
+ *  Import leaflet css
+ */
+import 'leaflet/dist/leaflet.css'
+
+/**
  * Import Timer
  * TODO: Revisar si importar directamente en el componente
  */
