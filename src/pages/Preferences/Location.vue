@@ -6,14 +6,14 @@
         <l-map
           class="map__map"
           :zoom="zoom"
-          :center="center"
+          :center="userLocation"
           @updateate:zoom="zoomUpdated"
           @update:center="centerUpdated"
           @update:bounds="boundsUpdated"
         >
           <l-tile-layer :url="url"></l-tile-layer>
           <l-marker :latLng="markerLatLng"></l-marker>
-          <v-locatecontrol />
+          <v-locatecontrol/>
         </l-map>
       </div>
       <div class="preferencesButton">
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 import { latLng, Icon, icon } from 'leaflet'
 import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol'
@@ -52,16 +52,27 @@ export default {
       zoom: 17,
       center: [40.455761, -3.680087],
       markerLatLng: [40.455761, -3.680087],
-      bounds: null
+      bounds: null,
+      location: []
     }
   },
+
+  created() {
+    console.log('Estoy en Location.created')
+  },
+  beforeMount() {
+    console.log('Estoy en Location.beforeMount')
+    // console.log('la latitud es: ' + userLocation.latitude)
+    this.GET_USER_LOCATION()
+  },
   computed: {
-    ...mapGEtters('location', { userLocation: 'USER_LOCATION' }),
-    setLocation: location => {}
+    ...mapGetters('location', { userLocation: 'USER_LOCATION' }),
+    setLocation: location => []
   },
   methods: {
     ...mapMutations('navigator', ['PUSH']),
-    getLocation() {},
+    ...mapActions('location', ['GET_USER_LOCATION']),
+
     zoomUpdated(zoom) {
       this.zoom = zoom
     },
@@ -79,6 +90,8 @@ export default {
 </script>
 
 <style scoped>
+@import '~leaflet/dist/leaflet.css';
+
 .text {
   text-align: center;
 }

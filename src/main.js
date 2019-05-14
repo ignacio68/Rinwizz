@@ -4,7 +4,7 @@
  * @copyright Ignacio López-Amor Pinillos 2019
  * @author Ignacio López-Amor Pinillos <ignaciolopezamor@gmail.com>
  * @license MIT
- * @version 0.2.0
+ * @version 0.2.1
  */
 
 /*
@@ -42,11 +42,6 @@ import { store } from './store'
  */
 // import i18n from './locales'
 import i18n from '@setup/i18n'
-
-/**
- *  Import leaflet css
- */
-import 'leaflet/dist/leaflet.css'
 
 /**
  * Import Timer

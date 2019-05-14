@@ -215,7 +215,6 @@ export default {
   methods: {
     ...mapMutations('navigator', ['PUSH', 'REPLACE']),
     ...mapMutations('shared', ['SET_ACTION_PASS']),
-    ...mapActions('shared', ['CLEAR_ERROR']),
     ...mapActions('social', ['DISPATCH_SIGNUP']),
     ...mapActions('user', ['SIGNUP_USER']),
 

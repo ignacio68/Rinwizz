@@ -6,7 +6,6 @@ const aliases = {
   '@': '.',
   '@src': 'src',
   '@assets': 'src/assets',
-  '@api': 'src/api',
   '@components': 'src/components',
   '@config': 'src/config',
   // '@firebase': 'src/firebase',
