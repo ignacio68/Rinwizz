@@ -19,7 +19,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import Location from './Location'
+import userLocation from './UserLocation'
 export default {
   name: 'personal',
   data() {
@@ -29,7 +29,7 @@ export default {
     ...mapMutations('navigator', ['REPLACE']),
 
     toUserLocation() {
-      this.REPLACE(Location)
+      this.REPLACE(userLocation)
     }
   }
 }
