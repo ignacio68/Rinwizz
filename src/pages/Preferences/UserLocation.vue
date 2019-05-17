@@ -3,7 +3,7 @@
     <v-ons-col class="col">
       <h3 class="text">Elige tu localización</h3>
       <div class="map">
-        <location></location>
+        <location :location="userLocation" @onDragEndEvent()="setLocation"/>
       </div>
       <div class="preferencesButton">
         <v-ons-button
@@ -41,7 +41,7 @@ export default {
     console.log('Estoy en Location.beforeMount')
   },
   computed: {
-    location() {
+    userLocation() {
       console.log('estoy en location()')
       return {
         lat: this.$store.state.geolocation.lat,
@@ -53,6 +53,10 @@ export default {
     ...mapMutations('navigator', ['PUSH']),
     toPreferences() {
       this.PUSH(Preferences)
+    },
+    setLocation() {
+      this.location = getLatLng()
+      console.log('Estoy en setLocation')
     }
   }
 }
