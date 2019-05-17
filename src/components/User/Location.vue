@@ -7,20 +7,22 @@
     @update:center="centerUpdated"
     @update:bounds="boundsUpdated"
   >
-    <l-tile-layer :url="url" />
-    <l-marker :lat-lng="location" />
+    <l-tile-layer :url="url"/>
+    <l-marker :lat-lng="location"/>
     <l-circle-marker
       :lat-lng="location"
       :radius="circle.radius"
       :color="circle.color"
+      :stroke="circle.stroke"
     />
-    <!-- v-locatecontrol/ -->
+    <v-locatecontrol/>
   </l-map>
 </template>
 <script>
 import { LMap, LTileLayer, LMarker, LCircleMarker } from 'vue2-leaflet'
-import { latLng, icon } from 'leaflet'
+// import { latLng } from 'leaflet'
 import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol'
+
 export default {
   name: 'location',
   components: {
@@ -40,7 +42,8 @@ export default {
       bounds: null,
       circle: {
         radius: 50,
-        color: 'blue'
+        color: 'blue',
+        stroke: false
       },
       icon: { icon: '@assets/icon/baseline-room-24px.svg' }
     }
@@ -69,7 +72,6 @@ export default {
 }
 </script>
 <style scoped>
-@import '~leaflet/dist/leaflet.css';
 .map__map {
   border: 1px, solid, blue;
 }
