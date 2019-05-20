@@ -1,9 +1,9 @@
 <template>
-  <v-ons-page class="preferences">
+  <v-ons-page id="preferences">
     <div class="container">
       <h3>Elige tus preferencias</h3>
       <br>
-      <h3>Deportes</h3>
+      <v-ons-list-title class="preferences__list-title">Deportes</v-ons-list-title>
       <v-ons-list class="preferences__list">
         <v-ons-list-header class="preferences__list-header">Futbol</v-ons-list-header>
         <v-ons-list-item
@@ -52,7 +52,7 @@
         </v-ons-list-item>
       </v-ons-list>
 
-      <h3>Ocio</h3>
+      <v-ons-list-title class="preferences__list-title">Ocio</v-ons-list-title>
       <v-ons-list class="preferences__list">
         <v-ons-list-item
           class="preferences__list-item"
@@ -84,7 +84,7 @@
           modifier="large"
           :disabled="false"
           ripple="true"
-          @click.prevent="toHomePage"
+          @click.prevent="toGreetings"
         >Comenzar!!</v-ons-button>
       </div>
     </div>
@@ -93,7 +93,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import HomePage from '@pages/HomePage'
+import greetings from './Greetings'
 export default {
   name: 'preferences',
   data() {
@@ -109,19 +109,22 @@ export default {
   methods: {
     ...mapMutations('navigator', ['PUSH']),
 
-    toHomePage() {
-      this.PUSH(HomePage)
+    toGreetings() {
+      this.PUSH(greetings)
     }
   }
 }
 </script>
 <style scoped>
-.preferences {
+#preferences {
 }
 .peferences__list {
 }
+.preferences__list-title {
+  background-color: rgb(193, 193, 193);
+}
 .preferences__list-header {
-  background-color: rgb(196, 193, 193);
+  background-color: rgb(215, 215, 215);
   font-size: 18px;
 }
 .preferences__list-item {

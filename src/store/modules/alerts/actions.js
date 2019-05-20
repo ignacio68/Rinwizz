@@ -87,5 +87,8 @@ export default {
         commit('shared/SET_ERROR', error, { root: true })
         console.log(error)
       })
+    /**
+     * Cuenta las alertas disponibles
+     */
   }
 }

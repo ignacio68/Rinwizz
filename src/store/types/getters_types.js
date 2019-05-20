@@ -1,5 +1,6 @@
 // alerts
 export const LOADED_ALERTS = 'LOADED_ALERTS'
+export const NUM_ALERTS = 'NUM_ALERTS'
 
 // errors
 export const ERROR_MESSAGE = 'ERROR_MESSAGE'

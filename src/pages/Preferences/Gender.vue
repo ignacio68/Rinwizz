@@ -1,5 +1,5 @@
 <template>
-  <v-ons-page>
+  <v-ons-page id="gender">
     <div class="container">
       <p>Elige tu género</p>
       <v-ons-list>

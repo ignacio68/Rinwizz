@@ -451,6 +451,7 @@ export default {
         // Actualizamos los datos en LokiJS
         // dispatch('localDataBase/updateUser', userUpdated, { root: true })
       })
+      // TODO: revisar y actualizar errores
       .catch(error => {
         console.log('error en UPDATED_USER_INFO: ' + error)
         commit('shared/SET_ERROR', null, { root: true })

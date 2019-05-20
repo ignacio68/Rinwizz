@@ -1,4 +1,4 @@
-import { LOADED_ALERTS } from '@store/types/getters_types'
+import { LOADED_ALERTS, NUM_ALERTS } from '@store/types/getters_types'
 
 export default {
   [LOADED_ALERTS]: state => {
@@ -9,5 +9,8 @@ export default {
     return state.loadedMeetups.sort((meetupA, meetupB) => {
       return meetupA.date > meetupB.date
     }) */
+  },
+  [NUM_ALERTS]: state => {
+    return state.numAlerts
   }
 }

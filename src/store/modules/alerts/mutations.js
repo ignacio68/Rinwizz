@@ -1,4 +1,8 @@
-import { SET_LOADED_ALERTS, CREATE_ALERT } from '@store/types/mutations_types'
+import {
+  SET_LOADED_ALERTS,
+  CREATE_ALERT,
+  SET_NUM_ALERTS
+} from '@store/types/mutations_types'
 
 export default {
   /**
@@ -18,5 +22,11 @@ export default {
    */
   [CREATE_ALERT]: (state, alert) => {
     state.loadedAlerts.push(alert)
+  },
+  /**
+   * recupera el número de alertas para mostrar
+   */
+  [SET_NUM_ALERTS]: (state, alerts) => {
+    state.numAlerts = alerts
   }
 }

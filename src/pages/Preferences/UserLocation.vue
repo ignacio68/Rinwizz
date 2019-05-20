@@ -1,9 +1,12 @@
 <template>
-  <v-ons-page>
+  <v-ons-page id="userLocation">
     <v-ons-col class="col">
       <h3 class="text">Elige tu localización</h3>
       <div class="map">
-        <location :location="userLocation" @onDragEndEvent()="setLocation"/>
+        <location
+          :location="userLocation"
+          @onDragEndEvent()="setLocation"
+        />
       </div>
       <div class="preferencesButton">
         <v-ons-button

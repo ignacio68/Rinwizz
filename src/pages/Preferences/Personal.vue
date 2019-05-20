@@ -1,5 +1,5 @@
 <template>
-  <v-ons-page>
+  <v-ons-page id='personal'>
     <div class="container">
       <h4>Necesitamos unos datos tuyos para ofrcerte un mejor servicio</h4>
       <br>
