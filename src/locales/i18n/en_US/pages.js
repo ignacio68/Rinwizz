@@ -13,7 +13,7 @@ export default {
       backLabel: '',
       title: 'ALERTS!!'
     },
-    tabbar: 'Profile | Alerts! | Search'
+    tabbar: 'Alerts! | Profile | Search'
   },
   signup: {
     toolbar: {

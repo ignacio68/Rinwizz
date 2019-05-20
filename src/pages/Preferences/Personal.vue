@@ -1,16 +1,16 @@
 <template>
   <v-ons-page>
     <div class="container">
-      <h3>Aquí van el sexo, edad, etc. del usuario</h3>
+      <h4>Necesitamos unos datos tuyos para ofrcerte un mejor servicio</h4>
       <br>
-      <div class="userLcationButton">
+      <div class="gender">
         <v-ons-button
-          class="userLocationButton__button"
-          name="userLocationButton"
+          class="genderButton__button"
+          name="genderButton"
           modifier="large"
           :disabled="false"
           ripple="true"
-          @click.prevent="toUserLocation"
+          @click.prevent="toGender"
         >Continuar</v-ons-button>
       </div>
     </div>
@@ -19,7 +19,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import userLocation from './UserLocation'
+import gender from './Gender'
 export default {
   name: 'personal',
   data() {
@@ -28,8 +28,8 @@ export default {
   methods: {
     ...mapMutations('navigator', ['REPLACE']),
 
-    toUserLocation() {
-      this.REPLACE(userLocation)
+    toGender() {
+      this.REPLACE(gender)
     }
   }
 }
