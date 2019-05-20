@@ -9,10 +9,6 @@ export default {
     signup: 'CONTINUE'
   },
   homePage: {
-    toolbar: {
-      backLabel: '',
-      title: 'ALERTS!!'
-    },
     tabbar: 'Alerts! | Profile | Search'
   },
   signup: {
@@ -81,13 +77,11 @@ export default {
     }
   },
   alerts: {
-    main: {
-      text: 'ALERTS PAGE'
-    }
+    toolbar: 'ALERTS'
   },
   profile: {
+    toolbar: 'USER',
     main: {
-      text: 'PROFILE PAGE',
       button: 'Save',
       list: {
         input: {
@@ -100,8 +94,6 @@ export default {
     }
   },
   search: {
-    main: {
-      text: 'SEARCH PAGE'
-    }
+    toolbar: 'SEARCH'
   }
 }

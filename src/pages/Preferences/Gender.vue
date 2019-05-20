@@ -12,7 +12,7 @@
             <v-ons-radio
               :input-id="'radio-' + $index"
               :value="gender"
-              v-model=" selectedGender"
+              v-model="selectedGender"
             >
             </v-ons-radio>
           </label>
@@ -50,6 +50,11 @@ export default {
     return {
       genders: ['Male', 'Female', 'Other'],
       selectedGender: ''
+    }
+  },
+  computed: {
+    userGender () {
+      const userGender = this.selectedGender
     }
   },
   methods: {

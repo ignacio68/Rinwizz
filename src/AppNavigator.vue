@@ -8,7 +8,7 @@ import { mapState, mapGetters, mapMutations } from 'vuex'
 import HomePage from '@pages/HomePage'
 import Welcome from '@pages/Shared/Welcome'
 
-import userLocation from '@pages/Preferences/UserLocation'
+// import userLocation from '@pages/Preferences/UserLocation'
 
 export default {
   name: 'appNavigator',
@@ -18,7 +18,7 @@ export default {
       this.PUSH(Welcome)
       console.log('El usuario NO está autenticado')
     } else {
-      this.PUSH(userLocation)
+      this.PUSH(HomePage)
       console.log('El usuario SI está autenticado')
     }
   },

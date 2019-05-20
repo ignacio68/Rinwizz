@@ -27,6 +27,7 @@ export const SOCIAL_SIGNUP = 'SOCIAL_SIGNUP'
 
 // user
 export const SIGNUP_USER = 'SIGNUP_USER'
+export const UPDATE_PROFILE = 'UPDATE_PROFILE'
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const DELETE_USER = 'DELETE_USER'

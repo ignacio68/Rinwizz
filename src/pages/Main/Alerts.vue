@@ -1,7 +1,12 @@
 <template>
-  <v-ons-page>
+  <v-ons-page id="alerts">
+    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')">
+      <template v-slot:left>
+        <h5>{{ userName }}</h5>
+      </template>
+    </the-custom-toolbar>
+
     <div class="container">
-      <h1>{{ $t('lang.pages.alerts.main.text') }}</h1>
       <!-- Alerts list -->
       <v-ons-list class="alertsList">
         <v-ons-list-item
@@ -28,10 +33,7 @@
       </v-ons-list>
     </div>
 
-    <v-ons-alert-dialog
-      modifier="rowfooter"
-      :visible.sync="isAlertVisible"
-    >
+    <v-ons-alert-dialog modifier="rowfooter" :visible.sync="isAlertVisible">
       <alert-script
         :userIcon="userIcon"
         :altIcon="userName + ' icon'"
@@ -83,16 +85,13 @@
       ripple="true"
       @click.prevent="isAlertVisible = true"
     >
-      <v-ons-icon
-        class="alertScript__icon"
-        icon="ion-edit, material:zmdi-email-open"
-      ></v-ons-icon>
+      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import alertMessage from '@components/Alerts/alertMessage'
 import alertScript from '@components/Alerts/alertScript'
 export default {
@@ -134,9 +133,9 @@ export default {
       },
       isAlertVisible: false,
       userIcon: 'src/assets/Real-Madrid-logo-256.png',
-      userName: 'Real Madrid',
-      referenceDate: '',
-      numAlerts: null
+      // userName: 'Real Madrid',
+      referenceDate: ''
+      // numAlerts: null
     }
   },
   mounted() {
@@ -145,6 +144,9 @@ export default {
     console.log('El número de alertas es: ' + this.numAlerts)
   },
   computed: {
+    ...mapState('user', {
+      userName: state => state.user.name
+    }),
     ...mapGetters('alerts', {
       alerts: 'LOADED_ALERTS',
       numAlerts: 'NUM_ALERTS'
@@ -152,7 +154,7 @@ export default {
   },
   methods: {
     ...mapActions('user', ['LOGOUT_USER', 'DELETE_USER', 'TO_JSON']),
-    ...mapMutations(),
+    ...mapMutations('alerts', [' SET_NUM_ALERTS']),
 
     toPhone(phone) {
       console.log('phone to: ' + phone)

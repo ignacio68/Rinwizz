@@ -2,6 +2,7 @@ import { firebaseAuth, firebaseDb } from '../../../firebase'
 
 import {
   SIGNUP_USER,
+  UPDATE_PROFILE,
   SEND_EMAIL_VERIFICATION,
   APPLY_ACTION_CODE,
   LOGIN_USER,
@@ -64,7 +65,7 @@ export default {
         console.log('Estoy dentro de createUserWithEmailAndPassword')
         console.log(user)
         commit('shared/SET_ACTION_PASS', true, { root: true })
-
+        
         // Añadimos los datos del nuevo usuario
         const newUser = {
           id: user.uid,
@@ -80,6 +81,9 @@ export default {
           creationDate: user.metadata.creationTime,
           lastSignInDate: user.metadata.LastSignInTime
         }
+        // Actualizamos el perfil de firebase
+        dispatch('UPDATE_PROFILE', { displayName: newUser.name })
+
         // Llamamos a 'setUser' para crear el nuevo usuario localmente
         commit('SET_USER', newUser)
         console.log('Hay un nuevo usuario: ' + state.user.name)
@@ -104,7 +108,29 @@ export default {
       commit('shared/SET_ACTION_PASS', false, { root: true })
     }
   },
+  
+  /**
+   *  Actualiza el perfil de usuario de Firebase
+   * @param {object} user - datos del usuario a actualizar
+   */
 
+  [UPDATE_PROFILE]: ({ commit, dispatch }, user) => {
+    commit('shared/CLEAR_ERROR', null, { root: true })
+    const userActive = firebaseAuth().currentUser
+    userActive.updateProfile(user)
+    .then(() => {
+      console.log ("Se ha actualizado el perfil de: " + user.displayName)
+    })
+    .catch (error => {
+      commit('shared/SET_ERROR', null, { root: true })
+      console.log('UPDATE PROFILE error: ' + error)
+      // dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
+    })
+  },
+
+  [APPLY_ACTION_CODE]: ({ commit, dispatch }, code) => {
+  },
+  
   /**
    * Enviamos un email de confirmación de la cuenta de usuario
    *
@@ -345,17 +371,18 @@ export default {
     console.log('Estoy en autoSignIn')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // const currentUser = firebaseAuth().currentUser
-    commit('SET_USER', {
+    const newUser = {
       id: user.uid,
       email: user.email,
-      name: user.name,
+      name: user.displayName,
       isVerified: user.emailVerified,
       isAnonymous: user.isAnonymous,
       creationDate: user.metadata.creationTime,
       lastSignInDate: user.metadata.LastSignInTime,
       providerData: user.providerData,
       providerId: user.providerData[0].providerId
-    })
+    }
+    commit('SET_USER', newUser)
   },
 
   /**

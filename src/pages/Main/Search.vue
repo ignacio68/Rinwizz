@@ -1,8 +1,7 @@
 <template>
-  <v-ons-page>
-    <div class="container">
-      <h1>{{ $t('lang.pages.search.main.text') }}</h1>
-    </div>
+  <v-ons-page id="search">
+    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
+    <div class="container"></div>
   </v-ons-page>
 </template>
 

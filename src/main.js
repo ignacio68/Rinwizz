@@ -182,7 +182,8 @@ firebaseAuth().onAuthStateChanged(user => {
            * Recuperamos los datos del usuario
            */
           // this.$store.dispatch('user/fetchUserData')
-          console.log('El usuario es: ' + user.email)
+          console.log('El usuario es: ' + user.displayName)
+          console.log(user)
           /**
            * Cargamos las alertas
            * 1ª Fase: cargamos todas las que hay en la base de datos

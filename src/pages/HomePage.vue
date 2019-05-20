@@ -1,22 +1,17 @@
 <template>
   <v-ons-page>
-    <the-custom-toolbar
+    <!--the-custom-toolbar
       modifier="white-content"
       :pageTitle="$t('lang.pages.homePage.toolbar.title')"
-    >
-      <!--v-ons-toolbar-button slot="right" modifier="white-content"
+    -->
+    <!--v-ons-toolbar-button slot="right" modifier="white-content"
                             @click="$store.commit('splitter/toggle'); showTip(null, 'Try dragging from right edge!')"
       >
         <v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
-      </v-ons-toolbar-button-->
-    </the-custom-toolbar>
+    </v-ons-toolbar-button-->
+    <!--/the-custom-toolbar-->
 
-    <v-ons-tabbar
-      position="bottom"
-      swipeable
-      :tabs="tabs"
-      :index.sync="index"
-    ></v-ons-tabbar>
+    <v-ons-tabbar position="bottom" :tabs="tabs" :index.sync="index"></v-ons-tabbar>
   </v-ons-page>
 </template>
 
@@ -70,6 +65,7 @@ export default {
 
 <style scoped>
 /* Custom 'white-content' modifier */
+/*
 .page--material .toolbar--white-content__center,
 .page--material .toolbar-button--white-content,
 .page--material :checked + .tabbar--white-content__button {
@@ -80,5 +76,5 @@ export default {
 }
 .page--material .tabbar--white-content__border {
   background-color: white;
-}
+} */
 </style>
