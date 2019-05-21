@@ -65,7 +65,7 @@ export default {
         console.log('Estoy dentro de createUserWithEmailAndPassword')
         console.log(user)
         commit('shared/SET_ACTION_PASS', true, { root: true })
-        
+
         // Añadimos los datos del nuevo usuario
         const newUser = {
           id: user.uid,
@@ -108,7 +108,7 @@ export default {
       commit('shared/SET_ACTION_PASS', false, { root: true })
     }
   },
-  
+
   /**
    *  Actualiza el perfil de usuario de Firebase
    * @param {object} user - datos del usuario a actualizar
@@ -117,20 +117,20 @@ export default {
   [UPDATE_PROFILE]: ({ commit, dispatch }, user) => {
     commit('shared/CLEAR_ERROR', null, { root: true })
     const userActive = firebaseAuth().currentUser
-    userActive.updateProfile(user)
-    .then(() => {
-      console.log ("Se ha actualizado el perfil de: " + user.displayName)
-    })
-    .catch (error => {
-      commit('shared/SET_ERROR', null, { root: true })
-      console.log('UPDATE PROFILE error: ' + error)
-      // dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
-    })
+    userActive
+      .updateProfile(user)
+      .then(() => {
+        console.log('Se ha actualizado el perfil de: ' + user.displayName)
+      })
+      .catch(error => {
+        commit('shared/SET_ERROR', null, { root: true })
+        console.log('UPDATE PROFILE error: ' + error)
+        // dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
+      })
   },
 
-  [APPLY_ACTION_CODE]: ({ commit, dispatch }, code) => {
-  },
-  
+  [APPLY_ACTION_CODE]: ({ commit, dispatch }, code) => {},
+
   /**
    * Enviamos un email de confirmación de la cuenta de usuario
    *
