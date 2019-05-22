@@ -503,10 +503,9 @@ export default {
     console.log('el id del usuario es: ' + newUser.id)
     console.log('La fecha de creación es: ' + newUser.creationDate)
     firebaseDb
-      .ref('users/')
-      .push(newUser)
-      /*
-      .set(newUser) */
+      .ref('users')
+      .child(newUser.id)
+      .set(newUser)
       .then(() => {
         // Añade el nombre de usuario a la base de datos
         dispatch('USER_NAME_DB', newUser.name)
@@ -520,7 +519,7 @@ export default {
         commit('shared/SET_ERROR', null, { root: true })
         console.log(error)
       })
-  },
+  },Pioneer DDJ-400
 
   /**
    *
@@ -534,7 +533,7 @@ export default {
     console.log('Estoy en USER_NAME_DB')
     commit('shared/CLEAR_ERROR', null, { root: true })
     firebaseDb
-      .ref('usersName/')
+      .ref('usersName/names')
       .update({
         userName
       })
@@ -545,7 +544,7 @@ export default {
         // Comprobamos que se ha añadido a Firebase
         firebaseDb
           .ref('users')
-          .on('child_added_event', snapshot => console.log(snapshot.val()))
+          .on('child_added', snapshot => console.log(snapshot.val()))
       })
       .catch(error => {
         console.log('USER_NAME_DB error: ' + error)
