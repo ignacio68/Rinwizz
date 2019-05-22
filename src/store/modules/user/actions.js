@@ -492,33 +492,36 @@ export default {
    * @param {*} dispatch
    * @param {Object} newUser - datos del usuario
    */
+  // TODO: Convertir en async
   [CREATE_USER_DB]: ({ commit, dispatch }, newUser) => {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
     console.log('Estoy en CREATE_USER_DB')
-    const userId = newUser._id
+    const user = newUser
+    const userId = user.id
     console.log('el id del usuario es: ' + userId)
     firebaseDb
       .ref('users/' + userId)
+      // TODO: revisar porque no reconoce al usuario, parece que no pasa los datos
       .set({
-        email: newUser.email,
-        name: newUser.displayName,
-        isVerified: newUser.emailVerified,
-        isAnonymous: newUser.isAnonymous,
-        creationDate: newUser.metadata.creationTime,
-        lastSignInDate: newUser.metadata.LastSignInTime,
-        providerData: newUser.providerData,
-        providerId: newUser.providerData[0].providerId
+        email: user.email,
+        name: user.displayName,
+        isVerified: user.emailVerified,
+        isAnonymous: user.isAnonymous,
+        creationDate: user.metadata.creationTime,
+        lastSignInDate: user.metadata.LastSignInTime,
+        providerData: user.providerData,
+        providerId: user.providerData[0].providerId
       })
       .then(() => {
         // Añade el nombre de usuario a la base de datos
-        dispatch('USER_NAME_DB', newUser.name)
+        dispatch('USER_NAME_DB', user.name)
         // Actualizamos los datos en Local Storage (LokiJS)
-        dispatch('localDataBase/CREATE_LOCAL_USER_DB', newUser, {
+        dispatch('localDataBase/CREATE_USER_LOCAL_DB', user, {
           root: true
         })
-        console.log(newUser.email)
+        console.log(user.email)
       })
       .catch(error => {
         commit('shared/SET_ERROR', null, { root: true })
@@ -529,7 +532,7 @@ export default {
   /**
    *
    * Añade el nombre la base de datos /usersNames
-   * TODO: REVISAR
+   * TODO: REVISAR -> crea una nueva key con el valor userName
    *
    * @param {*} commit
    * @param {String} userName
@@ -539,7 +542,7 @@ export default {
     commit('shared/CLEAR_ERROR', null, { root: true })
     firebaseDb
       .ref('usersName/')
-      .set({
+      .update({
         userName
       })
       .then(() => {
