@@ -70,16 +70,15 @@ export default {
         const newUser = {
           id: user.uid,
           email: user.email,
-          password: registerUser.password,
+          // password: registerUser.password,
           name: registerUser.name,
           phone: user.phoneNumber,
           isVerified: user.emailVerified,
           isAnonymous: user.isAnonymous,
           avatar: user.photoURL,
-          providerData: user.providerData,
-          providerId: user.providerData[0].providerId,
+          providerId: user.providerId,
           creationDate: user.metadata.creationTime,
-          lastSignInDate: user.metadata.LastSignInTime
+          lastSignInDate: user.metadata.lastSignInTime
         }
         // Actualizamos el perfil de firebase con el name
         await dispatch('UPDATE_PROFILE', { displayName: newUser.name })
@@ -368,19 +367,20 @@ export default {
    * @param {String} user - id y email del usuario
    */
   [AUTO_SIGN_IN]: ({ commit }, user) => {
-    console.log('Estoy en autoSignIn')
+    console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // const currentUser = firebaseAuth().currentUser
     const newUser = {
       id: user.uid,
       email: user.email,
       name: user.displayName,
+      phone: user.phone,
+      avatar: user.avatar,
       isVerified: user.emailVerified,
       isAnonymous: user.isAnonymous,
-      creationDate: user.metadata.creationTime,
-      lastSignInDate: user.metadata.LastSignInTime,
-      providerData: user.providerData,
-      providerId: user.providerData[0].providerId
+      creationDate: user.creationTime,
+      lastSignInDate: user.lastSignInTime,
+      providerId: user.providerId
     }
     commit('SET_USER', newUser)
   },
@@ -493,35 +493,28 @@ export default {
    * @param {Object} newUser - datos del usuario
    */
   // TODO: Convertir en async
-  [CREATE_USER_DB]: ({ commit, dispatch }, newUser) => {
+  [CREATE_USER_DB]: ({ state, commit, dispatch }, newUser) => {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
     console.log('Estoy en CREATE_USER_DB')
-    const user = newUser
-    const userId = user.id
-    console.log('el id del usuario es: ' + userId)
+    // const userId = user.id
+    // const creationDate = user.metadata.creationTime
+    console.log('el id del usuario es: ' + newUser.id)
+    console.log('La fecha de creación es: ' + newUser.creationDate)
     firebaseDb
-      .ref('users/' + userId)
-      // TODO: revisar porque no reconoce al usuario, parece que no pasa los datos
-      .set({
-        email: user.email,
-        name: user.displayName,
-        isVerified: user.emailVerified,
-        isAnonymous: user.isAnonymous,
-        creationDate: user.metadata.creationTime,
-        lastSignInDate: user.metadata.LastSignInTime,
-        providerData: user.providerData,
-        providerId: user.providerData[0].providerId
-      })
+      .ref('users/')
+      .push(newUser)
+      /*
+      .set(newUser) */
       .then(() => {
         // Añade el nombre de usuario a la base de datos
-        dispatch('USER_NAME_DB', user.name)
+        dispatch('USER_NAME_DB', newUser.name)
         // Actualizamos los datos en Local Storage (LokiJS)
-        dispatch('localDataBase/CREATE_USER_LOCAL_DB', user, {
-          root: true
-        })
-        console.log(user.email)
+        // dispatch('localDataBase/CREATE_USER_LOCAL_DB', user, {
+        //  root: true
+        // })
+        console.log(newUser.email)
       })
       .catch(error => {
         commit('shared/SET_ERROR', null, { root: true })
@@ -549,6 +542,10 @@ export default {
         console.log(
           'Añadido el nombre de usuario a la base de datos "UserNames"'
         )
+        // Comprobamos que se ha añadido a Firebase
+        firebaseDb
+          .ref('users')
+          .on('child_added_event', snapshot => console.log(snapshot.val()))
       })
       .catch(error => {
         console.log('USER_NAME_DB error: ' + error)

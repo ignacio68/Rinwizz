@@ -28,6 +28,7 @@ export default {
         return key
       })
       // Actualizamos con la fecha de inicio de la alerta
+      // TODO: Hacerlo al crear la alerta
       .then(key => {
         const startDate = Date.now()
         return firebaseDb
