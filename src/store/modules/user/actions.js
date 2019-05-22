@@ -81,21 +81,19 @@ export default {
           creationDate: user.metadata.creationTime,
           lastSignInDate: user.metadata.LastSignInTime
         }
-        // Actualizamos el perfil de firebase
-        dispatch('UPDATE_PROFILE', { displayName: newUser.name })
+        // Actualizamos el perfil de firebase con el name
+        await dispatch('UPDATE_PROFILE', { displayName: newUser.name })
 
         // Llamamos a 'setUser' para crear el nuevo usuario localmente
-        commit('SET_USER', newUser)
+        await commit('SET_USER', newUser)
+
+        // Añadimos los datos a la base de datos (Realtime Database)
+        await dispatch('CREATE_USER_DB', newUser)
+
         console.log('Hay un nuevo usuario: ' + state.user.name)
-        console.log('Password: ' + state.user.password)
-        console.log('Se unió el: ' + state.user.creationDate)
-        console.log('El provider es: ' + state.user.providerId)
         // Enviamos el email de confirmación
         const actionCodeSettings = state.actionCodeSettings
         await dispatch('SEND_EMAIL_VERIFICATION', actionCodeSettings)
-        // Añadimos los datos a la base de datos (Realtime Database)
-        // FIXME: Por el momento se desactiva:
-        // dispatch('createUserDb', newUser)
       } else {
         console.log('Hay un error')
         commit('shared/SET_ERROR', null, { root: true })
@@ -505,11 +503,17 @@ export default {
       .ref('users/' + userId)
       .set({
         email: newUser.email,
-        name: newUser.name
+        name: newUser.displayName,
+        isVerified: newUser.emailVerified,
+        isAnonymous: newUser.isAnonymous,
+        creationDate: newUser.metadata.creationTime,
+        lastSignInDate: newUser.metadata.LastSignInTime,
+        providerData: newUser.providerData,
+        providerId: newUser.providerData[0].providerId
       })
       .then(() => {
         // Añade el nombre de usuario a la base de datos
-        dispatch('userNameDb', newUser.name)
+        dispatch('USER_NAME_DB', newUser.name)
         // Actualizamos los datos en Local Storage (LokiJS)
         dispatch('localDataBase/CREATE_LOCAL_USER_DB', newUser, {
           root: true

@@ -8,7 +8,7 @@ import {
   REMOVE_USER_LOCAL_DB
 } from '@store/types/actions_types'
 
-const db = new PouchDB('rinwizz')
+const db = new PouchDB('Rinwizz')
 
 export default {
   /**
@@ -27,16 +27,15 @@ export default {
       _id: '"' + newUser._id + '"',
       userData: {
         email: '"' + newUser.email + '"',
-        name: '"' + newUser.name + '"',
-        location: '"' + newUser.location + '"'
+        name: '"' + newUser.name + '"'
       }
     })
       .then(response => {
         console.log('La info de la base de datos local es: ' + response)
-        console.log(this.dataToJSON)
       })
       .catch(error => {
-        console.log('El error es: ' + error)
+        // TODO: Revisar la gestión de errores
+        console.log('El error en PouchDb es: ' + error)
         console.log(newUser)
       })
   },
