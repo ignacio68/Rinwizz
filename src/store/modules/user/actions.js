@@ -215,6 +215,8 @@ export default {
       .signOut()
       .then(result => {
         commit('CLEAR_USER')
+        // TODO: Revisar si funciona la eliminacion de las alertas
+        commit('alerts/SET_LOADED_ALERTS', null, { root: true })
         console.log(result)
       })
       .then(commit('navigator/PUSH', LogIn, { root: true }))

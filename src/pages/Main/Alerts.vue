@@ -1,6 +1,9 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')">
+    <the-custom-toolbar
+      class="customToolbar"
+      :pageTitle="$t('lang.pages.alerts.toolbar')"
+    >
       <template v-slot:left>
         <h5>{{ userName }}</h5>
       </template>
@@ -33,7 +36,10 @@
       </v-ons-list>
     </div>
 
-    <v-ons-alert-dialog modifier="rowfooter" :visible.sync="isAlertVisible">
+    <v-ons-alert-dialog
+      modifier="rowfooter"
+      :visible.sync="isAlertVisible"
+    >
       <alert-script
         :userIcon="userIcon"
         :altIcon="userName + ' icon'"
@@ -85,7 +91,10 @@
       ripple="true"
       @click.prevent="isAlertVisible = true"
     >
-      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
+      <v-ons-icon
+        class="alertScript__icon"
+        icon="ion-edit, material:zmdi-email-open"
+      ></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -133,7 +142,7 @@ export default {
       },
       isAlertVisible: false,
       userIcon: 'src/assets/Real-Madrid-logo-256.png',
-      // userName: 'Real Madrid',
+      // userName: null,
       referenceDate: ''
       // numAlerts: null
     }

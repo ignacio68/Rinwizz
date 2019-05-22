@@ -5,7 +5,7 @@ import {
   SET_PLATFORM,
   SET_LANGUAGE
 } from '@store/types/mutations_types'
-
+// TODO: Repasar el funcionamiento del control de errores --> ELIMINAR!
 export default {
   /**
    * Control de errores
@@ -17,13 +17,15 @@ export default {
     console.log('El error es: ' + state.error)
   },
   /**
-   * Resetea los errores , el payload debe ser 'null'
+   * Resetea los errores
    *
    * @param {*} payload
    */
   [CLEAR_ERROR]: state => {
     state.error = false
-    console.log('Errores limpio')
+    // const errorMessage = ''
+    // commit('errors/SET_ERROR_MESSAGE', errorMessage, { root: true })
+    console.log('Limpio los errores')
   },
   /**
    * Comprueba si la acción ha sido ejecutada
