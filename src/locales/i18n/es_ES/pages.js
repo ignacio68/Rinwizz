@@ -50,6 +50,34 @@ export default {
     },
     button: 'ACCEDER'
   },
+
+  // Preferences
+  personal: {
+    main:
+      'Necesitamos alguna información personal para ofrecerte un mejor servicio',
+    button: 'Comenzamos'
+  },
+  gender: {
+    main: 'Elíge tu género',
+    genders: 'Hombre | Mujer | Otro',
+    button: 'A la localización'
+  },
+  userLocation: {
+    main: 'Indícanos donde estás'
+  },
+  preferences: {
+    main: 'Elíge tus aficiones favoritas',
+    hobbies: 'deportes | espectáculos | comida y bebida',
+    sports: 'footbal | basket | handball',
+    entertainment: 'movies | theatre | disco',
+    food: 'restaurant | bar | cocktails'
+  },
+  greetings: {
+    greetings: 'Guay!',
+    main: 'Ya puedes recibir tus alertas favoritas'
+  },
+
+  // TODO: Revisar configuration
   configuration: {
     toolbar: 'CONFIGURACION',
     profile: {
@@ -64,6 +92,7 @@ export default {
     },
     button: 'Guardar'
   },
+
   service: {
     toolbar: {
       title: 'TERMINOS DEL SERVICIO'

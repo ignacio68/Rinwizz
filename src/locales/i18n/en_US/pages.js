@@ -46,6 +46,33 @@ export default {
     },
     button: 'LOG IN'
   },
+
+  // Preferences
+  personal: {
+    main: 'We need some personal info to offer you a good service',
+    button: 'Start'
+  },
+  gender: {
+    main: 'Choose your gendre',
+    genders: 'Male | Female | Other',
+    button: 'To the location'
+  },
+  userLocation: {
+    main: 'Tell us where you stay'
+  },
+  preferences: {
+    main: 'Choose your favorites hobbies',
+    hobbies: 'sports | entertainment | food & drinks',
+    sports: 'footbal | basket | handball',
+    entertainment: 'movies | theatre | disco',
+    food: 'restaurant | bar | cocktails'
+  },
+  greetings: {
+    greetings: 'Greetings!',
+    main: 'You can receive your alerts now'
+  },
+
+  // TODO: Revisar configuration
   configuration: {
     toolbar: 'CONFIGURATION',
     profile: {

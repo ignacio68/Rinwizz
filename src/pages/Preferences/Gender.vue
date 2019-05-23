@@ -1,7 +1,7 @@
 <template>
   <v-ons-page id="gender">
     <div class="container">
-      <p>Elige tu género</p>
+      <p>{{ $t('lang.pages.gender.main') }}</p>
       <v-ons-list>
         <v-ons-list-item
           v-for="(gender, $index) in genders"
@@ -23,6 +23,11 @@
             {{ gender }}
           </label>
         </v-ons-list-item>
+        <v-ons-list-item>
+          <div class="center">
+            mi género es: {{ selectedGender }}!
+          </div>
+        </v-ons-list-item>
       </v-ons-list>
       <br>
       <div class="userLcationButton">
@@ -33,38 +38,56 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toUserLocation"
-        >Continuar</v-ons-button>
+        >{{ $t('lang.pages.gender.button') }}</v-ons-button>
       </div>
     </div>
   </v-ons-page>
-  </div>
-
 </template>
 <script>
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions, mapState } from 'vuex'
 import userLocation from './UserLocation'
 export default {
   name: 'gender',
   namespace: true,
   data() {
     return {
-      genders: ['Male', 'Female', 'Other'],
+      genders: ['Hombre', 'Mujer', 'Otro'],
       selectedGender: ''
     }
   },
   computed: {
-    userGender () {
+    // ...mapState('user', { userId: state => state.user.id })
+    ...mapGetters('user', { userId: 'USER_ID' }),
+    /*
+    // TODO: INTERNACIONALIZAR!!
+    genders() {
+      return this.$tc('lang.pages.gender.genders')
+    }, */
+    userGender() {
       const userGender = this.selectedGender
+    },
+    getUserGender() {
+      const gender = { gender: this.selectedGender }
+      console.log('El género es: ' + this.selectedGender)
     }
   },
   methods: {
     ...mapMutations('navigator', ['REPLACE']),
+    ...mapActions('userDb', ['UPDATE_USER_DB']),
 
     toUserLocation() {
+      console.log('Estoy en toUserLocation(')
+      console.log('userId es: ' + this.userId)
+      this.UPDATE_USER_DB(this.userId, this.getUserGender)
       this.REPLACE(userLocation)
     }
   }
 }
 </script>
 <style scoped>
+.container {
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 24px;
+}
 </style>

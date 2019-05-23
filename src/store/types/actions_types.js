@@ -51,3 +51,5 @@ export const TO_JSON = 'TO_JSON'
 // userDb
 export const CREATE_USER_DB = 'CREATE_USER_DB'
 export const USER_NAME_DB = 'USER_NAME_DB'
+export const UPDATE_USER_DB = 'UPDATE_USER_DB'
+export const DELETE_USER_DB = 'DELETE_USER_DB'

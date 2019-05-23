@@ -1,17 +1,17 @@
 <template>
   <v-ons-page id='personal'>
     <div class="container">
-      <h4>Necesitamos unos datos tuyos para ofrcerte un mejor servicio</h4>
+      <h4>{{ $t('lang.pages.personal.main') }}</h4>
       <br>
       <div class="gender">
         <v-ons-button
-          class="genderButton__button"
+          class="gender__button"
           name="genderButton"
           modifier="large"
           :disabled="false"
           ripple="true"
           @click.prevent="toGender"
-        >Continuar</v-ons-button>
+        >{{ $t('lang.pages.personal.button') }}</v-ons-button>
       </div>
     </div>
   </v-ons-page>
@@ -36,4 +36,9 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 24px;
+}
 </style>

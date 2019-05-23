@@ -1,5 +1,10 @@
 import { firebaseDb } from '../../../firebase'
-import { CREATE_USER_DB, USER_NAME_DB } from '@store/types/actions_types'
+import {
+  CREATE_USER_DB,
+  USER_NAME_DB,
+  UPDATE_USER_DB,
+  DELETE_USER_DB
+} from '@store/types/actions_types'
 
 export default {
   /**
@@ -61,6 +66,56 @@ export default {
       .catch(error => {
         console.log('USER_NAME_DB error: ' + error)
         commit('shared/SET_ERROR', null, { root: true })
+      })
+  },
+
+  /**
+   *
+   * Actualiza la base de datos del usuario
+   *
+   * @param {string} userId Id del usuario
+   * @param {object} userData Datos a añadir a la base de datos del usuario
+   */
+  [UPDATE_USER_DB]: ({ commit }, userId, userData) => {
+    console.log('Estoy en UPDATE_USER_DB')
+    commit('shared/CLEAR_ERROR', null, {
+      root: true
+    })
+    firebaseDb
+      .ref('users/')
+      .child(userId)
+      .update({
+        userData
+      })
+      .then(() => {
+        console.log('Usuario actualizado!')
+      })
+      .catch(error => {
+        commit('shared/SET_ERROR', null, { root: true })
+        console.log(error)
+      })
+  },
+
+  /**
+   *
+   * Elimina la base de datos del usuario
+   *
+   * @param {string} userId Id del usuario
+   */
+  [DELETE_USER_DB]: ({ commit }, userId) => {
+    commit('shared/CLEAR_ERROR', null, {
+      root: true
+    })
+    firebaseDb
+      .ref('users/')
+      .child(userId)
+      .remove()
+      .then(() => {
+        console.log('Borrada base de datos de Firebase')
+      })
+      .catch(error => {
+        commit('shared/SET_ERROR', null, { root: true })
+        console.log(error)
       })
   }
 }

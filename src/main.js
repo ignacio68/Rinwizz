@@ -190,7 +190,7 @@ firebaseAuth().onAuthStateChanged(user => {
            * 2ª Fase: sólo las que están activas
            * 3ª Fase: las subscritas por el usuario
            */
-          this.$store.dispatch('alerts/LOAD_ALERTS')
+          // this.$store.dispatch('alerts/LOAD_ALERTS')
         } else {
           console.log('No existe user')
         }

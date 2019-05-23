@@ -15,7 +15,6 @@ export default {
     state.user = newUser
     console.log('estoy en SET_USER')
     console.log('El id de usuario es: ' + newUser.id)
-    console.log('La fecha de creación es: ' + newUser.creationDate)
   },
   /**
    * Resetea el usuario

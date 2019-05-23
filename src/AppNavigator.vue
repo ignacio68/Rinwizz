@@ -1,5 +1,9 @@
 <template id="App">
-  <v-ons-navigator :page-stack="pageStack" :pop-page="storePop" :options="options"></v-ons-navigator>
+  <v-ons-navigator
+    :page-stack="pageStack"
+    :pop-page="storePop"
+    :options="options"
+  ></v-ons-navigator>
 </template>
 
 <script>
@@ -7,8 +11,7 @@ import { mapState, mapGetters, mapMutations } from 'vuex'
 
 import HomePage from '@pages/HomePage'
 import Welcome from '@pages/Shared/Welcome'
-
-// import userLocation from '@pages/Preferences/UserLocation'
+import Gender from '@pages/Preferences/Gender'
 
 export default {
   name: 'appNavigator',
@@ -18,7 +21,7 @@ export default {
       this.PUSH(Welcome)
       console.log('El usuario NO está autenticado')
     } else {
-      this.PUSH(HomePage)
+      this.PUSH(Gender)
       console.log('El usuario SI está autenticado')
     }
   },
@@ -32,11 +35,6 @@ export default {
     ...mapState('user', {
       user: state => state.user
     }),
-    /*
-    ...mapState('navigator', {
-      pageStack: state => state.stack,
-      options: state => state.options
-    }),*/
     // ...mapGetters('user', ['USER']),
     ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
