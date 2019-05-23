@@ -5,18 +5,14 @@ export default {
   /**
    * Creamos la base de datos del usuario
    *
-   * @param {*} commit
-   * @param {*} dispatch
-   * @param {Object} newUser - datos del usuario
+   * @param {Object} newUser - datos del usuario a almacenar en la base de datos
    */
   // TODO: Convertir en async
-  [CREATE_USER_DB]: ({ state, commit, dispatch }, newUser) => {
+  [CREATE_USER_DB]: ({ commit, dispatch }, newUser) => {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
     console.log('Estoy en CREATE_USER_DB')
-    // const userId = user.id
-    // const creationDate = user.metadata.creationTime
     console.log('el id del usuario es: ' + newUser.id)
     console.log('La fecha de creación es: ' + newUser.creationDate)
     firebaseDb
@@ -43,8 +39,7 @@ export default {
    * Añade el nombre la base de datos /usersNames
    * TODO: REVISAR -> crea una nueva key con el valor userName
    *
-   * @param {*} commit
-   * @param {String} userName
+   * @param {String} userName nombre del usuario a almacenar en la base de datos
    */
   [USER_NAME_DB]: ({ commit }, userName) => {
     console.log('Estoy en USER_NAME_DB')

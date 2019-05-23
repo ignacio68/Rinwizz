@@ -6,6 +6,7 @@ import auth from '@modules/auth'
 import errors from '@modules/errors'
 import localDb from '@modules/localDb'
 import navigator from '@modules/navigator'
+import password from '@modules/password'
 import shared from '@modules/shared'
 import social from '@modules/social'
 import user from '@modules/user'
@@ -20,6 +21,7 @@ export const store = new Vuex.Store({
     errors,
     localDb,
     navigator,
+    password,
     shared,
     social,
     user,

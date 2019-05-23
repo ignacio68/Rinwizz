@@ -257,7 +257,6 @@ export default {
       console.log('Estoy en el botón de la alerta de confirmación de password')
       this.SET_ACTION_PASS(false)
       this.REPLACE(Personal)
-      // this.$store.dispatch('user/confirmPassword', this.email)
     }
   }
 }
