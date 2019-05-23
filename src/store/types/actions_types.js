@@ -15,7 +15,6 @@ export const GET_USER_DATA_LOCAL_DB = 'GET_USER_DATA_LOCAL_DB'
 export const REMOVE_USER_LOCAL_DB = 'REMOVE_USER_LOCAL_DB'
 
 // location
-// location
 export const GET_USER_LOCATION = 'GET_USER_LOCATION'
 
 // shared
@@ -49,7 +48,8 @@ export const SEND_EMAIL_VERIFICATION = 'SEND_EMAIL_VERIFICATION'
 export const APPLY_ACTION_CODE = 'APPLY_ACTION_CODE'
 export const GET_CREDENTIAL = 'GET_CREDENTIAL'
 
+export const TO_JSON = 'TO_JSON'
+
+// userDb
 export const CREATE_USER_DB = 'CREATE_USER_DB'
 export const USER_NAME_DB = 'USER_NAME_DB'
-
-export const TO_JSON = 'TO_JSON'

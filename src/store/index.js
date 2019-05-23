@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 import alerts from '@modules/alerts'
 import auth from '@modules/auth'
 import errors from '@modules/errors'
-import localDataBase from '@modules/localDataBase'
+import localDb from '@modules/localDb'
 import navigator from '@modules/navigator'
 import shared from '@modules/shared'
 import social from '@modules/social'
@@ -18,7 +18,7 @@ export const store = new Vuex.Store({
     alerts,
     auth,
     errors,
-    localDataBase,
+    localDb,
     navigator,
     shared,
     social,
