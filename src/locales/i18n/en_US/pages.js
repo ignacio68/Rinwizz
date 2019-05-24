@@ -71,7 +71,8 @@ export default {
   },
   greetings: {
     greetings: 'Greetings!',
-    main: 'You can receive your alerts now'
+    main: 'You can receive your alerts now',
+    button: 'Start'
   },
 
   // TODO: Revisar configuration

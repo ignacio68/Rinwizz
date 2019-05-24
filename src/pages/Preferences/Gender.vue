@@ -54,7 +54,7 @@ export default {
       const data = { gender: this.selectedGender }
       const userData = { userId: this.userId, data }
       await this.UPDATE_USER_DB(userData)
-      await toUserLocation()
+      await this.toUserLocation()
     },
     toUserLocation() {
       this.REPLACE(userLocation)

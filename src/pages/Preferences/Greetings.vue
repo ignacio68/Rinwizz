@@ -1,9 +1,9 @@
 <template>
   <v-ons-page id="greetings">
     <div class="container">
-      <h1 style="text-align:center">¡¡Enhorabuena!!</h1>
+      <h1 style="text-align:center">{{ $t('lang.pages.greetings.greetings') }}</h1>
       <br>
-      <h3>Ya pudes comenzar a recibir tus alertas</h3>
+      <h3>{{ $t('lang.pages.greetings.main') }}</h3>
       <br>
       <div class="homePageButton">
         <v-ons-button
@@ -13,7 +13,7 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toHomePage"
-        >Comenzar!!</v-ons-button>
+        >{{ $t('lang.pages.greetings.button') }}</v-ons-button>
       </div>
     </div>
   </v-ons-page>
@@ -30,10 +30,10 @@ export default {
     return {}
   },
   methods: {
-    ...mapMutations('navigator', ['PUSH']),
+    ...mapMutations('navigator', ['REPLACE']),
 
     toHomePage() {
-      this.PUSH(HomePage)
+      this.REPLACE(HomePage)
     }
   }
 }

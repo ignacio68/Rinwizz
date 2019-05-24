@@ -76,7 +76,8 @@ export default {
   },
   greetings: {
     greetings: 'Guay!',
-    main: 'Ya puedes recibir tus alertas favoritas'
+    main: 'Ya puedes recibir tus alertas favoritas',
+    button: 'Comenzar'
   },
 
   // TODO: Revisar configuration
