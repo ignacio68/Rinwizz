@@ -1,9 +1,5 @@
 <template id="App">
-  <v-ons-navigator
-    :page-stack="pageStack"
-    :pop-page="storePop"
-    :options="options"
-  ></v-ons-navigator>
+  <v-ons-navigator :page-stack="pageStack" :pop-page="storePop" :options="options"></v-ons-navigator>
 </template>
 
 <script>
@@ -11,7 +7,7 @@ import { mapState, mapGetters, mapMutations } from 'vuex'
 
 import HomePage from '@pages/HomePage'
 import Welcome from '@pages/Shared/Welcome'
-import Gender from '@pages/Preferences/Gender'
+import Hobbies from '@pages/Preferences/Hobbies'
 
 export default {
   name: 'appNavigator',
@@ -21,7 +17,7 @@ export default {
       this.PUSH(Welcome)
       console.log('El usuario NO está autenticado')
     } else {
-      this.PUSH(Gender)
+      this.PUSH(Hobbies)
       console.log('El usuario SI está autenticado')
     }
   },
@@ -32,19 +28,12 @@ export default {
     return {}
   },
   computed: {
-    ...mapState('user', {
-      user: state => state.user
-    }),
-    // ...mapGetters('user', ['USER']),
+    ...mapGetters('user', { user: 'USER' }),
     ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
     userIsAuthenticated() {
       console.log('Comprobando si el usuario está autenticado')
-      return (
-        // this.$store.getters['user/user'] !== null &&
-        // this.$store.getters['user/user'] !== undefined
-        this.user !== null && this.user !== undefined
-      )
+      return this.user !== null && this.user !== undefined
     }
   },
   methods: {

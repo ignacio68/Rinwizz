@@ -58,14 +58,16 @@ export default {
     button: 'To the location'
   },
   userLocation: {
-    main: 'Tell us where you stay'
+    main: 'Tell us where you stay',
+    button: 'Continue'
   },
-  preferences: {
+  hobbies: {
     main: 'Choose your favorites hobbies',
     hobbies: 'sports | entertainment | food & drinks',
     sports: 'footbal | basket | handball',
     entertainment: 'movies | theatre | disco',
-    food: 'restaurant | bar | cocktails'
+    food: 'restaurant | bar | cocktails',
+    button: 'Finish'
   },
   greetings: {
     greetings: 'Greetings!',

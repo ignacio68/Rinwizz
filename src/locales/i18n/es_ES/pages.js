@@ -63,14 +63,16 @@ export default {
     button: 'A la localización'
   },
   userLocation: {
-    main: 'Indícanos donde estás'
+    main: 'Indícanos donde estás',
+    button: 'Continuamos'
   },
-  preferences: {
+  hobbies: {
     main: 'Elíge tus aficiones favoritas',
     hobbies: 'deportes | espectáculos | comida y bebida',
     sports: 'footbal | basket | handball',
     entertainment: 'movies | theatre | disco',
-    food: 'restaurant | bar | cocktails'
+    food: 'restaurant | bar | cocktails',
+    button: 'Terminar'
   },
   greetings: {
     greetings: 'Guay!',

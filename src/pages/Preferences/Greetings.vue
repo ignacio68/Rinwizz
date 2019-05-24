@@ -25,6 +25,7 @@ import HomePage from '@pages/HomePage'
 
 export default {
   name: 'greetings',
+  namespace: true,
   data() {
     return {}
   },

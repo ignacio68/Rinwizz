@@ -21,16 +21,15 @@
           modifier="large"
           :disabled="false"
           ripple="true"
-          @click.prevent="toUserLocation"
+          @click.prevent="updateGender"
         >{{ $t('lang.pages.gender.button') }}</v-ons-button>
       </div>
     </div>
   </v-ons-page>
 </template>
 <script>
-import { mapGetters, mapMutations, mapActions, mapState } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import userLocation from './UserLocation'
-import { userInfo } from 'os'
 export default {
   name: 'gender',
   namespace: true,
@@ -41,30 +40,24 @@ export default {
     }
   },
   computed: {
-    // ...mapState('user', { userId: state => state.user.id })
-    ...mapGetters('user', { userId: 'USER_ID' }),
+    ...mapGetters('user', { userId: 'USER_ID' })
     /*
     // TODO: INTERNACIONALIZAR!!
     genders() {
       return this.$tc('lang.pages.gender.genders')
     }, */
-    userGender() {
-      const userGender = this.selectedGender
-    },
-    getUserGender() {
-      const gender = { gender: this.selectedGender }
-      console.log('El género es: ' + this.selectedGender)
-    }
   },
   methods: {
     ...mapMutations('navigator', ['REPLACE']),
     ...mapActions('userDb', ['UPDATE_USER_DB']),
-
-    async toUserLocation() {
+    async updateGender() {
       const data = { gender: this.selectedGender }
       const userData = { userId: this.userId, data }
       await this.UPDATE_USER_DB(userData)
-      await this.REPLACE(userLocation)
+      await toUserLocation()
+    },
+    toUserLocation() {
+      this.REPLACE(userLocation)
     }
   }
 }

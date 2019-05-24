@@ -1,12 +1,9 @@
 <template>
   <v-ons-page id="userLocation">
     <v-ons-col class="col">
-      <h3 class="text">Elige tu localización</h3>
+      <h3 class="text">{{ $t('lang.pages.userLocation.main') }}</h3>
       <div class="map">
-        <location
-          :location="userLocation"
-          @onDragEndEvent()="setLocation"
-        />
+        <location :location="userLocation" @onDragEndEvent()="setLocation"/>
       </div>
       <div class="preferencesButton">
         <v-ons-button
@@ -16,7 +13,7 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toPreferences"
-        >Continuar</v-ons-button>
+        >{{ $t('lang.pages.userLocation.button') }}</v-ons-button>
       </div>
     </v-ons-col>
   </v-ons-page>
@@ -27,7 +24,7 @@ import { mapMutations } from 'vuex'
 
 import location from '@components/User/Location'
 
-import Preferences from './Preferences'
+import Hobbies from './Hobbies'
 
 export default {
   name: 'userLocation',
@@ -37,15 +34,9 @@ export default {
   data() {
     return {}
   },
-  created() {
-    console.log('Estoy en Location.created')
-  },
-  beforeMount() {
-    console.log('Estoy en Location.beforeMount')
-  },
   computed: {
     userLocation() {
-      console.log('estoy en location()')
+      console.log('estoy en userLocation()')
       return {
         lat: this.$store.state.geolocation.lat,
         lng: this.$store.state.geolocation.lng
