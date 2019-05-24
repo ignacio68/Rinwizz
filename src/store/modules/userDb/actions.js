@@ -13,30 +13,31 @@ export default {
    * @param {Object} newUser - datos del usuario a almacenar en la base de datos
    */
   // TODO: Convertir en async
-  [CREATE_USER_DB]: ({ commit, dispatch }, newUser) => {
+  async [CREATE_USER_DB]({ commit, dispatch }, newUser) {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
     console.log('Estoy en CREATE_USER_DB')
     console.log('el id del usuario es: ' + newUser.id)
     console.log('La fecha de creación es: ' + newUser.creationDate)
-    firebaseDb
-      .ref('users')
-      .child(newUser.id)
-      .set(newUser)
-      .then(() => {
-        // Añade el nombre de usuario a la base de datos
-        dispatch('USER_NAME_DB', newUser.name)
-        // Actualizamos los datos en Local Storage (LokiJS)
-        // dispatch('localDb/CREATE_USER_LOCAL_DB', user, {
-        //  root: true
-        // })
-        console.log(newUser.email)
-      })
-      .catch(error => {
-        commit('shared/SET_ERROR', null, { root: true })
-        console.log(error)
-      })
+    try {
+      firebaseDb
+        .ref('users')
+        .child(newUser.id)
+        .set(newUser)
+        .then(() => {
+          // Añade el nombre de usuario a la base de datos
+          dispatch('USER_NAME_DB', newUser.name)
+          // Actualizamos los datos en Local Storage (LokiJS)
+          // dispatch('localDb/CREATE_USER_LOCAL_DB', user, {
+          //  root: true
+          // })
+          console.log(newUser.email)
+        })
+    } catch (error) {
+      commit('shared/SET_ERROR', null, { root: true })
+      console.log(error)
+    }
   },
 
   /**
@@ -46,27 +47,28 @@ export default {
    *
    * @param {String} userName nombre del usuario a almacenar en la base de datos
    */
-  [USER_NAME_DB]: ({ commit }, userName) => {
+  async [USER_NAME_DB]({ commit }, userName) {
     console.log('Estoy en USER_NAME_DB')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    firebaseDb
-      .ref('usersName/names')
-      .update({
-        userName
-      })
-      .then(() => {
-        console.log(
-          'Añadido el nombre de usuario a la base de datos "UserNames"'
-        )
-        // Comprobamos que se ha añadido a Firebase
-        firebaseDb
-          .ref('users')
-          .on('child_added', snapshot => console.log(snapshot.val()))
-      })
-      .catch(error => {
-        console.log('USER_NAME_DB error: ' + error)
-        commit('shared/SET_ERROR', null, { root: true })
-      })
+    try {
+      firebaseDb
+        .ref('usersName/names')
+        .update({
+          userName
+        })
+        .then(() => {
+          console.log(
+            'Añadido el nombre de usuario a la base de datos "UserNames"'
+          )
+          // Comprobamos que se ha añadido a Firebase
+          firebaseDb
+            .ref('users')
+            .on('child_added', snapshot => console.log(snapshot.val()))
+        })
+    } catch (error) {
+      console.log('USER_NAME_DB error: ' + error)
+      commit('shared/SET_ERROR', null, { root: true })
+    }
   },
 
   /**
@@ -74,26 +76,33 @@ export default {
    * Actualiza la base de datos del usuario
    *
    * @param {string} userId Id del usuario
-   * @param {object} userData Datos a añadir a la base de datos del usuario
+   * @param {object} userData Datos a actualizar. Debe incluir dos parámetros:
+   *                            - userId: Id del usuario
+   *                            - userData: los datos que deben actualizarse
    */
-  [UPDATE_USER_DB]: ({ commit }, userId, userData) => {
-    console.log('Estoy en UPDATE_USER_DB')
+  async [UPDATE_USER_DB]({ commit }, userData) {
+    console.log(
+      'Estoy en UPDATE_USER_DB, userID: ' +
+        userData.userId +
+        ' ,userData: ' +
+        userData.data
+    )
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
-    firebaseDb
-      .ref('users/')
-      .child(userId)
-      .update({
-        userData
-      })
-      .then(() => {
-        console.log('Usuario actualizado!')
-      })
-      .catch(error => {
-        commit('shared/SET_ERROR', null, { root: true })
-        console.log(error)
-      })
+    try {
+      const updateUserData = userData.data
+      firebaseDb
+        .ref('users/')
+        .child(userData.userId)
+        .update(updateUserData)
+        .then(() => {
+          console.log('Usuario actualizado!')
+        })
+    } catch (error) {
+      commit('shared/SET_ERROR', null, { root: true })
+      console.log(error)
+    }
   },
 
   /**
@@ -102,20 +111,21 @@ export default {
    *
    * @param {string} userId Id del usuario
    */
-  [DELETE_USER_DB]: ({ commit }, userId) => {
+  async [DELETE_USER_DB]({ commit }, userId) {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
-    firebaseDb
-      .ref('users/')
-      .child(userId)
-      .remove()
-      .then(() => {
-        console.log('Borrada base de datos de Firebase')
-      })
-      .catch(error => {
-        commit('shared/SET_ERROR', null, { root: true })
-        console.log(error)
-      })
+    try {
+      firebaseDb
+        .ref('users/')
+        .child(userId)
+        .remove()
+        .then(() => {
+          console.log('Borrada base de datos de Firebase')
+        })
+    } catch (error) {
+      commit('shared/SET_ERROR', null, { root: true })
+      console.log(error)
+    }
   }
 }

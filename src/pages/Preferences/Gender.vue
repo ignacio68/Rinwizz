@@ -3,34 +3,18 @@
     <div class="container">
       <p>{{ $t('lang.pages.gender.main') }}</p>
       <v-ons-list>
-        <v-ons-list-item
-          v-for="(gender, $index) in genders"
-          :key="gender"
-          tappable
-        >
+        <v-ons-list-item v-for="(gender, $index) in genders" :key="gender" tappable>
           <label class="left">
-            <v-ons-radio
-              :input-id="'radio-' + $index"
-              :value="gender"
-              v-model="selectedGender"
-            >
-            </v-ons-radio>
+            <v-ons-radio :input-id="'radio-' + $index" :value="gender" v-model="selectedGender"></v-ons-radio>
           </label>
-          <label
-            :for="'radio-' + $index"
-            class="center"
-          >
-            {{ gender }}
-          </label>
+          <label :for="'radio-' + $index" class="center">{{ gender }}</label>
         </v-ons-list-item>
         <v-ons-list-item>
-          <div class="center">
-            mi género es: {{ selectedGender }}!
-          </div>
+          <div class="center">mi género es: {{ selectedGender }}!</div>
         </v-ons-list-item>
       </v-ons-list>
       <br>
-      <div class="userLcationButton">
+      <div class="userLocationButton">
         <v-ons-button
           class="userLocationButton__button"
           name="userLocationButton"
@@ -46,6 +30,7 @@
 <script>
 import { mapGetters, mapMutations, mapActions, mapState } from 'vuex'
 import userLocation from './UserLocation'
+import { userInfo } from 'os'
 export default {
   name: 'gender',
   namespace: true,
@@ -75,11 +60,11 @@ export default {
     ...mapMutations('navigator', ['REPLACE']),
     ...mapActions('userDb', ['UPDATE_USER_DB']),
 
-    toUserLocation() {
-      console.log('Estoy en toUserLocation(')
-      console.log('userId es: ' + this.userId)
-      this.UPDATE_USER_DB(this.userId, this.getUserGender)
-      this.REPLACE(userLocation)
+    async toUserLocation() {
+      const data = { gender: this.selectedGender }
+      const userData = { userId: this.userId, data }
+      await this.UPDATE_USER_DB(userData)
+      await this.REPLACE(userLocation)
     }
   }
 }
