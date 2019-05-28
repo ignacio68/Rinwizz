@@ -8,19 +8,17 @@
     @update:center="centerUpdated"
     @update:bounds="boundsUpdated"
   >
-    <v-tile-layer
-      :url="maps.url"
-      :atribution="maps.atribution"
-    />
+    <v-tile-layer :url="maps.url" :atribution="maps.atribution"/>
     <v-marker
       ref="marker"
       class="map__marker"
-      :lat-lng="location"
+      alt="user position"
+      :lat-lng.sync="location"
       :draggable="true"
-      :autopan="false"
+      :autopan="true"
       @dragend="onDragEnd"
     >
-      <v-popup :content="mapMarker.tooltip" />
+      <v-popup :content="mapMarker.tooltip"/>
     </v-marker>
     <v-circle-marker
       :lat-lng="location"
@@ -40,7 +38,7 @@
       :opacity="circle2.opacity"
       :fillOpacity="circle2.fillOpacity"
     />
-    <v-locatecontrol />
+    <v-locatecontrol/>
   </v-map>
 </template>
 <script>
@@ -79,7 +77,7 @@ export default {
       },
       center: [],
       zoom: null,
-      markerLatLng: [],
+      markerLocation: {},
       bounds: null,
       marker: null,
       mapMarker: {
@@ -102,19 +100,22 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      // this.marker = this.$refs.marker
       this.marker = this.$refs.marker
       console.log('marker: ' + this.marker)
     })
     // this.$refs.marker.on('click', this.onDragEnd, this)
-    if (!this.$refs.marker) {
-      console.log('El marker NO existe')
-    } else {
-      console.log('El marker SI existe')
-    }
   },
   computed: {
-    markerLocation: () => this.marker.getLatlng()
+    /*
+    markerLocation: () => {
+      if (this.marker) {
+        // this.marker.getLatlng()
+        console.log('El marker SI existe')
+        console.log(this.marker.getLanLng())
+      } else {
+        console.log('El marker NO existe')
+      }
+    }*/
   },
   methods: {
     zoomUpdated(zoom) {
@@ -128,12 +129,23 @@ export default {
       this.bounds = bounds
     },
     // TODO: revisar su utilización
-    onDragEnd() {
+    onDragEnd(event) {
       console.log('Estoy en onDragEnd')
       // const position =
       // lat = position['lat']
       // lng = position['lng']
-      this.location = this.marker.getLatlng()
+      // this.location = this.marker.getLatLng()
+      if (this.marker) {
+        // this.marker.getLatlng()
+        console.log('El marker SI existe')
+        console.log(event.distance)
+        console.log(this.marker)
+        console.log(this.marker.latLng.lat)
+        console.log(this.marker.latLng.lng)
+        // console.log(this.marker.getLanLng())
+      } else {
+        console.log('El marker NO existe')
+      }
     }
   }
 }
