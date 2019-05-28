@@ -3,7 +3,10 @@
     <v-ons-col class="col">
       <h3 class="text">{{ $t('lang.pages.userLocation.main') }}</h3>
       <div class="map">
-        <location :location="userLocation" @onDragEndEvent()="setLocation"/>
+        <location
+          :location="userLocation"
+          :initialZoom="17"
+        />
       </div>
       <div class="preferencesButton">
         <v-ons-button
@@ -20,7 +23,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 import location from '@components/User/Location'
 
@@ -35,11 +38,15 @@ export default {
     return {}
   },
   computed: {
+    ...mapState('geolocation', {
+      lat: state => state.lat,
+      lng: state => state.lng
+    }),
     userLocation() {
       console.log('estoy en userLocation()')
       return {
-        lat: this.$store.state.geolocation.lat,
-        lng: this.$store.state.geolocation.lng
+        lat: this.lat,
+        lng: this.lng
       }
     }
   },
@@ -47,10 +54,6 @@ export default {
     ...mapMutations('navigator', ['PUSH']),
     toPreferences() {
       this.PUSH(Preferences)
-    },
-    setLocation() {
-      this.location = getLatLng()
-      console.log('Estoy en setLocation')
     }
   }
 }

@@ -1,14 +1,18 @@
 <template>
-  <l-map
+  <v-map
+    ref="map"
     class="map__map"
-    :zoom="zoom"
+    :zoom="initialZoom"
     :center="location"
     @update:zoom="zoomUpdated"
     @update:center="centerUpdated"
     @update:bounds="boundsUpdated"
   >
-    <l-tile-layer :url="maps.url" :atribution="maps.atribution"/>
-    <l-marker
+    <v-tile-layer
+      :url="maps.url"
+      :atribution="maps.atribution"
+    />
+    <v-marker
       ref="marker"
       class="map__marker"
       :lat-lng="location"
@@ -16,9 +20,9 @@
       :autopan="false"
       @dragend="onDragEnd"
     >
-      <l-popup :content="mapMarker.tooltip"/>
-    </l-marker>
-    <l-circle-marker
+      <v-popup :content="mapMarker.tooltip" />
+    </v-marker>
+    <v-circle-marker
       :lat-lng="location"
       :radius="circle.radius"
       :color="circle.color"
@@ -27,7 +31,7 @@
       :opacity="circle.opacity"
       :fillOpacity="circle.fillOpacity"
     />
-    <l-circle-marker
+    <v-circle-marker
       :lat-lng="location"
       :radius="circle2.radius"
       :color="circle2.color"
@@ -36,8 +40,8 @@
       :opacity="circle2.opacity"
       :fillOpacity="circle2.fillOpacity"
     />
-    <v-locatecontrol/>
-  </l-map>
+    <v-locatecontrol />
+  </v-map>
 </template>
 <script>
 import { LMap, LTileLayer, LMarker, LCircleMarker, LPopup } from 'vue2-leaflet'
@@ -47,17 +51,21 @@ import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol'
 export default {
   name: 'location',
   components: {
-    LMap,
-    LTileLayer,
-    LMarker,
-    LCircleMarker,
-    LPopup,
+    'v-map': LMap,
+    'v-tile-layer': LTileLayer,
+    'v-marker': LMarker,
+    'v-circle-marker': LCircleMarker,
+    'v-popup': LPopup,
     'v-locatecontrol': Vue2LeafletLocatecontrol
   },
   props: {
     location: {
       type: Object,
       default: {}
+    },
+    initialZoom: {
+      type: Number,
+      default: null
     }
   },
   data() {
@@ -69,8 +77,8 @@ export default {
           // This atribution is when the map owner is stamen.com in terrain mode
           'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
       },
-      zoom: 17,
       center: [],
+      zoom: null,
       markerLatLng: [],
       bounds: null,
       marker: null,
@@ -94,27 +102,38 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
+      // this.marker = this.$refs.marker
       this.marker = this.$refs.marker
       console.log('marker: ' + this.marker)
     })
+    // this.$refs.marker.on('click', this.onDragEnd, this)
+    if (!this.$refs.marker) {
+      console.log('El marker NO existe')
+    } else {
+      console.log('El marker SI existe')
+    }
   },
-  computed: {},
+  computed: {
+    markerLocation: () => this.marker.getLatlng()
+  },
   methods: {
     zoomUpdated(zoom) {
       this.zoom = zoom
     },
+    // utilizamos la posición del usuario como centro inicial del mapa
     centerUpdated(center) {
       this.center = center
     },
     boundsUpdated(bounds) {
       this.bounds = bounds
     },
+    // TODO: revisar su utilización
     onDragEnd() {
-      console.log('Estoy en setLocation')
-      const position = this.marker.getLatLng()
-      lat = position['lat']
-      lng = position['lng']
-      this.location = [lat, lng]
+      console.log('Estoy en onDragEnd')
+      // const position =
+      // lat = position['lat']
+      // lng = position['lng']
+      this.location = this.marker.getLatlng()
     }
   }
 }
