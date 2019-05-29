@@ -29,7 +29,7 @@
       :opacity="circle.opacity"
       :fillOpacity="circle.fillOpacity"
     />
-    <v-locatecontrol/>
+    <v-locatecontrol :options="localeControlOptions"/>
   </v-map>
 </template>
 <script>
@@ -88,6 +88,13 @@ export default {
         weight: 3,
         opacity: 0.5,
         fillOpacity: 0.3
+      },
+      localeControlOptions: {
+        position: 'bottomright',
+        icon: 'fas fa-bullseye',
+        strings: {
+          popup: 'Te llevo a donde estás ahora'
+        }
       }
     }
   },
@@ -102,7 +109,6 @@ export default {
     zoomUpdated(zoom) {
       this.zoom = zoom
     },
-    // utilizamos la posición del usuario como centro inicial del mapa
     centerUpdated(center) {
       this.center = center
     },
