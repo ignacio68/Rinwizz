@@ -8,17 +8,28 @@
     @update:center="centerUpdated"
     @update:bounds="boundsUpdated"
   >
-    <v-tile-layer :url="maps.url" :atribution="maps.atribution"/>
+    <v-tile-layer
+      :url="maps.url"
+      :atribution="maps.atribution"
+    />
     <v-marker
       ref="marker"
       class="map__marker"
       alt="user position"
-      :lat-lng.sync="location"
+      :lat-lng="location"
       :draggable="true"
       :autopan="true"
       @dragend="onDragEnd"
     >
-      <v-popup :content="mapMarker.tooltip"/>
+      <!--v-marker
+      v-for="marker in markers"
+      ref="marker"
+      :key="marker.id"
+      :lat-lng="location"
+      :draggable="true"
+      @dragend="onDragEnd"
+    -->
+      <v-popup :content="mapMarker.tooltip" />
     </v-marker>
     <v-circle-marker
       :lat-lng="location"
@@ -38,7 +49,7 @@
       :opacity="circle2.opacity"
       :fillOpacity="circle2.fillOpacity"
     />
-    <v-locatecontrol/>
+    <v-locatecontrol />
   </v-map>
 </template>
 <script>
@@ -73,12 +84,13 @@ export default {
         url: 'http://{s}.tile.stamen.com/terrain/{z}/{x}/{y}.jpg',
         atribution:
           // This atribution is when the map owner is stamen.com in terrain mode
-          'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+          '@copy; <a href="http://stamen.com"></a><a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a><a href="http://openstreetmap.org">OpenStreetMap</a><a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
       },
       center: [],
       zoom: null,
-      markerLocation: {},
+      // markerLocation: {},
       bounds: null,
+      markers: [L.latLng(47.41722, -1.222482)],
       marker: null,
       mapMarker: {
         tooltip: 'Esta es tu posición'
@@ -103,20 +115,8 @@ export default {
       this.marker = this.$refs.marker
       console.log('marker: ' + this.marker)
     })
-    // this.$refs.marker.on('click', this.onDragEnd, this)
   },
-  computed: {
-    /*
-    markerLocation: () => {
-      if (this.marker) {
-        // this.marker.getLatlng()
-        console.log('El marker SI existe')
-        console.log(this.marker.getLanLng())
-      } else {
-        console.log('El marker NO existe')
-      }
-    }*/
-  },
+  computed: {},
   methods: {
     zoomUpdated(zoom) {
       this.zoom = zoom
@@ -131,18 +131,16 @@ export default {
     // TODO: revisar su utilización
     onDragEnd(event) {
       console.log('Estoy en onDragEnd')
-      // const position =
-      // lat = position['lat']
-      // lng = position['lng']
-      // this.location = this.marker.getLatLng()
       if (this.marker) {
         // this.marker.getLatlng()
         console.log('El marker SI existe')
         console.log(event.distance)
         console.log(this.marker)
-        console.log(this.marker.latLng.lat)
-        console.log(this.marker.latLng.lng)
-        // console.log(this.marker.getLanLng())
+        // console.log(this.marker.latLng.lat)
+        // console.log(this.marker.latLng.lng)
+        //  console.log(this.marker.latLng.lat)
+        //  console.log(this.marker.latLng.lng)
+        console.log(this.marker.getLanLng())
       } else {
         console.log('El marker NO existe')
       }

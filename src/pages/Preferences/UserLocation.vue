@@ -15,7 +15,7 @@
           modifier="large"
           :disabled="false"
           ripple="true"
-          @click.prevent="toPreferences"
+          @click.prevent="updateUserLocation"
         >{{ $t('lang.pages.userLocation.button') }}</v-ons-button>
       </div>
     </v-ons-col>
@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 import location from '@components/User/Location'
 
-import Hobbies from './Hobbies'
+import Greetings from './Greetings'
 
 export default {
   name: 'userLocation',
@@ -51,9 +51,19 @@ export default {
     }
   },
   methods: {
+    ...mapActions('userDb', ['UPDATE_USER_DB']),
     ...mapMutations('navigator', ['PUSH']),
+
+    async updateUserLocation() {
+      const data = {
+        location: this.userLocation
+      }
+      const userData = { userId: this.userId, data }
+      await this.UPDATE_USER_DB(userData)
+      await this.toPreferences()
+    },
     toPreferences() {
-      this.PUSH(Preferences)
+      this.PUSH(Greetings)
     }
   }
 }
