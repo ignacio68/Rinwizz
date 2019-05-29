@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
 import location from '@components/User/Location'
 
@@ -42,6 +42,7 @@ export default {
       lat: state => state.lat,
       lng: state => state.lng
     }),
+    ...mapGetters('user', { userId: 'USER_ID' }),
     userLocation() {
       console.log('estoy en userLocation()')
       return {
