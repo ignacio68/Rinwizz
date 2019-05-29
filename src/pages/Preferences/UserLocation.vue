@@ -3,10 +3,7 @@
     <v-ons-col class="col">
       <h3 class="text">{{ $t('lang.pages.userLocation.main') }}</h3>
       <div class="map">
-        <location
-          :location="userLocation"
-          :initialZoom="17"
-        />
+        <location :location="userLocation" :initialZoom="17"/>
       </div>
       <div class="preferencesButton">
         <v-ons-button

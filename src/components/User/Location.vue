@@ -4,32 +4,21 @@
     class="map__map"
     :zoom="initialZoom"
     :center="location"
-    @update:zoom="zoomUpdated"
+    :inertia="true"
     @update:center="centerUpdated"
-    @update:bounds="boundsUpdated"
   >
-    <v-tile-layer
-      :url="maps.url"
-      :atribution="maps.atribution"
-    />
+    <v-tile-layer :url="maps.url" :atribution="maps.atribution"/>
     <v-marker
       ref="marker"
       class="map__marker"
       alt="user position"
       :lat-lng="location"
       :draggable="true"
-      :autopan="true"
+      :autoPan="true"
+      @drag="onDrag"
       @dragend="onDragEnd"
     >
-      <!--v-marker
-      v-for="marker in markers"
-      ref="marker"
-      :key="marker.id"
-      :lat-lng="location"
-      :draggable="true"
-      @dragend="onDragEnd"
-    -->
-      <v-popup :content="mapMarker.tooltip" />
+      <v-popup :content="mapMarker.tooltip"/>
     </v-marker>
     <v-circle-marker
       :lat-lng="location"
@@ -40,22 +29,28 @@
       :opacity="circle.opacity"
       :fillOpacity="circle.fillOpacity"
     />
-    <v-circle-marker
-      :lat-lng="location"
-      :radius="circle2.radius"
-      :color="circle2.color"
-      :stroke="circle2.stroke"
-      :weight="circle2.weight"
-      :opacity="circle2.opacity"
-      :fillOpacity="circle2.fillOpacity"
-    />
-    <v-locatecontrol />
+    <v-geosearch :options="geosearchOptions"/>
+    <v-locatecontrol/>
   </v-map>
 </template>
 <script>
 import { LMap, LTileLayer, LMarker, LCircleMarker, LPopup } from 'vue2-leaflet'
+import { Icon } from 'leaflet'
+import { OpenStreetMapProvider } from 'leaflet-geosearch'
+import VGeosearch from 'vue2-leaflet-geosearch'
 import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol'
 import { maps } from '@setup/maps'
+
+/**
+ *  this part resolve an issue where the marker would not apear
+ */
+delete Icon.Default.prototype._getIconUrl
+
+Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+})
 
 export default {
   name: 'location',
@@ -65,6 +60,7 @@ export default {
     'v-marker': LMarker,
     'v-circle-marker': LCircleMarker,
     'v-popup': LPopup,
+    VGeosearch,
     'v-locatecontrol': Vue2LeafletLocatecontrol
   },
   props: {
@@ -82,33 +78,33 @@ export default {
       maps: maps,
       center: [],
       zoom: null,
-      // markerLocation: {},
+      markerLocation: {},
       bounds: null,
-      markers: [L.latLng(47.41722, -1.222482)],
       marker: null,
       mapMarker: {
         tooltip: 'Esta es tu posición'
       },
       circle: {
-        radius: 25,
+        radius: 10,
         stroke: true,
         color: 'blue',
-        weight: 5,
+        weight: 3,
         opacity: 0.5,
         fillOpacity: 0.3
       },
-      circle2: {
-        radius: 100,
-        stroke: false,
-        fillOpacity: 0.3
+      geosearchOptions: {
+        provider: new OpenStreetMapProvider(),
+        showMarker: false,
+        showPopup: false
       }
     }
   },
   mounted() {
     this.$nextTick(() => {
-      this.marker = this.$refs.marker
+      this.marker = this.$refs.marker.mapObject
       console.log('marker: ' + this.marker)
     })
+    this.marker.setLatLng(this.center)
   },
   computed: {},
   methods: {
@@ -123,18 +119,17 @@ export default {
       this.bounds = bounds
     },
     // TODO: revisar su utilización
-    onDragEnd(event) {
+    onDrag() {
+      this.markerLocation = this.marker.getLatLng()
+      console.log(this.markerLocation)
+    },
+    onDragEnd() {
       console.log('Estoy en onDragEnd')
       if (this.marker) {
         // this.marker.getLatlng()
         console.log('El marker SI existe')
-        console.log(event.distance)
-        console.log(this.marker)
-        // console.log(this.marker.latLng.lat)
-        // console.log(this.marker.latLng.lng)
-        //  console.log(this.marker.latLng.lat)
-        //  console.log(this.marker.latLng.lng)
-        console.log(this.marker.getLanLng())
+
+        console.log(this.marker.getLatLng())
       } else {
         console.log('El marker NO existe')
       }
@@ -143,6 +138,7 @@ export default {
 }
 </script>
 <style scoped>
+@import '~leaflet/dist/leaflet.css';
 .map__map {
   border: 1px, solid, blue;
 }

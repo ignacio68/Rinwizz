@@ -15,10 +15,6 @@
 import 'onsenui/css/onsenui-core.css'
 import 'onsenui/css/onsen-css-components.css'
 
-// Import leaflet styles and module
-import 'leaflet/dist/leaflet.css'
-import { Icon } from 'leaflet'
-
 /**
  * Import Dependencies
  */
@@ -37,7 +33,6 @@ import { firebaseAuth } from './firebase'
 /**
  *  Import Vuex
  */
-
 import { store } from './store'
 
 /**
@@ -122,17 +117,6 @@ Vue.use(VueTimers)
 // Vue.component('the-preloader', ThePreloader) // Preloader
 Vue.component('the-custom-toolbar', TheCustomtoolbar) // Toolbar común
 // Vue.component('app-alert', AlertCmp) // Alerta de errores
-
-/**
- *  this part resolve an issue where the marker would not apear
- */
-delete Icon.Default.prototype._getIconUrl
-
-Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-})
 
 let app
 
