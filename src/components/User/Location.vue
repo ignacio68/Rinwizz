@@ -29,17 +29,15 @@
       :opacity="circle.opacity"
       :fillOpacity="circle.fillOpacity"
     />
-    <v-geosearch :options="geosearchOptions"/>
     <v-locatecontrol/>
   </v-map>
 </template>
 <script>
 import { LMap, LTileLayer, LMarker, LCircleMarker, LPopup } from 'vue2-leaflet'
 import { Icon } from 'leaflet'
-import { OpenStreetMapProvider } from 'leaflet-geosearch'
-import VGeosearch from 'vue2-leaflet-geosearch'
 import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol'
 import { maps } from '@setup/maps'
+import MyGeocoderPlugin from 'pelias-leaflet-plugin'
 
 /**
  *  this part resolve an issue where the marker would not apear
@@ -60,7 +58,6 @@ export default {
     'v-marker': LMarker,
     'v-circle-marker': LCircleMarker,
     'v-popup': LPopup,
-    VGeosearch,
     'v-locatecontrol': Vue2LeafletLocatecontrol
   },
   props: {
@@ -91,11 +88,6 @@ export default {
         weight: 3,
         opacity: 0.5,
         fillOpacity: 0.3
-      },
-      geosearchOptions: {
-        provider: new OpenStreetMapProvider(),
-        showMarker: false,
-        showPopup: false
       }
     }
   },
@@ -104,7 +96,6 @@ export default {
       this.marker = this.$refs.marker.mapObject
       console.log('marker: ' + this.marker)
     })
-    this.marker.setLatLng(this.center)
   },
   computed: {},
   methods: {
