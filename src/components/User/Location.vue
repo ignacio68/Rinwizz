@@ -53,7 +53,6 @@ import {
 import { Icon } from 'leaflet'
 import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol'
 import { maps } from '@setup/maps'
-import MyGeocoderPlugin from 'pelias-leaflet-plugin'
 
 /**
  *  this part resolve an issue where the marker would not apear

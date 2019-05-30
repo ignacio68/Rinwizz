@@ -3,7 +3,10 @@
     <v-ons-col class="col">
       <h3 class="text">{{ $t('lang.pages.userLocation.main') }}</h3>
       <div class="map">
-        <location :location="userLocation" :initialZoom="17"/>
+        <location
+          :location="userLocation"
+          :initialZoom="17"
+        />
       </div>
       <div class="preferencesButton">
         <v-ons-button
@@ -21,9 +24,8 @@
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
-
+import axios from 'axios'
 import location from '@components/User/Location'
-
 import Greetings from './Greetings'
 
 export default {
