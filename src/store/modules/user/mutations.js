@@ -1,6 +1,7 @@
 import {
   SET_USER,
   CLEAR_USER,
+  UPDATE_USER,
   SET_CREDENTIAL
 } from '@store/types/mutations_types'
 
@@ -9,7 +10,7 @@ export default {
    * Crea un nuevo usuario
    *
    * @param {*} state
-   * @param {Object} newUser - Parámetros a añadir al usuario
+   * @param {object} newUser - Datos del nuevo usuario
    */
   [SET_USER]: (state, newUser) => {
     state.user = newUser
@@ -23,6 +24,16 @@ export default {
    */
   [CLEAR_USER]: state => {
     state.user = null
+  },
+  /**
+   * Actualiza los datos del usuario
+   *
+   * @param {*} state
+   * @param {object} userData - Datos a añadir a los del usuario
+   */
+  [UPDATE_USER]: (state, userData) => {
+    state.user = userData
+    // TODO: agregar datos nuevos al usuario
   },
   /**
    * Establece la credencial del usuario

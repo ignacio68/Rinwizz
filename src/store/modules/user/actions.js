@@ -2,7 +2,7 @@ import { firebaseAuth, firebaseDb } from '../../../firebase'
 
 import {
   SIGNUP_USER,
-  UPDATE_PROFILE,
+  SET_USER_PROFILE,
   SEND_EMAIL_VERIFICATION,
   APPLY_ACTION_CODE,
   LOGIN_USER,
@@ -13,7 +13,7 @@ import {
   REAUTHENTICATE_USER,
   DELETE_FIREBASE_USER_ACCOUNT,
   AUTO_SIGN_IN,
-  UPDATED_USER_INFO,
+  UPDATED_USER_PROFILE,
   IS_USER_ACTIVE,
   TO_JSON
 } from '@store/types/actions_types'
@@ -75,7 +75,7 @@ export default {
           lastSignInDate: user.metadata.lastSignInTime
         }
         // Actualizamos el perfil de firebase con el name
-        await dispatch('UPDATE_PROFILE', { displayName: newUser.name })
+        await dispatch('SET_USER_PROFILE', { displayName: newUser.name })
 
         // Llamamos a 'setUser' para crear el nuevo usuario localmente
         await commit('SET_USER', newUser)
@@ -105,7 +105,7 @@ export default {
    * @param {object} user - datos del usuario a actualizar
    */
 
-  [UPDATE_PROFILE]: ({ commit, dispatch }, user) => {
+  [SET_USER_PROFILE]: ({ commit, dispatch }, user) => {
     commit('shared/CLEAR_ERROR', null, { root: true })
     const userActive = firebaseAuth().currentUser
     userActive
@@ -379,14 +379,12 @@ export default {
    * @param {*} state
    * @param {Object} user - datos del usuario para actualizar
    */
-  [UPDATED_USER_INFO]: ({ commit, state }, user) => {
-    console.log('Estoy en UPDATED_USER_INFO')
+  [UPDATED_USER_PROFILE]: ({ commit, state }, user) => {
+    console.log('Estoy en UPDATED_USER_PROFILE')
     commit('shared/CLEAR_ERROR', null, { root: true })
     const userUpdated = {
       // userIcon: user.userIcon, // por el momento utilizar direcciones URL
-      userName: user.userName,
-      location: user.location // escribir una localidad, después utilizar geolocalización
-      // preferences: user.preferences
+      userName: user.userName
     }
     // console.log(userUpdated)
     // commit('setUser', userUpdated)
@@ -404,7 +402,7 @@ export default {
       })
       // TODO: revisar y actualizar errores
       .catch(error => {
-        console.log('error en UPDATED_USER_INFO: ' + error)
+        console.log('error en UPDATED_USER_PROFILE: ' + error)
         commit('shared/SET_ERROR', null, { root: true })
       })
   },

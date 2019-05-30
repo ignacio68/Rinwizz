@@ -28,4 +28,5 @@ export const SET_LANGUAGE = 'SET_LANGUAGE'
 // user
 export const SET_USER = 'SET_USER'
 export const CLEAR_USER = 'CLEAR_USER'
+export const UPDATE_USER = 'UPDATE_USER'
 export const SET_CREDENTIAL = 'SET_CREDENTIAL'
