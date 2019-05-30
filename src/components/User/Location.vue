@@ -7,7 +7,10 @@
     :inertia="true"
     @update:center="centerUpdated"
   >
-    <v-tile-layer :url="maps.url" :atribution="maps.atribution"/>
+    <v-tile-layer
+      :url="maps.url"
+      :atribution="maps.atribution"
+    />
     <v-marker
       ref="marker"
       class="map__marker"
@@ -18,7 +21,7 @@
       @drag="onDrag"
       @dragend="onDragEnd"
     >
-      <v-popup :content="mapMarker.tooltip"/>
+      <v-popup :content="mapMarker.tooltip" />
     </v-marker>
     <v-circle-marker
       :lat-lng="location"
@@ -29,11 +32,24 @@
       :opacity="circle.opacity"
       :fillOpacity="circle.fillOpacity"
     />
-    <v-locatecontrol :options="localeControlOptions"/>
+    <v-control
+      class="control"
+      position="bottomleft"
+    >
+      <p class="control__p">{{ userAddress }}</p>
+    </v-control>
+    <v-locatecontrol :options="localeControlOptions" />
   </v-map>
 </template>
 <script>
-import { LMap, LTileLayer, LMarker, LCircleMarker, LPopup } from 'vue2-leaflet'
+import {
+  LMap,
+  LTileLayer,
+  LMarker,
+  LCircleMarker,
+  LPopup,
+  LControl
+} from 'vue2-leaflet'
 import { Icon } from 'leaflet'
 import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol'
 import { maps } from '@setup/maps'
@@ -58,6 +74,7 @@ export default {
     'v-marker': LMarker,
     'v-circle-marker': LCircleMarker,
     'v-popup': LPopup,
+    'v-control': LControl,
     'v-locatecontrol': Vue2LeafletLocatecontrol
   },
   props: {
@@ -89,6 +106,7 @@ export default {
         opacity: 0.5,
         fillOpacity: 0.3
       },
+      userAddress: 'Aquí va la dirección del usuario',
       localeControlOptions: {
         position: 'bottomright',
         icon: 'fas fa-bullseye',
@@ -104,7 +122,11 @@ export default {
       console.log('marker: ' + this.marker)
     })
   },
-  computed: {},
+  computed: {
+    setUserAdress(userAddress) {
+      this.userAddress = userAddress
+    }
+  },
   methods: {
     zoomUpdated(zoom) {
       this.zoom = zoom
@@ -114,6 +136,9 @@ export default {
     },
     boundsUpdated(bounds) {
       this.bounds = bounds
+    },
+    getUserAdress() {
+      this.setUserAddress(userAddress)
     },
     // TODO: revisar su utilización
     onDrag() {
@@ -138,6 +163,9 @@ export default {
 @import '~leaflet/dist/leaflet.css';
 .map__map {
   border: 1px, solid, blue;
+}
+.control {
+  background-color: white;
 }
 </style>
 
