@@ -10,7 +10,5 @@ export default {
       return meetupA.date > meetupB.date
     }) */
   },
-  [NUM_ALERTS]: state => {
-    return state.numAlerts
-  }
+  [NUM_ALERTS]: state => state.numAlerts
 }

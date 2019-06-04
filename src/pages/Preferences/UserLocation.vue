@@ -3,11 +3,7 @@
     <v-ons-col class="col">
       <h3 class="text">{{ $t('lang.pages.userLocation.main') }}</h3>
       <div class="map">
-        <location-map
-          :location="userLocation"
-          :initialZoom="17"
-          :showMarkers="false"
-        />
+        <location-map :location="userLocation" :initialZoom="17" :showMarkers="false"/>
       </div>
       <p class="control__p">{{ userAddress }}</p>
       <div class="preferencesButton">
@@ -26,7 +22,6 @@
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
-import axios from 'axios'
 import LocationMap from '@components/User/LocationMap'
 import Greetings from './Greetings'
 
@@ -40,6 +35,9 @@ export default {
       userAddress: 'Aquí va la dirección'
     }
   },
+  mounted() {
+    this.getUserLocation()
+  },
   computed: {
     // Utilizar un getter
     ...mapState('location', {
@@ -47,17 +45,16 @@ export default {
       lng: state => state.lng
     }),
     ...mapGetters('user', { userId: 'USER_ID' }),
-    userLocation() {
-      console.log('estoy en userLocation()')
-      return {
-        lat: this.lat,
-        lng: this.lng
-      }
-    }
+    ...mapGetters('location', { userLocation: 'USER_LOCATION' })
   },
   methods: {
     ...mapActions('userDb', ['UPDATE_USER_DB']),
+    ...mapActions('location', ['GET_CURRENT_POSITION']),
     ...mapMutations('navigator', ['REPLACE']),
+
+    async getUserLocation() {
+      await this.GET_CURRENT_POSITION()
+    },
 
     async updateUserLocation() {
       const data = {

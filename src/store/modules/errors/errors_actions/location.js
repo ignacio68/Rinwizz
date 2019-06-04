@@ -7,8 +7,8 @@ import i18n from '@locales'
  */
 // TODO: Terminar de completar e internacionalizar
 export function LOCATION_ERROR({ commit }, errorCode) {
-  console.log('Estoy en LOCATION_ERRO')
-  console.log('LOCATION_ERRO es: ' + errorCode)
+  console.log('Estoy en LOCATION_ERROR')
+  console.log('LOCATION_ERROR es: ' + errorCode)
   switch (errorCode) {
     case 'auth/email-already-in-use': {
       const message = i18n.t('lang.errors.auth.emailAlreadyInUse')
