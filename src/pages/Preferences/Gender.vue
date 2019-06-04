@@ -29,7 +29,7 @@
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import userLocation from './UserLocation'
+import Hobbies from './Hobbies'
 export default {
   name: 'gender',
   namespace: true,
@@ -48,16 +48,16 @@ export default {
     }, */
   },
   methods: {
-    ...mapMutations('navigator', ['REPLACE']),
+    ...mapMutations('navigator', ['PUSH']),
     ...mapActions('userDb', ['UPDATE_USER_DB']),
     async updateGender() {
       const data = { gender: this.selectedGender }
       const userData = { userId: this.userId, data }
       await this.UPDATE_USER_DB(userData)
-      await this.toUserLocation()
+      await this.toHobbies()
     },
-    toUserLocation() {
-      this.REPLACE(userLocation)
+    toHobbies() {
+      this.PUSH(Hobbies)
     }
   }
 }

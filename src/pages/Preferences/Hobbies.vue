@@ -71,7 +71,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import greetings from './Greetings'
+import UserLocation from './UserLocation'
 export default {
   name: 'hobbies',
   namespace: true,
@@ -89,7 +89,7 @@ export default {
     ...mapGetters('user', { userId: 'USER_ID' })
   },
   methods: {
-    ...mapMutations('navigator', ['REPLACE']),
+    ...mapMutations('navigator', ['PUSH']),
     ...mapActions('userDb', ['UPDATE_USER_DB']),
     async updateHobbies() {
       const data = {
@@ -101,8 +101,8 @@ export default {
       await this.UPDATE_USER_DB(userData)
       await this.toGreetings()
     },
-    toGreetings() {
-      this.REPLACE(greetings)
+    toUserLocation() {
+      this.PUSH(UserLocation)
     }
   }
 }

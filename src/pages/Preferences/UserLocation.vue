@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     ...mapActions('userDb', ['UPDATE_USER_DB']),
-    ...mapMutations('navigator', ['PUSH']),
+    ...mapMutations('navigator', ['REPLACE']),
 
     async updateUserLocation() {
       const data = {
@@ -63,7 +63,7 @@ export default {
       await this.toPreferences()
     },
     toPreferences() {
-      this.PUSH(Greetings)
+      this.REPLACE(Greetings)
     }
   }
 }
