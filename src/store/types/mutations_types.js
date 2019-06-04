@@ -6,8 +6,9 @@ export const SET_NUM_ALERTS = 'SET_NUM_ALERTS'
 // errors
 export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
 
-// location
-// location
+// geolocation
+export const LOCATION_CHANGED = 'LOCATION_CHANGED'
+export const SET_WATCH_ID = 'SET_WATCH_ID'
 export const SET_USER_LOCATION = 'SET_USER_LOCATION'
 
 // navigator

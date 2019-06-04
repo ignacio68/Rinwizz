@@ -33,6 +33,7 @@ module.exports = {
       .set('@config', resolve('src/config'))
       // .set('@firebase', resolve('src/firebase'))
       .set('@locales', resolve('src/locales'))
+      .set('@location', resolve('src/location'))
       .set('@pages', resolve('src/pages'))
       .set('@setup', resolve('src/setup'))
       .set('@store', resolve('src/store'))

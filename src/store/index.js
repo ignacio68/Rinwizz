@@ -5,6 +5,7 @@ import alerts from '@modules/alerts'
 import auth from '@modules/auth'
 import errors from '@modules/errors'
 import localDb from '@modules/localDb'
+import location from '@modules/location'
 import navigator from '@modules/navigator'
 import password from '@modules/password'
 import shared from '@modules/shared'
@@ -19,6 +20,7 @@ export const store = new Vuex.Store({
     alerts,
     auth,
     errors,
+    location,
     localDb,
     navigator,
     password,

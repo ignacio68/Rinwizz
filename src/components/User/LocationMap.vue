@@ -15,7 +15,7 @@
       ref="marker"
       class="map__marker"
       alt="user position"
-      :lat-lng="location"
+      :lat-lng="ocation"
       :draggable="true"
       :autoPan="true"
       @drag="onDrag"
@@ -24,7 +24,7 @@
       <v-popup :content="mapMarker.tooltip" />
     </v-marker>
     <v-circle-marker
-      :lat-lng="location"
+      :lat-lng="ocation"
       :radius="circle.radius"
       :color="circle.color"
       :stroke="circle.stroke"
@@ -32,24 +32,11 @@
       :opacity="circle.opacity"
       :fillOpacity="circle.fillOpacity"
     />
-    <v-control
-      class="control"
-      position="bottomleft"
-    >
-      <p class="control__p">{{ userAddress }}</p>
-    </v-control>
     <v-locatecontrol :options="localeControlOptions" />
   </v-map>
 </template>
 <script>
-import {
-  LMap,
-  LTileLayer,
-  LMarker,
-  LCircleMarker,
-  LPopup,
-  LControl
-} from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker, LCircleMarker, LPopup } from 'vue2-leaflet'
 import { Icon } from 'leaflet'
 import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol'
 import { maps } from '@setup/maps'
@@ -66,14 +53,13 @@ Icon.Default.mergeOptions({
 })
 
 export default {
-  name: 'map',
+  name: 'locationMap',
   components: {
     'v-map': LMap,
     'v-tile-layer': LTileLayer,
     'v-marker': LMarker,
     'v-circle-marker': LCircleMarker,
     'v-popup': LPopup,
-    'v-control': LControl,
     'v-locatecontrol': Vue2LeafletLocatecontrol
   },
   props: {
@@ -84,6 +70,10 @@ export default {
     initialZoom: {
       type: Number,
       default: null
+    },
+    showMarkers: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -162,9 +152,6 @@ export default {
 @import '~leaflet/dist/leaflet.css';
 .map__map {
   border: 1px, solid, blue;
-}
-.control {
-  background-color: white;
 }
 </style>
 

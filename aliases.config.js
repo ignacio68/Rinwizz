@@ -10,6 +10,7 @@ const aliases = {
   '@config': 'src/config',
   // '@firebase': 'src/firebase',
   '@locales': 'src/locales',
+  '@location': 'src/location',
   '@pages': 'src/router/pages',
   '@setup': 'src/setup',
   '@store': 'src/store',

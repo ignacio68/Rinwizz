@@ -44,7 +44,7 @@ import i18n from '@setup/i18n'
 /**
  *  Import Geolocation plugin
  */
-import VuexGeolocation from 'vuex-geolocation'
+// import VuexGeolocation from 'vuex-geolocation'
 
 /**
  * Import Timer
@@ -102,8 +102,8 @@ Vue.use(VueOnsen)
 /**
  * Load vuex-geolocation
  */
-const vuexGeolocation = VuexGeolocation.sync(store)
-Vue.use(vuexGeolocation)
+// const vuexGeolocation = VuexGeolocation.sync(store)
+// Vue.use(vuexGeolocation)
 
 /**
  * Load  Vue-Timer

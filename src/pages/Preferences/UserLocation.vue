@@ -3,11 +3,13 @@
     <v-ons-col class="col">
       <h3 class="text">{{ $t('lang.pages.userLocation.main') }}</h3>
       <div class="map">
-        <map
+        <location-map
           :location="userLocation"
           :initialZoom="17"
+          :showMarkers="false"
         />
       </div>
+      <p class="control__p">{{ userAddress }}</p>
       <div class="preferencesButton">
         <v-ons-button
           class="preferencesButton__button"
@@ -25,19 +27,22 @@
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import axios from 'axios'
-import map from '@components/User/Map'
+import LocationMap from '@components/User/LocationMap'
 import Greetings from './Greetings'
 
 export default {
-  name: 'userLocation',
+  name: 'UserLocation',
   components: {
-    map
+    LocationMap
   },
   data() {
-    return {}
+    return {
+      userAddress: 'Aquí va la dirección'
+    }
   },
   computed: {
-    ...mapState('geolocation', {
+    // Utilizar un getter
+    ...mapState('location', {
       lat: state => state.lat,
       lng: state => state.lng
     }),
