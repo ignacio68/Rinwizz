@@ -66,7 +66,7 @@ Icon.Default.mergeOptions({
 })
 
 export default {
-  name: 'location',
+  name: 'map',
   components: {
     'v-map': LMap,
     'v-tile-layer': LTileLayer,
