@@ -7,24 +7,21 @@
     :inertia="true"
     @update:center="centerUpdated"
   >
-    <v-tile-layer
-      :url="maps.url"
-      :atribution="maps.atribution"
-    />
+    <v-tile-layer :url="maps.url" :atribution="maps.atribution"/>
     <v-marker
       ref="marker"
       class="map__marker"
       alt="user position"
-      :lat-lng="ocation"
+      :lat-lng="location"
       :draggable="true"
       :autoPan="true"
       @drag="onDrag"
       @dragend="onDragEnd"
     >
-      <v-popup :content="mapMarker.tooltip" />
+      <v-popup :content="mapMarker.tooltip"/>
     </v-marker>
     <v-circle-marker
-      :lat-lng="ocation"
+      :lat-lng="location"
       :radius="circle.radius"
       :color="circle.color"
       :stroke="circle.stroke"
@@ -32,7 +29,7 @@
       :opacity="circle.opacity"
       :fillOpacity="circle.fillOpacity"
     />
-    <v-locatecontrol :options="localeControlOptions" />
+    <v-locatecontrol :options="localeControlOptions"/>
   </v-map>
 </template>
 <script>

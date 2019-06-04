@@ -1,9 +1,5 @@
 <template id="App">
-  <v-ons-navigator
-    :page-stack="pageStack"
-    :pop-page="storePop"
-    :options="options"
-  ></v-ons-navigator>
+  <v-ons-navigator :page-stack="pageStack" :pop-page="storePop" :options="options"></v-ons-navigator>
 </template>
 
 <script>
@@ -19,10 +15,10 @@ export default {
   beforeMount() {
     console.log('AppNavigator beforeMount()')
     if (!this.userIsAuthenticated) {
-      this.PUSH(Welcome)
+      this.REPLACE(Welcome)
       console.log('El usuario NO está autenticado')
     } else {
-      this.PUSH(UserLocation)
+      this.REPLACE(UserLocation)
       console.log('El usuario SI está autenticado')
     }
   },
@@ -42,7 +38,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('navigator', ['PUSH', 'POP']),
+    ...mapMutations('navigator', ['REPLACE', 'POP']),
 
     storePop() {
       this.POP()
