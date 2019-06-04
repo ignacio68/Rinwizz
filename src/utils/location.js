@@ -22,6 +22,7 @@ export function currentCoordinates() {
 
 // reverse geocoder
 export async function addressByCoordinates({ latitude, longitude }) {
+  console.log('Estoy en addressByCoordinates')
   const { data } = await axios.get(ENDPOINT, {
     params: {
       format: FORMAT,
@@ -34,7 +35,7 @@ export async function addressByCoordinates({ latitude, longitude }) {
 }
 
 export async function currentAddress() {
+  console.log('Estoy en currentAddress')
   const coordinates = await currentCoordinates()
-
   return addressByCoordinates(coordinates)
 }

@@ -64,7 +64,8 @@ export default {
   },
   userLocation: {
     main: 'Indícanos donde estás',
-    button: 'Continuamos'
+    button: 'Continuamos',
+    address: 'Tú localización es: '
   },
   hobbies: {
     main: 'Elíge tus aficiones favoritas',

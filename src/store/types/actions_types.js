@@ -16,6 +16,7 @@ export const REMOVE_USER_LOCAL_DB = 'REMOVE_USER_LOCAL_DB'
 
 // location
 export const GET_CURRENT_POSITION = 'GET_CURRENT_POSITION'
+export const CURRENT_ADDRESS = 'CURRENT_ADDRESS'
 
 // password
 export const RESET_PASSWORD = 'RESET_PASSWORD'

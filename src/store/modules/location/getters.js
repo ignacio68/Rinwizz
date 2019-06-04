@@ -1,4 +1,4 @@
-import { USER_LOCATION } from '@store/types/getters_types'
+import { USER_LOCATION, USER_ADDRESS } from '@store/types/getters_types'
 
 export default {
   [USER_LOCATION]: state => {
@@ -6,5 +6,6 @@ export default {
       lat: state.lat,
       lng: state.lng
     }
-  }
+  },
+  [USER_ADDRESS]: state => state.address
 }

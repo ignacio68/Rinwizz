@@ -59,7 +59,8 @@ export default {
   },
   userLocation: {
     main: 'Tell us where you stay',
-    button: 'Continue'
+    button: 'Continue',
+    address: 'Your location is: '
   },
   hobbies: {
     main: 'Choose your favorites hobbies',

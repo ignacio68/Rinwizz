@@ -7,6 +7,7 @@ export const ERROR_MESSAGE = 'ERROR_MESSAGE'
 
 // location
 export const USER_LOCATION = 'USER_LOCATION'
+export const USER_ADDRESS = 'USER_ADDRESS'
 
 // navigator
 export const PAGE_STACK = 'PAGE_STACK'

@@ -5,7 +5,14 @@
       <div class="map">
         <location-map :location="userLocation" :initialZoom="17" :showMarkers="false"/>
       </div>
-      <p class="control__p">{{ userAddress }}</p>
+      <div class="address">
+        <p>
+          {{ $t('lang.pages.userLocation.address') }}
+          <span>
+            <h5>{{ userAddress.suburb }}</h5>
+          </span>
+        </p>
+      </div>
       <div class="preferencesButton">
         <v-ons-button
           class="preferencesButton__button"
@@ -21,7 +28,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import LocationMap from '@components/User/LocationMap'
 import Greetings from './Greetings'
 
@@ -31,34 +38,35 @@ export default {
     LocationMap
   },
   data() {
-    return {
-      userAddress: 'Aquí va la dirección'
-    }
+    return {}
   },
   mounted() {
     this.getUserLocation()
+    this.getUserAddress()
   },
   computed: {
-    // Utilizar un getter
-    ...mapState('location', {
-      lat: state => state.lat,
-      lng: state => state.lng
-    }),
     ...mapGetters('user', { userId: 'USER_ID' }),
-    ...mapGetters('location', { userLocation: 'USER_LOCATION' })
+    ...mapGetters('location', {
+      userLocation: 'USER_LOCATION',
+      userAddress: 'USER_ADDRESS'
+    })
   },
   methods: {
     ...mapActions('userDb', ['UPDATE_USER_DB']),
-    ...mapActions('location', ['GET_CURRENT_POSITION']),
+    ...mapActions('location', ['GET_CURRENT_POSITION', 'CURRENT_ADDRESS']),
     ...mapMutations('navigator', ['REPLACE']),
 
     async getUserLocation() {
       await this.GET_CURRENT_POSITION()
     },
+    async getUserAddress() {
+      await this.CURRENT_ADDRESS()
+    },
 
     async updateUserLocation() {
       const data = {
-        location: this.userLocation
+        location: this.userLocation,
+        address: this.userAddress
       }
       const userData = { userId: this.userId, data }
       await this.UPDATE_USER_DB(userData)
@@ -87,5 +95,8 @@ export default {
   width: 100%;
   height: 90%;
   border: 1px, solid, red;
+}
+.address .p {
+  color: grey;
 }
 </style>

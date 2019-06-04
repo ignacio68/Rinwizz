@@ -15,15 +15,9 @@ export default {
     spd: '',
     ts: '',
     watchID: null,
-    errorCode: null,
-    defaults: {
-      autowatch: true,
-      enableHighAccuracy: true,
-      maximumAge: 30000,
-      timeout: 27000
-    }
+    address: {}
   },
   getters,
   mutations,
   actions
-} 
+}

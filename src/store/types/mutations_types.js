@@ -9,6 +9,7 @@ export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
 // location
 export const SET_WATCH_ID = 'SET_WATCH_ID'
 export const SET_USER_COORDS = 'SET_USER_COORDS'
+export const SET_USER_ADDRESS = 'SET_USER_ADDRESS'
 
 // navigator
 export const PUSH = 'PUSH'

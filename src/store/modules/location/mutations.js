@@ -1,4 +1,4 @@
-import { SET_USER_COORDS } from '@store/types/mutations_types'
+import { SET_USER_COORDS, SET_USER_ADDRESS } from '@store/types/mutations_types'
 
 /**
  * Actualiza la información de la localización del usuario en el state
@@ -15,5 +15,9 @@ export default {
     state.head = coords.heading
     state.spd = coords.speed
     state.ts = coords.timestamp
+  },
+  [SET_USER_ADDRESS]: (state, address) => {
+    console.log('Estoy en SET_USER_ADDRESS')
+    state.address = address
   }
 }
