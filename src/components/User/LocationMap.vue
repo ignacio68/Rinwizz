@@ -7,7 +7,10 @@
     :inertia="true"
     @update:center="centerUpdated"
   >
-    <v-tile-layer :url="maps.url" :atribution="maps.atribution"/>
+    <v-tile-layer
+      :url="maps.url"
+      :atribution="maps.atribution"
+    />
     <v-marker
       ref="marker"
       class="map__marker"
@@ -18,7 +21,7 @@
       @drag="onDrag"
       @dragend="onDragEnd"
     >
-      <v-popup :content="mapMarker.tooltip"/>
+      <v-popup :content="mapMarker.tooltip" />
     </v-marker>
     <v-circle-marker
       :lat-lng="location"
@@ -29,11 +32,29 @@
       :opacity="circle.opacity"
       :fillOpacity="circle.fillOpacity"
     />
-    <v-locatecontrol :options="localeControlOptions"/>
+    <v-feature-group
+      v-if="showMarkers"
+      class="groupMarkers"
+      ref="markers"
+    >
+      <v-marker
+        class="groupMarkers_marker"
+        alt="marker position"
+        :lat-lng="[40.423819772625954, -3.713185787200928]"
+      />
+    </v-feature-group>
+    <v-locatecontrol :options="localeControlOptions" />
   </v-map>
 </template>
 <script>
-import { LMap, LTileLayer, LMarker, LCircleMarker, LPopup } from 'vue2-leaflet'
+import {
+  LMap,
+  LTileLayer,
+  LMarker,
+  LCircleMarker,
+  LPopup,
+  LFeatureGroup
+} from 'vue2-leaflet'
 import { Icon } from 'leaflet'
 import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol'
 import { maps } from '@setup/maps'
@@ -57,6 +78,7 @@ export default {
     'v-marker': LMarker,
     'v-circle-marker': LCircleMarker,
     'v-popup': LPopup,
+    'v-feature-group': LFeatureGroup,
     'v-locatecontrol': Vue2LeafletLocatecontrol
   },
   props: {
@@ -150,5 +172,7 @@ export default {
 .map__map {
   border: 1px, solid, blue;
 }
+.groupMarkers_marker {
+  width: 75%;
+}
 </style>
-
