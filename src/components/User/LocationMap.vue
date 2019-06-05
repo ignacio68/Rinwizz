@@ -5,7 +5,6 @@
     :zoom="initialZoom"
     :center="location"
     :inertia="true"
-    @update:center="centerUpdated"
   >
     <v-tile-layer
       :url="maps.url"
@@ -24,7 +23,7 @@
       <v-popup :content="mapMarker.tooltip" />
     </v-marker>
     <v-circle-marker
-      :lat-lng="location"
+      :lat-lng="markerLocation"
       :radius="circle.radius"
       :color="circle.color"
       :stroke="circle.stroke"
@@ -37,11 +36,13 @@
       class="groupMarkers"
       ref="markers"
     >
+      <!----- SOLO ES UNA PRUEBA ----->
       <v-marker
         class="groupMarkers_marker"
         alt="marker position"
         :lat-lng="[40.423819772625954, -3.713185787200928]"
       />
+      <!------------------------------>
     </v-feature-group>
     <v-locatecontrol :options="localeControlOptions" />
   </v-map>
@@ -114,7 +115,6 @@ export default {
         opacity: 0.5,
         fillOpacity: 0.3
       },
-      userAddress: 'Aquí va la dirección del usuario',
       localeControlOptions: {
         position: 'bottomright',
         icon: 'fas fa-bullseye',
@@ -125,41 +125,38 @@ export default {
     }
   },
   mounted() {
+    /**
+     * Pone en funcionamiento el marcador de posición del usuario
+     */
     this.$nextTick(() => {
       this.marker = this.$refs.marker.mapObject
-      console.log('marker: ' + this.marker)
+      this.markerLocation = this.location
+      console.log('Estoy en mounted y lat es: ' + this.markerLocation.lat)
     })
   },
-  computed: {
-    setUserAdress(userAddress) {
-      this.userAddress = userAddress
-    }
-  },
+  computed: {},
+
   methods: {
     zoomUpdated(zoom) {
       this.zoom = zoom
     },
     centerUpdated(center) {
-      this.center = center
+      this.center = this.markerLocation
     },
     boundsUpdated(bounds) {
       this.bounds = bounds
     },
-    getUserAdress() {
-      this.setUserAddress(userAddress)
-    },
+
     // TODO: revisar su utilización
     onDrag() {
       this.markerLocation = this.marker.getLatLng()
-      console.log(this.markerLocation)
+      this.$refs.map.mapObject.panTo(this.markerLocation)
     },
     onDragEnd() {
-      console.log('Estoy en onDragEnd')
       if (this.marker) {
         // this.marker.getLatlng()
         console.log('El marker SI existe')
-
-        console.log(this.marker.getLatLng())
+        this.markerLocation = this.marker.getLatLng()
       } else {
         console.log('El marker NO existe')
       }

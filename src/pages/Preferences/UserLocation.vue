@@ -58,10 +58,11 @@ export default {
       showMarkers: true
     }
   },
-  mounted() {
+  created() {
     this.getUserLocation()
     this.getUserAddress()
   },
+  mounted() {},
   computed: {
     ...mapGetters('user', { userId: 'USER_ID' }),
     ...mapGetters('location', {
