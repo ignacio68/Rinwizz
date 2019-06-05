@@ -1,15 +1,6 @@
 <template>
-  <v-map
-    ref="map"
-    class="map__map"
-    :zoom="initialZoom"
-    :center="location"
-    :inertia="true"
-  >
-    <v-tile-layer
-      :url="maps.url"
-      :atribution="maps.atribution"
-    />
+  <v-map ref="map" class="map__map" :zoom="initialZoom" :center="location" :inertia="true">
+    <v-tile-layer :url="maps.url" :atribution="maps.atribution"/>
     <v-marker
       ref="marker"
       class="map__marker"
@@ -20,7 +11,7 @@
       @drag="onDrag"
       @dragend="onDragEnd"
     >
-      <v-popup :content="mapMarker.tooltip" />
+      <v-popup :content="mapMarker.tooltip"/>
     </v-marker>
     <v-circle-marker
       :lat-lng="markerLocation"
@@ -31,11 +22,7 @@
       :opacity="circle.opacity"
       :fillOpacity="circle.fillOpacity"
     />
-    <v-feature-group
-      v-if="showMarkers"
-      class="groupMarkers"
-      ref="markers"
-    >
+    <v-feature-group v-if="showMarkers" class="groupMarkers" ref="markers">
       <!----- SOLO ES UNA PRUEBA ----->
       <v-marker
         class="groupMarkers_marker"
@@ -44,7 +31,7 @@
       />
       <!------------------------------>
     </v-feature-group>
-    <v-locatecontrol :options="localeControlOptions" />
+    <v-locatecontrol :options="localeControlOptions"/>
   </v-map>
 </template>
 <script>
