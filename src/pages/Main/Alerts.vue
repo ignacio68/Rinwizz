@@ -1,14 +1,7 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar
-      class="customToolbar"
-      :pageTitle="$t('lang.pages.alerts.toolbar')"
-    >
-      <template v-slot:left>
-        <h5>{{ userName }}</h5>
-      </template>
-    </the-custom-toolbar>
-
+    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
+    <h5 class="dummyText">Hola {{ userName }} estas son tus alertas</h5>
     <div class="container">
       <!-- Alerts list -->
       <v-ons-list class="alertsList">
@@ -36,10 +29,7 @@
       </v-ons-list>
     </div>
 
-    <v-ons-alert-dialog
-      modifier="rowfooter"
-      :visible.sync="isAlertVisible"
-    >
+    <v-ons-alert-dialog modifier="rowfooter" :visible.sync="isAlertVisible">
       <alert-script
         :userIcon="userIcon"
         :altIcon="userName + ' icon'"
@@ -52,33 +42,26 @@
       </template>
     </v-ons-alert-dialog>
 
-    <div class="logOutButton">
+    <div class="buttonsGroup">
       <v-ons-button
         class="logOutButton__button"
         name="logOutButton"
-        modifier="large"
         :disabled="false"
         ripple="true"
         @click.prevent="logOutUser"
       >Logout User</v-ons-button>
-    </div>
 
-    <div class="deleteButton">
       <v-ons-button
         class="deleteButton__button"
         name="deleteButton"
-        modifier="large"
         :disabled="false"
         ripple="true"
         @click.prevent="deleteUser"
       >Delete User</v-ons-button>
-    </div>
 
-    <div class="toJSONButton">
       <v-ons-button
         class="toJSON__button"
         name="toJSONButton"
-        modifier="large"
         :disabled="false"
         ripple="true"
         @click.prevent="toJSON"
@@ -91,10 +74,7 @@
       ripple="true"
       @click.prevent="isAlertVisible = true"
     >
-      <v-ons-icon
-        class="alertScript__icon"
-        icon="ion-edit, material:zmdi-email-open"
-      ></v-ons-icon>
+      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -196,6 +176,16 @@ export default {
 </script>
 
 <style scoped>
+.toolbar {
+  background-color: #e06257;
+}
+.toolbar__center {
+  color: white;
+}
+.dummyText {
+  margin-left: 16px;
+  margin-right: 16px;
+}
 .alertsList {
   width: 96%;
   margin-left: 2%;
@@ -215,5 +205,15 @@ export default {
 .toJSONButton {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+.buttonsGroup {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.button {
+  margin-top: 8px;
+  width: 100%;
+  background-color: red;
+  border-radius: 18px;
 }
 </style>
