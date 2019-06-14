@@ -31,7 +31,7 @@ module.exports = {
       .set('@assets', resolve('src/assets'))
       .set('@components', resolve('src/components'))
       .set('@config', resolve('src/config'))
-      // .set('@firebase', resolve('src/firebase'))
+      // .set('@fb', resolve('src/firebase'))
       .set('@locales', resolve('src/locales'))
       .set('@location', resolve('src/location'))
       .set('@pages', resolve('src/pages'))
