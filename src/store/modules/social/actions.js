@@ -45,38 +45,50 @@ export default {
    *
    * @param {String} provider - Red Social utilizada
    */
-  [SOCIAL_SIGNUP]: ({ commit, dispatch }, provider) => {
+  async [SOCIAL_SIGNUP]({ commit, dispatch }, provider) {
     // provider.addScope('public_profile')
-    firebaseAuth().useDeviceLanguage
+    // firebaseAuth().useDeviceLanguage
     // NOTA: desarrollar un método para según el device elegir un método de acceso
     // firebase.auth().signInWithPopup(provider) // Utilizamos esta forma de acceso en producción en web
-    firebaseAuth()
-      .signInWithRedirect(provider) // Utilizamos esta forma de acceso en móviles
-      .then(() => {
-        firebaseAuth()
-          .getRedirectResult()
-          .then(result => {
-            if (result.credential) {
-              // Accedemos Access Token, ahora podemos utilizarlo para acceder a la API de la red social
-              const token = result.credential.accessToken
-              console.log('El token es: ' + token)
-            }
-            // Datos del nuevo usuario
-            const newUser = {
-              id: result.user.uid,
-              email: result.user.email,
-              name: result.user.displayName
-            }
-            commit('user/SET_USER', newUser, { root: true })
-            console.log('El id del usuario es: ' + newUser.id)
-            console.log('El email del usuario es: ' + newUser.email)
-            console.log('El nombre del usuario es: ' + newUser.displayName)
-          })
-          .catch(error => {
-            commit('shared/SET_ERROR', error)
-            dispatch('errors/AUTH_ERROR', error.code, { root: true })
-            console.log('SOCIAL_SIGNUP error es: ' + error.code)
-          })
-      })
+    try {
+      await firebaseAuth().signInWithRedirect(provider) // Utilizamos esta forma de acceso en móviles
+      // TODO: elresto del código no se ejecuta
+      const { result } = await firebaseAuth().getRedirectResult()
+      if (result.credential) {
+        // Accedemos Access Token, ahora podemos utilizarlo para acceder a la API de la red social
+        const token = result.credential.accessToken
+        console.log('El token es: ' + token)
+        // Datos del nuevo usuario
+        const newUser = {
+          id: result.user.uid,
+          email: result.user.email,
+          name: result.user.displayName,
+          phone: result.user.phoneNumber,
+          isVerified: result.user.emailVerified,
+          isAnonymous: result.user.isAnonymous,
+          avatar: result.user.photoURL,
+          providerId: result.user.providerId,
+          creationDate: result.user.metadata.creationTime,
+          lastSignInDate: result.user.metadata.lastSignInTime
+        }
+        // Actualizamos el perfil de firebase con el displayName
+        await dispatch('SET_USER_PROFILE', { displayName: newUser.name })
+
+        // Llamamos a 'setUser' para crear el nuevo usuario localmente
+        await commit('SET_USER', newUser)
+
+        // Añadimos los datos a la base de datos (Realtime Database)
+        await dispatch('userDb/CREATE_USER_DB', newUser, { root: true })
+
+        console.log('El id del usuario es: ' + newUser.id)
+        console.log('El email del usuario es: ' + newUser.email)
+        console.log('El nombre del usuario es: ' + newUser.displayName)
+      }
+    } catch (error) {
+      commit('shared/SET_ERROR', error, { root: true })
+      dispatch('errors/AUTH_ERROR', error.code, { root: true })
+      console.log('SOCIAL_SIGNUP error es: ' + error.code)
+      commit('shared/SET_ACTION_PASS', false, { root: true })
+    }
   }
 }

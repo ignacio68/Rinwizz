@@ -73,7 +73,7 @@ import 'onsenui/esm/elements/ons-select'
 import 'onsenui/esm/elements/ons-toolbar'
 import 'onsenui/esm/elements/ons-back-button'
 import 'onsenui/esm/elements/ons-fab'
-import 'onsenui/esm/elements/ons-progress-circular' // TODO: REVISAR SU UTILIZACION - A ELIMINAR!
+import 'onsenui/esm/elements/ons-progress-circular' // TODO: REVISAR SU UTILIZACION
 */
 
 /**
@@ -167,6 +167,7 @@ firebaseAuth().onAuthStateChanged(user => {
            */
           // this.$store.dispatch('user/fetchUserData')
           console.log('El usuario es: ' + user.displayName)
+          console.log('La foto es: ' + user.photoURL)
           console.log(user)
           /**
            * Cargamos las alertas

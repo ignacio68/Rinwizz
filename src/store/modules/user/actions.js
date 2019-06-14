@@ -74,7 +74,7 @@ export default {
           creationDate: user.metadata.creationTime,
           lastSignInDate: user.metadata.lastSignInTime
         }
-        // Actualizamos el perfil de firebase con el name
+        // Actualizamos el perfil de firebase con el displayName
         await dispatch('SET_USER_PROFILE', { displayName: newUser.name })
 
         // Llamamos a 'setUser' para crear el nuevo usuario localmente
@@ -116,7 +116,7 @@ export default {
       .catch(error => {
         commit('shared/SET_ERROR', null, { root: true })
         console.log('UPDATE PROFILE error: ' + error)
-        // dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
+        dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
       })
   },
 
@@ -353,6 +353,7 @@ export default {
    * @param {*} commit
    * @param {String} user - id y email del usuario
    */
+  // TODO: Revisar la utilización del user y newUser.
   [AUTO_SIGN_IN]: ({ commit }, user) => {
     console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })

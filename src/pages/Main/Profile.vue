@@ -3,9 +3,10 @@
     <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
     <div class="container">
       <div class="picture">
-        <img src="../../assets/user_icon.png" alt="user icon" class="picture__frame-photo">
+        <!-- <img src="../../assets/user_icon.png" alt="user icon" class="picture__frame-photo"> -->
+        <img :src="userPhoto" alt="user photo" class="picture__frame-photo">
       </div>
-
+      <h2>La foto es: {{ userPhoto }}</h2>
       <form>
         <v-ons-list class="profileList">
           <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
@@ -80,6 +81,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'profile',
   data() {
@@ -90,6 +92,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('user', { userPhoto: state => state.user.avatar }),
     userEmail() {
       // let userEmail = this.$store.getters['user/user']
       // this.$store.dispatch('localDataBase/getUserData', email)

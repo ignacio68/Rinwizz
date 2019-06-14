@@ -12,13 +12,14 @@ import UserLocationVue from './pages/Preferences/UserLocation.vue'
 
 export default {
   name: 'appNavigator',
+
   beforeMount() {
     console.log('AppNavigator beforeMount()')
     if (!this.userIsAuthenticated) {
       this.REPLACE(Welcome)
       console.log('El usuario NO está autenticado')
     } else {
-      this.REPLACE(UserLocation)
+      this.REPLACE(HomePage)
       console.log('El usuario SI está autenticado')
     }
   },
