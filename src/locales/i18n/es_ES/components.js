@@ -22,7 +22,6 @@ export default {
     linkButton: 'acceder'
   },
   alertScript: {
-    pageTitle: 'Mi Alerta!',
     title: 'Título',
     text: 'Texto',
     end: 'Caducidad',

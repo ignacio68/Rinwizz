@@ -1,13 +1,23 @@
 <template>
   <v-ons-card class="alertCard">
-    <div class="title">
-      <p class="title__text">{{ $t('lang.components.alertScript.pageTitle') }}</p>
-    </div>
-
     <div class="content">
-      <v-ons-col class="columnLeft">
-        <img class="alertCard__userIcon" :src="userIcon" :alt="altIcon">
-      </v-ons-col>
+      <v-ons-row class="row">
+        <img
+          class="alertCard__userAvatar"
+          :src="userAvatar"
+          :alt="altAvatar"
+        />
+        <h3 class="alertCard_userName">
+          {{ userName }}
+        </h3>
+        <v-ons-icon
+          v-if="isVerified"
+          class="alertCard_verifiedIcon"
+          size="16px"
+          icon='ion-heckmark-circle, material:md-zmdi-check-circle-u'
+        />
+      </v-ons-row>
+
       <v-ons-col class="columnRight">
         <v-ons-list class="alertList">
           <v-ons-list-item class="alertList__item">
@@ -36,7 +46,10 @@
             ></textarea>
           </v-ons-list-item>
           <v-ons-list-item class="alertList__item">
-            <label for="endDate" class="alertList__item-label">
+            <label
+              for="endDate"
+              class="alertList__item-label"
+            >
               {{
               $t('lang.components.alertScript.end')
               }}
@@ -77,12 +90,12 @@ import { mapActions } from 'vuex'
 export default {
   name: 'alert-script',
   props: {
-    userIcon: {
+    userAvatar: {
       type: String,
       required: true,
       default: ''
     },
-    altIcon: {
+    altAvatar: {
       type: String,
       required: true,
       default: ''
@@ -91,6 +104,11 @@ export default {
       type: String,
       required: true,
       default: ''
+    },
+    isVerified: {
+      type: Boolean,
+      required: true,
+      default: false
     },
     alertPhone: {
       type: String,
@@ -183,16 +201,12 @@ export default {
 .columnRight {
   border: 1px solid black;
 }
-.columnLeft {
-  border: 1px solid pink;
-  width: 21%;
-}
 .alertCard {
   border: 1px solid red;
 }
-.alertCard__userIcon {
-  height: 50px;
-  width: 50px;
+.alertCard__userAvatar {
+  height: 36px;
+  width: 36px;
   border: 1px solid blue;
 }
 .alertCard__userName {
@@ -201,5 +215,8 @@ export default {
   font-weight: bold;
   color: black;
   border: 1px solid green;
+}
+.alertCard_verifiedIcon {
+  color: blue;
 }
 </style>

@@ -20,7 +20,11 @@
 
       <v-ons-row>
         <v-ons-col width="21%">
-          <img :src="userIcon" :alt="altIcon" class="alertCard__userIcon" />
+          <img
+            :src="userAvatar"
+            :alt="altAvatar"
+            class="alertCard__userAvatar"
+          />
         </v-ons-col>
         <v-ons-col>
           <h3 class="alertCard__userName">{{ userName }}</h3>
@@ -41,15 +45,16 @@
             class="alertCard__button"
             ripple="true"
             @click.prevent="onPhoneClick()"
-            >{{ phoneButton }}</v-ons-button
-          >
+          >{{ phoneButton }}</v-ons-button>
           <v-ons-button
             class="alertCard__button"
             ripple="true"
             @click.prevent="onLinkClick()"
-            >{{ linkButton }}</v-ons-button
+          >{{ linkButton }}</v-ons-button>
+          <v-ons-button
+            class="alertCard__button"
+            ripple="true"
           >
-          <v-ons-button class="alertCard__button" ripple="true">
             <v-ons-icon icon="ion-share, material:md-share" />
           </v-ons-button>
         </div>
@@ -71,13 +76,13 @@ export default {
   },
   props: {
     /**
-     * Icono del emisor
+     * Acono del emisor
      */
-    userIcon: {
+    userAvatar: {
       type: String,
       default: ''
     },
-    altIcon: {
+    altAvatar: {
       type: String,
       default: ''
     },
@@ -183,7 +188,7 @@ export default {
   color: red;
   border: 1px solid blue;
 }
-.alertCard__userIcon {
+.alertCard__userAvatar {
   height: 50px;
   width: 50px;
   border: 1px solid orange;

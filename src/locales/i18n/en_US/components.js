@@ -22,7 +22,6 @@ export default {
     linkButton: 'link'
   },
   alertScript: {
-    pageTitle: 'Mi Alert!',
     title: 'Title',
     text: 'Text',
     end: 'End',

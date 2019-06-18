@@ -13,9 +13,16 @@
           tappable
         >
           <label class="left">
-            <v-ons-checkbox :input-id="'checkbox-' + $index" :value="sport" v-model="checkedSports"></v-ons-checkbox>
+            <v-ons-checkbox
+              :input-id="'checkbox-' + $index"
+              :value="sport"
+              v-model="checkedSports"
+            ></v-ons-checkbox>
           </label>
-          <label class="center" :for="'checkbox-' + $index">{{ sport }}</label>
+          <label
+            class="center"
+            :for="'checkbox-' + $index"
+          >{{ sport }}</label>
         </v-ons-list-item>
       </v-ons-list>
 
@@ -35,7 +42,10 @@
               v-model="checkedEntertainments"
             ></v-ons-checkbox>
           </label>
-          <label class="center" :for="'checkbox-' + $index">{{ entertainment }}</label>
+          <label
+            class="center"
+            :for="'checkbox-' + $index"
+          >{{ entertainment }}</label>
         </v-ons-list-item>
       </v-ons-list>
 
@@ -49,9 +59,16 @@
           tappable
         >
           <label class="left">
-            <v-ons-checkbox :input-id="'checkbox-' + $index" :value="food" v-model="checkedFoods"></v-ons-checkbox>
+            <v-ons-checkbox
+              :input-id="'checkbox-' + $index"
+              :value="food"
+              v-model="checkedFoods"
+            ></v-ons-checkbox>
           </label>
-          <label class="center" :for="'checkbox-' + $index">{{ food }}</label>
+          <label
+            class="center"
+            :for="'checkbox-' + $index"
+          >{{ food }}</label>
         </v-ons-list-item>
       </v-ons-list>
 
@@ -99,7 +116,7 @@ export default {
       }
       const userData = { userId: this.userId, data }
       await this.UPDATE_USER_DB(userData)
-      await this.toGreetings()
+      await this.toUserLocation()
     },
     toUserLocation() {
       this.PUSH(UserLocation)
