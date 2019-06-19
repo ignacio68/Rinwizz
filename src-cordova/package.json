@@ -15,6 +15,7 @@
     "cordova-ios": "^4.5.5",
     "cordova-plugin-browsertab": "^0.2.0",
     "cordova-plugin-buildinfo": "^2.0.2",
+    "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-inappbrowser": "^3.0.0",
     "cordova-plugin-nativestorage": "^2.3.2",
@@ -30,7 +31,8 @@
       "cordova-plugin-browsertab": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-nativestorage": {},
-      "cordova-universal-links-plugin": {}
+      "cordova-universal-links-plugin": {},
+      "cordova-plugin-camera": {}
     },
     "platforms": [
       "ios",

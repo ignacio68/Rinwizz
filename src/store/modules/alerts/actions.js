@@ -36,11 +36,12 @@ export default {
           .child(key)
           .update({ startDate: startDate })
       })
-      // Añadimos el resto de la alerta a la base de datos
+      // Añadimos el resto de la alerta a la base de datos local
       .then(() => {
         commit('CREATE_ALERT', {
           ...alert,
-          id: key
+          id: key,
+          startDate: startDate
         })
         console.log(alert)
         console.log(key)

@@ -1,5 +1,5 @@
 <template>
-  <v-ons-page id='personal'>
+  <v-ons-page id="personal">
     <div class="container">
       <h4>{{ $t('lang.pages.personal.main') }}</h4>
       <br>
@@ -19,7 +19,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import gender from './Gender'
+import avatar from './Avatar'
 export default {
   name: 'personal',
   data() {
@@ -29,7 +29,7 @@ export default {
     ...mapMutations('navigator', ['REPLACE']),
 
     toGender() {
-      this.REPLACE(gender)
+      this.REPLACE(avatar)
     }
   }
 }
