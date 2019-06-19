@@ -26,4 +26,11 @@ src/components/Firebase/firebaseConfig.js
 src/setup/firebase.js
 
 # Cordova
-src-cordova
+src-cordova/hooks
+src-cordova/node_modules
+src-cordova/platforms
+src-cordova/plugins
+src-cordova/res
+src-cordova/www
+src-cordova/google-services.json
+src-cordova/GoogleService-info.plist
