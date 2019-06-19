@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import alerts from '@modules/alerts'
 import auth from '@modules/auth'
+import cloudStorage from '@modules/cloudStorage'
 import errors from '@modules/errors'
 import localDb from '@modules/localDb'
 import location from '@modules/location'
@@ -19,6 +20,7 @@ export const store = new Vuex.Store({
   modules: {
     alerts,
     auth,
+    cloudStorage,
     errors,
     location,
     localDb,

@@ -57,6 +57,11 @@ export default {
       'Necesitamos alguna información personal para ofrecerte un mejor servicio',
     button: 'Comenzamos'
   },
+  avatar: {
+    main: 'Elige tu imágen de usuario',
+    avatarButton: '¡Elige una',
+    button: 'Continua'
+  },
   gender: {
     main: 'Elíge tu género',
     genders: 'Hombre | Mujer | Otro',

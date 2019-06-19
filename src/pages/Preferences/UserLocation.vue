@@ -3,11 +3,7 @@
     <v-ons-col class="col">
       <h3 class="text">{{ $t('lang.pages.userLocation.main') }}</h3>
       <div class="map">
-        <location-map
-          :location="userLocation"
-          :initialZoom="17"
-          :showMarkers="showMarkers"
-        />
+        <location-map :location="userLocation" :initialZoom="17" :showMarkers="showMarkers"/>
       </div>
       <div class="address">
         <p>
@@ -36,7 +32,8 @@
             :disabled="false"
             ripple="true"
             @click.prevent="changeShowMarkers"
-          >marcadores</v-ons-button>{{ showMarkers }}
+          >marcadores</v-ons-button>
+          {{ showMarkers }}
         </div>
       </v-row>
     </v-ons-col>
@@ -90,9 +87,9 @@ export default {
       }
       const userData = { userId: this.userId, data }
       await this.UPDATE_USER_DB(userData)
-      await this.toPreferences()
+      this.toGreetings()
     },
-    toPreferences() {
+    toGreetings() {
       this.REPLACE(Greetings)
     },
     changeShowMarkers() {

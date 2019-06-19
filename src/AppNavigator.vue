@@ -5,11 +5,11 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
 
-import HomePage from '@pages/HomePage'
+// import HomePage from '@pages/HomePage'
 import Welcome from '@pages/Shared/Welcome'
 // import UserLocation from '@pages/Preferences/UserLocation'
 // import UserLocationVue from '@pages/Preferences/UserLocation.vue'
-// import Avatar from '@pages/Preferences/Avatar'
+import Avatar from '@pages/Preferences/Avatar'
 
 export default {
   name: 'appNavigator',
@@ -20,7 +20,7 @@ export default {
       this.REPLACE(Welcome)
       console.log('El usuario NO está autenticado')
     } else {
-      this.REPLACE(HomePage)
+      this.REPLACE(Avatar)
       console.log('El usuario SI está autenticado')
     }
   },

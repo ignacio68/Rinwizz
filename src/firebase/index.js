@@ -21,6 +21,7 @@ try {
 }
 
 // - Storage reference
+export const storage = firebase.storage()
 export const storageRef = firebase.storage().ref()
 
 // Initialize Database through Firebase Database

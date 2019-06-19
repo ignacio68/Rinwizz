@@ -2,6 +2,9 @@
 export const CREATE_ALERT = 'CREATE_ALERT'
 export const LOAD_ALERTS = 'LOAD_ALERTS'
 
+// cloudStorage
+export const PUT_FILE = 'PUT_FILE'
+
 // errors
 export const AUTH_ERROR = 'AUTH_ERROR'
 export const USER_ERROR = 'USER_ERROR'

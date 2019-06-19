@@ -80,6 +80,12 @@ export default {
           creationDate: result.user.metadata.creationTime,
           lastSignInDate: result.user.metadata.lastSignInTime
         }
+        // Guardamos en Cloud Storage el avatar
+        dispatch(
+          'cloudStorage/PUT_FILE',
+          { userId: newUser.id, file: newUser.avatar, metadata: 'image/jpeg' },
+          { root: true }
+        )
         // Actualizamos el perfil de firebase con el displayName
         dispatch(
           'user/SET_USER_PROFILE',
