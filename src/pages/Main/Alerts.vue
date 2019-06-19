@@ -1,19 +1,15 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar
-      class="customToolbar"
-      :pageTitle="$t('lang.pages.alerts.toolbar')"
-    ></the-custom-toolbar>
+    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
     <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
     <h5 class="dummyText">Hola {{ userName }} estas son tus alertas</h5>
-    <h5 class="dummyText">Este es tu Avatar <span><img
-          class="alertCard__userAvatar"
-          src="@assets/Real-Madrid-logo-256.png"
-        /></span></h5>
-    <h5
-      v-if="isVerified"
-      class="dummyText"
-    >Estás verificado</h5>
+    <h5 class="dummyText">
+      Este es tu Avatar
+      <span>
+        <img class="alertCard__userAvatar" :src="userAvatar">
+      </span>
+    </h5>
+    <h5 v-if="isVerified" class="dummyText">Estás verificado</h5>
     <div class="container">
       <!-- Alerts list -->
       <v-ons-list class="alertsList">
@@ -42,10 +38,7 @@
     </div>
 
     <!-- Editor de alertas -- Se puede cambiar a una página independiente -->
-    <v-ons-alert-dialog
-      modifier="rowfooter"
-      :visible.sync="isAlertVisible"
-    >
+    <v-ons-alert-dialog modifier="rowfooter" :visible.sync="isAlertVisible">
       <alert-script
         :userAvatar="userAvatar"
         :altAvatar="userAvatar + ' icon'"
@@ -92,10 +85,7 @@
       ripple="true"
       @click.prevent="isAlertVisible = true"
     >
-      <v-ons-icon
-        class="alertScript__icon"
-        icon="ion-edit, material:zmdi-email-open"
-      ></v-ons-icon>
+      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -142,7 +132,7 @@ export default {
         }
       },
       isAlertVisible: false,
-      userAvatar: '@assets/Real-Madrid-logo-256.png',
+      // userAvatar: '@assets/Real-Madrid-logo-256.png',
       // userName: null,
       referenceDate: ''
       // numAlerts: null
@@ -156,7 +146,8 @@ export default {
   computed: {
     ...mapState('user', {
       userName: state => state.user.name,
-      isVerified: state => state.user.isVerified
+      isVerified: state => state.user.isVerified,
+      userAvatar: state => state.user.avatar
     }),
     ...mapGetters('alerts', {
       alerts: 'LOADED_ALERTS',

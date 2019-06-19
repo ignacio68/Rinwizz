@@ -46,9 +46,9 @@ export default {
     console.log('estoy en Welcome.mounted')
   },
   methods: {
-    ...mapMutations('navigator', ['PUSH']),
+    ...mapMutations('navigator', ['REPLACE']),
     toSignUp() {
-      this.PUSH(SignUp)
+      this.REPLACE(SignUp)
     }
   }
 }

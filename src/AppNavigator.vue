@@ -7,9 +7,9 @@ import { mapState, mapGetters, mapMutations } from 'vuex'
 
 import HomePage from '@pages/HomePage'
 import Welcome from '@pages/Shared/Welcome'
-import UserLocation from '@pages/Preferences/UserLocation'
-import UserLocationVue from './pages/Preferences/UserLocation.vue'
-import Avatar from '@pages/Preferences/Avatar'
+// import UserLocation from '@pages/Preferences/UserLocation'
+// import UserLocationVue from '@pages/Preferences/UserLocation.vue'
+// import Avatar from '@pages/Preferences/Avatar'
 
 export default {
   name: 'appNavigator',

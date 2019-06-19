@@ -2,6 +2,8 @@ import { firebaseAuth } from '../../../firebase'
 
 import { DISPATCH_SIGNUP, SOCIAL_SIGNUP } from '@store/types/actions_types'
 
+import HomePage from '@pages/HomePage'
+
 export default {
   /**
    * Acciones para autenticar segun la red social elegida
@@ -20,21 +22,21 @@ export default {
         const provider = new firebaseAuth.FacebookAuthProvider()
         // provider.addScope()
         dispatch('SOCIAL_SIGNUP', provider)
-        console.log('La red social elegida es Facebook')
+        console.log('La red social elegida es : ' + provider)
         break
       }
       case 'Google': {
         const provider = new firebaseAuth.GoogleAuthProvider()
         // provider.addScope()
         dispatch('SOCIAL_SIGNUP', provider)
-        console.log('La red social elegida es Google')
+        console.log('La red social elegida es : ' + provider)
         break
       }
       case 'Twitter': {
         const provider = new firebaseAuth.TwitterAuthProvider()
         // provider.addScope()
         dispatch('SOCIAL_SIGNUP', provider)
-        console.log('La red social elegida es Twitter')
+        console.log('La red social elegida es : ' + provider)
         break
       }
     }
@@ -45,26 +47,33 @@ export default {
    *
    * @param {String} provider - Red Social utilizada
    */
-  async [SOCIAL_SIGNUP]({ commit, dispatch }, provider) {
+  [SOCIAL_SIGNUP]: ({ commit, dispatch }, provider) => {
+    console.log('Estoy en SOCIAL_SIGNUP')
     // provider.addScope('public_profile')
     // firebaseAuth().useDeviceLanguage
     // NOTA: desarrollar un método para según el device elegir un método de acceso
-    // firebase.auth().signInWithPopup(provider) // Utilizamos esta forma de acceso en producción en web
-    try {
-      await firebaseAuth().signInWithRedirect(provider) // Utilizamos esta forma de acceso en móviles
-      // TODO: elresto del código no se ejecuta
-      const { result } = await firebaseAuth().getRedirectResult()
-      if (result.credential) {
-        // Accedemos Access Token, ahora podemos utilizarlo para acceder a la API de la red social
-        const token = result.credential.accessToken
-        console.log('El token es: ' + token)
+    // firebaseAuth().signInWithRedirect(provider) // Utilizamos esta forma de acceso en móviles
+    firebaseAuth()
+      .signInWithPopup(provider) // Utilizamos esta forma de acceso en producción en web
+      // .then(() => { // Se utiliza cuando accedemos con Redirect
+      //   firebaseAuth()
+      //     .getRedirectResult()
+      .then(result => {
+        console.log('He pasado signInWithPopup')
+        if (result.credential) {
+          // Accedemos Access Token, ahora podemos utilizarlo para acceder a la API de la red social
+          const token = result.credential.accessToken
+          console.log('El token es: ' + token)
+        } else {
+          console.log('No hay crededential')
+        }
         // Datos del nuevo usuario
         const newUser = {
           id: result.user.uid,
           email: result.user.email,
           name: result.user.displayName,
           phone: result.user.phoneNumber,
-          isVerified: result.user.emailVerified,
+          isVerified: true,
           isAnonymous: result.user.isAnonymous,
           avatar: result.user.photoURL,
           providerId: result.user.providerId,
@@ -72,23 +81,76 @@ export default {
           lastSignInDate: result.user.metadata.lastSignInTime
         }
         // Actualizamos el perfil de firebase con el displayName
-        await dispatch('SET_USER_PROFILE', { displayName: newUser.name })
+        dispatch(
+          'user/SET_USER_PROFILE',
+          {
+            displayName: newUser.name,
+            photoURL: newUser.avatar
+          },
+          { root: true }
+        )
 
         // Llamamos a 'setUser' para crear el nuevo usuario localmente
-        await commit('SET_USER', newUser)
+        commit('user/SET_USER', newUser, { root: true })
 
         // Añadimos los datos a la base de datos (Realtime Database)
-        await dispatch('userDb/CREATE_USER_DB', newUser, { root: true })
+        dispatch('userDb/CREATE_USER_DB', newUser, { root: true })
 
         console.log('El id del usuario es: ' + newUser.id)
         console.log('El email del usuario es: ' + newUser.email)
         console.log('El nombre del usuario es: ' + newUser.displayName)
-      }
-    } catch (error) {
-      commit('shared/SET_ERROR', error, { root: true })
-      dispatch('errors/AUTH_ERROR', error.code, { root: true })
-      console.log('SOCIAL_SIGNUP error es: ' + error.code)
-      commit('shared/SET_ACTION_PASS', false, { root: true })
-    }
+
+        // Accedemos a la página principal
+        commit('navigator/REPLACE', HomePage, { root: true })
+      })
+      .catch(error => {
+        if (error.code === 'auth/account-exists-with-different-credential') {
+          const pendingCred = error.credential
+          const email = error.email
+          firebaseAuth()
+            .fetchSignInMethodsForEmail(email)
+            .then(methods => {
+              if (methods[0] === 'password') {
+                const password = promptUserforPassword() // TODO: implementar promptUserforPassword
+                firebaseAuth()
+                  .signInWithEmailAndPassword(email, password)
+                  .then(user => {
+                    user.linkWithCredential(pendingCred).then(() => {
+                      console.log('Hacer algo')
+                    })
+                  })
+              }
+              // All the other cases are external providers.
+              // Construct provider object for that provider.
+              // TODO: implement getProviderForProviderId.
+              const provider = getProviderForProviderId(methods[0])
+              // At this point, you should let the user know that he already has an account
+              // but with a different provider, and let him validate the fact he wants to
+              // sign in with this provider.
+              // Sign in to provider. Note: browsers usually block popup triggered asynchronously,
+              // so in real scenario you should ask the user to click on a "continue" button
+              // that will trigger the signInWithPopup.
+              auth.signInWithPopup(provider).then(result => {
+                // Remember that the user may have signed in with an account that has a different email
+                // address than the first one. This can happen as Firebase doesn't control the provider's
+                // sign in flow and the user is free to login using whichever account he owns.
+                // Step 4b.
+                // Link to Facebook credential.
+                // As we have access to the pending credential, we can directly call the link method.
+                result.user
+                  .linkAndRetrieveDataWithCredential(pendingCred)
+                  .then(usercred => {
+                    // Facebook account successfully linked to the existing Firebase user.
+                    goToApp()
+                  })
+              })
+            })
+        } else {
+          commit('shared/SET_ERROR', null, { root: true })
+          dispatch('errors/AUTH_ERROR', error.code, { root: true })
+          console.log('SOCIAL_SIGNUP error es: ' + error.code)
+        }
+      })
+    // })
   }
 }
