@@ -1,11 +1,18 @@
 <template id="App">
-  <v-ons-navigator :page-stack="pageStack" :pop-page="storePop" :options="options"></v-ons-navigator>
+  <v-ons-navigator
+    swipeable
+    swipe-target-width="50px"
+    :page-stack="pageStack"
+    :pop-page="storePop"
+    :options="options"
+  ></v-ons-navigator>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
 
 // import HomePage from '@pages/HomePage'
+import AppSplitter from '@pages/AppSplitter'
 import Welcome from '@pages/Shared/Welcome'
 // import UserLocation from '@pages/Preferences/UserLocation'
 // import UserLocationVue from '@pages/Preferences/UserLocation.vue'
@@ -17,10 +24,10 @@ export default {
   beforeMount() {
     console.log('AppNavigator beforeMount()')
     if (!this.userIsAuthenticated) {
-      this.REPLACE(Welcome)
+      this.PUSH(Welcome)
       console.log('El usuario NO está autenticado')
     } else {
-      this.REPLACE(Avatar)
+      this.PUSH(AppSplitter)
       console.log('El usuario SI está autenticado')
     }
   },
@@ -40,7 +47,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('navigator', ['REPLACE', 'POP']),
+    ...mapMutations('navigator', ['PUSH', 'POP']),
 
     storePop() {
       this.POP()

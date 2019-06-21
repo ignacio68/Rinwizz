@@ -1,19 +1,28 @@
 <template>
   <v-ons-page id="alerts">
 
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
-   
+    <the-custom-toolbar
+      class="customToolbar"
+      :pageTitle="$t('lang.pages.alerts.toolbar')"
+    ></the-custom-toolbar>
+
     <div class="content">
 
-       <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
-    <h5 class="dummyText">Hola {{ userName }} estas son tus alertas</h5>
-    <h5 class="dummyText">
-      Este es tu Avatar
-      <span>
-        <img class="alertCard__userAvatar" :src="userAvatar">
-      </span>
-    </h5>
-    <h5 v-if="isVerified" class="dummyText">Estás verificado</h5>
+      <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
+      <h5 class="dummyText">Hola {{ userName }} estas son tus alertas</h5>
+      <h5 class="dummyText">
+        Este es tu Avatar
+        <span>
+          <img
+            class="alertCard__userAvatar"
+            :src="userAvatar"
+          >
+        </span>
+      </h5>
+      <h5
+        v-if="isVerified"
+        class="dummyText"
+      >Estás verificado</h5>
 
       <!-- Alerts list -->
       <v-ons-list class="alertsList">
@@ -39,57 +48,62 @@
           ></alert-message>
         </v-ons-list-item>
       </v-ons-list>
+
+      <!-- Editor de alertas -- Se puede cambiar a una página independiente -->
+      <v-ons-alert-dialog
+        modifier="rowfooter"
+        :visible.sync="isAlertVisible"
+      >
+        <alert-script
+          :userAvatar="userAvatar"
+          :altAvatar="userAvatar + ' icon'"
+          :userName="userName"
+          :isVerified="isVerified"
+          ref="scriptAlert"
+        ></alert-script>
+        <template slot="footer">
+          <v-ons-alert-dialog-button @click.prevent="isAlertVisible = false">Cancel</v-ons-alert-dialog-button>
+          <v-ons-alert-dialog-button @click.prevent="createAlert">Ok</v-ons-alert-dialog-button>
+        </template>
+      </v-ons-alert-dialog>
+
+      <!-- Botones para probrar funcionalidades -- Se pueden eliminar -->
+      <div class="buttonsGroup">
+        <v-ons-button
+          class="logOutButton__button"
+          name="logOutButton"
+          :disabled="false"
+          ripple="true"
+          @click.prevent="logOutUser"
+        >Logout User</v-ons-button>
+
+        <v-ons-button
+          class="deleteButton__button"
+          name="deleteButton"
+          :disabled="false"
+          ripple="true"
+          @click.prevent="deleteUser"
+        >Delete User</v-ons-button>
+
+        <v-ons-button
+          class="toJSON__button"
+          name="toJSONButton"
+          :disabled="false"
+          ripple="true"
+          @click.prevent="toJSON"
+        >User JSON</v-ons-button>
+      </div>
     </div>
-
-    <!-- Editor de alertas -- Se puede cambiar a una página independiente -->
-    <v-ons-alert-dialog modifier="rowfooter" :visible.sync="isAlertVisible">
-      <alert-script
-        :userAvatar="userAvatar"
-        :altAvatar="userAvatar + ' icon'"
-        :userName="userName"
-        :isVerified="isVerified"
-        ref="scriptAlert"
-      ></alert-script>
-      <template slot="footer">
-        <v-ons-alert-dialog-button @click.prevent="isAlertVisible = false">Cancel</v-ons-alert-dialog-button>
-        <v-ons-alert-dialog-button @click.prevent="createAlert">Ok</v-ons-alert-dialog-button>
-      </template>
-    </v-ons-alert-dialog>
-
-    <!-- Botones para probrar funcionalidades -- Se pueden eliminar -->
-    <div class="buttonsGroup">
-      <v-ons-button
-        class="logOutButton__button"
-        name="logOutButton"
-        :disabled="false"
-        ripple="true"
-        @click.prevent="logOutUser"
-      >Logout User</v-ons-button>
-
-      <v-ons-button
-        class="deleteButton__button"
-        name="deleteButton"
-        :disabled="false"
-        ripple="true"
-        @click.prevent="deleteUser"
-      >Delete User</v-ons-button>
-
-      <v-ons-button
-        class="toJSON__button"
-        name="toJSONButton"
-        :disabled="false"
-        ripple="true"
-        @click.prevent="toJSON"
-      >User JSON</v-ons-button>
-    </div>
-
     <v-ons-fab
       class="alertScript"
       position="bottom right"
       ripple="true"
       @click.prevent="isAlertVisible = true"
     >
-      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
+      <v-ons-icon
+        class="alertScript__icon"
+        icon="ion-edit, material:zmdi-email-open"
+      ></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>

@@ -132,8 +132,8 @@ firebaseAuth().onAuthStateChanged(user => {
         // Shortcut for Material Design, IOS & web
         Vue.prototype.md = this.$ons.platform.isAndroid()
         Vue.prototype.ios = this.$ons.platform.isIOS()
-        Vue.prototype.web =
-          !this.$ons.platform.isAndroid() && !this.$ons.platform.isIOS()
+        // Vue.prototype.web =
+        //   !this.$ons.platform.isAndroid() && !this.$ons.platform.isIOS()
 
         // Set iPhoneX flag based on URL
         if (window.location.search.match(/iphonex/i)) {
