@@ -1,6 +1,6 @@
 <template>
   <v-ons-page id="preferences">
-    <div class="container">
+    <div class="content">
       <p>{{ $t('lang.pages.hobbies.main') }}</p>
       <br>
       <!------ DEPORTES ------->

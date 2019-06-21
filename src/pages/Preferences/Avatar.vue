@@ -1,9 +1,13 @@
 <template>
   <v-ons-page id="avatar">
-    <div class="container">
+    <div class="content">
       <h5>{{ $t('lang.pages.avatar.main') }}</h5>
       <!-- TODO: mostrar icono cuando no haya imágen elegida -->
-      <img v-if="imageUrl !== ''" :src="imageUrl" height="150px">
+      <img
+        v-if="imageUrl !== ''"
+        :src="imageUrl"
+        height="150px"
+      >
       <!-- TODO: cambiar según plataforma -->
       <v-ons-button
         class="avatarButton"

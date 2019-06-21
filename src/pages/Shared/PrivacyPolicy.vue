@@ -4,7 +4,7 @@
       :backLabel="volver"
       :pageTitle="toolbarTitle"
     ></the-custom-toolbar>
-    <div class="container">
+    <div class="content">
       <v-ons-button
         name="returnButton"
         class="return__button"

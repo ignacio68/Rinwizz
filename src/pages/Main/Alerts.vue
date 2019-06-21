@@ -1,7 +1,11 @@
 <template>
   <v-ons-page id="alerts">
+
     <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
-    <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
+   
+    <div class="content">
+
+       <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
     <h5 class="dummyText">Hola {{ userName }} estas son tus alertas</h5>
     <h5 class="dummyText">
       Este es tu Avatar
@@ -10,7 +14,7 @@
       </span>
     </h5>
     <h5 v-if="isVerified" class="dummyText">Estás verificado</h5>
-    <div class="container">
+
       <!-- Alerts list -->
       <v-ons-list class="alertsList">
         <v-ons-list-item

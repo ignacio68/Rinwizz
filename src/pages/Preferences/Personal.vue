@@ -1,6 +1,6 @@
 <template>
   <v-ons-page id="personal">
-    <div class="container">
+    <div class="content">
       <h4>{{ $t('lang.pages.personal.main') }}</h4>
       <br>
       <div class="gender">

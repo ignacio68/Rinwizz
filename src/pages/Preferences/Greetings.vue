@@ -1,6 +1,6 @@
 <template>
   <v-ons-page id="greetings">
-    <div class="container">
+    <div class="content">
       <h1 style="text-align:center">{{ $t('lang.pages.greetings.greetings') }}</h1>
       <br>
       <h3>{{ $t('lang.pages.greetings.main') }}</h3>

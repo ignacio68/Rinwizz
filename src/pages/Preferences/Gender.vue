@@ -1,13 +1,24 @@
 <template>
   <v-ons-page id="gender">
-    <div class="container">
+    <div class="content">
       <p>{{ $t('lang.pages.gender.main') }}</p>
       <v-ons-list>
-        <v-ons-list-item v-for="(gender, $index) in genders" :key="gender" tappable>
+        <v-ons-list-item
+          v-for="(gender, $index) in genders"
+          :key="gender"
+          tappable
+        >
           <label class="left">
-            <v-ons-radio :input-id="'radio-' + $index" :value="gender" v-model="selectedGender"></v-ons-radio>
+            <v-ons-radio
+              :input-id="'radio-' + $index"
+              :value="gender"
+              v-model="selectedGender"
+            ></v-ons-radio>
           </label>
-          <label :for="'radio-' + $index" class="center">{{ gender }}</label>
+          <label
+            :for="'radio-' + $index"
+            class="center"
+          >{{ gender }}</label>
         </v-ons-list-item>
         <v-ons-list-item>
           <div class="center">mi género es: {{ selectedGender }}!</div>
