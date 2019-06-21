@@ -1,28 +1,17 @@
 <template>
   <v-ons-page id="alerts">
-
-    <the-custom-toolbar
-      class="customToolbar"
-      :pageTitle="$t('lang.pages.alerts.toolbar')"
-    ></the-custom-toolbar>
+    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
 
     <div class="content">
-
       <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
       <h5 class="dummyText">Hola {{ userName }} estas son tus alertas</h5>
       <h5 class="dummyText">
         Este es tu Avatar
         <span>
-          <img
-            class="alertCard__userAvatar"
-            :src="userAvatar"
-          >
+          <img class="alertCard__userAvatar" :src="userAvatar">
         </span>
       </h5>
-      <h5
-        v-if="isVerified"
-        class="dummyText"
-      >Estás verificado</h5>
+      <h5 v-if="isVerified" class="dummyText">Estás verificado</h5>
 
       <!-- Alerts list -->
       <v-ons-list class="alertsList">
@@ -50,9 +39,11 @@
       </v-ons-list>
 
       <!-- Editor de alertas -- Se puede cambiar a una página independiente -->
-      <!-- <v-ons-alert-dialog
-        modifier="rowfooter"
-        :visible.sync="isAlertVisible"
+      <v-ons-modal
+        :options="{animation:'lift'}"
+        :visible.sync="isModalVisible"
+        class="alertModal"
+        name="alertModal"
       >
         <alert-script
           :userAvatar="userAvatar"
@@ -61,11 +52,9 @@
           :isVerified="isVerified"
           ref="alertScript"
         ></alert-script>
-        <template slot="footer">
-          <v-ons-alert-dialog-button @click.prevent="isAlertVisible = false">Cancel</v-ons-alert-dialog-button>
-          <v-ons-alert-dialog-button @click.prevent="createAlert">Ok</v-ons-alert-dialog-button>
-        </template>
-      </v-ons-alert-dialog> -->
+        <v-ons-button @click.prevent="cancel">Cancel</v-ons-button>
+        <v-ons-button @click.prevent="createAlert">Ok</v-ons-button>
+      </v-ons-modal>
 
       <!-- Botones para probrar funcionalidades -- Se pueden eliminar -->
       <div class="buttonsGroup">
@@ -94,20 +83,8 @@
         >User JSON</v-ons-button>
       </div>
     </div>
-    <!-- <v-ons-fab
-      position="bottom right"
-      ripple="true"
-      @click.prevent="isAlertVisible = true"
-    > -->
-    <v-ons-fab
-      position="bottom right"
-      ripple="true"
-      @click.prevent="toEditAlert"
-    >
-      <v-ons-icon
-        class="alertScript__icon"
-        icon="ion-edit, material:zmdi-email-open"
-      ></v-ons-icon>
+    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
+      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -116,7 +93,6 @@
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import alertMessage from '@components/Alerts/alertMessage'
 import alertScript from '@components/Alerts/alertScript'
-import EditAlert from './EditAlert'
 export default {
   name: 'alerts',
   components: {
@@ -154,7 +130,7 @@ export default {
           alertLink: 'https://www.atleticodemadrid.com/entradas'
         }
       },
-      isAlertVisible: false,
+      isModalVisible: false,
       // userAvatar: '@assets/Real-Madrid-logo-256.png',
       // userName: null,
       referenceDate: ''
@@ -180,7 +156,6 @@ export default {
   methods: {
     ...mapActions('user', ['LOGOUT_USER', 'DELETE_USER', 'TO_JSON']),
     ...mapMutations('alerts', [' SET_NUM_ALERTS']),
-    ...mapMutations('navigator', ['OPTIONS', 'PUSH']),
 
     toPhone(phone) {
       console.log('phone to: ' + phone)
@@ -189,23 +164,32 @@ export default {
       console.log('link to: ' + link)
       window.location.href = link
     },
+    cancel() {
+      this.isModalVisible = false
+      this.toHomePage()
+    },
     createAlert() {
       this.isAlertVisible = false
       this.$refs.alertScript.onCreateAlert()
-    },
-    toEditAlert() {
-      console.log('Estoy en toEditAlert')
-      this.OPTIONS({
-        animation: 'lift',
-        callback: () => this.OPTIONS({})
-      })
-      this.PUSH(EditAlert)
+      this.toHomePage()
     },
     // Establece la fecha de referencia según la configuración del timer
     loadDate() {
       // Si no hay alertas o todas están caducadas parar el timer o no arrancar
       this.referenceDate = Date.now()
       console.log('La fecha de referencia es:' + this.referenceDate)
+    },
+    toHomePage() {
+      const options = {
+        animation: 'slide'
+      }
+      let myModal = document.querySelector('.alertModal')
+      myModal.addEventListener('prehide', event => {
+        console.log('Se cierra el modal')
+      })
+      // this.$VOnsModal('preHide', event => {
+      //   console.log('Se cierra el modal')
+      // })
     },
     logOutUser() {
       this.LOGOUT_USER()
@@ -239,6 +223,9 @@ export default {
 }
 .fab {
   background-color: #e06257;
+}
+.modal {
+  background: white;
 }
 .alertScript__icon {
   color: white;
