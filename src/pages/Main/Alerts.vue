@@ -50,7 +50,7 @@
       </v-ons-list>
 
       <!-- Editor de alertas -- Se puede cambiar a una página independiente -->
-      <v-ons-alert-dialog
+      <!-- <v-ons-alert-dialog
         modifier="rowfooter"
         :visible.sync="isAlertVisible"
       >
@@ -59,13 +59,13 @@
           :altAvatar="userAvatar + ' icon'"
           :userName="userName"
           :isVerified="isVerified"
-          ref="scriptAlert"
+          ref="alertScript"
         ></alert-script>
         <template slot="footer">
           <v-ons-alert-dialog-button @click.prevent="isAlertVisible = false">Cancel</v-ons-alert-dialog-button>
           <v-ons-alert-dialog-button @click.prevent="createAlert">Ok</v-ons-alert-dialog-button>
         </template>
-      </v-ons-alert-dialog>
+      </v-ons-alert-dialog> -->
 
       <!-- Botones para probrar funcionalidades -- Se pueden eliminar -->
       <div class="buttonsGroup">
@@ -94,11 +94,15 @@
         >User JSON</v-ons-button>
       </div>
     </div>
-    <v-ons-fab
-      class="alertScript"
+    <!-- <v-ons-fab
       position="bottom right"
       ripple="true"
       @click.prevent="isAlertVisible = true"
+    > -->
+    <v-ons-fab
+      position="bottom right"
+      ripple="true"
+      @click.prevent="toEditAlert"
     >
       <v-ons-icon
         class="alertScript__icon"
@@ -112,6 +116,7 @@
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import alertMessage from '@components/Alerts/alertMessage'
 import alertScript from '@components/Alerts/alertScript'
+import EditAlert from './EditAlert'
 export default {
   name: 'alerts',
   components: {
@@ -175,6 +180,7 @@ export default {
   methods: {
     ...mapActions('user', ['LOGOUT_USER', 'DELETE_USER', 'TO_JSON']),
     ...mapMutations('alerts', [' SET_NUM_ALERTS']),
+    ...mapMutations('navigator', ['OPTIONS', 'PUSH']),
 
     toPhone(phone) {
       console.log('phone to: ' + phone)
@@ -185,7 +191,15 @@ export default {
     },
     createAlert() {
       this.isAlertVisible = false
-      this.$refs.scriptAlert.onCreateAlert()
+      this.$refs.alertScript.onCreateAlert()
+    },
+    toEditAlert() {
+      console.log('Estoy en toEditAlert')
+      this.OPTIONS({
+        animation: 'lift',
+        callback: () => this.OPTIONS({})
+      })
+      this.PUSH(EditAlert)
     },
     // Establece la fecha de referencia según la configuración del timer
     loadDate() {
@@ -223,7 +237,7 @@ export default {
 }
 .alertsList__item {
 }
-.alertScript {
+.fab {
   background-color: #e06257;
 }
 .alertScript__icon {

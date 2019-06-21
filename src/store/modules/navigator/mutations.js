@@ -18,7 +18,7 @@ export default {
   },
 
   /**
-   * Elimina la última página añadida a la pila
+   * Elimina la última página añadida a la pila y la devuelve
    *
    * @param {String} state
    */
