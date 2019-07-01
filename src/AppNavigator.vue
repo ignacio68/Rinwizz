@@ -19,7 +19,7 @@ import Welcome from '@pages/Shared/Welcome'
 import Avatar from '@pages/Preferences/Avatar'
 
 export default {
-  name: 'appNavigator',
+  name: 'AppNavigator',
 
   beforeMount() {
     console.log('AppNavigator beforeMount()')
