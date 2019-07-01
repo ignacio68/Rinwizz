@@ -8,13 +8,13 @@ function resolve(dir) {
 module.exports = {
   publicPath: '',
   pluginOptions: {
-    cordovaPath: 'src-cordova',
-    i18n: {
-      locale: 'es',
-      fallbackLocale: 'es',
-      localeDir: 'locales',
-      enableInSFC: false
-    }
+    cordovaPath: 'src-cordova' // ,
+    // i18n: {
+    //   locale: 'es',
+    //   fallbackLocale: 'es',
+    //   localeDir: 'locales',
+    //   enableInSFC: false
+    // }
   },
   configureWebpack: {
     plugins: [

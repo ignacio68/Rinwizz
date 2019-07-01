@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+import AppNavigator from '@src/AppNavigator'
 
-describe('HelloWorld.vue', () => {
+describe('AppNavigator.vue', () => {
 })
