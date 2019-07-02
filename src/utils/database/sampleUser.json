@@ -1,0 +1,28 @@
+{
+  "_id": "",
+  "type": "item",
+  "name": "",
+  "email": "",
+  "phone": "",
+  "alertPhone": "",
+  "link": "",
+  "creationDate": "",
+  "lastSigninDate": "",
+  "isAnonymous": true,
+  "isVerified": false,
+  "providerId": 2,
+  "personal": {
+    "age": "",
+    "gender": ""
+  },
+  "preferences": {
+    "entertainments": [],
+    "foods": [],
+    "sports": []
+  },
+  "location": {
+    "lat": "",
+    "lng": "",
+    "address": {}
+  }
+}

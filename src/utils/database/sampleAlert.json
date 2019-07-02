@@ -1,0 +1,18 @@
+{
+  "_id": "",
+  "type": "item",
+  "version": 1,
+  "title": "",
+  "text": "",
+  "avatar": "",
+  "altAvatar": "",
+  "startDate": "",
+  "endDate": "",
+  "phone": "",
+  "link": "",
+  "location": {
+    "lat": "",
+    "lng": "",
+    "address": {}
+  }
+}

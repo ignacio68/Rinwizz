@@ -25,6 +25,7 @@ yarn-error.log*
 # Private dates
 src/components/Firebase/firebaseConfig.js
 src/setup/firebase.js
+src/setup/cloudant.js
 
 # Cordova
 src-cordova/hooks
