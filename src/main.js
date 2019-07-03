@@ -31,10 +31,11 @@ import { firebaseAuth } from './firebase'
 // import { db, userData } from './loki'
 
 // import PouchDB
-import PouchDB from 'pouchdb-browser'
+// import PouchDB from 'pouchdb-browser'
 // import pouchVue from 'pouch-vue'
-import createDb from '@services/database/index'
+// import createDb from '@services/database/index'
 
+import { usersList, alertsList } from '@services/database/index'
 /**
  *  Import Vuex
  */
@@ -107,9 +108,9 @@ Vue.use(VueOnsen)
 /**
  * Load PouchDB
  */
-PouchDB.plugin(require('pouchdb-find'))
-PouchDB.plugin(require('pouchdb-live-find'))
-PouchDB.plugin(require('pouchdb-authentication'))
+// PouchDB.plugin(require('pouchdb-find'))
+// PouchDB.plugin(require('pouchdb-live-find'))
+// PouchDB.plugin(require('pouchdb-authentication'))
 // Vue.use(pouchVue, {
 //   pouch: PouchDB,
 //   defaultDB: 'alertDatabase'
@@ -174,14 +175,12 @@ firebaseAuth().onAuthStateChanged(user => {
             console.log('No se encuentra el idioma del navegador')
           }
         }
-        // Create the databases
-        // const alertsList = new PouchDB('alerts')
-        const usersList = new PouchDB('users')
-      },
-      created() {
-        this.usersList.info().then(info => {
+        // Comprobamos que existe la lista de usuarios - solo en desarrollo
+        usersList.info().then(info => {
           console.log(info)
         })
+      },
+      created() {
         if (user) {
           this.$store.dispatch('user/AUTO_SIGN_IN', user)
           /**
@@ -197,6 +196,10 @@ firebaseAuth().onAuthStateChanged(user => {
            * 2ª Fase: sólo las que están activas
            * 3ª Fase: las subscritas por el usuario
            */
+          // Comprobamos que existe la lista de usuarios - solo en desarrollo
+          alertsList.info().then(info => {
+            console.log(info)
+          })
           // this.$store.dispatch('alerts/LOAD_ALERTS')
         } else {
           console.log('No existe user')

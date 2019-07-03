@@ -1,4 +1,9 @@
-export const sampleUser = {
+export const usersListSample = {
+  _id: 'users',
+  type: 'list',
+  alerts: {}
+}
+export const userSample = {
   _id: '',
   type: 'user',
   name: '',
@@ -27,13 +32,13 @@ export const sampleUser = {
   }
 }
 
-export const listAlerts = {
-  _id: '',
+export const alertsListSample = {
+  _id: 'alerts',
   type: 'list',
   alerts: {}
 }
 
-export const sampleAlert = {
+export const alertSample = {
   _id: '',
   type: 'alert',
   title: '',
