@@ -8,7 +8,7 @@ import {
   REMOVE_USER_LOCAL_DB
 } from '@store/types/actions_types'
 
-const db = new PouchDB('Rinwizz')
+// const db = new PouchDB('Rinwizz')
 
 export default {
   /**

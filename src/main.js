@@ -32,7 +32,8 @@ import { firebaseAuth } from './firebase'
 
 // import PouchDB
 import PouchDB from 'pouchdb-browser'
-import pouchVue from 'pouch-vue'
+// import pouchVue from 'pouch-vue'
+import createDb from '@services/database/index'
 
 /**
  *  Import Vuex
@@ -109,10 +110,10 @@ Vue.use(VueOnsen)
 PouchDB.plugin(require('pouchdb-find'))
 PouchDB.plugin(require('pouchdb-live-find'))
 PouchDB.plugin(require('pouchdb-authentication'))
-Vue.use(pouchVue, {
-  pouch: PouchDB,
-  defaultDB: 'alertDatabase'
-})
+// Vue.use(pouchVue, {
+//   pouch: PouchDB,
+//   defaultDB: 'alertDatabase'
+// })
 
 /**
  * Load vuex-geolocation
@@ -173,8 +174,14 @@ firebaseAuth().onAuthStateChanged(user => {
             console.log('No se encuentra el idioma del navegador')
           }
         }
+        // Create the databases
+        // const alertsList = new PouchDB('alerts')
+        const usersList = new PouchDB('users')
       },
       created() {
+        this.usersList.info().then(info => {
+          console.log(info)
+        })
         if (user) {
           this.$store.dispatch('user/AUTO_SIGN_IN', user)
           /**
