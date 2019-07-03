@@ -1,9 +1,6 @@
-// import PouchDB from 'pouchdb'
-
-// export const db = new PouchDB('alerts')
 export const sampleUser = {
   _id: '',
-  type: 'item',
+  type: 'user',
   name: '',
   email: '',
   phone: '',
@@ -33,14 +30,12 @@ export const sampleUser = {
 export const listAlerts = {
   _id: '',
   type: 'list',
-  version: 1,
   alerts: {}
 }
 
 export const sampleAlert = {
   _id: '',
-  type: 'item',
-  version: 1,
+  type: 'alert',
   title: '',
   text: '',
   avatar: '',

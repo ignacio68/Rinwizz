@@ -4,7 +4,7 @@
  * @copyright Ignacio López-Amor Pinillos 2019
  * @author Ignacio López-Amor Pinillos <ignaciolopezamor@gmail.com>
  * @license MIT
- * @version 0.2.2
+ * @version 0.3.0
  */
 
 /*
@@ -29,6 +29,10 @@ import { firebaseAuth } from './firebase'
 // import LokiJS
 // import loki from 'lokijs'
 // import { db, userData } from './loki'
+
+// import PouchDB
+import PouchDB from 'pouchdb-browser'
+import pouchVue from 'pouch-vue'
 
 /**
  *  Import Vuex
@@ -98,6 +102,17 @@ Vue.config.productionTip = process.env.NODE_ENV === 'production'
  * Load Onsen
  */
 Vue.use(VueOnsen)
+
+/**
+ * Load PouchDB
+ */
+PouchDB.plugin(require('pouchdb-find'))
+PouchDB.plugin(require('pouchdb-live-find'))
+PouchDB.plugin(require('pouchdb-authentication'))
+Vue.use(pouchVue, {
+  pouch: PouchDB,
+  defaultDB: 'alertDatabase'
+})
 
 /**
  * Load vuex-geolocation
