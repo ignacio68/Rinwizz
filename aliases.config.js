@@ -12,6 +12,7 @@ const aliases = {
   '@locales': 'src/locales',
   '@location': 'src/location',
   '@pages': 'src/router/pages',
+  '@services': 'src/router/services',
   '@setup': 'src/setup',
   '@store': 'src/store',
   '@modules': 'src/state/modules',

@@ -35,6 +35,7 @@ module.exports = {
       .set('@locales', resolve('src/locales'))
       .set('@location', resolve('src/location'))
       .set('@pages', resolve('src/pages'))
+      .set('@services', resolve('src/services'))
       .set('@setup', resolve('src/setup'))
       .set('@store', resolve('src/store'))
       .set('@modules', resolve('src/store/modules'))
