@@ -80,6 +80,9 @@ export default {
         // Llamamos a 'setUser' para crear el nuevo usuario localmente
         await commit('SET_USER', newUser)
 
+        // Añadimos los datos a la base de datos local (PouchDB)
+        await dispatch('localDb/CREATE_USER_LOCAL_DB', newUser, { root: true })
+
         // Añadimos los datos a la base de datos (Realtime Database)
         await dispatch('userDb/CREATE_USER_DB', newUser, { root: true })
 

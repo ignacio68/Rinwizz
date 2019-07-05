@@ -1,4 +1,5 @@
-import PouchDB from 'pouchdb-browser'
+// import PouchDB from 'pouchdb-browser'
+import { createDb } from '@services/database/index'
 
 import {
   CREATE_USER_LOCAL_DB,
@@ -16,22 +17,26 @@ export default {
    *
    * @param {Object} newUser  Datos del usuario
    */
-  [CREATE_USER_LOCAL_DB]: newUser => {
-    console.log('estoy en createLocalUserDb')
-    // const newUserJSON = JSON.stringify(newUser)
-    // Repasar, la solución no es muy convincente
-    // commit ('toJSON', newUser)
-    // db.put(this.dataToJSON)
-    db.put({
-      // _id: new Date().toISOString(),
-      _id: '"' + newUser._id + '"',
-      userData: {
-        email: '"' + newUser.email + '"',
-        name: '"' + newUser.name + '"'
-      }
-    })
+  async [CREATE_USER_LOCAL_DB](newUser) {
+    console.log('estoy en CREATE_USER_LOCAL_DB')
+    // Creamos las bases de datos necesarias: usuarios y alertas
+    const usersList = await createDb('users')
+    // FIXME: convertir los datos a JSON
+    const userData = {
+      _id: newUser._id,
+      email: newUser.email,
+      name: newUser.name
+    }
+    const userDataJSON = JSON.stringify(userData)
+    console.log('La base de datos es: ' + userDataJSON)
+    await usersList
+      .put(userDataJSON)
       .then(response => {
-        console.log('La info de la base de datos local es: ' + response)
+        // Comprobamos que existe la lista de usuarios - solo en desarrollo
+        console.log('Base de datos local creada')
+        usersList.info().then(info => {
+          console.log(info)
+        })
       })
       .catch(error => {
         // TODO: Revisar la gestión de errores

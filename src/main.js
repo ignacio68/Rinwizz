@@ -35,7 +35,7 @@ import { firebaseAuth } from './firebase'
 // import pouchVue from 'pouch-vue'
 // import createDb from '@services/database/index'
 
-import { usersList, alertsList } from '@services/database/index'
+import { createDb } from '@services/database/index'
 /**
  *  Import Vuex
  */
@@ -175,13 +175,20 @@ firebaseAuth().onAuthStateChanged(user => {
             console.log('No se encuentra el idioma del navegador')
           }
         }
-        // Comprobamos que existe la lista de usuarios - solo en desarrollo
-        usersList.info().then(info => {
-          console.log(info)
-        })
       },
       created() {
         if (user) {
+          // Creamos las bases de datos necesarias: usuarios y alertas
+          const usersList = createDb('users')
+          const alertsList = createDb('alerts')
+          // Comprobamos que existe la lista de usuarios - solo en desarrollo
+          usersList.info().then(info => {
+            console.log(info)
+          })
+          alertsList.info().then(info => {
+            console.log(info)
+          })
+          // Load autoSignIn
           this.$store.dispatch('user/AUTO_SIGN_IN', user)
           /**
            * Recuperamos los datos del usuario
@@ -196,10 +203,6 @@ firebaseAuth().onAuthStateChanged(user => {
            * 2ª Fase: sólo las que están activas
            * 3ª Fase: las subscritas por el usuario
            */
-          // Comprobamos que existe la lista de usuarios - solo en desarrollo
-          alertsList.info().then(info => {
-            console.log(info)
-          })
           // this.$store.dispatch('alerts/LOAD_ALERTS')
         } else {
           console.log('No existe user')
