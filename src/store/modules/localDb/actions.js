@@ -1,6 +1,6 @@
-// import PouchDB from 'pouchdb-browser'
+import { cloudantConfig, authUser } from '@setup/cloudant'
 import { createDb } from '@services/database/index'
-import { userSample } from '@utils/database/samples'
+import { userObject } from '@utils/database/samples'
 
 import {
   CREATE_USER_LOCAL_DB,
@@ -10,11 +10,15 @@ import {
   REMOVE_USER_LOCAL_DB
 } from '@store/types/actions_types'
 
-// const db = new PouchDB('Rinwizz')
-
 // Creamos las bases de datos necesarias: usuarios y alertas
-const usersList = createDb('users')
-const user = JSON.parse(JSON.stringify(userSample))
+const nameDb = 'users'
+const apiKey = authUser.key
+const apiPassword = authUser.password
+const remote = cloudantConfig.url + '/' + nameDb
+
+const usersList = createDb(nameDb, apiKey, apiPassword, remote)
+
+const user = JSON.parse(JSON.stringify(userObject))
 
 export default {
   /**
@@ -29,10 +33,17 @@ export default {
     console.log('estoy en CREATE_USER_LOCAL_DB')
     console.log('el _id del usuario es: ' + newUser.id)
     console.log('El email de usuario es: ' + newUser.email)
-    if (newUser) {
+    if (usersList) {
       user._id = newUser.id
       user.email = newUser.email
       user.name = newUser.name
+      user.phone = newUser.phone
+      user.avatar = newUser.avatar
+      user.providerId = newUser.providerId
+      user.creationDate = newUser.creationDate
+      user.lastSignInDate = newUser.lastSignInDate
+      user.isAnonymous = newUser.isAnonymous
+      user.isVerified = newUser.isVerified
       await usersList
         .put(user)
         .then(data => {
@@ -61,7 +72,7 @@ export default {
    */
   // REVISAR -- UTILIZAR USER/user
   [UPDATE_USER_EMAIL_LOCAL_DB]: userEmail => {
-    this.userData.update({
+    usersList.update({
       email: userEmail
     })
   },
@@ -71,7 +82,7 @@ export default {
    */
   // REVISAR -- UTILIZAR USER/user
   [UPDATE_USER_LOCAL_DB]: updateUser => {
-    this.userData.update({
+    usersList.update({
       name: updateUser.name,
       location: updateUser.location
     })
@@ -83,16 +94,16 @@ export default {
    * @param {Object} data Dato del usuario solicitado
    * @returns {String} Devuelve el dato del usuario solicitado
    */
-  [GET_USER_DATA_LOCAL_DB]: data => {
+  [GET_USER_DATA_LOCAL_DB]: user => {
     // let userData
     // userData = "'" + data + "'"
-    return db.get(data)
+    return usersList.get(user)
   },
 
   /**
    * Elimina el usuario de la base de datos local
    */
   [REMOVE_USER_LOCAL_DB]: user => {
-    db.deleteDatabase(user)
+    usersList.deleteDatabase(user)
   }
 }

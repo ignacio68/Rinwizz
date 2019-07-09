@@ -84,7 +84,8 @@ export default {
         await dispatch('localDb/CREATE_USER_LOCAL_DB', newUser, { root: true })
 
         // Añadimos los datos a la base de datos (Realtime Database)
-        await dispatch('userDb/CREATE_USER_DB', newUser, { root: true })
+        // TODO: por el momento lo desactivamos
+        // await dispatch('userDb/CREATE_USER_DB', newUser, { root: true })
 
         console.log('Hay un nuevo usuario: ' + state.user.name)
         // Enviamos el email de confirmación

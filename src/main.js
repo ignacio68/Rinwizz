@@ -146,6 +146,7 @@ firebaseAuth().onAuthStateChanged(user => {
       store,
       render: h => h(AppNavigator),
       beforeCreate() {
+        console.log('Estoy en Main.beforeCreate()')
         // Shortcut for Material Design, IOS & web
         Vue.prototype.md = this.$ons.platform.isAndroid()
         Vue.prototype.ios = this.$ons.platform.isIOS()
