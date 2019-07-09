@@ -40,7 +40,7 @@ export default {
 
   // FIXME: desarrollar correctamente async y el catcher de errores.
   async [SIGNUP_USER]({ state, commit, dispatch }, registerUser) {
-    console.log('Estoy en signUserUp')
+    console.log('Estoy en SIGNUP_USER')
     commit('shared/SET_ACTION_PASS', false, { root: true })
     commit('shared/CLEAR_ERROR', null, { root: true })
     /**
@@ -56,7 +56,7 @@ export default {
       )
       const { user } = result
       if (user) {
-        console.log('Estoy dentro de createUserWithEmailAndPassword')
+        console.log('Estoy en createUserWithEmailAndPassword')
         console.log(user)
         commit('shared/SET_ACTION_PASS', true, { root: true })
 
@@ -110,6 +110,7 @@ export default {
 
   [SET_USER_PROFILE]: ({ commit, dispatch }, user) => {
     commit('shared/CLEAR_ERROR', null, { root: true })
+    console.log('Estoy en SET_USER_PROFILE')
     const userActive = firebaseAuth().currentUser
     userActive
       .updateProfile(user)
