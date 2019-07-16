@@ -26,10 +26,6 @@ import VueOnsen from 'vue-onsenui'
  */
 import { firebaseAuth } from './firebase'
 
-// import LokiJS
-// import loki from 'lokijs'
-// import { db, userData } from './loki'
-
 // import PouchDB
 // import PouchDB from 'pouchdb-browser'
 // import pouchVue from 'pouch-vue'
