@@ -7,11 +7,11 @@ import PouchDB from 'pouchdb-browser'
  * Create database
  * @param nameDb { string } - database name
  */
-export function createDb(nameDb, apiKey, apiPassword, remoteDb) {
-  const db = new PouchDB(nameDb)
-  const userName = apiKey
-  const password = apiPassword
-  const remote = remoteDb
+export function createDb(config) {
+  const db = new PouchDB(config.nameDb)
+  const userName = config.apiKey
+  const password = config.apiPassword
+  const remote = config.remoteDb
 
   let options = {
     live: true,
