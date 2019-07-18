@@ -9,6 +9,9 @@ export const ERROR_MESSAGE = 'ERROR_MESSAGE'
 export const USER_LOCATION = 'USER_LOCATION'
 export const USER_ADDRESS = 'USER_ADDRESS'
 
+// local databases
+export const USERS_LOCAL_DB = 'USERS_LOCAL_DB'
+
 // navigator
 export const PAGE_STACK = 'PAGE_STACK'
 export const OPTIONS = 'OPTIONS'

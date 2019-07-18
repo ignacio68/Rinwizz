@@ -1,9 +1,5 @@
-/**
- * ----- REVISAR A FONDO ------
- *
- * Todas las operaciones con la base de datos local
- * se ejecutan EXCLUSIVAMENTE desde aquí
- */
+import getters from './getters'
+import mutations from './mutations'
 import actions from './actions'
 
 export default {
@@ -12,22 +8,10 @@ export default {
   // db: new PouchDB('rinwizz'),
 
   state: {
-    dataToJSON: {},
-    userData: {} // dummy userData
+    usersLocalDb: {},
+    alertsLocalDb: {}
   },
-  getters: {},
-  mutations: {
-    /* toJSON (data) {
-      function replacer (key, value) {
-        // Filtrando propiedades
-        if (typeof value === 'string') {
-          return '"' + value + '"'
-        }
-        return value
-      }
-      this.dataToJSON = JSON.stringify(data, replacer)
-      return this.dataToJSON
-    } */
-  },
+  getters,
+  mutations,
   actions
 }

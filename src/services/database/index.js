@@ -5,7 +5,7 @@ import PouchDB from 'pouchdb-browser'
 
 /**
  * Create database
- * @param dbName { string } - database name
+ * @param nameDb { string } - database name
  */
 export function createDb(nameDb, apiKey, apiPassword, remoteDb) {
   const db = new PouchDB(nameDb)

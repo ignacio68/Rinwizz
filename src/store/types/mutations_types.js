@@ -6,6 +6,9 @@ export const SET_NUM_ALERTS = 'SET_NUM_ALERTS'
 // errors
 export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
 
+// local databases
+export const SET_LOCAL_DB = 'SET_LOCAL_DB'
+
 // location
 export const SET_WATCH_ID = 'SET_WATCH_ID'
 export const SET_USER_COORDS = 'SET_USER_COORDS'

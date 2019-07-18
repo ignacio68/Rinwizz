@@ -1,9 +1,7 @@
-/**
-import { GETTER } from '@store/types/getters_types'
+import { USERS_LOCAL_DB } from '@store/types/getters_types'
 
 export default {
-  [GETTER]: () => {
-
+  [USERS_LOCAL_DB]: state => {
+    return state.usersLocalDb
   }
 }
-**/
