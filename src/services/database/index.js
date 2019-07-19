@@ -10,47 +10,56 @@ import PouchDB from 'pouchdb-browser'
  * TODO: hacer primero local y luego sincronizar con la del servidor
  */
 export function createDb(config) {
+  console.log('Estoy en createDb')
   const db = new PouchDB(config.nameDb)
-  const userName = config.apiKey
-  const password = config.apiPassword
-  const remote = config.remoteDb
+  if (db) {
+    console.log('SI existe db')
+    const userName = config.apiKey
+    const password = config.apiPassword
+    const remote = config.remote
 
-  const options = {
-    live: true,
-    retry: true,
-    continuous: true,
-    auth: {
-      username: userName,
-      password: password
+    const options = {
+      live: true,
+      retry: true,
+      continuous: true,
+      auth: {
+        username: userName,
+        password: password
+      }
     }
-  }
 
-  db.replicate
-    .from(remote)
-    .on('complete', function(info) {
-      db.sync(remote, options)
-        .on('change', function(info) {
-          console.log('La sync ha cambiado: ' + info)
-        })
-        .on('complete', function(info) {
-          console.log('La sync se ha completado: ' + info)
-        })
-        .on('paused', function(err) {
-          console.log('La sync está pausada: ' + err)
-        })
-        .on('active', function() {
-          console.log('La sync está trabajando')
-        })
-        .on('denied', function(err) {
-          console.log('Se ha denegado la sync: ' + err)
-        })
-        .on('error', function(err) {
-          console.log('Hay un error en la sync: ' + err)
-        })
-    })
-    .on('error', function(err) {
-      console.log('Ha habido un error en replicate: ' + err)
-    })
+    db.replicate
+      .from(remote)
+      .on('complete', function(info) {
+        console.log('Replicate completado: ' + info)
+        db.sync(remote, options)
+          .on('change', function(info) {
+            console.log('La sync ha cambiado: ' + info)
+          })
+          .on('complete', function(info) {
+            console.log('La sync se ha completado: ' + info)
+          })
+          .on('paused', function(err) {
+            console.log('La sync está pausada: ' + err)
+          })
+          .on('active', function() {
+            console.log('La sync está trabajando')
+          })
+          .on('denied', function(err) {
+            console.log('Se ha denegado la sync: ' + err)
+          })
+          .on('error', function(err) {
+            console.log('Hay un error en la sync: ' + err)
+          })
+      })
+      .on('error', function(err) {
+        console.log('Ha habido un error en replicate: ' + err)
+      })
+
+    return db
+  } else {
+    console.log('NO existe db')
+  }
 }
 
 /**
