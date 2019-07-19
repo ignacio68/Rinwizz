@@ -24,8 +24,33 @@ export function createDb(config) {
       password: password
     }
   }
-  db.sync(remote, options)
-  return db
+
+  db.replicate
+    .from(remote)
+    .on('complete', function(info) {
+      db.sync(remote, options)
+        .on('change', function(info) {
+          console.log('La sync ha cambiado: ' + info)
+        })
+        .on('complete', function(info) {
+          console.log('La sync se ha completado: ' + info)
+        })
+        .on('paused', function(err) {
+          console.log('La sync está pausada: ' + err)
+        })
+        .on('active', function() {
+          console.log('La sync está trabajando')
+        })
+        .on('denied', function(err) {
+          console.log('Se ha denegado la sync: ' + err)
+        })
+        .on('error', function(err) {
+          console.log('Hay un error en la sync: ' + err)
+        })
+    })
+    .on('error', function(err) {
+      console.log('Ha habido un error en replicate: ' + err)
+    })
 }
 
 /**
@@ -46,8 +71,8 @@ export function deleteLocalDb(db) {
 
 /**
  * Create a document
- * @param {*} db
- * @param {*} doc
+ * @param db { String } - local database name
+ * @param { String } doc - new document
  */
 export function createDoc(db, doc) {
   db.put(doc)
@@ -66,9 +91,9 @@ export function createDoc(db, doc) {
 
 /**
  * Update a document
- * @param { String } db
- * @param { String } docId
- * @param { Object } data
+ * @param db { String } - local database name
+ * @param docId { String } - document id
+ * @param { Object } data - data to update
  */
 export function updateDoc(db, docId, data) {
   db.get(docId)
@@ -89,8 +114,8 @@ export function updateDoc(db, docId, data) {
 
 /**
  * Fetch a docuemnt
- * @param { String } db
- * @param { String } docId
+ * @param db { String } - local database name
+ * @param docId { String } - document id
  */
 export function fetchDoc(db, docId) {
   db.get(docId)
@@ -113,7 +138,8 @@ export function fetchDoc(db, docId) {
 export function deleteDoc(db, docId) {
   db.get(docId)
     .then(doc => {
-      return db.remove(doc)
+      doc._deleted = true
+      return db.put(doc._deleted)
     })
     .then(result => {
       console.log('Documento eliminado')
