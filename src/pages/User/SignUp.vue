@@ -187,7 +187,7 @@ export default {
       email: '',
       password: '',
       type: 'password',
-      passwordVisible: false
+      passwordVisible: true
     }
   },
   created() {
