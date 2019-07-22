@@ -47,7 +47,7 @@ export default {
         console.log(key)
       })
       .catch(error => {
-        commit('shared/SET_ERROR', error)
+        commit('shared/SET_ERROR', null, { root: true })
         console.log(error)
       })
   },

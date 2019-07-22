@@ -2,6 +2,7 @@
   <v-ons-page>
     <v-ons-tabbar
       position="bottom"
+      swipeable
       :tabs="tabs"
       :index.sync="index"
     >

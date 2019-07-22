@@ -10,7 +10,7 @@
           modifier="large"
           :disabled="false"
           ripple="true"
-          @click.prevent="toGender"
+          @click.prevent="toAvatar"
         >{{ $t('lang.pages.personal.button') }}</v-ons-button>
       </div>
     </div>
@@ -28,8 +28,8 @@ export default {
   methods: {
     ...mapMutations('navigator', ['REPLACE']),
 
-    toGender() {
-      this.REPLACE(avatar)
+    async toAvatar() {
+      await this.REPLACE(avatar)
     }
   }
 }

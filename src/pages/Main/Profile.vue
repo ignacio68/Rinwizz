@@ -1,6 +1,6 @@
 <template>
   <v-ons-page id="profile">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.profile.toolbar')"></the-custom-toolbar>
     <div class="content">
       <div class="picture">
         <!-- <img src="../../assets/user_icon.png" alt="user icon" class="picture__frame-photo"> -->

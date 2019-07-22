@@ -93,10 +93,10 @@ export default {
       }
       const userData = { userId: this.userId, data }
       await this.UPDATE_USER_DB(userData)
-      this.toGreetings()
+      await this.toGreetings()
     },
-    toGreetings() {
-      this.REPLACE(Greetings)
+    async toGreetings() {
+      await this.REPLACE(Greetings)
     },
     changeShowMarkers() {
       return (this.showMarkers = !this.showMarkers)

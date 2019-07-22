@@ -118,8 +118,8 @@ export default {
       await this.UPDATE_USER_DB(userData)
       await this.toUserLocation()
     },
-    toUserLocation() {
-      this.PUSH(UserLocation)
+    async toUserLocation() {
+      await this.PUSH(UserLocation)
     }
   }
 }

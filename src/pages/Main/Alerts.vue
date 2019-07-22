@@ -8,7 +8,7 @@
       <h5 class="dummyText">
         Este es tu Avatar
         <span>
-          <img class="alertCard__userAvatar" :src="userAvatar">
+          <img class="alertCard__userAvatar" :src="userAvatar" />
         </span>
       </h5>
       <h5 v-if="isVerified" class="dummyText">Estás verificado</h5>
@@ -205,9 +205,6 @@ export default {
 </script>
 
 <style scoped>
-.toolbar {
-  background-color: #e06257;
-}
 .toolbar__center {
   color: white;
 }

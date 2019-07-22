@@ -67,8 +67,8 @@ export default {
       await this.UPDATE_USER_DB(userData)
       await this.toHobbies()
     },
-    toHobbies() {
-      this.PUSH(Hobbies)
+    async toHobbies() {
+      await this.PUSH(Hobbies)
     }
   }
 }
