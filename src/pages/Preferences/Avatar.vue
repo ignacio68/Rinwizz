@@ -3,13 +3,7 @@
     <div class="content">
       <h5>{{ $t('lang.pages.avatar.main') }}</h5>
       <!-- TODO: mostrar icono cuando no haya imágen elegida -->
-      <img
-        v-if="imageUrl !== ''"
-        :src="imageUrl"
-        style="display:none"
-        id="avatar"
-        height="150px"
-      >
+      <img v-if="imageUrl !== ''" :src="imageUrl" style="display:none" id="avatar" height="150px" />
       <!-- TODO: cambiar según plataforma -->
       <v-ons-button
         class="avatarButton"
@@ -29,7 +23,7 @@
         />
       </v-ons-button>
     </div>
-    <br>
+    <br />
     <div class="gender">
       <v-ons-button
         class="gender__button"
@@ -45,6 +39,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { capturePhoto, getPhoto } from '@services/camera'
 import gender from './Gender'
 export default {
   name: 'avatar',
@@ -77,15 +72,16 @@ export default {
 
     async getAvatar() {
       console.log('Estoy en getAvatar()')
-        if (navigator.camera) {
-            navigator.camera.getPicture(this.setPicture, this.error, {
-            destinationType: navigator.camera.DestinationType.FILE_URI,
-            sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
-            //sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM
-          })
-        } else {
-          console.log('No hay camara')
-        }
+      if (navigator.camera) {
+        // navigator.camera.getPicture(this.setPicture, this.error, {
+        // destinationType: navigator.camera.DestinationType.FILE_URI,
+        // sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+        //sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM
+        // })
+        this.image = capturePhoto()
+      } else {
+        console.log('No hay camara')
+      }
       console.log('La imagen es: ' + this.image)
       const userData = {
         userId: this.userId,
