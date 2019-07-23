@@ -6,6 +6,8 @@
       <img
         v-if="imageUrl !== ''"
         :src="imageUrl"
+        style="display:none"
+        id="avatar"
         height="150px"
       >
       <!-- TODO: cambiar según plataforma -->
@@ -74,16 +76,16 @@ export default {
     ...mapActions('cloudStorage', ['PUT_FILE']),
 
     async getAvatar() {
-      // if (navigator.camera) {
-      //   navigator.camera.getPicture(this.setPicture, this.error, {
-      //     destinationType: navigator.camera.DestinationType.FILE_URI,
-      //     sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
-      //     //sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM
-      //   })
-      // } else {
-      //   console.log('No hay camara')
-      // }
       console.log('Estoy en getAvatar()')
+        if (navigator.camera) {
+            navigator.camera.getPicture(this.setPicture, this.error, {
+            destinationType: navigator.camera.DestinationType.FILE_URI,
+            sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+            //sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM
+          })
+        } else {
+          console.log('No hay camara')
+        }
       console.log('La imagen es: ' + this.image)
       const userData = {
         userId: this.userId,
