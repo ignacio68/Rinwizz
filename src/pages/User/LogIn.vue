@@ -8,13 +8,22 @@
     <div class="container">
       <!-------------------- LOG IN FORM ------------------------------------------------>
 
-      <form class="form" autocomplete="off">
+      <form
+        class="form"
+        autocomplete="off"
+      >
         <v-ons-list class="form-list">
           <!-- EMAIL INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-ios-email, material:zmdi-email" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-ios-email, material:zmdi-email"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -23,7 +32,7 @@
                 :placeholder="$t('lang.pages.login.input.email')"
                 required
                 float
-                modifier="underbar"
+                modifier="underbar transparent"
                 v-model="email"
               ></v-ons-input>
             </div>
@@ -31,19 +40,25 @@
 
           <!-- PASSWORD INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-locked, material:zmdi-lock" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-locked, material:zmdi-lock"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
-                type="password"
+                type="text"
                 input-id="password"
                 minlength="8"
                 :placeholder="$t('lang.pages.login.input.password')"
                 required
                 float
-                modifier="underbar"
+                modifier="underbar transparent"
                 v-model="password"
                 v-bind="$attrs"
                 ref="passwordInput"
@@ -68,7 +83,10 @@
           <!-- ERROR -->
 
           <v-ons-list-item>
-            <p v-if="isError" class="error">{{ errorMessage }}</p>
+            <p
+              v-if="isError"
+              class="error"
+            >{{ errorMessage }}</p>
           </v-ons-list-item>
 
           <!-- FORGOT PASSWORD -->
@@ -114,7 +132,10 @@
 
       <!-- SIGNUP BUTTON -->
       <div>
-        <p class="text__button" @click.prevent="toSignUp">{{ $t('lang.pages.login.main.text2') }}</p>
+        <p
+          class="text__button"
+          @click.prevent="toSignUp"
+        >{{ $t('lang.pages.login.main.text2') }}</p>
       </div>
     </div>
   </v-ons-page>
@@ -135,8 +156,8 @@ export default {
       volver: '',
       email: '',
       password: '',
-      type: 'password',
-      passwordVisible: false
+      type: 'text',
+      passwordVisible: true
     }
   },
   created() {
@@ -192,7 +213,6 @@ export default {
 
 <style scoped>
 .text__button {
-  border: 1px solid pink;
   height: 50px;
 }
 .socialButtons__text {
@@ -203,14 +223,12 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 60%;
-  border: 1px, solid, blue;
 }
 .socialButtons__list-button {
   display: inline;
   padding: 0px;
   margin-left: 10px;
   margin-right: 10px;
-  border: 1px, solid, red;
 }
 .error {
   color: red;
