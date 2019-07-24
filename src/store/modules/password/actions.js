@@ -1,4 +1,4 @@
-import { firebaseAuth } from '../../../firebase'
+import { firebaseAuth } from '@services/firebase'
 import {
   RESET_PASSWORD,
   CONFIRM_RESET_PASSWORD,

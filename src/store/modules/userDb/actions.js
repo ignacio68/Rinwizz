@@ -1,4 +1,4 @@
-import { firebaseDb } from '.@services/firebase'
+import { firebaseDb } from '@services/firebase'
 // import userSample from '@utils/database/samples'
 import {
   CREATE_USER_DB,

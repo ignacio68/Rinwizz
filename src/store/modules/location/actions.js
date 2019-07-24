@@ -1,4 +1,4 @@
-import * as locationService from '@service/location'
+import * as locationService from '@services/location'
 
 import {
   GET_CURRENT_POSITION,
