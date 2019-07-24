@@ -12,8 +12,8 @@
 import { mapGetters, mapMutations } from 'vuex'
 
 // import HomePage from '@pages/HomePage'
-// import AppSplitter from '@pages/AppSplitter'
-// import Welcome from '@pages/Shared/Welcome'
+import AppSplitter from '@pages/AppSplitter'
+import Welcome from '@pages/Shared/Welcome'
 // import UserLocation from '@pages/Preferences/UserLocation'
 import Avatar from '@pages/Preferences/Avatar'
 
@@ -23,12 +23,10 @@ export default {
   beforeMount() {
     console.log('AppNavigator beforeMount()')
     if (!this.userIsAuthenticated) {
-      this.PUSH(Avatar)
-      // this.PUSH(Welcome)
+      this.PUSH(Welcome)
       console.log('El usuario NO está autenticado')
     } else {
-      this.PUSH(Avatar)
-      // this.PUSH(AppSplitter)
+      this.PUSH(AppSplitter)
       console.log('El usuario SI está autenticado')
     }
   },

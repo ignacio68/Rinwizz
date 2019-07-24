@@ -17,10 +17,13 @@ export default {
       dispatch('errors/LOCATION_ERROR', error.message, { root: true })
     }
   },
-  async [CURRENT_ADDRESS]({ getters, commit, dispatch }) {
+  async [CURRENT_ADDRESS]({ state, commit, dispatch }) {
     console.log('Estoy en CURRENT_ADDRESS')
     try {
-      const { coords } = getters('USER_LOCATION')
+      // const { coords } = getters('USER_LOCATION')
+      const coords = {}
+      coords.lat = state.lat
+      coords.lng = state.lng
       const address = await locationService.currentAddress(coords)
       console.log('La dirección es: ' + address)
       commit('SET_USER_ADDRESS', address)
