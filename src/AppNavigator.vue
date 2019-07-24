@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 // import HomePage from '@pages/HomePage'
-import AppSplitter from '@pages/AppSplitter'
-import Welcome from '@pages/Shared/Welcome'
+// import AppSplitter from '@pages/AppSplitter'
+// import Welcome from '@pages/Shared/Welcome'
 // import UserLocation from '@pages/Preferences/UserLocation'
 import Avatar from '@pages/Preferences/Avatar'
 

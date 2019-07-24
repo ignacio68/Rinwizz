@@ -3,7 +3,13 @@
     <div class="content">
       <h5>{{ $t('lang.pages.avatar.main') }}</h5>
       <!-- TODO: mostrar icono cuando no haya imágen elegida -->
-      <img v-if="imageUrl !== ''" :src="imageUrl" style="display:none" id="avatar" height="150px" />
+      <img
+        v-if="imageUrl !== ''"
+        :src="imageUrl"
+        style="display:none"
+        id="avatar"
+        height="150px"
+      />
       <!-- TODO: cambiar según plataforma -->
       <v-ons-button
         class="avatarButton"
@@ -76,7 +82,7 @@ export default {
         // navigator.camera.getPicture(this.setPicture, this.error, {
         // destinationType: navigator.camera.DestinationType.FILE_URI,
         // sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
-        //sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM
+        // sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM
         // })
         this.image = capturePhoto()
       } else {
@@ -116,5 +122,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>
