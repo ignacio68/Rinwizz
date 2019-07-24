@@ -20,7 +20,6 @@ export default {
   async [CURRENT_ADDRESS]({ state, commit, dispatch }) {
     console.log('Estoy en CURRENT_ADDRESS')
     try {
-      // const { coords } = getters('USER_LOCATION')
       const coords = {}
       coords.lat = state.lat
       coords.lng = state.lng

@@ -26,12 +26,12 @@ import VueOnsen from 'vue-onsenui'
  */
 import { firebaseAuth } from '@services/firebase'
 
-// import PouchDB
-// import PouchDB from 'pouchdb-browser'
-// import pouchVue from 'pouch-vue'
-// import createDb from '@services/database/index'
-
+/**
+ * import Cloudant settings
+ */
+import { DbConfig } from '@services/database/config'
 import { createDb } from '@services/database'
+
 /**
  *  Import Vuex
  */
@@ -176,8 +176,11 @@ firebaseAuth().onAuthStateChanged(user => {
       created() {
         if (user) {
           // Creamos las bases de datos necesarias: usuarios y alertas
-          const usersList = createDb('users')
-          const alertsList = createDb('alerts')
+          const usersDbName = 'users'
+          const usersListConfig = new DbConfig(usersDbName)
+          const usersList = createDb(usersListConfig)
+          // TODO: crear config para alertsList
+          // const alertsList = createDb('alerts')
           // Comprobamos que existe la lista de usuarios - solo en desarrollo
           usersList.info().then(info => {
             console.log(info)
