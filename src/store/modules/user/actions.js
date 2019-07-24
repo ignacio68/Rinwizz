@@ -1,4 +1,4 @@
-import { firebaseAuth, firebaseDb } from '../../../firebase'
+import { firebaseAuth, firebaseDb } from '@services/firebase'
 
 import {
   SIGNUP_USER,

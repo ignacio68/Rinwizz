@@ -1,4 +1,4 @@
-import { firebaseAuth } from '../../../firebase'
+import { firebaseAuth } from '@services/firebase'
 
 import { DISPATCH_SIGNUP, SOCIAL_SIGNUP } from '@store/types/actions_types'
 

@@ -1,4 +1,4 @@
-import { firebaseDb } from '../../../firebase'
+import { firebaseDb } from '@services/firebase'
 
 import { CREATE_ALERT, LOAD_ALERTS } from '@store/types/actions_types'
 

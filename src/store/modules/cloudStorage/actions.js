@@ -1,4 +1,4 @@
-import { storage } from '../../../firebase'
+import { storage } from '@services/firebase'
 
 import { PUT_FILE } from '@store/types/actions_types'
 

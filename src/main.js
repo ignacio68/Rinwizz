@@ -24,14 +24,14 @@ import VueOnsen from 'vue-onsenui'
 /**
  * Import Firebase
  */
-import { firebaseAuth } from './firebase'
+import { firebaseAuth } from '@services/firebase'
 
 // import PouchDB
 // import PouchDB from 'pouchdb-browser'
 // import pouchVue from 'pouch-vue'
 // import createDb from '@services/database/index'
 
-import { createDb } from '@services/database/index'
+import { createDb } from '@services/database'
 /**
  *  Import Vuex
  */
