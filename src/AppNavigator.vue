@@ -15,7 +15,7 @@ import { mapGetters, mapMutations } from 'vuex'
 import AppSplitter from '@pages/AppSplitter'
 import Welcome from '@pages/Shared/Welcome'
 // import UserLocation from '@pages/Preferences/UserLocation'
-import Avatar from '@pages/Preferences/Avatar'
+// import Avatar from '@pages/Preferences/Avatar'
 
 export default {
   name: 'AppNavigator',

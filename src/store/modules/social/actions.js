@@ -111,7 +111,7 @@ export default {
       })
       .catch(error => {
         if (error.code === 'auth/account-exists-with-different-credential') {
-          const pendingCred = error.credential
+          const pendingCredential = error.credential
           const email = error.email
           firebaseAuth()
             .fetchSignInMethodsForEmail(email)
@@ -121,7 +121,7 @@ export default {
                 firebaseAuth()
                   .signInWithEmailAndPassword(email, password)
                   .then(user => {
-                    user.linkWithCredential(pendingCred).then(() => {
+                    user.linkWithCredential(pendingCredential).then(() => {
                       console.log('Hacer algo')
                     })
                   })
@@ -136,20 +136,22 @@ export default {
               // Sign in to provider. Note: browsers usually block popup triggered asynchronously,
               // so in real scenario you should ask the user to click on a "continue" button
               // that will trigger the signInWithPopup.
-              auth.signInWithPopup(provider).then(result => {
-                // Remember that the user may have signed in with an account that has a different email
-                // address than the first one. This can happen as Firebase doesn't control the provider's
-                // sign in flow and the user is free to login using whichever account he owns.
-                // Step 4b.
-                // Link to Facebook credential.
-                // As we have access to the pending credential, we can directly call the link method.
-                result.user
-                  .linkAndRetrieveDataWithCredential(pendingCred)
-                  .then(usercred => {
-                    // Facebook account successfully linked to the existing Firebase user.
-                    goToApp()
-                  })
-              })
+              firebaseAuth()
+                .signInWithPopup(provider)
+                .then(result => {
+                  // Remember that the user may have signed in with an account that has a different email
+                  // address than the first one. This can happen as Firebase doesn't control the provider's
+                  // sign in flow and the user is free to login using whichever account he owns.
+                  // Step 4b.
+                  // Link to Facebook credential.
+                  // As we have access to the pending credential, we can directly call the link method.
+                  result.user
+                    .linkAndRetrieveDataWithCredential(pendingCredential)
+                    .then(userCredential => {
+                      // Facebook account successfully linked to the existing Firebase user.
+                      console.log('Hacer algo')
+                    })
+                })
             })
         } else {
           commit('shared/SET_ERROR', null, { root: true })

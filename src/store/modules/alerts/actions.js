@@ -18,6 +18,7 @@ export default {
       link: alertData.link,
       phone: alertData.alertPhone || '' // utilizar por defecto el guardado en Firebase
     }
+    const startDate = Date.now()
     let key
     // Genera una nueva alerta en la base de datos
     firebaseDb
@@ -30,7 +31,7 @@ export default {
       // Actualizamos con la fecha de inicio de la alerta
       // TODO: Hacerlo al crear la alerta
       .then(key => {
-        const startDate = Date.now()
+        // const startDate = Date.now()
         return firebaseDb
           .ref('alerts')
           .child(key)

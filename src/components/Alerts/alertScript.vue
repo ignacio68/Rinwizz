@@ -14,7 +14,7 @@
           v-if="isVerified"
           class="alertCard_verifiedIcon"
           size="16px"
-          icon='ion-heckmark-circle, material:md-zmdi-check-circle-u'
+          icon='ion-checkmark-circle, material:zmdi-check-circle-u'
         />
       </v-ons-row>
 

@@ -1,9 +1,9 @@
 <template>
   <v-ons-splitter>
     <v-ons-splitter-side
-      swipeable
-      width="260px"
       collapse=""
+      swipeable
+      width="75%"
       side="left"
       :swipe-target-width="md && 25"
       :animation="md ? 'overlay' : 'reveal'"
@@ -22,12 +22,17 @@
 import Settings from './Settings'
 import HomePage from './HomePage'
 export default {
+  name: 'AppSplitter',
   components: {
     Settings,
     HomePage
+  },
+  data() {
+    return {
+      isOpen: true
+    }
   }
 }
 </script>
 
-<style>
-</style>
+<style></style>
