@@ -167,7 +167,8 @@ firebaseAuth().onAuthStateChanged(user => {
             // const lang = val.slice(0, 2)
             i18n.locale = lang
             this.$store.commit('shared/SET_LANGUAGE', lang)
-            console.log('el lenguaje es ' + i18n.locale)
+            console.log('el lenguaje es ${i18n.locale}')
+            // console.log('el lenguaje es ' + i18n.locale)
           } else {
             console.log('No se encuentra el idioma del navegador')
           }
@@ -176,9 +177,10 @@ firebaseAuth().onAuthStateChanged(user => {
       created() {
         if (user) {
           // Creamos las bases de datos necesarias: usuarios y alertas
-          const usersDbName = 'users'
-          const usersListConfig = new DbConfig(usersDbName)
-          const usersList = createDb(usersListConfig)
+          this.$store.dispatch('localDb/CREATE_USER_LOCAL_DB', user)
+          // const usersDbName = 'users'
+          // const usersListConfig = new DbConfig(usersDbName)
+          // const usersList = createDb(usersListConfig)
           // TODO: crear config para alertsList
           // const alertsList = createDb('alerts')
           // Comprobamos que existe la lista de usuarios - solo en desarrollo
