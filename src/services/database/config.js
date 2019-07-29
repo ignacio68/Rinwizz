@@ -2,16 +2,11 @@
 
 import { cloudantConfig, authUser } from '@setup/cloudant'
 
-export default class DbConfig {
+export class DbConfig {
   constructor(nameDb) {
     this.nameDb = nameDb
-  }
-  getConfig() {
-    const config = {}
-    config.nameDb = this.nameDb
-    config.apiKey = authUser.key
-    config.apiPassword = authUser.password
-    config.remote = cloudantConfig.url + '/' + this.nameDb
-    return config
+    this.apikey = authUser.key
+    this.apiPassword = authUser.password
+    this.remote = cloudantConfig.url + '/' + this.nameDb
   }
 }

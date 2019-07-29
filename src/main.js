@@ -27,12 +27,6 @@ import VueOnsen from 'vue-onsenui'
 import { firebaseAuth } from '@services/firebase'
 
 /**
- * import Cloudant settings
- */
-import { DbConfig } from '@services/database/config'
-import { createDb } from '@services/database'
-
-/**
  *  Import Vuex
  */
 import { store } from './store'
@@ -167,8 +161,8 @@ firebaseAuth().onAuthStateChanged(user => {
             // const lang = val.slice(0, 2)
             i18n.locale = lang
             this.$store.commit('shared/SET_LANGUAGE', lang)
-            console.log('el lenguaje es ${i18n.locale}')
-            // console.log('el lenguaje es ' + i18n.locale)
+            // console.log('el lenguaje es ${i18n.locale}')
+            console.log('el lenguaje es ' + i18n.locale)
           } else {
             console.log('No se encuentra el idioma del navegador')
           }
@@ -177,28 +171,29 @@ firebaseAuth().onAuthStateChanged(user => {
       created() {
         if (user) {
           // Creamos las bases de datos necesarias: usuarios y alertas
-          this.$store.dispatch('localDb/CREATE_USER_LOCAL_DB', user)
+          // this.$store.dispatch('localDb/CREATE_USER_LOCAL_DB', user)
           // const usersDbName = 'users'
           // const usersListConfig = new DbConfig(usersDbName)
           // const usersList = createDb(usersListConfig)
           // TODO: crear config para alertsList
           // const alertsList = createDb('alerts')
           // Comprobamos que existe la lista de usuarios - solo en desarrollo
-          usersList.info().then(info => {
-            console.log(info)
-          })
-          alertsList.info().then(info => {
-            console.log(info)
-          })
+          // usersList.info().then(info => {
+          //   console.log(info)
+          // })
+          // alertsList.info().then(info => {
+          //   console.log(info)
+          // })
           // Load autoSignIn
           this.$store.dispatch('user/AUTO_SIGN_IN', user)
+
           /**
            * Recuperamos los datos del usuario
            */
           // this.$store.dispatch('user/fetchUserData')
           console.log('El usuario es: ' + user.displayName)
           console.log('La foto es: ' + user.photoURL)
-          console.log(user)
+          console.log(JSON.stringify(user))
           /**
            * Cargamos las alertas
            * 1ª Fase: cargamos todas las que hay en la base de datos
