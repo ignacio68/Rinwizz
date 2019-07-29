@@ -161,11 +161,10 @@ export default {
     }
   },
   created() {
-    console.log('Estoy en LogIn.created')
-    // this.$store.commit('navigator/POP')
+    console.log('LogIn.created')
   },
   mounted() {
-    console.log('Estoy en LogIn.mounted')
+    console.log('LogIn.mounted')
   },
   computed: {
     ...mapGetters('errors', { errorMessage: 'ERROR_MESSAGE' }),

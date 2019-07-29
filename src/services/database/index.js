@@ -25,19 +25,21 @@ export function createDb(config) {
       auth: {
         username: userName,
         password: password
-      }
+      },
+      filter: 'app/by_user',
+      query_params: { 'userId': config._id }
     }
 
     db.replicate
       .from(remote)
       .on('complete', function(info) {
-        console.log('Replicate completado: ' + info)
+        console.log('Replicate completado: ' + JSON.stringify(info))
         db.sync(remote, options)
           .on('change', function(info) {
-            console.log('La sync ha cambiado: ' + info)
+            console.log('La sync ha cambiado: ' + JSON.stringify(info))
           })
           .on('complete', function(info) {
-            console.log('La sync se ha completado: ' + info)
+            console.log('La sync se ha completado: ' + JSON.stringify(info))
           })
           .on('paused', function(err) {
             console.log('La sync está pausada: ' + err)
@@ -90,7 +92,7 @@ export function createDoc(db, doc) {
       console.log('document create')
       doc._rev = response.rev
       db.info().then(info => {
-        console.log(info)
+        console.log(JSON.stringify(info))
       })
     })
     .catch(err => {

@@ -1,7 +1,7 @@
 <template>
   <v-ons-splitter>
     <v-ons-splitter-side
-      collapse=""
+      collapse
       swipeable
       width="75%"
       side="left"
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { DbConfig } from '@services/database/config'
+import { mapGetters, mapMutations } from 'vuex'
 import Settings from './Settings'
 import HomePage from './HomePage'
 export default {
@@ -29,8 +31,30 @@ export default {
   },
   data() {
     return {
-      isOpen: true
+      isOpen: false
     }
+  },
+  created() {
+    console.log('AppSplitter.created()')
+  },
+  beforeMount() {
+    // Load the users database
+    console.log('AppSplitter.beforeMount()')
+    const usersDbConfig = new DbConfig('users')
+    usersDbConfig._id = this._id
+    console.log('La configuración es: ' + JSON.stringify(usersDbConfig))
+    this.SET_LOCAL_DB(usersDbConfig)
+
+    // Load the alerts database
+    // const alertsDbConfig = new DbConfig('alerts')
+    // console.log('La configuración es: ' + JSON.stringify(alertsDbConfig))
+    // this.SET_LOCAL_DB(alertsDbConfig)
+  },
+  computed: {
+    ...mapGetters('user', { _id: 'USER_ID' })
+  },
+  methods: {
+    ...mapMutations('localDb', ['SET_LOCAL_DB'])
   }
 }
 </script>

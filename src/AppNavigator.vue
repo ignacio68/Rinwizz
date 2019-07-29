@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import { DbConfig } from '@services/database/config'
 import { mapGetters, mapMutations } from 'vuex'
 
 // import HomePage from '@pages/HomePage'
@@ -27,11 +26,6 @@ export default {
       this.PUSH(Welcome)
       console.log('El usuario NO está autenticado')
     } else {
-      // Load the users database
-      const usersDbConfig = new DbConfig('users')
-      console.log('La configuración es: ' + JSON.stringify(usersDbConfig))
-      this.SET_LOCAL_DB(usersDbConfig)
-      
       this.PUSH(AppSplitter)
       console.log('El usuario SI está autenticado')
     }
@@ -53,7 +47,6 @@ export default {
   },
   methods: {
     ...mapMutations('navigator', ['PUSH', 'POP']),
-    ...mapMutations('localDb', ['SET_LOCAL_DB']),
 
     storePop() {
       this.POP()
