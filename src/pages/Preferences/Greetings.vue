@@ -2,9 +2,9 @@
   <v-ons-page id="greetings">
     <div class="content">
       <h1 style="text-align:center">{{ $t('lang.pages.greetings.greetings') }}</h1>
-      <br>
+      <br />
       <h3>{{ $t('lang.pages.greetings.main') }}</h3>
-      <br>
+      <br />
       <div class="homePageButton">
         <v-ons-button
           class="homePageButton__button"
@@ -21,7 +21,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import HomePage from '@pages/HomePage'
+import AppSplitter from '@pages/AppSplitter'
 
 export default {
   name: 'greetings',
@@ -33,7 +33,7 @@ export default {
     ...mapMutations('navigator', ['REPLACE']),
 
     toHomePage() {
-      this.REPLACE(HomePage)
+      this.REPLACE(AppSplitter)
     }
   }
 }
