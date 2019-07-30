@@ -14,6 +14,7 @@ export function createDb(config) {
   const db = new PouchDB(config.nameDb)
   if (db) {
     console.log('SI existe db')
+    console.log(JSON.stringify(config))
     const userName = config.apiKey
     const password = config.apiPassword
     const remote = config.remote
@@ -32,25 +33,25 @@ export function createDb(config) {
 
     db.replicate
       .from(remote)
-      .on('complete', function(info) {
+      .on('complete', info => {
         console.log('Replicate completado: ' + JSON.stringify(info))
         db.sync(remote, options)
-          .on('change', function(info) {
+          .on('change', info => {
             console.log('La sync ha cambiado: ' + JSON.stringify(info))
           })
-          .on('complete', function(info) {
+          .on('complete', info => {
             console.log('La sync se ha completado: ' + JSON.stringify(info))
           })
-          .on('paused', function(err) {
+          .on('paused', err => {
             console.log('La sync está pausada: ' + err)
           })
-          .on('active', function() {
+          .on('active', () => {
             console.log('La sync está trabajando')
           })
-          .on('denied', function(err) {
+          .on('denied', err => {
             console.log('Se ha denegado la sync: ' + err)
           })
-          .on('error', function(err) {
+          .on('error', err => {
             console.log('Hay un error en la sync: ' + err)
           })
       })
@@ -75,7 +76,7 @@ export function deleteLocalDb(db) {
     .then(response => {
       console.log('Local database destroy')
     })
-    .catch(function(err) {
+    .catch( err => {
       console.log(err)
     })
 }
