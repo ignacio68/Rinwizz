@@ -24,11 +24,12 @@ export function createDb(config) {
       retry: true,
       continuous: true,
       auth: {
-        username: userName,
-        password: password
+        username: '91560b5d-43c9-4baa-9689-ea557121adec-bluemix',
+        password:
+          '29acdc37b10aab10e1b96420254d51caede9af8c6ea4ba5d828a4a8cc30606f3'
       },
       filter: 'app/by_user',
-      query_params: { 'userId': config._id }
+      query_params: { userId: config._id }
     }
 
     db.replicate
@@ -43,22 +44,21 @@ export function createDb(config) {
             console.log('La sync se ha completado: ' + JSON.stringify(info))
           })
           .on('paused', err => {
-            console.log('La sync está pausada: ' + err)
+            console.log('La sync está pausada: ' + JSON.stringify(err))
           })
           .on('active', () => {
             console.log('La sync está trabajando')
           })
           .on('denied', err => {
-            console.log('Se ha denegado la sync: ' + err)
+            console.log('Se ha denegado la sync: ' + JSON.stringify(err))
           })
           .on('error', err => {
-            console.log('Hay un error en la sync: ' + err)
+            console.log('Hay un error en la sync: ' + JSON.stringify(err))
           })
       })
       .on('error', function(err) {
         console.log('Ha habido un error en replicate: ' + err)
       })
-
     return db
   } else {
     console.log('NO existe db')
@@ -76,7 +76,7 @@ export function deleteLocalDb(db) {
     .then(response => {
       console.log('Local database destroy')
     })
-    .catch( err => {
+    .catch(err => {
       console.log(err)
     })
 }
