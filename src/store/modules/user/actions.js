@@ -18,7 +18,7 @@ import {
   TO_JSON
 } from '@store/types/actions_types'
 
-import HomePage from '@pages/HomePage'
+import AppSplitter from '@pages/AppSplitter'
 import Welcome from '@pages/Shared/Welcome'
 import LogIn from '@pages/User/LogIn'
 
@@ -189,7 +189,7 @@ export default {
           id: user.uid
         }
         commit('SET_USER', newUser)
-        commit('navigator/REPLACE', HomePage, {
+        commit('navigator/REPLACE', AppSplitter, {
           root: true
         })
       }

@@ -27,6 +27,7 @@ export default {
     config.apiKey = authUser.key
     config.apiPassword = authUser.password
     config.remote = cloudantConfig.url + '/' + config.nameDb
+    config._id = newUser.id
 
     // Creamos la base de datos local de los usuarios
     commit('SET_LOCAL_DB', config)

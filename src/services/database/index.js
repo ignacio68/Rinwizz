@@ -14,6 +14,7 @@ export function createDb(config) {
   const db = new PouchDB(config.nameDb)
   if (db) {
     console.log('SI existe db')
+    console.log(JSON.stringify(config))
     const userName = config.apiKey
     const password = config.apiPassword
     const remote = config.remote
@@ -23,39 +24,41 @@ export function createDb(config) {
       retry: true,
       continuous: true,
       auth: {
-        username: userName,
-        password: password
-      }
+        username: '91560b5d-43c9-4baa-9689-ea557121adec-bluemix',
+        password:
+          '29acdc37b10aab10e1b96420254d51caede9af8c6ea4ba5d828a4a8cc30606f3'
+      },
+      filter: 'app/by_user',
+      query_params: { userId: config._id }
     }
 
     db.replicate
       .from(remote)
-      .on('complete', function(info) {
-        console.log('Replicate completado: ' + info)
+      .on('complete', info => {
+        console.log('Replicate completado: ' + JSON.stringify(info))
         db.sync(remote, options)
-          .on('change', function(info) {
-            console.log('La sync ha cambiado: ' + info)
+          .on('change', info => {
+            console.log('La sync ha cambiado: ' + JSON.stringify(info))
           })
-          .on('complete', function(info) {
-            console.log('La sync se ha completado: ' + info)
+          .on('complete', info => {
+            console.log('La sync se ha completado: ' + JSON.stringify(info))
           })
-          .on('paused', function(err) {
-            console.log('La sync está pausada: ' + err)
+          .on('paused', err => {
+            console.log('La sync está pausada: ' + JSON.stringify(err))
           })
-          .on('active', function() {
+          .on('active', () => {
             console.log('La sync está trabajando')
           })
-          .on('denied', function(err) {
-            console.log('Se ha denegado la sync: ' + err)
+          .on('denied', err => {
+            console.log('Se ha denegado la sync: ' + JSON.stringify(err))
           })
-          .on('error', function(err) {
-            console.log('Hay un error en la sync: ' + err)
+          .on('error', err => {
+            console.log('Hay un error en la sync: ' + JSON.stringify(err))
           })
       })
       .on('error', function(err) {
         console.log('Ha habido un error en replicate: ' + err)
       })
-
     return db
   } else {
     console.log('NO existe db')
@@ -73,7 +76,7 @@ export function deleteLocalDb(db) {
     .then(response => {
       console.log('Local database destroy')
     })
-    .catch(function(err) {
+    .catch(err => {
       console.log(err)
     })
 }
@@ -90,7 +93,7 @@ export function createDoc(db, doc) {
       console.log('document create')
       doc._rev = response.rev
       db.info().then(info => {
-        console.log(info)
+        console.log(JSON.stringify(info))
       })
     })
     .catch(err => {
