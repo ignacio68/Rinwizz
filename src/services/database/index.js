@@ -29,11 +29,14 @@ export function createDb(config) {
           '29acdc37b10aab10e1b96420254d51caede9af8c6ea4ba5d828a4a8cc30606f3'
       },
       filter: 'app/by_user',
-      query_params: { userId: config._id }
+      query_params: { userId: config._id, location: 'Madrid' }
     }
 
     db.replicate
-      .from(remote)
+      .from(remote, {
+        filter: 'app/by_user',
+        query_params: { userId: config._id, location: 'Madrid' }
+      })
       .on('complete', info => {
         console.log('Replicate completado: ' + JSON.stringify(info))
         db.sync(remote, options)
@@ -63,6 +66,32 @@ export function createDb(config) {
   } else {
     console.log('NO existe db')
   }
+}
+
+/**
+ * Replicate remote dataBase
+ * @param remote { String } - remote database URL
+ * @param options { Object }
+ */
+export function replicateRemoteDb(remote, db, options) {
+  db.replicate.from(remote, options)..on('change', info => {
+    console.log('La reply ha cambiado: ' + JSON.stringify(info))
+  })
+  .on('complete', info => {
+    console.log('La reply se ha completado: ' + JSON.stringify(info))
+  })
+  .on('paused', err => {
+    console.log('La reply está pausada: ' + JSON.stringify(err))
+  })
+  .on('active', () => {
+    console.log('La reply está trabajando')
+  })
+  .on('denied', err => {
+    console.log('Se ha denegado la reply: ' + JSON.stringify(err))
+  })
+  .on('error', err => {
+    console.log('Hay un error en la reply: ' + JSON.stringify(err))
+  })
 }
 
 /**
