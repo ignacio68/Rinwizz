@@ -1,12 +1,8 @@
-'use strict'
-
-import { cloudantConfig, authUser } from '@setup/cloudant'
-
 export class DbConfig {
-  constructor(nameDb) {
+  constructor(nameDb, path, auth) {
     this.nameDb = nameDb
-    this.apikey = authUser.key
-    this.apiPassword = authUser.password
-    this.remote = cloudantConfig.url + '/' + this.nameDb
+    this.apiKey = auth.key
+    this.apiPassword = auth.password
+    this.remote = path.url + '/' + this.nameDb
   }
 }

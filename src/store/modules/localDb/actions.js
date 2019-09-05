@@ -1,4 +1,4 @@
-import { cloudantConfig, authUser } from '@setup/cloudant'
+import { cloudantConfig, authUsers } from '@setup/cloudant'
 import { userObject } from '@utils/database/samples'
 
 import {
@@ -24,9 +24,9 @@ export default {
     const config = {}
 
     config.nameDb = 'users'
-    config.apiKey = authUser.key
-    config.apiPassword = authUser.password
-    config.remote = cloudantConfig.url + '/' + config.nameDb
+    // config.apiKey = authUsers.key
+    // config.apiPassword = authUsers.password
+    // config.remote = cloudantConfig.url + '/' + config.nameDb
     config._id = newUser.id
 
     // Creamos la base de datos local de los usuarios

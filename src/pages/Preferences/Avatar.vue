@@ -45,7 +45,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import { capturePhoto, getPhoto } from '@services/camera'
+import { capturePhoto, getPhoto } from '@services/camera/index'
 import gender from './Gender'
 export default {
   name: 'avatar',
