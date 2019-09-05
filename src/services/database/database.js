@@ -7,7 +7,7 @@ import PouchDB from 'pouchdb-browser'
  * Create database
  * @param config { Object } - parametros necesarios para crear la base de datos
  *
- * TODO: hacer primero local y luego sincronizar con la del servidor
+ * TODO: separar la réplica y la sincronización
  */
 export function createDb(config) {
   console.log('Estoy en createDb')
@@ -15,9 +15,12 @@ export function createDb(config) {
   if (db) {
     console.log('SI existe db')
     console.log(JSON.stringify(config))
+    console.log(JSON.stringify(db))
+    const userId = config._id
     const userName = config.apiKey
     const password = config.apiPassword
     const remote = config.remote
+    console.log('Remote es: ' + remote)
 
     const options = {
       live: true,
@@ -27,14 +30,18 @@ export function createDb(config) {
         username: userName,
         password: password
       },
-      filter: 'app/by_user',
-      query_params: { userId: config._id, location: 'Madrid' }
+      doc_ids: [userId],
+      filter: '_view',
+      view: 'myview/userName'
+      // filter: 'app/by_user',
+      // query_params: { userId: config._id, location: 'Madrid' }
     }
 
     db.replicate
       .from(remote, {
-        filter: 'app/by_user',
-        query_params: { userId: config._id, location: 'Madrid' }
+        // filter: 'app/by_user',
+        // query_params: { userId: config._id, location: 'Madrid' }
+        doc_ids: [userId]
       })
       .on('complete', info => {
         console.log('Replicate completado: ' + JSON.stringify(info))

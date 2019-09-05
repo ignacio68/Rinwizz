@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { DbConfig } from '@services/database/config'
+// import { DbConfig } from '@services/database'
 import { mapGetters, mapMutations } from 'vuex'
 import Settings from './Settings'
 import HomePage from './HomePage'
@@ -40,10 +40,11 @@ export default {
   beforeMount() {
     // Load the users database
     console.log('AppSplitter.beforeMount()')
-    const usersDbConfig = new DbConfig('users')
-    usersDbConfig._id = this._id
-    console.log('La configuración es: ' + JSON.stringify(usersDbConfig))
-    this.SET_LOCAL_DB(usersDbConfig)
+
+    // Establecemos el nombre del documento de la base de datos 'users'
+    const docId = this._id
+    console.log('El nombre del documento es: ' + JSON.stringify(docId))
+    this.SET_LOCAL_DB(docId)
 
     // Load the alerts database
     // const alertsDbConfig = new DbConfig('alerts')
