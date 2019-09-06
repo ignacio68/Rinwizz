@@ -44,7 +44,9 @@ export const userObject = {
     entertainments: [],
     foods: [],
     sports: []
-  } // preferencias de usuario
+  }, // preferencias de usuario
+  following: [], // _id de los usuarios que se siguen
+  followers: [] // _id de los usuarios que le siguen
 }
 
 // TODO: eliminar
