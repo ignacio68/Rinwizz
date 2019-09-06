@@ -24,5 +24,7 @@
     "lat": "",
     "lng": "",
     "address": {}
-  }
+  },
+  "following": [],
+  "followers": []
 }
