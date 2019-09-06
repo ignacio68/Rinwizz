@@ -154,7 +154,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions('user', ['LOGOUT_USER', 'DELETE_USER', 'TO_JSON']),
+    ...mapActions('user', ['LOGOUT_USER', 'DELETE_USER', 'TO_JSON']), //solo en producción luego borrar
     ...mapMutations('alerts', [' SET_NUM_ALERTS']),
 
     toPhone(phone) {

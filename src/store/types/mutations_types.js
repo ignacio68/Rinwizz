@@ -8,6 +8,8 @@ export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
 
 // local databases
 export const SET_LOCAL_DB = 'SET_LOCAL_DB'
+// TODO: repasar todo
+export const SET_FOLLOWINGS = 'SET_FOLLOWINGS'
 
 // location
 export const SET_WATCH_ID = 'SET_WATCH_ID'

@@ -11,6 +11,8 @@ export const USER_ADDRESS = 'USER_ADDRESS'
 
 // local databases
 export const USERS_LOCAL_DB = 'USERS_LOCAL_DB'
+// TODO: repasar todo
+export const GET_USER_FOLLOWINGS = 'GET_USER_FOLLOWINGS'
 
 // navigator
 export const PAGE_STACK = 'PAGE_STACK'
