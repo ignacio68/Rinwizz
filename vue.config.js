@@ -28,8 +28,8 @@ module.exports = {
     config.resolve.alias
       .set('@', resolve('.'))
       .set('@src', resolve('src'))
-      .set('@assets', resolve('src/assets'))
       .set('@api', resolve('src/api'))
+      .set('@assets', resolve('src/assets'))
       .set('@components', resolve('src/components'))
       .set('@locales', resolve('src/locales'))
       .set('@pages', resolve('src/pages'))
