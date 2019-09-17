@@ -42,29 +42,3 @@ export const userObject = {
   following: [], // _id de los usuarios que se siguen
   followers: [] // _id de los usuarios que le siguen
 }
-
-export const alertObject = {
-  _id: '', // usuario._id + creationDate
-  type: 'alert',
-  title: '', // título de la alerta
-  text: '', // texto completo
-  user: {
-    id: '' // Se utiliza solamente la referencia al el _id del emisor
-    // name: '',
-    // screenName: '',
-    // avatar: '',
-    // location: '',
-    // url: '',
-    // description: ''
-  }, // datos del emisor
-  creationDate: '', // fecha de la creación de la alerta
-  endDate: 0, // caducidad d ela alerta
-  alertLink: '', // link de la alerta
-  alertPhone: '', // teléfono de la alerta
-  alertLocation: {
-    lat: '',
-    lng: '',
-    address: {}
-  }, // localización de la alerta
-  entities: {} // hastags, fotos, etc.
-}
