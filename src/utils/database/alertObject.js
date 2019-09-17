@@ -15,13 +15,15 @@ export const alertObject = {
   // },
   creationDate: 0, // fecha de la creación de la alerta
   endDate: 0, // caducidad de la alerta
-  alertLink: '', // link de la alerta
-  alertPhone: '', // teléfono de la alerta
-  alertLocation: {
+  link: '', // link de la alerta
+  phone: '', // teléfono de la alerta
+  location: {
+    // proporcionado por geolocation
     id: '', // id de la localización
-    lat: '',
-    lng: '',
+    lat: '', // latitud
+    lng: '', // longitud
     address: {
+      // dirección completa
       houseNumber: '',
       road: '',
       suburb: '',
@@ -37,5 +39,7 @@ export const alertObject = {
       type: ''
     }
   }, // localización de la alerta
-  entities: {} // hastags, fotos, etc.
+  entities: {}, // hastags, fotos, etc.
+  extendedEntities: {}, // videos, fotos,...
+  favoriteCount: 0 // numero de veces que la alerta ha sido clicada como favorita
 }
