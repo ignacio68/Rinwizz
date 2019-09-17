@@ -62,13 +62,13 @@ export const alertObject = {
   title: '', // título de la alerta
   text: '', // texto completo
   user: {
-    id: '',
-    name: '',
-    screenName: '',
-    avatar: '',
-    location: '',
-    url: '',
-    description: ''
+    id: '' // Se utiliza solamente la referencia al el _id del emisor
+    // name: '',
+    // screenName: '',
+    // avatar: '',
+    // location: '',
+    // url: '',
+    // description: ''
   }, // datos del emisor
   creationDate: '', // fecha de la creación de la alerta
   endDate: 0, // caducidad d ela alerta
