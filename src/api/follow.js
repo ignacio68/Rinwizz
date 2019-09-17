@@ -2,18 +2,18 @@
  * Get followings
  * @param usersId { Array } - array con los ids de los followings
  **/
-export function followingsGet(usersId) {}
+export async function followingsGet(usersId) {}
 
 /**
  * Get followers
  * @param usersId { Array } - array con los ids de los followers
  **/
-export function followersGet(usersId) {}
+export async function followersGet(usersId) {}
 
-export function usersSearch() {}
+export async function usersSearch() {}
 
-export function usersShow(usersId, usersName) {}
+export async function usersShow(usersId, usersName) {}
 
-export function followingCreate(userId, userName) {}
+export async function followingCreate(userId, userName) {}
 
-export function followingDestroy(userId, userName) {}
+export async function followingDestroy(userId, userName) {}

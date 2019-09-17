@@ -1,7 +1,9 @@
-export function alertCreate(text, media, link, phone) {}
+import alertObject from '@utils/database'
 
-export function alertDestroy(alertId) {}
+export async function alertCreate(text, media, link, phone) {}
 
-export function alertsSearch(usersId) {}
+export async function alertDestroy(alertId) {}
 
-export function alertsShow(alertsId) {}
+export async function alertsSearch(usersId) {}
+
+export async function alertsShow(alertsId) {}

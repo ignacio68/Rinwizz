@@ -1,3 +1,5 @@
-export function userCreate(userId) {}
+import userObjects from '@utils/alertObject'
 
-export function userDelete(userId) {}
+export async function userCreate(userId) {}
+
+export async function userDelete(userId) {}

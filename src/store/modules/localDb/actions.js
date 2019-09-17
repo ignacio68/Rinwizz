@@ -1,5 +1,5 @@
 import { cloudantConfig, authUsers } from '@setup/cloudant'
-import { userObject } from '@utils/database/samples'
+import { userObject } from '@utils/database'
 
 import {
   CREATE_USER_LOCAL_DB,
