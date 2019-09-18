@@ -11,66 +11,71 @@ import PouchDB from 'pouchdb-browser'
  */
 export function createDb(config) {
   console.log('Estoy en createDb')
-  const db = new PouchDB(config.nameDb, { auto_compaction: true })
-  if (db) {
-    console.log('SI existe db')
-    console.log(JSON.stringify(config))
-    console.log(JSON.stringify(db))
-    const userId = config._id
-    const userName = config.apiKey
-    const password = config.apiPassword
-    const remote = config.remote
-    console.log('Remote es: ' + remote)
+  try {
+    const db = new PouchDB(config.nameDb, { auto_compaction: true })
+    if (db) {
+      console.log('SI existe db')
+      console.log(JSON.stringify(config))
+      console.log(JSON.stringify(db))
+      const userId = config._id
+      const userName = config.apiKey
+      const password = config.apiPassword
+      const remote = config.remote
+      console.log('El ID del usuario es: ' + userId)
+      console.log('Remote es: ' + remote)
 
-    const options = {
-      live: true,
-      retry: true,
-      continuous: true,
-      auth: {
-        username: userName,
-        password: password
-      },
-      doc_ids: [userId],
-      filter: '_view',
-      view: 'myview/userName'
-      // filter: 'app/by_user',
-      // query_params: { userId: config._id, location: 'Madrid' }
-    }
-
-    db.replicate
-      .from(remote, {
+      const options = {
+        live: true,
+        retry: true,
+        continuous: true,
+        auth: {
+          username: userName,
+          password: password
+        },
+        doc_ids: [userId],
+        filter: '_view',
+        view: 'myview/userName'
         // filter: 'app/by_user',
         // query_params: { userId: config._id, location: 'Madrid' }
-        doc_ids: [userId]
-      })
-      .on('complete', info => {
-        console.log('Replicate completado: ' + JSON.stringify(info))
-        db.sync(remote, options)
-          .on('change', info => {
-            console.log('La sync ha cambiado: ' + JSON.stringify(info))
-          })
-          .on('complete', info => {
-            console.log('La sync se ha completado: ' + JSON.stringify(info))
-          })
-          .on('paused', err => {
-            console.log('La sync está pausada: ' + JSON.stringify(err))
-          })
-          .on('active', () => {
-            console.log('La sync está trabajando')
-          })
-          .on('denied', err => {
-            console.log('Se ha denegado la sync: ' + JSON.stringify(err))
-          })
-          .on('error', err => {
-            console.log('Hay un error en la sync: ' + JSON.stringify(err))
-          })
-      })
-      .on('error', function(err) {
-        console.log('Ha habido un error en replicate: ' + err)
-      })
-    return db
-  } else {
-    console.log('NO existe db')
+      }
+
+      db.replicate
+        .from(remote, {
+          // filter: 'app/by_user',
+          // query_params: { userId: config._id, location: 'Madrid' }
+          doc_ids: [userId]
+        })
+        .on('complete', info => {
+          console.log('Replicate completado: ' + JSON.stringify(info))
+          db.sync(remote, options)
+            .on('change', info => {
+              console.log('La sync ha cambiado: ' + JSON.stringify(info))
+            })
+            .on('complete', info => {
+              console.log('La sync se ha completado: ' + JSON.stringify(info))
+            })
+            .on('paused', err => {
+              console.log('La sync está pausada: ' + JSON.stringify(err))
+            })
+            .on('active', () => {
+              console.log('La sync está trabajando')
+            })
+            .on('denied', err => {
+              console.log('Se ha denegado la sync: ' + JSON.stringify(err))
+            })
+            .on('error', err => {
+              console.log('Hay un error en la sync: ' + JSON.stringify(err))
+            })
+        })
+        .on('error', function(err) {
+          console.log('Ha habido un error en replicate: ' + err)
+        })
+      return db
+    } else {
+      console.log('NO existe db')
+    }
+  } catch (error) {
+    console.log('createDb: Ha habido un error: ' + error)
   }
 }
 

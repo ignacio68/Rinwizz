@@ -1,5 +1,6 @@
+// TODO: eliminar, se utiliza la base de datos de PuchDB
+
 import { firebaseDb } from '@services/firebase'
-// import userSample from '@utils/database/samples'
 import {
   CREATE_USER_DB,
   USER_NAME_DB,

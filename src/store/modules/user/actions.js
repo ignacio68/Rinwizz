@@ -74,17 +74,19 @@ export default {
           creationDate: user.metadata.creationTime,
           lastSignInDate: user.metadata.lastSignInTime
         }
+        // TODO: eliminar, no utilizamos firebase como base de datos
         // Actualizamos el perfil de firebase con el displayName
-        await dispatch('SET_USER_PROFILE', { displayName: newUser.name })
+        // dispatch('SET_USER_PROFILE', { displayName: newUser.name })
 
+        // TODO: eliminar, el usuario se carga desde la base de datos local
         // Llamamos a 'setUser' para crear el nuevo usuario localmente
-        await commit('SET_USER', newUser)
+        // await commit('SET_USER', newUser)
 
         // Añadimos los datos a la base de datos local (PouchDB)
         await dispatch('localDb/CREATE_USER_LOCAL_DB', newUser, { root: true })
 
+        // TODO: eliminar, utilizamos Cloudant
         // Añadimos los datos a la base de datos (Realtime Database)
-        // TODO: por el momento lo desactivamos
         // await dispatch('userDb/CREATE_USER_DB', newUser, { root: true })
 
         console.log('Hay un nuevo usuario: ' + state.user.name)
@@ -105,14 +107,15 @@ export default {
   },
 
   /**
+   * TODO: eliminar, utilizamos Cloudant
    *  Actualiza el perfil de usuario de Firebase
    * @param {object} user - datos del usuario a actualizar
    */
 
-  [SET_USER_PROFILE]: ({ commit, dispatch }, user) => {
+  async [SET_USER_PROFILE]({ commit, dispatch }, user) {
     commit('shared/CLEAR_ERROR', null, { root: true })
     console.log('Estoy en SET_USER_PROFILE')
-    const userActive = firebaseAuth().currentUser
+    const userActive = await firebaseAuth().currentUser
     userActive
       .updateProfile(user)
       .then(() => {
@@ -355,27 +358,27 @@ export default {
   /**
    * Autoautenticación, el usuario ya está registrado
    *
-   * @param {*} commit
    * @param {String} user - id y email del usuario
    */
   // TODO: Revisar la utilización del user y newUser.
-  [AUTO_SIGN_IN]: ({ commit }, user) => {
+  async [AUTO_SIGN_IN]({ commit, dispatch }, user) {
     console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // const currentUser = firebaseAuth().currentUser
     const newUser = {
       id: user.uid,
-      email: user.email,
-      name: user.displayName,
-      phone: user.phone,
-      avatar: user.avatar,
+      // email: user.email,
+      // name: user.displayName,
+      // phone: user.phone,
+      // avatar: user.avatar,
       isVerified: user.emailVerified,
-      isAnonymous: user.isAnonymous,
-      creationDate: user.metadata.creationTime,
-      lastSignInDate: user.metadata.lastSignInTime,
-      providerId: user.providerId
+      // isAnonymous: user.isAnonymous,
+      // creationDate: user.metadata.creationTime,
+      lastSignInDate: user.metadata.lastSignInTime
+      // providerId: user.providerId
     }
-    commit('SET_USER', newUser)
+    await dispatch('localDb/CREATE_USER_LOCAL_DB', newUser, { root: true })
+    // commit('SET_USER', newUser)
   },
 
   /**

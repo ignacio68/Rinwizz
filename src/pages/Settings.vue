@@ -32,14 +32,14 @@ export default {
     return {
       followings: {}
     }
-  },
+  }
 }
 </script>
 
 <style scoped>
 .following_name {
   font-size: 18px;
-  color: black
+  color: black;
 },
 .following_email {
   font-size: 14px;

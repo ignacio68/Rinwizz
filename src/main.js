@@ -184,6 +184,7 @@ firebaseAuth().onAuthStateChanged(user => {
           // alertsList.info().then(info => {
           //   console.log(info)
           // })
+
           // Load autoSignIn
           this.$store.dispatch('user/AUTO_SIGN_IN', user)
 
