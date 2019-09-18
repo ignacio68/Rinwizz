@@ -4,4 +4,3 @@ export default {
   [USER]: state => state.user,
   [USER_ID]: state => state.user.id
 }
-git add.
