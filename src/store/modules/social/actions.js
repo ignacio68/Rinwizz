@@ -100,6 +100,7 @@ export default {
         commit('user/SET_USER', newUser, { root: true })
 
         // Añadimos los datos a la base de datos (Realtime Database)
+        // TODO: cambiar a Cloudant
         dispatch('userDb/CREATE_USER_DB', newUser, { root: true })
 
         console.log('El id del usuario es: ' + newUser.id)
@@ -117,7 +118,8 @@ export default {
             .fetchSignInMethodsForEmail(email)
             .then(methods => {
               if (methods[0] === 'password') {
-                const password = promptUserforPassword() // TODO: implementar promptUserforPassword
+                // TODO: implementar promptUserforPassword
+                const password = this.promptUserforPassword()
                 firebaseAuth()
                   .signInWithEmailAndPassword(email, password)
                   .then(user => {
@@ -129,7 +131,7 @@ export default {
               // All the other cases are external providers.
               // Construct provider object for that provider.
               // TODO: implement getProviderForProviderId.
-              const provider = getProviderForProviderId(methods[0])
+              const provider = this.getProviderForProviderId(methods[0])
               // At this point, you should let the user know that he already has an account
               // but with a different provider, and let him validate the fact he wants to
               // sign in with this provider.
@@ -160,5 +162,8 @@ export default {
         }
       })
     // })
-  }
+  },
+
+  promptUserforPassword() {},
+  getProviderForProviderId() {}
 }

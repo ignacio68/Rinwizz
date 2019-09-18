@@ -114,6 +114,7 @@ Vue.use(VueOnsen)
 
 /**
  * Load  Vue-Timer
+ * TODO: cargar en el componente
  */
 Vue.use(VueTimers)
 
@@ -167,44 +168,50 @@ firebaseAuth().onAuthStateChanged(user => {
             console.log('No se encuentra el idioma del navegador')
           }
         }
-      },
-      created() {
         if (user) {
-          // Creamos las bases de datos necesarias: usuarios y alertas
-          // this.$store.dispatch('localDb/CREATE_USER_LOCAL_DB', user)
-          // const usersDbName = 'users'
-          // const usersListConfig = new DbConfig(usersDbName)
-          // const usersList = createDb(usersListConfig)
-          // TODO: crear config para alertsList
-          // const alertsList = createDb('alerts')
-          // Comprobamos que existe la lista de usuarios - solo en desarrollo
-          // usersList.info().then(info => {
-          //   console.log(info)
-          // })
-          // alertsList.info().then(info => {
-          //   console.log(info)
-          // })
-
-          // Load autoSignIn
           this.$store.dispatch('user/AUTO_SIGN_IN', user)
-
-          /**
-           * Recuperamos los datos del usuario
-           */
-          // this.$store.dispatch('user/fetchUserData')
           console.log('El usuario es: ' + user.displayName)
           console.log('La foto es: ' + user.photoURL)
           console.log(JSON.stringify(user))
-          /**
-           * Cargamos las alertas
-           * 1ª Fase: cargamos todas las que hay en la base de datos
-           * 2ª Fase: sólo las que están activas
-           * 3ª Fase: las subscritas por el usuario
-           */
-          // this.$store.dispatch('alerts/LOAD_ALERTS')
         } else {
           console.log('No existe user')
         }
+      },
+      created() {
+        // *if (user) {
+        // Creamos las bases de datos necesarias: usuarios y alertas
+        // this.$store.dispatch('localDb/CREATE_USER_LOCAL_DB', user)
+        // const usersDbName = 'users'
+        // const usersListConfig = new DbConfig(usersDbName)
+        // const usersList = createDb(usersListConfig)
+        // TODO: crear config para alertsList
+        // const alertsList = createDb('alerts')
+        // Comprobamos que existe la lista de usuarios - solo en desarrollo
+        // usersList.info().then(info => {
+        //   console.log(info)
+        // })
+        // alertsList.info().then(info => {
+        //   console.log(info)
+        // })
+        // Load autoSignIn
+        // *this.$store.dispatch('user/AUTO_SIGN_IN', user)
+        /**
+         * Recuperamos los datos del usuario
+         */
+        // this.$store.dispatch('user/fetchUserData')
+        // console.log('El usuario es: ' + user.displayName)
+        // console.log('La foto es: ' + user.photoURL)
+        // console.log(JSON.stringify(user))
+        /**
+         * Cargamos las alertas
+         * 1ª Fase: cargamos todas las que hay en la base de datos
+         * 2ª Fase: sólo las que están activas
+         * 3ª Fase: las subscritas por el usuario
+         */
+        // this.$store.dispatch('alerts/LOAD_ALERTS')
+        // } else {
+        //   console.log('No existe user')
+        // }
       }
     })
   }

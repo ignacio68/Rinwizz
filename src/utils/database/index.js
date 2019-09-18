@@ -1,3 +1,3 @@
 export * from './userObject'
-export * from './alertObject'
+export { alertObject } from './alertObject'
 export * from './config'

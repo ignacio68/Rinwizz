@@ -15,16 +15,13 @@
               v-model="selectedGender"
             ></v-ons-radio>
           </label>
-          <label
-            :for="'radio-' + $index"
-            class="center"
-          >{{ gender }}</label>
+          <label :for="'radio-' + $index" class="center">{{ gender }}</label>
         </v-ons-list-item>
         <v-ons-list-item>
           <div class="center">mi género es: {{ selectedGender }}!</div>
         </v-ons-list-item>
       </v-ons-list>
-      <br>
+      <br />
       <div class="userLocationButton">
         <v-ons-button
           class="userLocationButton__button"
@@ -33,7 +30,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="updateGender"
-        >{{ $t('lang.pages.gender.button') }}</v-ons-button>
+          >{{ $t('lang.pages.gender.button') }}</v-ons-button
+        >
       </div>
     </div>
   </v-ons-page>

@@ -27,7 +27,8 @@
               :disabled="false"
               ripple="true"
               @click.prevent="updateUserLocation"
-            >{{ $t('lang.pages.userLocation.button') }}</v-ons-button>
+              >{{ $t('lang.pages.userLocation.button') }}</v-ons-button
+            >
           </div>
           <div class="showMarkersButton">
             <v-ons-button
@@ -37,7 +38,8 @@
               :disabled="false"
               ripple="true"
               @click.prevent="changeShowMarkers"
-            >marcadores</v-ons-button>
+              >marcadores</v-ons-button
+            >
             {{ showMarkers }}
           </div>
         </v-row>

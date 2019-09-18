@@ -5,8 +5,7 @@
       swipeable
       :tabs="tabs"
       :index.sync="index"
-    >
-    </v-ons-tabbar>
+    ></v-ons-tabbar>
   </v-ons-page>
 </template>
 

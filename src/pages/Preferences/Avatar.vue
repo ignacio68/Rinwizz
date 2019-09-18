@@ -3,13 +3,7 @@
     <div class="content">
       <h5>{{ $t('lang.pages.avatar.main') }}</h5>
       <!-- TODO: mostrar icono cuando no haya imágen elegida -->
-      <img
-        v-if="imageUrl !== ''"
-        :src="imageUrl"
-        style="display:none"
-        id="avatar"
-        height="150px"
-      />
+      <img v-if="imageUrl !== ''" :src="imageUrl" style="display:none" id="avatar" height="150px" />
       <!-- TODO: cambiar según plataforma -->
       <v-ons-button
         class="avatarButton"
@@ -87,6 +81,8 @@ export default {
         this.image = capturePhoto()
       } else {
         console.log('No hay camara')
+        // TODO: revisar!!
+        this.image = getPhoto()
       }
       console.log('La imagen es: ' + this.image)
       const userData = {

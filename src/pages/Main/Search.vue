@@ -1,10 +1,17 @@
 <template>
   <v-ons-page id="search">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.search.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar
+      class="customToolbar"
+      :pageTitle="$t('lang.pages.search.toolbar')"
+    ></the-custom-toolbar>
     <div class="content">
       <v-ons-col class="col">
         <div class="map">
-          <location-map :location="userLocation" :initialZoom="17" :showMarkers="showMarkers" />
+          <location-map
+            :location="userLocation"
+            :initialZoom="17"
+            :showMarkers="showMarkers"
+          />
         </div>
         <div class="address">
           <p>
@@ -21,7 +28,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="changeShowMarkers"
-        >marcadores</v-ons-button>
+          >marcadores</v-ons-button
+        >
       </v-ons-col>
     </div>
   </v-ons-page>

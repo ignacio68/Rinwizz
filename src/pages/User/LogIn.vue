@@ -8,10 +8,7 @@
     <div class="container">
       <!-------------------- LOG IN FORM ------------------------------------------------>
 
-      <form
-        class="form"
-        autocomplete="off"
-      >
+      <form class="form" autocomplete="off">
         <v-ons-list class="form-list">
           <!-- EMAIL INPUT -->
 
@@ -83,19 +80,15 @@
           <!-- ERROR -->
 
           <v-ons-list-item>
-            <p
-              v-if="isError"
-              class="error"
-            >{{ errorMessage }}</p>
+            <p v-if="isError" class="error">{{ errorMessage }}</p>
           </v-ons-list-item>
 
           <!-- FORGOT PASSWORD -->
 
           <v-ons-list-item class="text__button">
-            <p
-              class="forgotPassword"
-              @click.prevent="onForgotPassword"
-            >{{ $t('lang.pages.login.main.text1') }}</p>
+            <p class="forgotPassword" @click.prevent="onForgotPassword">
+              {{ $t('lang.pages.login.main.text1') }}
+            </p>
           </v-ons-list-item>
         </v-ons-list>
       </form>
@@ -110,12 +103,15 @@
         :disabled="buttonActive"
         ripple="true"
         @click.prevent="onLognIn"
-      >{{ $t('lang.pages.login.button') }}</v-ons-button>
+        >{{ $t('lang.pages.login.button') }}</v-ons-button
+      >
 
       <!------ LOGIN WITH SOCIAL BUTTONS ------>
 
       <div class="socialText">
-        <p class="socialButtons__text">{{ $t('lang.pages.login.main.socialText') }}</p>
+        <p class="socialButtons__text">
+          {{ $t('lang.pages.login.main.socialText') }}
+        </p>
         <v-ons-row class="socialButtons__list">
           <circle-button
             v-for="(socialButton, $index) in socialButtons"
@@ -132,10 +128,9 @@
 
       <!-- SIGNUP BUTTON -->
       <div>
-        <p
-          class="text__button"
-          @click.prevent="toSignUp"
-        >{{ $t('lang.pages.login.main.text2') }}</p>
+        <p class="text__button" @click.prevent="toSignUp">
+          {{ $t('lang.pages.login.main.text2') }}
+        </p>
       </div>
     </div>
   </v-ons-page>

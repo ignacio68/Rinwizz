@@ -1,7 +1,9 @@
 <template>
   <v-ons-page id="greetings">
     <div class="content">
-      <h1 style="text-align:center">{{ $t('lang.pages.greetings.greetings') }}</h1>
+      <h1 style="text-align:center">
+        {{ $t('lang.pages.greetings.greetings') }}
+      </h1>
       <br />
       <h3>{{ $t('lang.pages.greetings.main') }}</h3>
       <br />
@@ -13,7 +15,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toHomePage"
-        >{{ $t('lang.pages.greetings.button') }}</v-ons-button>
+          >{{ $t('lang.pages.greetings.button') }}</v-ons-button
+        >
       </div>
     </div>
   </v-ons-page>
@@ -39,5 +42,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -1,6 +1,9 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar
+      class="customToolbar"
+      :pageTitle="$t('lang.pages.alerts.toolbar')"
+    ></the-custom-toolbar>
 
     <div class="content">
       <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
@@ -40,7 +43,7 @@
 
       <!-- Editor de alertas -- Se puede cambiar a una página independiente -->
       <v-ons-modal
-        :options="{animation:'lift'}"
+        :options="{ animation: 'lift' }"
         :visible.sync="isModalVisible"
         class="alertModal"
         name="alertModal"
@@ -64,7 +67,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="logOutUser"
-        >Logout User</v-ons-button>
+          >Logout User</v-ons-button
+        >
 
         <v-ons-button
           class="deleteButton__button"
@@ -72,7 +76,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="deleteUser"
-        >Delete User</v-ons-button>
+          >Delete User</v-ons-button
+        >
 
         <v-ons-button
           class="toJSON__button"
@@ -80,11 +85,19 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toJSON"
-        >User JSON</v-ons-button>
+          >User JSON</v-ons-button
+        >
       </div>
     </div>
-    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
-      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
+    <v-ons-fab
+      position="bottom right"
+      ripple="true"
+      @click.prevent="isModalVisible = true"
+    >
+      <v-ons-icon
+        class="alertScript__icon"
+        icon="ion-edit, material:zmdi-email-open"
+      ></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -154,7 +167,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions('user', ['LOGOUT_USER', 'DELETE_USER', 'TO_JSON']), //solo en producción luego borrar
+    ...mapActions('user', ['LOGOUT_USER', 'DELETE_USER', 'TO_JSON']), // solo en producción luego borrar
     ...mapMutations('alerts', [' SET_NUM_ALERTS']),
 
     toPhone(phone) {
@@ -180,9 +193,6 @@ export default {
       console.log('La fecha de referencia es:' + this.referenceDate)
     },
     toHomePage() {
-      const options = {
-        animation: 'slide'
-      }
       let myModal = document.querySelector('.alertModal')
       myModal.addEventListener('prehide', event => {
         console.log('Se cierra el modal')

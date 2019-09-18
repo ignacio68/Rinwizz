@@ -1,6 +1,12 @@
 <template>
-  <v-map ref="map" class="map__map" :zoom="initialZoom" :center="location" :inertia="true">
-    <v-tile-layer :url="maps.url" :atribution="maps.atribution"/>
+  <v-map
+    ref="map"
+    class="map__map"
+    :zoom="initialZoom"
+    :center="location"
+    :inertia="true"
+  >
+    <v-tile-layer :url="maps.url" :atribution="maps.atribution" />
     <v-marker
       ref="marker"
       class="map__marker"
@@ -11,7 +17,7 @@
       @drag="onDrag"
       @dragend="onDragEnd"
     >
-      <v-popup :content="mapMarker.tooltip"/>
+      <v-popup :content="mapMarker.tooltip" />
     </v-marker>
     <v-circle-marker
       :lat-lng="markerLocation"
@@ -31,7 +37,7 @@
       />
       <!------------------------------>
     </v-feature-group>
-    <v-locatecontrol :options="localeControlOptions"/>
+    <v-locatecontrol :options="localeControlOptions" />
   </v-map>
 </template>
 <script>
@@ -72,7 +78,7 @@ export default {
   props: {
     location: {
       type: Object,
-      default: {}
+      default: null
     },
     initialZoom: {
       type: Number,

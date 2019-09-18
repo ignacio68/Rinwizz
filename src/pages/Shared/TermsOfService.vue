@@ -12,7 +12,8 @@
         :disabled="false"
         ripple="true"
         @click.prevent="onReturn"
-      >{{ $t('lang.components.button.OK') }}</v-ons-button>
+        >{{ $t('lang.components.button.OK') }}</v-ons-button
+      >
     </div>
   </v-ons-page>
 </template>

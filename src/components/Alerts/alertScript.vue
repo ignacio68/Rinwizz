@@ -2,19 +2,13 @@
   <v-ons-card class="alertCard">
     <div class="content">
       <v-ons-row class="row">
-        <img
-          class="alertCard__userAvatar"
-          :src="userAvatar"
-          :alt="altAvatar"
-        />
-        <h3 class="alertCard_userName">
-          {{ userName }}
-        </h3>
+        <img class="alertCard__userAvatar" :src="userAvatar" :alt="altAvatar" />
+        <h3 class="alertCard_userName">{{ userName }}</h3>
         <v-ons-icon
           v-if="isVerified"
           class="alertCard_verifiedIcon"
           size="16px"
-          icon='ion-checkmark-circle, material:zmdi-check-circle-u'
+          icon="ion-checkmark-circle, material:zmdi-check-circle-u"
         />
       </v-ons-row>
 
@@ -29,7 +23,7 @@
               id="alertTitle"
               :placeholder="$t('lang.components.alertScript.title')"
               v-model="alertTitle"
-            >
+            />
           </v-ons-list-item>
           <v-ons-list-item class="alertList__item">
             <!--label for="alertName" class="alertList__item-label">{{ $t('lang.components.alertScript.text') }}</label-->
@@ -46,13 +40,8 @@
             ></textarea>
           </v-ons-list-item>
           <v-ons-list-item class="alertList__item">
-            <label
-              for="endDate"
-              class="alertList__item-label"
-            >
-              {{
-              $t('lang.components.alertScript.end')
-              }}
+            <label for="endDate" class="alertList__item-label">
+              {{ $t('lang.components.alertScript.end') }}
             </label>
             <v-ons-select
               class="alertList__item-endDate"
@@ -64,7 +53,8 @@
                 v-for="option in options"
                 :value="option.value"
                 :key="option.id"
-              >{{ option.text }}</option>
+                >{{ option.text }}</option
+              >
             </v-ons-select>
           </v-ons-list-item>
           <v-ons-list-item class="alertList__item">
@@ -76,7 +66,7 @@
               id="alertLink"
               :placeholder="$t('lang.components.alertScript.link')"
               v-model="alertLink"
-            >
+            />
           </v-ons-list-item>
         </v-ons-list>
       </v-ons-col>
@@ -150,12 +140,15 @@ export default {
     },
     /**
      * Resetea los campos de la alerta
+     * TODO: revisar
      */
-    resetAlert() {
-      this.alertTitle = ''
-      this.alertText = ''
-      this.endDate = 0
-      this.alertLink = ''
+    resetAlert(alertData) {
+      alertData.alertTitle = ''
+      alertData.alertText = ''
+      alertData.endDate = 0
+      alertData.alertLink = ''
+
+      return alertData
     }
   },
   methods: {
@@ -187,7 +180,7 @@ export default {
       this.$emit('onCreateAlert')
       // ¡¡¡¡DA ERROR!!!!
       // Reseteamos los campos de la alerta
-      // return this.resetAlert()
+      // return this.resetAlert(alertData)
     }
   }
 }

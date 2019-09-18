@@ -1,4 +1,4 @@
-import alertObject from '@utils/database'
+import { alertObject } from '@utils/database'
 
 export async function alertCreate(text, media, link, phone) {}
 

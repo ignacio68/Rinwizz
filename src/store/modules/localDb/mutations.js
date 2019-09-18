@@ -9,6 +9,6 @@ export default {
   [SET_FOLLOWINGS]: state => {
     // Creamos la base de datos de followings
     console.log('estoy en SET_FOLLOWINGS')
-    const userFollowings = state.usersLocalDb.followings
+    // const userFollowings = state.usersLocalDb.followings
   }
 }

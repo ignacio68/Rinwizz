@@ -361,7 +361,7 @@ export default {
    * @param {String} user - id y email del usuario
    */
   // TODO: Revisar la utilización del user y newUser.
-  async [AUTO_SIGN_IN]({ commit, dispatch }, user) {
+  [AUTO_SIGN_IN]: ({ commit, dispatch }, user) => {
     console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // const currentUser = firebaseAuth().currentUser
@@ -369,7 +369,7 @@ export default {
       id: user.uid,
       // email: user.email,
       // name: user.displayName,
-      // phone: user.phone,
+      phone: user.phone,
       // avatar: user.avatar,
       isVerified: user.emailVerified,
       // isAnonymous: user.isAnonymous,
@@ -377,7 +377,7 @@ export default {
       lastSignInDate: user.metadata.lastSignInTime
       // providerId: user.providerId
     }
-    await dispatch('localDb/CREATE_USER_LOCAL_DB', newUser, { root: true })
+    dispatch('localDb/CREATE_USER_LOCAL_DB', newUser, { root: true })
     // commit('SET_USER', newUser)
   },
 
