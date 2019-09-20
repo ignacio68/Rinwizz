@@ -81,12 +81,12 @@ export default {
         // Actualizamos el perfil de firebase con el displayName
         // dispatch('SET_USER_PROFILE', { displayName: newUser.name })
 
-        // Creamos al nuevo usuario localmente
+        // Creamos al nuevo usuario en memoria
         await commit('SET_USER', newUser)
 
         // Creamos la base de datos local de usuarios
-        const usersDb = createDb('users')
-        await commit('usersLocalDb/SET_LOCAL_DB', usersDb, { root: true })
+        // const usersDb = createDb('users')
+        // await commit('usersLocalDb/SET_LOCAL_DB', usersDb, { root: true })
 
         // creamos la base de datos local de usuario (PouchDB)
         await dispatch('usersLocalDb/CREATE_USER_LOCAL_DB', newUser, {

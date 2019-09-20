@@ -43,6 +43,12 @@ import i18n from '@setup/i18n'
 // import VuexGeolocation from 'vuex-geolocation'
 
 /**
+ *  Import database services
+ */
+
+import { createDb } from '@services/database'
+
+/**
  * Import Timer
  * TODO: Revisar si importar directamente en el componente
  */
@@ -167,6 +173,10 @@ firebaseAuth().onAuthStateChanged(user => {
           } else {
             console.log('No se encuentra el idioma del navegador')
           }
+
+          // Creamos la base de datos local de usuarios
+          const usersDb = createDb('users')
+          this.$store.commit('usersLocalDb/SET_LOCAL_DB', usersDb)
         }
         if (user) {
           this.$store.dispatch('user/AUTO_SIGN_IN', user)
