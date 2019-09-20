@@ -286,6 +286,7 @@ export default {
     },
     onClickAlertButton() {
       console.log('Estoy en el botón de la alerta de confirmación de password')
+      // TODO: revisar lo de SET_ACTION_PASS
       this.SET_ACTION_PASS(false)
       this.REPLACE(Personal)
     }

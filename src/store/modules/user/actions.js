@@ -1,4 +1,5 @@
 import { firebaseAuth, firebaseDb } from '@services/firebase'
+import { createDb } from '@services/database'
 
 import {
   SIGNUP_USER,
@@ -35,37 +36,39 @@ export default {
    *
    * @param {*} commit
    * @param {*} dispatch
-   * @param {Object} registerUser - datos a añadir al nuevo usuario
+   * @param {Object} registeredUser - datos a añadir al nuevo usuario
    */
 
   // FIXME: desarrollar correctamente async y el catcher de errores.
-  async [SIGNUP_USER]({ state, commit, dispatch }, registerUser) {
+  async [SIGNUP_USER]({ state, commit, dispatch }, registeredUser) {
     console.log('Estoy en SIGNUP_USER')
+    // TODO: revisar SET ACTION PASS
     commit('shared/SET_ACTION_PASS', false, { root: true })
     commit('shared/CLEAR_ERROR', null, { root: true })
     /**
      * Crea el nuevo usuario en Firebase
      *
-     * @param {String} registerUser.email - email del usuario
-     * @param {String} registerUser.password - password del usuario
+     * @param {String} registeredUser.email - email del usuario
+     * @param {String} registeredUser.password - password del usuario
      */
     try {
       const result = await firebaseAuth().createUserWithEmailAndPassword(
-        registerUser.email,
-        registerUser.password
+        registeredUser.email,
+        registeredUser.password
       )
       const { user } = result
       if (user) {
         console.log('Estoy en createUserWithEmailAndPassword')
         console.log(user)
+        // TODO: Revisar
         commit('shared/SET_ACTION_PASS', true, { root: true })
 
         // Añadimos los datos del nuevo usuario
         const newUser = {
           id: user.uid,
           email: user.email,
-          // password: registerUser.password,
-          name: registerUser.name,
+          // password: registeredUser.password,
+          name: registeredUser.name,
           phone: user.phoneNumber,
           isVerified: user.emailVerified,
           isAnonymous: user.isAnonymous,
@@ -74,16 +77,21 @@ export default {
           creationDate: user.metadata.creationTime,
           lastSignInDate: user.metadata.lastSignInTime
         }
-        // TODO: eliminar, no utilizamos firebase como base de datos
+        // TODO: eliminar, no utilizamos firebase como base de datos, utilizamos Cloudant
         // Actualizamos el perfil de firebase con el displayName
         // dispatch('SET_USER_PROFILE', { displayName: newUser.name })
 
-        // TODO: eliminar, el usuario se carga desde la base de datos local
-        // Llamamos a 'setUser' para crear el nuevo usuario localmente
-        // await commit('SET_USER', newUser)
+        // Creamos al nuevo usuario localmente
+        await commit('SET_USER', newUser)
 
-        // Añadimos los datos a la base de datos local (PouchDB)
-        await dispatch('localDb/CREATE_USER_LOCAL_DB', newUser, { root: true })
+        // Creamos la base de datos local de usuarios
+        const usersDb = createDb('users')
+        await commit('usersLocalDb/SET_LOCAL_DB', usersDb, { root: true })
+
+        // creamos la base de datos local de usuario (PouchDB)
+        await dispatch('usersLocalDb/CREATE_USER_LOCAL_DB', newUser, {
+          root: true
+        })
 
         // TODO: eliminar, utilizamos Cloudant
         // Añadimos los datos a la base de datos (Realtime Database)
@@ -377,7 +385,11 @@ export default {
       lastSignInDate: user.metadata.lastSignInTime
       // providerId: user.providerId
     }
-    dispatch('localDb/CREATE_USER_LOCAL_DB', newUser, { root: true })
+    // TODO: recuperar la base de datos 'users'(get) y actualizar los datos
+    // const usersDb = 'users'
+    // dispatch('localDb/users/CREATE_USER_LOCAL_DB', usersDb, newUser, {
+    //   root: true
+    // })
     // commit('SET_USER', newUser)
   },
 

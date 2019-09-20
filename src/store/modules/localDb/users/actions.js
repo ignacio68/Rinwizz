@@ -1,4 +1,4 @@
-import { createDb } from '@services/database'
+import { createDb, replicateRemoteDb, syncDb } from '@services/database'
 import { cloudantConfig, authUsers } from '@setup/cloudant'
 import { userObject } from '@utils/database'
 
@@ -10,12 +10,14 @@ import {
 } from '@store/types/actions_types'
 
 export default {
+  // TODO: ¡¡REPASAR TODO URGENTEMENTE!!
+
   /**
    * Crea la base de datos local del usuario
    *
    * @param {Object} newUser  Datos del usuario
    */
-  async [CREATE_USER_LOCAL_DB]({ state, commit }, newUser) {
+  [CREATE_USER_LOCAL_DB]: ({ state, getters, commit }, newUser) => {
     console.log('estoy en CREATE_USER_LOCAL_DB')
     console.log('el _id del usuario es: ' + newUser.id)
 
@@ -23,23 +25,44 @@ export default {
       root: true
     })
 
-    // Creamos el objeto "config" para poder crear la base de datos
+    // Establecemos la configuración para la sincronización de la base de datos
     const config = {}
-    config.nameDb = 'users'
-    config.apiKey = authUsers.key
-    config.apiPassword = authUsers.password
+    config.dbName = 'users'
+    // config.apiKey = authUsers.key
+    // config.apiPassword = authUsers.password
     config.remote = cloudantConfig.url + '/' + config.nameDb
-    config._id = newUser.id
+
+    // establecemos las opciones para la réplica y la sincronización de la base de datos
+    const options = {}
+    options.doc_ids = newUser.id
+    const syncOptions = {
+      live: true,
+      retry: true,
+      continuous: true,
+      auth: {
+        username: authUsers.key,
+        password: authUsers.password
+      },
+      doc_ids: [newUser.id]
+      // filter: '_view',
+      // view: 'myview/userName'
+      // filter: 'app/by_user',
+      // query_params: { userId: config._id, location: 'Madrid' }
+    }
 
     try {
       // Creamos la base de datos local de los usuarios
       // TODO: createDb devuelve una promesa
-      const localDb = createDb(config)
+
+      // const localDb = createDb(config)
+      const localDb = getters('USERS_LOCAL_DB')
+      replicateRemoteDb(config, options)
+      syncDb(config, syncOptions)
       console.log('userLocalDb: ' + localDb)
       if (localDb) {
         console.log('Estoy en userLocalDb')
-        await commit('user/SET_USER', localDb, { root: true })
-        state.usersLocalDb = localDb
+        // await commit('user/SET_USER', localDb, { root: true })
+        // state.usersLocalDb = localDb
 
         const user = JSON.parse(JSON.stringify(userObject))
 
@@ -56,7 +79,7 @@ export default {
           user.isAnonymous = newUser.isAnonymous
           user.isVerified = newUser.isVerified
           console.log('el user es: ' + JSON.stringify(user))
-          await localDb
+          localDb
             .put(user)
             .then(data => {
               // Comprobamos que existe la lista de usuarios - solo en desarrollo

@@ -3,79 +3,93 @@
  */
 import PouchDB from 'pouchdb-browser'
 
+// TODO: ¡¡REPASAR TODO URGENTEMENTE!!
+
 /**
  * Create database
  * @param config { Object } - parametros necesarios para crear la base de datos
  *
  * TODO: separar la réplica y la sincronización
  */
-export function createDb(config) {
+// export function createDb(config) {
+//   console.log('Estoy en createDb')
+//   try {
+//     const db = new PouchDB(config.nameDb, { auto_compaction: true })
+//     if (db) {
+//       console.log('SI existe db')
+//       console.log(JSON.stringify(config))
+//       console.log(JSON.stringify(db))
+//       const userId = config._id
+//       const userName = config.apiKey
+//       const password = config.apiPassword
+//       const remote = config.remote
+//       console.log('El ID del usuario es: ' + userId)
+//       console.log('Remote es: ' + remote)
+
+//       const options = {
+//         live: true,
+//         retry: true,
+//         continuous: true,
+//         auth: {
+//           username: userName,
+//           password: password
+//         },
+//         doc_ids: [userId],
+//         filter: '_view',
+//         view: 'myview/userName'
+//         // filter: 'app/by_user',
+//         // query_params: { userId: config._id, location: 'Madrid' }
+//       }
+
+//       db.replicate
+//         .from(remote, {
+//           // filter: 'app/by_user',
+//           // query_params: { userId: config._id, location: 'Madrid' }
+//           doc_ids: [userId]
+//         })
+//         .on('complete', info => {
+//           console.log('Replicate completado: ' + JSON.stringify(info))
+//           db.sync(remote, options)
+//             .on('change', info => {
+//               console.log('La sync ha cambiado: ' + JSON.stringify(info))
+//             })
+//             .on('complete', info => {
+//               console.log('La sync se ha completado: ' + JSON.stringify(info))
+//             })
+//             .on('paused', err => {
+//               console.log('La sync está pausada: ' + JSON.stringify(err))
+//             })
+//             .on('active', () => {
+//               console.log('La sync está trabajando')
+//             })
+//             .on('denied', err => {
+//               console.log('Se ha denegado la sync: ' + JSON.stringify(err))
+//             })
+//             .on('error', err => {
+//               console.log('Hay un error en la sync: ' + JSON.stringify(err))
+//             })
+//         })
+//         .on('error', function(err) {
+//           console.log('Ha habido un error en replicate: ' + err)
+//         })
+//       return db
+//     } else {
+//       console.log('NO existe db')
+//     }
+//   } catch (error) {
+//     console.log('createDb: Ha habido un error: ' + error)
+//   }
+// }
+
+export function createDb(nameDb) {
   console.log('Estoy en createDb')
-  try {
-    const db = new PouchDB(config.nameDb, { auto_compaction: true })
-    if (db) {
-      console.log('SI existe db')
-      console.log(JSON.stringify(config))
-      console.log(JSON.stringify(db))
-      const userId = config._id
-      const userName = config.apiKey
-      const password = config.apiPassword
-      const remote = config.remote
-      console.log('El ID del usuario es: ' + userId)
-      console.log('Remote es: ' + remote)
-
-      const options = {
-        live: true,
-        retry: true,
-        continuous: true,
-        auth: {
-          username: userName,
-          password: password
-        },
-        doc_ids: [userId],
-        filter: '_view',
-        view: 'myview/userName'
-        // filter: 'app/by_user',
-        // query_params: { userId: config._id, location: 'Madrid' }
-      }
-
-      db.replicate
-        .from(remote, {
-          // filter: 'app/by_user',
-          // query_params: { userId: config._id, location: 'Madrid' }
-          doc_ids: [userId]
-        })
-        .on('complete', info => {
-          console.log('Replicate completado: ' + JSON.stringify(info))
-          db.sync(remote, options)
-            .on('change', info => {
-              console.log('La sync ha cambiado: ' + JSON.stringify(info))
-            })
-            .on('complete', info => {
-              console.log('La sync se ha completado: ' + JSON.stringify(info))
-            })
-            .on('paused', err => {
-              console.log('La sync está pausada: ' + JSON.stringify(err))
-            })
-            .on('active', () => {
-              console.log('La sync está trabajando')
-            })
-            .on('denied', err => {
-              console.log('Se ha denegado la sync: ' + JSON.stringify(err))
-            })
-            .on('error', err => {
-              console.log('Hay un error en la sync: ' + JSON.stringify(err))
-            })
-        })
-        .on('error', function(err) {
-          console.log('Ha habido un error en replicate: ' + err)
-        })
-      return db
-    } else {
-      console.log('NO existe db')
-    }
-  } catch (error) {
-    console.log('createDb: Ha habido un error: ' + error)
+  const db = new PouchDB(nameDb, { auto_compaction: true })
+  if (db) {
+    console.log('SI existe db')
+    console.log(JSON.stringify(db))
+    return db
+  } else {
+    console.log('NO existe db')
   }
 }
 
@@ -84,8 +98,12 @@ export function createDb(config) {
  * @param remote { String } - remote database URL
  * @param options { Object }
  */
-export function replicateRemoteDb(remote, db, options) {
-  db.replicate
+export function replicateRemoteDb(config, options) {
+  const dbName = config.dbName
+  const remote = config.remote
+  console.log('Remote es: ' + remote)
+
+  dbName.replicate
     .from(remote, options)
     .on('change', info => {
       console.log('La reply ha cambiado: ' + JSON.stringify(info))
@@ -104,6 +122,39 @@ export function replicateRemoteDb(remote, db, options) {
     })
     .on('error', err => {
       console.log('Hay un error en la reply: ' + JSON.stringify(err))
+    })
+}
+
+/**
+ * Sincronización de la base de datos
+ * @param {*} db
+ */
+export function syncDb(config, options) {
+  const dbName = config.dbName
+  const userId = config._id
+  const remote = config.remote
+  console.log('El ID del usuario es: ' + userId)
+  console.log('Remote es: ' + remote)
+
+  dbName
+    .sync(remote, options)
+    .on('change', info => {
+      console.log('La sync ha cambiado: ' + JSON.stringify(info))
+    })
+    .on('complete', info => {
+      console.log('La sync se ha completado: ' + JSON.stringify(info))
+    })
+    .on('paused', err => {
+      console.log('La sync está pausada: ' + JSON.stringify(err))
+    })
+    .on('active', () => {
+      console.log('La sync está trabajando')
+    })
+    .on('denied', err => {
+      console.log('Se ha denegado la sync: ' + JSON.stringify(err))
+    })
+    .on('error', err => {
+      console.log('Hay un error en la sync: ' + JSON.stringify(err))
     })
 }
 
