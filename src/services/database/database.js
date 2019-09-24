@@ -195,6 +195,7 @@ export function createDoc(db, doc) {
 }
 
 /**
+ * TODO: Repasar
  * Update a document
  * @param db { String } - local database name
  * @param docId { String } - document id
@@ -222,13 +223,17 @@ export function updateDoc(db, docId, data) {
  * @param db { String } - local database name
  * @param docId { String } - document id
  */
-export function fetchDoc(db, docId) {
+export function fetchDoc(db, docId, newDoc) {
   db.get(docId)
     .then(doc => {
       console.log('document fetched')
-      db.info().then(info => {
-        console.log(info)
-      })
+      db.put(newDoc)
+    })
+    .then(() => {
+      db.get(docId)
+    })
+    .then(doc => {
+      console.log(JSON.stringify(doc))
     })
     .catch(err => {
       console.log(err)
