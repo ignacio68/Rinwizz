@@ -1,4 +1,4 @@
-export const alertObject = {
+export const alertSample = {
   _id: '', // usuario._id + creationDate
   type: 'alert',
   title: '', // título de la alerta

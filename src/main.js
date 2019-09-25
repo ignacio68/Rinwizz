@@ -176,7 +176,7 @@ firebaseAuth().onAuthStateChanged(user => {
 
           // Creamos la base de datos local de usuarios
           const usersDb = createDb('users')
-          this.$store.commit('usersLocalDb/SET_LOCAL_DB', usersDb)
+          this.$store.commit('usersLocalDb/SET_USERS_LOCAL_DB', usersDb) // TODO: revisar
         }
         if (user) {
           this.$store.dispatch('user/AUTO_SIGN_IN', user)

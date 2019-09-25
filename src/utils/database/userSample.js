@@ -1,4 +1,4 @@
-export const userObject = {
+export const userSample = {
   _id: '', // id único del usuario -> id proporcionado por Firbase Auth
   type: 'user', // topo de docuemnto
   name: '', // nombre del usuario

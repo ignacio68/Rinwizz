@@ -77,9 +77,9 @@ export default {
           creationDate: user.metadata.creationTime,
           lastSignInDate: user.metadata.lastSignInTime
         }
-        // TODO: eliminar, no utilizamos firebase como base de datos, utilizamos Cloudant
+
         // Actualizamos el perfil de firebase con el displayName
-        // dispatch('SET_USER_PROFILE', { displayName: newUser.name })
+        dispatch('SET_USER_PROFILE', { displayName: newUser.name })
 
         // Creamos al nuevo usuario en memoria
         await commit('SET_USER', newUser)
@@ -376,7 +376,7 @@ export default {
     const newUser = {
       id: user.uid,
       // email: user.email,
-      // name: user.displayName,
+      name: user.displayName,
       phone: user.phone,
       // avatar: user.avatar,
       isVerified: user.emailVerified,

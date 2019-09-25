@@ -1,5 +1,6 @@
 export default {
   usersLocalDb: {},
-  usersFollowings: {},
-  usersFllowers: {}
+  userLocalDb: {},
+  userFollowings: {},
+  userFollowers: {}
 }

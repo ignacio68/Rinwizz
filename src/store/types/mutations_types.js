@@ -7,7 +7,8 @@ export const SET_NUM_ALERTS = 'SET_NUM_ALERTS'
 export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
 
 // local databases
-export const SET_LOCAL_DB = 'SET_LOCAL_DB'
+export const SET_USERS_LOCAL_DB = 'SET_USERS_LOCAL_DB'
+export const SET_USER_LOCAL_DB = 'SET_USER_LOCAL_DB'
 export const SET_FOLLOWINGS = 'SET_FOLLOWINGS'
 export const SET_FOLLOWERS = 'SET_FOLLOWERS'
 

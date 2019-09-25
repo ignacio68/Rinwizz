@@ -99,11 +99,11 @@ export function createDb(nameDb) {
  * @param options { Object }
  */
 export function replicateRemoteDb(config, options) {
-  const dbName = config.dbName
+  const db = config.dbName
   const remote = config.remote
   console.log('Remote es: ' + remote)
 
-  dbName.replicate
+  db.replicate
     .from(remote, options)
     .on('change', info => {
       console.log('La reply ha cambiado: ' + JSON.stringify(info))
@@ -163,14 +163,16 @@ export function syncDb(config, options) {
  * @param db { String } - local database name
  *
  * TODO: No utilizar hasta no separar la base local de la del servidor
+ * TODO: Evitar utilizar esta función
  */
 export function deleteLocalDb(db) {
   db.destroy()
     .then(response => {
       console.log('Local database destroy')
+      console.log(JSON.stringify(response))
     })
     .catch(err => {
-      console.log(err)
+      console.log('deleteLocalDb error: ' + err)
     })
 }
 
@@ -184,13 +186,10 @@ export function createDoc(db, doc) {
     .then(response => {
       // Comprobamos que existe la lista de usuarios - solo en desarrollo
       console.log('document create')
-      doc._rev = response.rev
-      db.info().then(info => {
-        console.log(JSON.stringify(info))
-      })
+      console.log(JSON.stringify(response))
     })
     .catch(err => {
-      console.log(err)
+      console.log('createDoc error: ' + err)
     })
 }
 
@@ -199,7 +198,7 @@ export function createDoc(db, doc) {
  * Update a document
  * @param db { String } - local database name
  * @param docId { String } - document id
- * @param { Object } data - data to update
+ * @param data { Object } - data to update
  */
 export function updateDoc(db, docId, data) {
   db.get(docId)
@@ -209,12 +208,10 @@ export function updateDoc(db, docId, data) {
     })
     .then(response => {
       console.log('document updated')
-      db.info().then(info => {
-        console.log(info)
-      })
+      console.log(JSON.stringify(response))
     })
     .catch(err => {
-      console.log(err)
+      console.log('updateDoc error: ' + err)
     })
 }
 
@@ -223,20 +220,13 @@ export function updateDoc(db, docId, data) {
  * @param db { String } - local database name
  * @param docId { String } - document id
  */
-export function fetchDoc(db, docId, newDoc) {
+export function fetchDoc(db, docId) {
   db.get(docId)
     .then(doc => {
-      console.log('document fetched')
-      db.put(newDoc)
-    })
-    .then(() => {
-      db.get(docId)
-    })
-    .then(doc => {
-      console.log(JSON.stringify(doc))
+      console.log('documento recuperado: ' + JSON.stringify(doc))
     })
     .catch(err => {
-      console.log(err)
+      console.log('fetchDoc error: ' + err)
     })
 }
 
@@ -253,8 +243,30 @@ export function deleteDoc(db, docId) {
     })
     .then(result => {
       console.log('Documento eliminado')
+      console.log(JSON.stringify(result))
     })
     .catch(err => {
-      console.log(err)
+      console.log('deleteDoc error: ' + err)
     })
 }
+
+/**
+ * Fetch a batch of documents
+ *
+ * @param db { String } - local database name
+ * @param options { Array } - options
+ */
+export function fetchDocs(db, options) {
+  db.allDocs(options)
+    .then(results => {
+      console.log('Todos los documentos han sido recuperados')
+      console.log(JSON.stringify(results))
+    })
+    .catch(err => {
+      console.log('fetchDocs error: ' + err)
+    })
+}
+
+/**
+ * Listen to database changes
+ */

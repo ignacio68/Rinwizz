@@ -1,4 +1,4 @@
-import { userObjects } from '@utils/alertObject'
+import { userSample } from '@utils/alertObject'
 
 export async function userCreate(userId) {}
 

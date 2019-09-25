@@ -1,3 +1,4 @@
-export * from './userObject'
-export { alertObject } from './alertObject'
-export * from './configSampler'
+export * from './userSample'
+export * from './alertSample'
+export * from './configSample'
+export * from './optionsSample'
