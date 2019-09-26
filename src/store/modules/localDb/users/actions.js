@@ -17,7 +17,7 @@ export default {
    *
    * @param {Object} newUser  Datos del usuario
    */
-  [CREATE_USER_LOCAL_DB]: ({ state, getters, commit }, newUser) => {
+  async [CREATE_USER_LOCAL_DB]({ state, getters, commit }, newUser) {
     console.log('estoy en CREATE_USER_LOCAL_DB')
     console.log('el _id del usuario es: ' + newUser.id)
 
@@ -40,8 +40,32 @@ export default {
         user.isAnonymous = newUser.isAnonymous
         user.isVerified = newUser.isVerified
         console.log('el user es: ' + JSON.stringify(user))
-        const dbName = 'users'
-        createDoc(dbName, user)
+
+        // Recuperamos la base de datos de usuarios almacenada en caché
+        const db = getters.USERS_LOCAL_DB
+
+        // Creamos el documento del usuario
+        await createDoc(db, user)
+        // Establecemos la configuración
+        const config = JSON.parse(JSON.stringify(configSample))
+        config._id = user._id
+        config.remote = cloudantConfig.url + '/' + config.nameDb
+        console.log('La configuración es: ' + JSON.stringify(config))
+
+        // Establecemos las opciones
+        const options = JSON.parse(JSON.stringify(optionsSample))
+        // options.auth.username = authUsers.key
+        // options.auth.password = authUsers.password
+        options.username = authUsers.key
+        options.password = authUsers.password
+        options.doc_ids.push(user._id)
+        console.log('Las opciones son: ' + JSON.stringify(options))
+
+        // Replicamos la base de datos
+        await replicateRemoteDb(db, config, options)
+
+        // Sincronizamos la base de datos
+        await syncDb(db, config, options)
       } else {
         commit('shared/SET_ERROR', null, { root: true })
         console.log('error, no existe el usuario')

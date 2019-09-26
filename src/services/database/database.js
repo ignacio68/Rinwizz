@@ -98,13 +98,11 @@ export function createDb(nameDb) {
  * @param remote { String } - remote database URL
  * @param options { Object }
  */
-export function replicateRemoteDb(config, options) {
-  const db = config.dbName
+export function replicateRemoteDb(db, config, options) {
   const remote = config.remote
   console.log('Remote es: ' + remote)
-
   db.replicate
-    .from(remote, options)
+    .from(remote, { doc_ids: options.doc_ids })
     .on('change', info => {
       console.log('La reply ha cambiado: ' + JSON.stringify(info))
     })
@@ -129,15 +127,13 @@ export function replicateRemoteDb(config, options) {
  * Sincronización de la base de datos
  * @param {*}
  */
-export function syncDb(config, options) {
-  const dbName = config.dbName
+export function syncDb(db, config, options) {
   const userId = config._id
   const remote = config.remote
   console.log('El ID del usuario es: ' + userId)
   console.log('Remote es: ' + remote)
 
-  dbName
-    .sync(remote, options)
+  db.sync(remote, options)
     .on('change', info => {
       console.log('La sync ha cambiado: ' + JSON.stringify(info))
     })
@@ -182,6 +178,7 @@ export function deleteLocalDb(db) {
  * @param doc { String } - new document
  */
 export function createDoc(db, doc) {
+  console.log('Estoy en createDoc')
   db.put(doc)
     .then(response => {
       // Comprobamos que existe la lista de usuarios - solo en desarrollo
