@@ -127,7 +127,7 @@ export function replicateRemoteDb(config, options) {
 
 /**
  * Sincronización de la base de datos
- * @param {*} db
+ * @param {*}
  */
 export function syncDb(config, options) {
   const dbName = config.dbName
@@ -179,7 +179,7 @@ export function deleteLocalDb(db) {
 /**
  * Create a document
  * @param db { String } - local database name
- * @param { String } doc - new document
+ * @param doc { String } - new document
  */
 export function createDoc(db, doc) {
   db.put(doc)
