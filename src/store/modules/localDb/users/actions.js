@@ -1,4 +1,4 @@
-import { createDoc, replicateRemoteDb, syncDb } from '@services/database'
+import { createDoc, replyDb } from '@services/database'
 import { cloudantConfig, authUsers } from '@setup/cloudant'
 import { userSample, configSample, optionsSample } from '@utils/database'
 
@@ -61,11 +61,8 @@ export default {
         options.doc_ids.push(user._id)
         console.log('Las opciones son: ' + JSON.stringify(options))
 
-        // Replicamos la base de datos
-        await replicateRemoteDb(db, config, options)
-
-        // Sincronizamos la base de datos
-        await syncDb(db, config, options)
+        // Replicamos y sincronizamos la base de datos
+        await replyDb(db, config, options)
       } else {
         commit('shared/SET_ERROR', null, { root: true })
         console.log('error, no existe el usuario')

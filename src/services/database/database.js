@@ -94,45 +94,17 @@ export function createDb(nameDb) {
 }
 
 /**
- * Replicate remote dataBase
+ * Replicate and sync with the remote dataBase
  * @param remote { String } - remote database URL
  * @param options { Object }
  */
-export function replicateRemoteDb(db, config, options) {
+export function replyDb(db, config, options) {
   const remote = config.remote
   console.log('Remote es: ' + remote)
-  db.replicate
-    .from(remote, { doc_ids: options.doc_ids })
-    .on('change', info => {
-      console.log('La reply ha cambiado: ' + JSON.stringify(info))
-    })
-    .on('complete', info => {
-      console.log('La reply se ha completado: ' + JSON.stringify(info))
-    })
-    .on('paused', err => {
-      console.log('La reply está pausada: ' + JSON.stringify(err))
-    })
-    .on('active', () => {
-      console.log('La reply está trabajando')
-    })
-    .on('denied', err => {
-      console.log('Se ha denegado la reply: ' + JSON.stringify(err))
-    })
-    .on('error', err => {
-      console.log('Hay un error en la reply: ' + JSON.stringify(err))
-    })
-}
-
-/**
- * Sincronización de la base de datos
- * @param {*}
- */
-export function syncDb(db, config, options) {
-  const userId = config._id
-  const remote = config.remote
-  console.log('El ID del usuario es: ' + userId)
-  console.log('Remote es: ' + remote)
-
+  // db.replicate
+  //   .from(remote, { doc_ids: options.doc_ids })
+  //   .on('change', info => {
+  //     console.log('La reply ha cambiado: ' + JSON.stringify(info))
   db.sync(remote, options)
     .on('change', info => {
       console.log('La sync ha cambiado: ' + JSON.stringify(info))
@@ -152,6 +124,22 @@ export function syncDb(db, config, options) {
     .on('error', err => {
       console.log('Hay un error en la sync: ' + JSON.stringify(err))
     })
+  // })
+  // .on('complete', info => {
+  //   console.log('La reply se ha completado: ' + JSON.stringify(info))
+  // })
+  // .on('paused', err => {
+  //   console.log('La reply está pausada: ' + JSON.stringify(err))
+  // })
+  // .on('active', () => {
+  //   console.log('La reply está trabajando')
+  // })
+  // .on('denied', err => {
+  //   console.log('Se ha denegado la reply: ' + JSON.stringify(err))
+  // })
+  // .on('error', err => {
+  //   console.log('Hay un error en la reply: ' + JSON.stringify(err))
+  // })
 }
 
 /**
