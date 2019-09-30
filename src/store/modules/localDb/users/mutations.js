@@ -9,20 +9,20 @@ import {
 
 export default {
   // Creamos la base de datos de usuarios
-  [SET_USERS_LOCAL_DB]: (state, dbName) => {
+  [SET_USERS_LOCAL_DB]: (state, localDb) => {
     console.log(
       'estoy en SET_USERS_LOCAL_DB y la base de datos es: ' +
-        JSON.stringify(dbName)
+        JSON.stringify(localDb)
     )
-    state.usersLocalDb = dbName
+    state.usersLocalDb = localDb
   },
 
-  [SET_USER_LOCAL_DB]: (state, dbName) => {
+  [SET_USER_LOCAL_DB]: (state, localDb) => {
     console.log(
       'estoy en SET_user_LOCAL_DB y la base de datos es: ' +
-        JSON.stringify(dbName)
+        JSON.stringify(localDb)
     )
-    state.userLocalDb = dbName
+    state.userLocalDb = localDb
   },
 
   [SET_FOLLOWINGS]: (state, userFollowings) => {
