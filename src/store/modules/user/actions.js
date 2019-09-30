@@ -186,7 +186,7 @@ export default {
    * @param {*} commit
    * @param {String} user
    */
-  async [LOGIN_USER]({ getters, commit, dispatch }, logInUser) {
+  async [LOGIN_USER]({ commit, dispatch, rootGetters }, logInUser) {
     console.log('Estoy en signUserIn')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // Comprueba que el usuario existe en Firebase
@@ -199,7 +199,9 @@ export default {
       // Si existe el usuario recuperamos la información de la base de datos
       if (user) {
         console.log('LOGIN_USER user: ' + JSON.stringify(user))
-        const db = await getters.usersLocalDb.USERS_LOCAL_DB
+        // const db = rootGetters['localDb/users/USERS_LOCAL_DB']
+        const db = await commit('GET_USERS_LOCAL_DB', { root: true })
+        console.log('db es: ' + JSON.stringify(db))
         // Establecemos la configuración
         const config = JSON.parse(JSON.stringify(configSample))
         config._id = user.uid
@@ -215,7 +217,7 @@ export default {
         console.log('Las opciones son: ' + JSON.stringify(options))
 
         // Replicamos y sincronizamos la base de datos
-        await replyDb(db, config, options)
+        await replyDb('users', config, options)
 
         const localUser = await fetchDoc(db, user.uid)
         commit('SET_USER', localUser)

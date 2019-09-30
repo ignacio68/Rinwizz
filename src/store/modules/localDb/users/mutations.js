@@ -2,6 +2,7 @@
 
 import {
   SET_USERS_LOCAL_DB,
+  GET_USERS_LOCAL_DB,
   SET_USER_LOCAL_DB,
   SET_FOLLOWINGS,
   SET_FOLLOWERS
@@ -15,6 +16,10 @@ export default {
         JSON.stringify(localDb)
     )
     state.usersLocalDb = localDb
+  },
+  // Recuperamos la base de datos de usuarios
+  [GET_USERS_LOCAL_DB]: state => {
+    return state.usersLocalDb
   },
 
   [SET_USER_LOCAL_DB]: (state, localDb) => {
