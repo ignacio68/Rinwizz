@@ -101,45 +101,45 @@ export function createDb(nameDb) {
 export function replyDb(db, config, options) {
   const remote = config.remote
   console.log('Remote es: ' + remote)
-  // db.replicate
-  //   .from(remote, { doc_ids: options.doc_ids })
-  //   .on('change', info => {
-  //     console.log('La reply ha cambiado: ' + JSON.stringify(info))
-  db.sync(remote, options)
+  db.replicate
+    .from(remote, { doc_ids: options.doc_ids })
     .on('change', info => {
-      console.log('La sync ha cambiado: ' + JSON.stringify(info))
+      console.log('La reply ha cambiado: ' + JSON.stringify(info))
     })
     .on('complete', info => {
-      console.log('La sync se ha completado: ' + JSON.stringify(info))
+      console.log('La reply se ha completado: ' + JSON.stringify(info))
+      db.sync(remote, options)
+        .on('change', info => {
+          console.log('La sync ha cambiado: ' + JSON.stringify(info))
+        })
+        .on('complete', info => {
+          console.log('La sync se ha completado: ' + JSON.stringify(info))
+        })
+        .on('paused', err => {
+          console.log('La sync está pausada: ' + JSON.stringify(err))
+        })
+        .on('active', () => {
+          console.log('La sync está trabajando')
+        })
+        .on('denied', err => {
+          console.log('Se ha denegado la sync: ' + JSON.stringify(err))
+        })
+        .on('error', err => {
+          console.log('Hay un error en la sync: ' + JSON.stringify(err))
+        })
     })
     .on('paused', err => {
-      console.log('La sync está pausada: ' + JSON.stringify(err))
+      console.log('La reply está pausada: ' + JSON.stringify(err))
     })
     .on('active', () => {
-      console.log('La sync está trabajando')
+      console.log('La reply está trabajando')
     })
     .on('denied', err => {
-      console.log('Se ha denegado la sync: ' + JSON.stringify(err))
+      console.log('Se ha denegado la reply: ' + JSON.stringify(err))
     })
     .on('error', err => {
-      console.log('Hay un error en la sync: ' + JSON.stringify(err))
+      console.log('Hay un error en la reply: ' + JSON.stringify(err))
     })
-  // })
-  // .on('complete', info => {
-  //   console.log('La reply se ha completado: ' + JSON.stringify(info))
-  // })
-  // .on('paused', err => {
-  //   console.log('La reply está pausada: ' + JSON.stringify(err))
-  // })
-  // .on('active', () => {
-  //   console.log('La reply está trabajando')
-  // })
-  // .on('denied', err => {
-  //   console.log('Se ha denegado la reply: ' + JSON.stringify(err))
-  // })
-  // .on('error', err => {
-  //   console.log('Hay un error en la reply: ' + JSON.stringify(err))
-  // })
 }
 
 /**

@@ -49,15 +49,14 @@ export default {
         // Establecemos la configuración
         const config = JSON.parse(JSON.stringify(configSample))
         config._id = user._id
-        config.remote = cloudantConfig.url + '/' + config.nameDb
+        config.dbName = 'users'
+        config.remote = cloudantConfig.url + '/' + config.dbName
         console.log('La configuración es: ' + JSON.stringify(config))
 
         // Establecemos las opciones
         const options = JSON.parse(JSON.stringify(optionsSample))
-        // options.auth.username = authUsers.key
-        // options.auth.password = authUsers.password
-        options.username = authUsers.key
-        options.password = authUsers.password
+        options.auth.username = authUsers.key
+        options.auth.password = authUsers.password
         options.doc_ids.push(user._id)
         console.log('Las opciones son: ' + JSON.stringify(options))
 
