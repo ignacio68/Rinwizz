@@ -11,8 +11,7 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toAvatar"
-          >{{ $t('lang.pages.personal.button') }}</v-ons-button
-        >
+        >{{ $t('lang.pages.personal.button') }}</v-ons-button>
       </div>
     </div>
   </v-ons-page>
@@ -20,7 +19,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import avatar from './Avatar'
+import Gender from './Gender'
 export default {
   name: 'personal',
   data() {
@@ -30,7 +29,7 @@ export default {
     ...mapMutations('navigator', ['REPLACE']),
 
     async toAvatar() {
-      await this.REPLACE(avatar)
+      await this.REPLACE(Gender)
     }
   }
 }

@@ -1,5 +1,7 @@
 import { firebaseAuth, firebaseDb } from '@services/firebase'
-import { fetchDoc } from '@services/database'
+import { fetchDoc, replyDb } from '@services/database'
+import { cloudantConfig, authUsers } from '@setup/cloudant'
+import { configSample, optionsSample } from '@utils/database'
 
 import {
   SIGNUP_USER,
@@ -184,22 +186,42 @@ export default {
    * @param {*} commit
    * @param {String} user
    */
-  async [LOGIN_USER]({ commit, dispatch }, logInUser) {
+  async [LOGIN_USER]({ getters, commit, dispatch }, logInUser) {
     console.log('Estoy en signUserIn')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    /* Comprueba que el usuario existe en Firebase */
+    // Comprueba que el usuario existe en Firebase
     try {
       const result = await firebaseAuth().signInWithEmailAndPassword(
         logInUser.email,
         logInUser.password
       )
       const { user } = result
+      // Si existe el usuario recuperamos la información de la base de datos
       if (user) {
-        console.log('signUserIn user')
-        const newUser = {
-          id: user.uid
-        }
-        commit('SET_USER', newUser)
+        console.log('LOGIN_USER user: ' + JSON.stringify(user))
+        const db = await getters.usersLocalDb.USERS_LOCAL_DB
+        // Establecemos la configuración
+        const config = JSON.parse(JSON.stringify(configSample))
+        config._id = user.uid
+        config.dbName = 'users'
+        config.remote = cloudantConfig.url + '/' + config.dbName
+        console.log('La configuración es: ' + JSON.stringify(config))
+
+        // Establecemos las opciones
+        const options = JSON.parse(JSON.stringify(optionsSample))
+        options.auth.username = authUsers.key
+        options.auth.password = authUsers.password
+        options.doc_ids.push(user._id)
+        console.log('Las opciones son: ' + JSON.stringify(options))
+
+        // Replicamos y sincronizamos la base de datos
+        await replyDb(db, config, options)
+
+        const localUser = await fetchDoc(db, user.uid)
+        commit('SET_USER', localUser)
+        console.log('El user es: ' + JSON.stringify(localUser))
+
+        // Lanzamos la página principal
         commit('navigator/REPLACE', AppSplitter, {
           root: true
         })
@@ -400,6 +422,7 @@ export default {
    * @param {*} state
    * @param {Object} user - datos del usuario para actualizar
    */
+  // TODO: repasar todo, actualizar base de datos
   [UPDATED_USER_PROFILE]: ({ commit, state }, user) => {
     console.log('Estoy en UPDATED_USER_PROFILE')
     commit('shared/CLEAR_ERROR', null, { root: true })
