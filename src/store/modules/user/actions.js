@@ -1,5 +1,5 @@
 import { firebaseAuth, firebaseDb } from '@services/firebase'
-import { createDb } from '@services/database'
+import { fetchDoc } from '@services/database'
 
 import {
   SIGNUP_USER,
@@ -369,28 +369,28 @@ export default {
    * @param {String} user - id y email del usuario
    */
   // TODO: Revisar la utilización del user y newUser.
-  [AUTO_SIGN_IN]: ({ commit, dispatch }, user) => {
+  async [AUTO_SIGN_IN]({ getters, commit, dispatch }, user) {
     console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // const currentUser = firebaseAuth().currentUser
-    const newUser = {
-      id: user.uid,
-      // email: user.email,
-      name: user.displayName,
-      phone: user.phone,
-      // avatar: user.avatar,
-      isVerified: user.emailVerified,
-      // isAnonymous: user.isAnonymous,
-      // creationDate: user.metadata.creationTime,
-      lastSignInDate: user.metadata.lastSignInTime
-      // providerId: user.providerId
-    }
-    // TODO: recuperar la base de datos 'users'(get) y actualizar los datos
-    // const usersDb = 'users'
-    // dispatch('localDb/users/CREATE_USER_LOCAL_DB', usersDb, newUser, {
-    //   root: true
-    // })
-    // commit('SET_USER', newUser)
+    // const authenticatedUser = {
+    //   id: user.uid,
+    //   // email: user.email,
+    //   // name: user.displayName,
+    //   phone: user.phone,
+    //   // avatar: user.avatar,
+    //   isVerified: user.emailVerified,
+    //   // isAnonymous: user.isAnonymous,
+    //   // creationDate: user.metadata.creationTime,
+    //   lastSignInDate: user.metadata.lastSignInTime
+    //   // providerId: user.providerId
+    // }
+    // Recuperamos la base de datos 'users'
+    const usersDb = await getters.usersLocalDb.USERS_LOCAL_DB
+    const userId = user.uid
+    const localUser = await fetchDoc(usersDb, userId)
+    commit('SET_USER', localUser)
+    console.log('El user es: ' + JSON.stringify(localUser))
   },
 
   /**

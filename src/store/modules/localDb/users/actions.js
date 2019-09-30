@@ -42,7 +42,7 @@ export default {
         console.log('el user es: ' + JSON.stringify(user))
 
         // Recuperamos la base de datos de usuarios almacenada en caché
-        const db = getters.USERS_LOCAL_DB
+        const db = await getters.USERS_LOCAL_DB
 
         // Creamos el documento del usuario
         await createDoc(db, user)
