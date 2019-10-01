@@ -18,6 +18,7 @@ export default {
     state.usersLocalDb = localDb
   },
   // Recuperamos la base de datos de usuarios
+  // TODO: a eliminar
   [GET_USERS_LOCAL_DB]: state => {
     return state.usersLocalDb
   },

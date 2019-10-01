@@ -4,7 +4,9 @@
       <p>{{ $t('lang.pages.hobbies.main') }}</p>
       <br />
       <!------ DEPORTES ------->
-      <v-ons-list-title class="preferences__list-title">Deportes</v-ons-list-title>
+      <v-ons-list-title class="preferences__list-title"
+        >Deportes</v-ons-list-title
+      >
       <v-ons-list class="sports__list">
         <v-ons-list-item
           class="preferences__list-item"
@@ -19,10 +21,7 @@
               v-model="checkedSports"
             ></v-ons-checkbox>
           </label>
-          <label
-            class="center"
-            :for="'checkbox-' + $index"
-          >{{ sport }}</label>
+          <label class="center" :for="'checkbox-' + $index">{{ sport }}</label>
         </v-ons-list-item>
       </v-ons-list>
 
@@ -42,17 +41,16 @@
               v-model="checkedEntertainments"
             ></v-ons-checkbox>
           </label>
-          <label
-            class="center"
-            :for="'checkbox-' + $index"
-          >{{
+          <label class="center" :for="'checkbox-' + $index">{{
             entertainment
           }}</label>
         </v-ons-list-item>
       </v-ons-list>
 
       <!------ COMIDA Y BEBIDA ------->
-      <v-ons-list-title class="preferences__list-title">Comida y bebida</v-ons-list-title>
+      <v-ons-list-title class="preferences__list-title"
+        >Comida y bebida</v-ons-list-title
+      >
       <v-ons-list class="preferences__list">
         <v-ons-list-item
           class="preferences__list-item"
@@ -67,10 +65,7 @@
               v-model="checkedFoods"
             ></v-ons-checkbox>
           </label>
-          <label
-            class="center"
-            :for="'checkbox-' + $index"
-          >{{ food }}</label>
+          <label class="center" :for="'checkbox-' + $index">{{ food }}</label>
         </v-ons-list-item>
       </v-ons-list>
 
@@ -82,7 +77,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="updateHobbies"
-        >{{ $t('lang.pages.hobbies.button') }}</v-ons-button>
+          >{{ $t('lang.pages.hobbies.button') }}</v-ons-button
+        >
       </div>
     </div>
   </v-ons-page>

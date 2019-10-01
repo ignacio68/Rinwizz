@@ -15,7 +15,7 @@ export default {
   [SET_USER]: (state, newUser) => {
     state.user = newUser
     console.log('estoy en SET_USER')
-    console.log('El id de usuario es: ' + newUser.id)
+    console.log('El id de usuario es: ' + newUser._id)
   },
   /**
    * Resetea el usuario

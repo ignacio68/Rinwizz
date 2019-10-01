@@ -11,7 +11,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toAvatar"
-        >{{ $t('lang.pages.personal.button') }}</v-ons-button>
+          >{{ $t('lang.pages.personal.button') }}</v-ons-button
+        >
       </div>
     </div>
   </v-ons-page>

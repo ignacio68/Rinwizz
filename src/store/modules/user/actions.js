@@ -71,10 +71,10 @@ export default {
           email: user.email,
           // password: registeredUser.password,
           name: registeredUser.name,
-          phone: user.phoneNumber,
+          phone: '',
           isVerified: user.emailVerified,
           isAnonymous: user.isAnonymous,
-          avatar: user.photoURL,
+          avatar: '',
           providerId: user.providerId,
           creationDate: user.metadata.creationTime,
           lastSignInDate: user.metadata.lastSignInTime
@@ -186,7 +186,7 @@ export default {
    * @param {*} commit
    * @param {String} user
    */
-  async [LOGIN_USER]({ commit, dispatch, rootState }, logInUser) {
+  async [LOGIN_USER]({ commit, dispatch }, logInUser) {
     console.log('Estoy en signUserIn')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // Comprueba que el usuario existe en Firebase
@@ -413,18 +413,22 @@ export default {
       //   lastSignInDate: user.metadata.lastSignInTime
       //   // providerId: user.providerId
       // }
-      // Recuperamos la base de datos 'users'
-      const usersDb = commit('usersLocalDb/GET_USERS_LOCAL_DB', null, {
-        root: true
-      })
-      const userId = user.uid
-      const localUser = await fetchDoc(usersDb, userId)
-      commit('SET_USER', localUser)
-      console.log('El user es: ' + JSON.stringify(localUser))
+      // })
+      const usersDb = createDb('users')
+      if (usersDb) {
+        const userId = user.uid
+        console.log('AUTO_SIGN_IN user es: ' + userId)
+        const localUser = fetchDoc(usersDb, userId)
+        if (localUser) {
+          commit('SET_USER', localUser)
+          console.log('El user es: ' + JSON.stringify(localUser))
+        } else {
+          console.log('No existe localUser')
+        }
+      }
     } catch (error) {
       console.log('signUserUp error: ' + error)
       commit('shared/SET_ERROR', null, { root: true })
-      commit('shared/SET_ACTION_PASS', false, { root: true })
     }
   },
 

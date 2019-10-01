@@ -48,21 +48,21 @@ export default {
       const alertsConfig = await JSON.parse(JSON.stringify(configSample))
       // const timeStamp = Date.now()
       // config._id = timeStamp + "/" + user._id
-      config.dbName = 'alerts'
-      config.remote = cloudantConfig.url + '/' + config.dbName
-      console.log('La configuración es: ' + JSON.stringify(config))
+      alertsConfig.dbName = 'alerts'
+      alertsConfig.remote = cloudantConfig.url + '/' + alertsConfig.dbName
+      console.log('La configuración es: ' + JSON.stringify(alertsConfig))
 
       // Establecemos las opciones
       const alertsOptions = await JSON.parse(JSON.stringify(optionsSample))
-      options.auth.username = authAlerts.key
-      options.auth.password = authAlerts.password
+      alertsOptions.auth.username = authAlerts.key
+      alertsOptions.auth.password = authAlerts.password
       // options.doc_ids.push(user._id)
-      console.log('Las opciones son: ' + JSON.stringify(options))
+      console.log('Las opciones son: ' + JSON.stringify(alertsOptions))
 
       // Load the alerts database
       const alertsDb = await createDb('alerts')
       // Replicamos y sincronizamos la base de datos
-      await replyDb(alertsDb, config, options)
+      await replyDb(alertsDb, alertsConfig, alertsOptions)
     } catch (error) {
       console.log('AppSplitter_beforeMounted error: ' + error)
     }

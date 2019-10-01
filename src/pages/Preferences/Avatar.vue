@@ -3,7 +3,13 @@
     <div class="content">
       <h5>{{ $t('lang.pages.avatar.main') }}</h5>
       <!-- TODO: mostrar icono cuando no haya imágen elegida -->
-      <img v-if="imageUrl !== ''" :src="imageUrl" style="display:none" id="avatar" height="150px" />
+      <img
+        v-if="imageUrl !== ''"
+        :src="imageUrl"
+        style="display:none"
+        id="avatar"
+        height="150px"
+      />
       <!-- TODO: cambiar según plataforma -->
       <v-ons-button
         class="avatarButton"
@@ -32,7 +38,8 @@
         :disabled="false"
         ripple="true"
         @click.prevent="toGender"
-      >{{ $t('lang.pages.avatar.button') }}</v-ons-button>
+        >{{ $t('lang.pages.avatar.button') }}</v-ons-button
+      >
     </div>
   </v-ons-page>
 </template>

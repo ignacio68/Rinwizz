@@ -181,7 +181,6 @@ firebaseAuth().onAuthStateChanged(user => {
         if (user) {
           this.$store.dispatch('user/AUTO_SIGN_IN', user)
           console.log('El usuario es: ' + user.displayName)
-          console.log('La foto es: ' + user.photoURL)
           console.log(JSON.stringify(user))
         } else {
           console.log('No existe user')

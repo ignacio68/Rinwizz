@@ -15,7 +15,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toHomePage"
-        >{{ $t('lang.pages.greetings.button') }}</v-ons-button>
+          >{{ $t('lang.pages.greetings.button') }}</v-ons-button
+        >
       </div>
     </div>
   </v-ons-page>
