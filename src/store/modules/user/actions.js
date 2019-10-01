@@ -1,5 +1,5 @@
 import { firebaseAuth, firebaseDb } from '@services/firebase'
-import { fetchDoc, replyDb } from '@services/database'
+import { createDb, fetchDoc, replyDb } from '@services/database'
 import { cloudantConfig, authUsers } from '@setup/cloudant'
 import { configSample, optionsSample } from '@utils/database'
 
@@ -84,7 +84,7 @@ export default {
         dispatch('SET_USER_PROFILE', { displayName: newUser.name })
 
         // Creamos al nuevo usuario en memoria
-        await commit('SET_USER', newUser)
+        commit('SET_USER', newUser)
 
         // Creamos la base de datos local de usuarios
         // const usersDb = createDb('users')
@@ -102,7 +102,7 @@ export default {
         console.log('Hay un nuevo usuario: ' + state.user.name)
         // Enviamos el email de confirmación
         const actionCodeSettings = state.actionCodeSettings
-        await dispatch('SEND_EMAIL_VERIFICATION', actionCodeSettings)
+        dispatch('SEND_EMAIL_VERIFICATION', actionCodeSettings)
       } else {
         console.log('Hay un error')
         commit('shared/SET_ERROR', null, { root: true })
@@ -186,7 +186,7 @@ export default {
    * @param {*} commit
    * @param {String} user
    */
-  async [LOGIN_USER]({ commit, dispatch, rootGetters }, logInUser) {
+  async [LOGIN_USER]({ commit, dispatch, rootState }, logInUser) {
     console.log('Estoy en signUserIn')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // Comprueba que el usuario existe en Firebase
@@ -199,9 +199,12 @@ export default {
       // Si existe el usuario recuperamos la información de la base de datos
       if (user) {
         console.log('LOGIN_USER user: ' + JSON.stringify(user))
-        // const db = rootGetters['localDb/users/USERS_LOCAL_DB']
-        const db = await commit('GET_USERS_LOCAL_DB', { root: true })
-        console.log('db es: ' + JSON.stringify(db))
+        // const db = rootState.usersLocalDb
+        // const db = commit('usersLocalDb/GET_USERS_LOCAL_DB', null, {
+        //   root: true
+        // })
+        const db = await createDb('users')
+        // console.log('db es: ' + JSON.stringify(db))
         // Establecemos la configuración
         const config = JSON.parse(JSON.stringify(configSample))
         config._id = user.uid
@@ -213,11 +216,11 @@ export default {
         const options = JSON.parse(JSON.stringify(optionsSample))
         options.auth.username = authUsers.key
         options.auth.password = authUsers.password
-        options.doc_ids.push(user._id)
+        options.doc_ids.push(user.uid)
         console.log('Las opciones son: ' + JSON.stringify(options))
 
         // Replicamos y sincronizamos la base de datos
-        await replyDb('users', config, options)
+        await replyDb(db, config, options)
 
         const localUser = await fetchDoc(db, user.uid)
         commit('SET_USER', localUser)
@@ -393,28 +396,36 @@ export default {
    * @param {String} user - id y email del usuario
    */
   // TODO: Revisar la utilización del user y newUser.
-  async [AUTO_SIGN_IN]({ getters, commit, dispatch }, user) {
+  async [AUTO_SIGN_IN]({ commit, dispatch }, user) {
     console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    // const currentUser = firebaseAuth().currentUser
-    // const authenticatedUser = {
-    //   id: user.uid,
-    //   // email: user.email,
-    //   // name: user.displayName,
-    //   phone: user.phone,
-    //   // avatar: user.avatar,
-    //   isVerified: user.emailVerified,
-    //   // isAnonymous: user.isAnonymous,
-    //   // creationDate: user.metadata.creationTime,
-    //   lastSignInDate: user.metadata.lastSignInTime
-    //   // providerId: user.providerId
-    // }
-    // Recuperamos la base de datos 'users'
-    const usersDb = await getters.usersLocalDb.USERS_LOCAL_DB
-    const userId = user.uid
-    const localUser = await fetchDoc(usersDb, userId)
-    commit('SET_USER', localUser)
-    console.log('El user es: ' + JSON.stringify(localUser))
+    try {
+      // const currentUser = firebaseAuth().currentUser
+      // const authenticatedUser = {
+      //   id: user.uid,
+      //   // email: user.email,
+      //   // name: user.displayName,
+      //   phone: user.phone,
+      //   // avatar: user.avatar,
+      //   isVerified: user.emailVerified,
+      //   // isAnonymous: user.isAnonymous,
+      //   // creationDate: user.metadata.creationTime,
+      //   lastSignInDate: user.metadata.lastSignInTime
+      //   // providerId: user.providerId
+      // }
+      // Recuperamos la base de datos 'users'
+      const usersDb = commit('usersLocalDb/GET_USERS_LOCAL_DB', null, {
+        root: true
+      })
+      const userId = user.uid
+      const localUser = await fetchDoc(usersDb, userId)
+      commit('SET_USER', localUser)
+      console.log('El user es: ' + JSON.stringify(localUser))
+    } catch (error) {
+      console.log('signUserUp error: ' + error)
+      commit('shared/SET_ERROR', null, { root: true })
+      commit('shared/SET_ACTION_PASS', false, { root: true })
+    }
   },
 
   /**
