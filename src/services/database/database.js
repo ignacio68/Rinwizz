@@ -29,6 +29,7 @@ export function createDb(nameDb) {
  * @param options { Object }
  */
 export function replyDb(db, config, options) {
+  console.log('Estoy en replyDb')
   const remote = config.remote
   console.log('Remote es: ' + remote)
   db.replicate
@@ -118,12 +119,15 @@ export function createDoc(db, doc) {
 export function updateDoc(db, docId, data) {
   db.get(docId)
     .then(doc => {
-      data._rev = doc._rev
+      // data._rev = doc._rev
       return db.put(data)
     })
-    .then(response => {
+    .then(() => {
       console.log('document updated')
-      console.log(JSON.stringify(response))
+      return db.get(docId)
+    })
+    .then(doc => {
+      console.log(JSON.stringify(doc))
     })
     .catch(err => {
       console.log('updateDoc error: ' + err)

@@ -32,8 +32,12 @@ export default {
    * @param {object} userData - Datos a añadir a los del usuario
    */
   [UPDATE_USER]: (state, userData) => {
-    state.user = userData
-    // TODO: agregar datos nuevos al usuario
+    console.log('Estoy UPDATE_USER')
+    const user = state.user
+    console.log('El user es: ' + JSON.stringify(user))
+    const updatedUser = { ...user, ...userData }
+    console.log('El nuevo user es: ' + JSON.stringify(updatedUser))
+    state.user = updatedUser
   },
   /**
    * Establece la credencial del usuario

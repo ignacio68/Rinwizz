@@ -27,8 +27,7 @@
               :disabled="false"
               ripple="true"
               @click.prevent="updateUserLocation"
-              >{{ $t('lang.pages.userLocation.button') }}</v-ons-button
-            >
+            >{{ $t('lang.pages.userLocation.button') }}</v-ons-button>
           </div>
           <div class="showMarkersButton">
             <v-ons-button
@@ -38,8 +37,7 @@
               :disabled="false"
               ripple="true"
               @click.prevent="changeShowMarkers"
-              >marcadores</v-ons-button
-            >
+            >marcadores</v-ons-button>
             {{ showMarkers }}
           </div>
         </v-row>
@@ -50,6 +48,7 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { updateDoc } from '@services/database'
 import LocationMap from '@components/User/LocationMap'
 import Greetings from './Greetings'
 
@@ -69,7 +68,7 @@ export default {
   },
   mounted() {},
   computed: {
-    ...mapGetters('user', { userId: 'USER_ID' }),
+    ...mapGetters('users', { user: 'USER' }),
     ...mapGetters('location', {
       userLocation: 'USER_LOCATION',
       userAddress: 'USER_ADDRESS'
@@ -77,8 +76,8 @@ export default {
     // changeShowMarkers: () => return (this.showMarkers = !this.showMarkers)
   },
   methods: {
-    ...mapActions('userDb', ['UPDATE_USER_DB']),
     ...mapActions('location', ['GET_CURRENT_POSITION', 'CURRENT_ADDRESS']),
+    ...mapMutations('user', ['UPDATE_USER']),
     ...mapMutations('navigator', ['REPLACE']),
 
     async getUserLocation() {
@@ -89,15 +88,15 @@ export default {
     },
 
     async updateUserLocation() {
-      const data = {
-        location: this.userLocation,
-        address: this.userAddress
-      }
-      const userData = { userId: this.userId, data }
-      await this.UPDATE_USER_DB(userData)
+      const data = { location: '', address: [] }
+      data.location = this.userLocation
+      data.address.push(this.userAddress)
+      await this.UPDATE_USER(data)
       await this.toGreetings()
     },
     async toGreetings() {
+      console.log('Los datos de usuario son: ' + user)
+      await updateDoc('users', this.user.id, this.user)
       await this.REPLACE(Greetings)
     },
     changeShowMarkers() {

@@ -15,7 +15,10 @@
               v-model="selectedGender"
             ></v-ons-radio>
           </label>
-          <label :for="'radio-' + $index" class="center">{{ gender }}</label>
+          <label
+            :for="'radio-' + $index"
+            class="center"
+          >{{ gender }}</label>
         </v-ons-list-item>
         <v-ons-list-item>
           <div class="center">mi género es: {{ selectedGender }}!</div>
@@ -30,26 +33,25 @@
           :disabled="false"
           ripple="true"
           @click.prevent="updateGender"
-          >{{ $t('lang.pages.gender.button') }}</v-ons-button
-        >
+        >{{ $t('lang.pages.gender.button') }}</v-ons-button>
       </div>
     </div>
   </v-ons-page>
 </template>
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapMutations } from 'vuex'
 import Hobbies from './Hobbies'
 export default {
   name: 'gender',
   namespace: true,
   data() {
     return {
+      // TODO: INTERNACIONALIZAR!!
       genders: ['Hombre', 'Mujer', 'Otro'],
       selectedGender: ''
     }
   },
   computed: {
-    ...mapGetters('user', { userId: 'USER_ID' })
     /*
     // TODO: INTERNACIONALIZAR!!
     genders() {
@@ -58,11 +60,11 @@ export default {
   },
   methods: {
     ...mapMutations('navigator', ['PUSH']),
-    ...mapActions('userDb', ['UPDATE_USER_DB']),
+    ...mapMutations('user', ['UPDATE_USER']),
     async updateGender() {
-      const data = { gender: this.selectedGender }
-      const userData = { userId: this.userId, data }
-      await this.UPDATE_USER_DB(userData)
+      const data = { personal: { age: '', gender: '' } }
+      data.personal.gender = this.selectedGender
+      await this.UPDATE_USER(data)
       await this.toHobbies()
     },
     async toHobbies() {

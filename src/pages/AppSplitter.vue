@@ -21,6 +21,9 @@
 <script>
 // import { DbConfig } from '@services/database'
 import { mapGetters, mapMutations } from 'vuex'
+import { createDb, replyDb } from '@services/database'
+import { cloudantConfig, authAlerts } from '@setup/cloudant'
+import { configSample, optionsSample } from '@utils/database'
 import Settings from './Settings'
 import HomePage from './HomePage'
 export default {
@@ -37,19 +40,32 @@ export default {
   created() {
     console.log('AppSplitter.created()')
   },
-  beforeMount() {
+  async beforeMount() {
     // Load the users database
     console.log('AppSplitter.beforeMount()')
+    try {
+      // Establecemos la configuración
+      const alertsConfig = await JSON.parse(JSON.stringify(configSample))
+      // const timeStamp = Date.now()
+      // config._id = timeStamp + "/" + user._id
+      config.dbName = 'alerts'
+      config.remote = cloudantConfig.url + '/' + config.dbName
+      console.log('La configuración es: ' + JSON.stringify(config))
 
-    // Establecemos el nombre del documento de la base de datos 'users'
-    const docId = this._id
-    console.log('El nombre del documento es: ' + JSON.stringify(docId))
-    this.SET_LOCAL_DB(docId)
+      // Establecemos las opciones
+      const alertsOptions = await JSON.parse(JSON.stringify(optionsSample))
+      options.auth.username = authAlerts.key
+      options.auth.password = authAlerts.password
+      // options.doc_ids.push(user._id)
+      console.log('Las opciones son: ' + JSON.stringify(options))
 
-    // Load the alerts database
-    // const alertsDbConfig = new DbConfig('alerts')
-    // console.log('La configuración es: ' + JSON.stringify(alertsDbConfig))
-    // this.SET_LOCAL_DB(alertsDbConfig)
+      // Load the alerts database
+      const alertsDb = await createDb('alerts')
+      // Replicamos y sincronizamos la base de datos
+      await replyDb(alertsDb, config, options)
+    } catch (error) {
+      console.log('AppSplitter_beforeMounted error: ' + error)
+    }
   },
   computed: {
     ...mapGetters('user', { _id: 'USER_ID' })

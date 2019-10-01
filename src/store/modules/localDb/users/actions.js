@@ -41,9 +41,11 @@ export default {
         user.isVerified = newUser.isVerified
         console.log('el user es: ' + JSON.stringify(user))
 
+        await commit('user/SET_USER', user, { root: true })
+
         // Recuperamos la base de datos de usuarios almacenada en caché
         const db = await getters.USERS_LOCAL_DB
-
+        // console.log('La base de datos es: ' + JSON.stringify(db))
         // Creamos el documento del usuario
         await createDoc(db, user)
         // Establecemos la configuración

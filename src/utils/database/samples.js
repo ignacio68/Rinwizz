@@ -123,13 +123,11 @@ export const configSample = {
 export const optionsSample = {
   live: true,
   retry: true,
-  // continuos: true,
-  // auth: {
-  //   username: '',
-  //   password: ''
-  // },
-  username: '',
-  password: '',
+  continuos: true,
+  auth: {
+    username: '',
+    password: ''
+  },
   doc_ids: [],
   filter: '',
   query_params: {},
