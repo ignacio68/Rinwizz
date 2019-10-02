@@ -124,7 +124,7 @@ export default {
     this.$nextTick(() => {
       this.marker = this.$refs.marker.mapObject
       this.markerLocation = this.location
-      console.log('Estoy en mounted y lat es: ' + this.markerLocation.lat)
+      // console.log('Estoy en mounted y lat es: ' + this.markerLocation.lat)
     })
   },
   computed: {},

@@ -25,19 +25,10 @@ import AppSplitter from '@pages/AppSplitter'
 import Welcome from '@pages/Shared/Welcome'
 import LogIn from '@pages/User/LogIn'
 
-/**
- * TODO:
- * 1. Convertir todas las acciones con firebasea async/await
- * 2. El resto de acciones convertirlas en Promise
- * 3. Desarrollar la acción AUTH_ERROR en el módulo "errors/auth"
- */
-
 export default {
   /**
    * Nuevo usuario
    *
-   * @param {*} commit
-   * @param {*} dispatch
    * @param {Object} registeredUser - datos a añadir al nuevo usuario
    */
 
@@ -86,8 +77,9 @@ export default {
         commit('SET_USER', newUser)
 
         // Creamos la base de datos local de usuarios
-        // const usersDb = createDb('users')
-        // await commit('usersLocalDb/SET_LOCAL_DB', usersDb, { root: true })
+        const usersDb = createDb('users')
+        console.log('UsersDb es: ' + JSON.stringify(usersDb))
+        await commit('usersLocalDb/SET_USERS_LOCAL_DB', usersDb, { root: true })
 
         // creamos la base de datos local de usuario (PouchDB)
         await dispatch('usersLocalDb/CREATE_USER_LOCAL_DB', newUser, {
@@ -101,7 +93,7 @@ export default {
         console.log('Hay un nuevo usuario: ' + state.user.name)
         // Enviamos el email de confirmación
         const actionCodeSettings = state.actionCodeSettings
-        dispatch('SEND_EMAIL_VERIFICATION', actionCodeSettings)
+        await dispatch('SEND_EMAIL_VERIFICATION', actionCodeSettings)
       } else {
         console.log('Hay un error')
         commit('shared/SET_ERROR', null, { root: true })
@@ -124,17 +116,15 @@ export default {
   async [SET_USER_PROFILE]({ commit, dispatch }, user) {
     commit('shared/CLEAR_ERROR', null, { root: true })
     console.log('Estoy en SET_USER_PROFILE')
-    const userActive = await firebaseAuth().currentUser
-    userActive
-      .updateProfile(user)
-      .then(() => {
-        console.log('Se ha actualizado el perfil de: ' + user.displayName)
-      })
-      .catch(error => {
-        commit('shared/SET_ERROR', null, { root: true })
-        console.log('UPDATE PROFILE error: ' + error)
-        dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
-      })
+    try {
+      const userActive = await firebaseAuth().currentUser
+      await userActive.updateProfile(user)
+      console.log('Se ha actualizado el perfil de: ' + user.displayName)
+    } catch (error) {
+      commit('shared/SET_ERROR', null, { root: true })
+      console.log('UPDATE PROFILE error: ' + error)
+      dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
+    }
   },
 
   [APPLY_ACTION_CODE]: ({ commit, dispatch }, code) => {},
@@ -277,10 +267,10 @@ export default {
   /**
    * Elimina el usuario
    */
-  async [DELETE_USER]({ commit, dispatch, state }) {
+  [DELETE_USER]: ({ commit, dispatch, state }) => {
     console.log('Estoy en deleteUser')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    await dispatch('GET_CREDENTIAL')
+    dispatch('GET_CREDENTIAL')
     let currentUser = firebaseAuth().currentUser
     let credential = state.credential
     console.log('myCredential es:' + credential)
@@ -395,50 +385,23 @@ export default {
    * @param {String} user - id y email del usuario
    */
   // TODO: Revisar la utilización del user y newUser.
-  [AUTO_SIGN_IN]: ({ commit }, user) => {
+  async [AUTO_SIGN_IN]({ commit }, user) {
     console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    // const currentUser = firebaseAuth().currentUser
-    // const authenticatedUser = {
-    //   id: user.uid,
-    //   // email: user.email,
-    //   // name: user.displayName,
-    //   phone: user.phone,
-    //   // avatar: user.avatar,
-    //   isVerified: user.emailVerified,
-    //   // isAnonymous: user.isAnonymous,
-    //   // creationDate: user.metadata.creationTime,
-    //   lastSignInDate: user.metadata.lastSignInTime
-    //   // providerId: user.providerId
-    // }
-    // })
+    try {
+      const userId = user.uid
+      console.log('AUTO_SIGN_IN user es: ' + userId)
 
-    // const usersDb = createDb('users')
-    // if (usersDb) {
-    //   const userId = user.uid
-    //   console.log('AUTO_SIGN_IN user es: ' + userId)
-    //   const localUser = fetchDoc(usersDb, userId)
-    //   if (localUser) {
-    //     commit('SET_USER', localUser)
-    //     console.log('El user es: ' + JSON.stringify(localUser))
-    //   } else {
-    //     console.log('No existe localUser')
-    //   }
-    // }
-    createDb('users')
-      .then(usersDb => {
-        const userId = user.uid
-        console.log('AUTO_SIGN_IN user es: ' + userId)
-        return fetchDoc(usersDb, userId)
-      })
-      .then(localUser => {
-        commit('SET_USER', localUser)
-        console.log('El user es: ' + JSON.stringify(localUser))
-      })
-      .catch(error => {
-        console.log('signUserUp error: ' + error)
-        commit('shared/SET_ERROR', null, { root: true })
-      })
+      // Comprobamos que existe la base de datos de usuarios
+      const usersDb = await createDb('users')
+
+      // Recuperamos la información del usuario desde la base de datos
+      const localUser = await fetchDoc(usersDb, userId)
+      console.log('El user es: ' + JSON.stringify(localUser))
+    } catch (error) {
+      console.log('signUserUp error: ' + error)
+      commit('shared/SET_ERROR', null, { root: true })
+    }
   },
 
   /**

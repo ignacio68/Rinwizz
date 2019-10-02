@@ -1,9 +1,4 @@
-/**
- * Importing
- */
 import PouchDB from 'pouchdb-browser'
-
-// TODO: ¡¡REPASAR TODO URGENTEMENTE!!
 
 /**
  * Create database
@@ -11,11 +6,11 @@ import PouchDB from 'pouchdb-browser'
  *
  * TODO: separar la réplica y la sincronización
  */
-export async function createDb(nameDb) {
+export function createDb(nameDb) {
   console.log('Estoy en createDb')
   try {
     const db = new PouchDB(nameDb, { auto_compaction: true })
-    console.log('SI existe db')
+    console.log('SI existe db' + JSON.stringify(db))
     // console.log(JSON.stringify(db))
     return db
   } catch (error) {
@@ -81,14 +76,12 @@ export async function replyDb(db, config, options) {
  * Delete local database
  * @param db { String } - local database name
  *
- * TODO: No utilizar hasta no separar la base local de la del servidor
  * TODO: Evitar utilizar esta función
  */
 export async function deleteLocalDb(db) {
   try {
     const response = await db.destroy()
-    console.log('Local database destroy')
-    console.log(JSON.stringify(response))
+    console.log('Local database destroy: ' + JSON.stringify(response))
   } catch (error) {
     console.log('deleteLocalDb error: ' + error)
   }
@@ -103,25 +96,23 @@ export async function createDoc(db, doc) {
   console.log('Estoy en createDoc')
   try {
     const response = await db.put(doc)
-    // Comprobamos que existe la lista de usuarios - solo en desarrollo
-    console.log('document create')
-    console.log(JSON.stringify(response))
+    console.log('document create' + JSON.stringify(response))
   } catch (error) {
     console.log('createDoc error: ' + error)
   }
 }
 
 /**
- * TODO: Repasar
+ * TODO: Revisar
  * Update a document
- * @param db { String } - local database name
+ * @param db { String } - local database
  * @param docId { String } - document id
  * @param data { Object } - data to update
  */
 export function updateDoc(db, docId, data) {
   db.get(docId)
     .then(doc => {
-      // data._rev = doc._rev
+      data._rev = doc._rev
       return db.put(data)
     })
     .then(() => {
@@ -144,7 +135,7 @@ export function updateDoc(db, docId, data) {
 export async function fetchDoc(db, docId) {
   console.log('Estoy en fetchDoc')
   try {
-    const doc = db.get(docId)
+    const doc = await db.get(docId)
     console.log('documento recuperado: ' + JSON.stringify(doc))
     return doc
   } catch (error) {
@@ -164,8 +155,7 @@ export function deleteDoc(db, docId) {
       return db.put(doc)
     })
     .then(result => {
-      console.log('Documento eliminado')
-      console.log(JSON.stringify(result))
+      console.log('Documento eliminado' + JSON.stringify(result))
     })
     .catch(err => {
       console.log('deleteDoc error: ' + err)
@@ -181,13 +171,10 @@ export function deleteDoc(db, docId) {
 export async function fetchAllDocs(db, options) {
   try {
     const results = await db.allDocs(options)
-    console.log('Todos los documentos han sido recuperados')
-    console.log(JSON.stringify(results))
+    console.log(
+      'Todos los documentos han sido recuperados' + JSON.stringify(results)
+    )
   } catch (error) {
     console.log('fetchDocs error: ' + error)
   }
 }
-
-/**
- * Listen to database changes
- */

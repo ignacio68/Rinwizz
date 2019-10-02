@@ -15,7 +15,7 @@ export default {
   [SET_USER]: (state, newUser) => {
     state.user = newUser
     console.log('estoy en SET_USER')
-    console.log('El id de usuario es: ' + newUser._id)
+    console.log('El id de usuario es: ' + JSON.stringify(newUser))
   },
   /**
    * Resetea el usuario
@@ -38,6 +38,7 @@ export default {
     const updatedUser = { ...user, ...userData }
     console.log('El nuevo user es: ' + JSON.stringify(updatedUser))
     state.user = updatedUser
+    console.log('state.user es: ' + JSON.stringify(state.user))
   },
   /**
    * Establece la credencial del usuario

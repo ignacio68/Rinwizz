@@ -46,7 +46,7 @@ export default {
     try {
       // Establecemos la configuración
       const alertsConfig = await JSON.parse(JSON.stringify(configSample))
-      // const timeStamp = Date.now()
+      // const timeStamp = await Date.now()
       // config._id = timeStamp + "/" + user._id
       alertsConfig.dbName = 'alerts'
       alertsConfig.remote = cloudantConfig.url + '/' + alertsConfig.dbName
@@ -67,12 +67,8 @@ export default {
       console.log('AppSplitter_beforeMounted error: ' + error)
     }
   },
-  computed: {
-    ...mapGetters('user', { _id: 'USER_ID' })
-  },
-  methods: {
-    ...mapMutations('localDb', ['SET_LOCAL_DB'])
-  }
+  computed: {},
+  methods: {}
 }
 </script>
 

@@ -4,11 +4,7 @@
       <v-ons-col class="col">
         <h3 class="text">{{ $t('lang.pages.userLocation.main') }}</h3>
         <div class="map">
-          <location-map
-            :location="userLocation"
-            :initialZoom="17"
-            :showMarkers="showMarkers"
-          />
+          <location-map :location="userLocation" :initialZoom="17" :showMarkers="showMarkers" />
         </div>
         <div class="address">
           <p>
@@ -27,8 +23,7 @@
               :disabled="false"
               ripple="true"
               @click.prevent="updateUserLocation"
-              >{{ $t('lang.pages.userLocation.button') }}</v-ons-button
-            >
+            >{{ $t('lang.pages.userLocation.button') }}</v-ons-button>
           </div>
           <div class="showMarkersButton">
             <v-ons-button
@@ -38,8 +33,7 @@
               :disabled="false"
               ripple="true"
               @click.prevent="changeShowMarkers"
-              >marcadores</v-ons-button
-            >
+            >marcadores</v-ons-button>
             {{ showMarkers }}
           </div>
         </v-row>
@@ -70,7 +64,7 @@ export default {
   },
   mounted() {},
   computed: {
-    ...mapGetters('users', { user: 'USER' }),
+    // ...mapGetters('user', { user: 'USER' }),
     ...mapGetters('location', {
       userLocation: 'USER_LOCATION',
       userAddress: 'USER_ADDRESS'
@@ -98,7 +92,7 @@ export default {
     },
     async toGreetings() {
       console.log('Los datos de usuario son: ' + user)
-      await updateDoc('users', this.user.id, this.user)
+      // await updateDoc('users', this.user.id, this.user)
       await this.REPLACE(Greetings)
     },
     changeShowMarkers() {

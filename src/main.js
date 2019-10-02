@@ -46,7 +46,7 @@ import i18n from '@setup/i18n'
  *  Import database services
  */
 
-import { createDb } from '@services/database'
+// import { createDb } from '@services/database'
 
 /**
  * Import Timer
@@ -175,13 +175,12 @@ firebaseAuth().onAuthStateChanged(user => {
           }
 
           // Creamos la base de datos local de usuarios
-          const usersDb = createDb('users')
-          this.$store.commit('usersLocalDb/SET_USERS_LOCAL_DB', usersDb) // TODO: revisar
+          // const usersDb = createDb('users')
+          // this.$store.commit('usersLocalDb/SET_USERS_LOCAL_DB', usersDb) // TODO: revisar
         }
         if (user) {
           this.$store.dispatch('user/AUTO_SIGN_IN', user)
-          console.log('El usuario es: ' + user.displayName)
-          console.log(JSON.stringify(user))
+          console.log('El usuario es: ' + JSON.stringify(user))
         } else {
           console.log('No existe user')
         }
