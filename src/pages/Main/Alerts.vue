@@ -1,6 +1,9 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar
+      class="customToolbar"
+      :pageTitle="$t('lang.pages.alerts.toolbar')"
+    ></the-custom-toolbar>
 
     <div class="content">
       <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
@@ -64,7 +67,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="logOutUser"
-        >Logout User</v-ons-button>
+          >Logout User</v-ons-button
+        >
 
         <v-ons-button
           class="deleteButton__button"
@@ -72,7 +76,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="deleteUser"
-        >Delete User</v-ons-button>
+          >Delete User</v-ons-button
+        >
 
         <v-ons-button
           class="toJSON__button"
@@ -80,11 +85,19 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toJSON"
-        >User JSON</v-ons-button>
+          >User JSON</v-ons-button
+        >
       </div>
     </div>
-    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
-      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
+    <v-ons-fab
+      position="bottom right"
+      ripple="true"
+      @click.prevent="isModalVisible = true"
+    >
+      <v-ons-icon
+        class="alertScript__icon"
+        icon="ion-edit, material:zmdi-email-open"
+      ></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
