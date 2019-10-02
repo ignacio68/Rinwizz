@@ -54,11 +54,10 @@ export default {
      * @param {String} registeredUser.password - password del usuario
      */
     try {
-      const result = await firebaseAuth().createUserWithEmailAndPassword(
+      const { user } = await firebaseAuth().createUserWithEmailAndPassword(
         registeredUser.email,
         registeredUser.password
       )
-      const { user } = result
       if (user) {
         console.log('Estoy en createUserWithEmailAndPassword')
         console.log(user)
@@ -74,14 +73,14 @@ export default {
           phone: '',
           isVerified: user.emailVerified,
           isAnonymous: user.isAnonymous,
-          avatar: '',
+          avatar: '../../../assets/user_icon.png',
           providerId: user.providerId,
           creationDate: user.metadata.creationTime,
           lastSignInDate: user.metadata.lastSignInTime
         }
 
         // Actualizamos el perfil de firebase con el displayName
-        dispatch('SET_USER_PROFILE', { displayName: newUser.name })
+        await dispatch('SET_USER_PROFILE', { displayName: newUser.name })
 
         // Creamos al nuevo usuario en memoria
         commit('SET_USER', newUser)
@@ -187,50 +186,50 @@ export default {
    * @param {String} user
    */
   async [LOGIN_USER]({ commit, dispatch }, logInUser) {
-    console.log('Estoy en signUserIn')
+    console.log('Estoy en LOGIN_USER')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // Comprueba que el usuario existe en Firebase
     try {
-      const result = await firebaseAuth().signInWithEmailAndPassword(
+      const { user } = await firebaseAuth().signInWithEmailAndPassword(
         logInUser.email,
         logInUser.password
       )
-      const { user } = result
-      // Si existe el usuario recuperamos la información de la base de datos
-      if (user) {
-        console.log('LOGIN_USER user: ' + JSON.stringify(user))
-        // const db = rootState.usersLocalDb
-        // const db = commit('usersLocalDb/GET_USERS_LOCAL_DB', null, {
-        //   root: true
-        // })
-        const db = await createDb('users')
-        // console.log('db es: ' + JSON.stringify(db))
-        // Establecemos la configuración
-        const config = JSON.parse(JSON.stringify(configSample))
-        config._id = user.uid
-        config.dbName = 'users'
-        config.remote = cloudantConfig.url + '/' + config.dbName
-        console.log('La configuración es: ' + JSON.stringify(config))
+      const userId = user.uid
+      console.log('LOGIN_USER user: ' + JSON.stringify(user))
+      console.log('config._id es: ' + userId)
 
-        // Establecemos las opciones
-        const options = JSON.parse(JSON.stringify(optionsSample))
-        options.auth.username = authUsers.key
-        options.auth.password = authUsers.password
-        options.doc_ids.push(user.uid)
-        console.log('Las opciones son: ' + JSON.stringify(options))
+      // Recuperamos la información de la base de datos
+      const db = await createDb('users')
 
-        // Replicamos y sincronizamos la base de datos
-        await replyDb(db, config, options)
+      // Establecemos los parametros de la confguracion
+      const config = await JSON.parse(JSON.stringify(configSample))
+      config._id = userId
+      config.dbName = 'users'
+      config.remote = cloudantConfig.url + '/' + config.dbName
 
-        const localUser = await fetchDoc(db, user.uid)
-        commit('SET_USER', localUser)
-        console.log('El user es: ' + JSON.stringify(localUser))
+      console.log('La configuración es: ' + JSON.stringify(config))
 
-        // Lanzamos la página principal
-        commit('navigator/REPLACE', AppSplitter, {
-          root: true
-        })
-      }
+      // Establecemos las opciones
+      const options = await JSON.parse(JSON.stringify(optionsSample))
+      options.auth.username = authUsers.key
+      options.auth.password = authUsers.password
+      options.doc_ids.push(userId)
+      console.log('Las opciones son: ' + JSON.stringify(options))
+
+      // Replicamos y sincronizamos la base de datos
+      await replyDb(db, config, options)
+
+      // Recuperamos la información del usuario
+      const localUser = await fetchDoc(db, userId)
+
+      // Establecemos la información de usuario en caché
+      commit('SET_USER', localUser)
+      console.log('El user es: ' + JSON.stringify(localUser))
+
+      // Lanzamos la página principal
+      commit('navigator/REPLACE', AppSplitter, {
+        root: true
+      })
     } catch (error) {
       console.log('logUserIn error: ' + error.message)
       commit('shared/SET_ERROR', null, { root: true })
@@ -396,40 +395,50 @@ export default {
    * @param {String} user - id y email del usuario
    */
   // TODO: Revisar la utilización del user y newUser.
-  async [AUTO_SIGN_IN]({ commit, dispatch }, user) {
+  [AUTO_SIGN_IN]: ({ commit }, user) => {
     console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    try {
-      // const currentUser = firebaseAuth().currentUser
-      // const authenticatedUser = {
-      //   id: user.uid,
-      //   // email: user.email,
-      //   // name: user.displayName,
-      //   phone: user.phone,
-      //   // avatar: user.avatar,
-      //   isVerified: user.emailVerified,
-      //   // isAnonymous: user.isAnonymous,
-      //   // creationDate: user.metadata.creationTime,
-      //   lastSignInDate: user.metadata.lastSignInTime
-      //   // providerId: user.providerId
-      // }
-      // })
-      const usersDb = createDb('users')
-      if (usersDb) {
+    // const currentUser = firebaseAuth().currentUser
+    // const authenticatedUser = {
+    //   id: user.uid,
+    //   // email: user.email,
+    //   // name: user.displayName,
+    //   phone: user.phone,
+    //   // avatar: user.avatar,
+    //   isVerified: user.emailVerified,
+    //   // isAnonymous: user.isAnonymous,
+    //   // creationDate: user.metadata.creationTime,
+    //   lastSignInDate: user.metadata.lastSignInTime
+    //   // providerId: user.providerId
+    // }
+    // })
+
+    // const usersDb = createDb('users')
+    // if (usersDb) {
+    //   const userId = user.uid
+    //   console.log('AUTO_SIGN_IN user es: ' + userId)
+    //   const localUser = fetchDoc(usersDb, userId)
+    //   if (localUser) {
+    //     commit('SET_USER', localUser)
+    //     console.log('El user es: ' + JSON.stringify(localUser))
+    //   } else {
+    //     console.log('No existe localUser')
+    //   }
+    // }
+    createDb('users')
+      .then(usersDb => {
         const userId = user.uid
         console.log('AUTO_SIGN_IN user es: ' + userId)
-        const localUser = fetchDoc(usersDb, userId)
-        if (localUser) {
-          commit('SET_USER', localUser)
-          console.log('El user es: ' + JSON.stringify(localUser))
-        } else {
-          console.log('No existe localUser')
-        }
-      }
-    } catch (error) {
-      console.log('signUserUp error: ' + error)
-      commit('shared/SET_ERROR', null, { root: true })
-    }
+        return fetchDoc(usersDb, userId)
+      })
+      .then(localUser => {
+        commit('SET_USER', localUser)
+        console.log('El user es: ' + JSON.stringify(localUser))
+      })
+      .catch(error => {
+        console.log('signUserUp error: ' + error)
+        commit('shared/SET_ERROR', null, { root: true })
+      })
   },
 
   /**

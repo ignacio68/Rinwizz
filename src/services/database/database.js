@@ -11,15 +11,15 @@ import PouchDB from 'pouchdb-browser'
  *
  * TODO: separar la réplica y la sincronización
  */
-export function createDb(nameDb) {
+export async function createDb(nameDb) {
   console.log('Estoy en createDb')
-  const db = new PouchDB(nameDb, { auto_compaction: true })
-  if (db) {
+  try {
+    const db = new PouchDB(nameDb, { auto_compaction: true })
     console.log('SI existe db')
-    console.log(JSON.stringify(db))
+    // console.log(JSON.stringify(db))
     return db
-  } else {
-    console.log('NO existe db')
+  } catch (error) {
+    console.log('createDb error: ' + error)
   }
 }
 
@@ -28,49 +28,53 @@ export function createDb(nameDb) {
  * @param remote { String } - remote database URL
  * @param options { Object }
  */
-export function replyDb(db, config, options) {
+export async function replyDb(db, config, options) {
   console.log('Estoy en replyDb')
-  const remote = config.remote
-  console.log('Remote es: ' + remote)
-  db.replicate
-    .from(remote, { doc_ids: options.doc_ids })
-    .on('change', info => {
-      console.log('La reply ha cambiado: ' + JSON.stringify(info))
-    })
-    .on('complete', info => {
-      console.log('La reply se ha completado: ' + JSON.stringify(info))
-      db.sync(remote, options)
-        .on('change', info => {
-          console.log('La sync ha cambiado: ' + JSON.stringify(info))
-        })
-        .on('complete', info => {
-          console.log('La sync se ha completado: ' + JSON.stringify(info))
-        })
-        .on('paused', err => {
-          console.log('La sync está pausada: ' + JSON.stringify(err))
-        })
-        .on('active', () => {
-          console.log('La sync está trabajando')
-        })
-        .on('denied', err => {
-          console.log('Se ha denegado la sync: ' + JSON.stringify(err))
-        })
-        .on('error', err => {
-          console.log('Hay un error en la sync: ' + JSON.stringify(err))
-        })
-    })
-    .on('paused', err => {
-      console.log('La reply está pausada: ' + JSON.stringify(err))
-    })
-    .on('active', () => {
-      console.log('La reply está trabajando')
-    })
-    .on('denied', err => {
-      console.log('Se ha denegado la reply: ' + JSON.stringify(err))
-    })
-    .on('error', err => {
-      console.log('Hay un error en la reply: ' + JSON.stringify(err))
-    })
+  try {
+    const remote = config.remote
+    console.log('Remote es: ' + remote)
+    await db.replicate
+      .from(remote, { doc_ids: options.doc_ids })
+      .on('change', info => {
+        console.log('La reply ha cambiado: ' + JSON.stringify(info))
+      })
+      .on('complete', info => {
+        console.log('La reply se ha completado: ' + JSON.stringify(info))
+        db.sync(remote, options)
+          .on('change', info => {
+            console.log('La sync ha cambiado: ' + JSON.stringify(info))
+          })
+          .on('complete', info => {
+            console.log('La sync se ha completado: ' + JSON.stringify(info))
+          })
+          .on('paused', err => {
+            console.log('La sync está pausada: ' + JSON.stringify(err))
+          })
+          .on('active', () => {
+            console.log('La sync está trabajando')
+          })
+          .on('denied', err => {
+            console.log('Se ha denegado la sync: ' + JSON.stringify(err))
+          })
+          .on('error', err => {
+            console.log('Hay un error en la sync: ' + JSON.stringify(err))
+          })
+      })
+      .on('paused', err => {
+        console.log('La reply está pausada: ' + JSON.stringify(err))
+      })
+      .on('active', () => {
+        console.log('La reply está trabajando')
+      })
+      .on('denied', err => {
+        console.log('Se ha denegado la reply: ' + JSON.stringify(err))
+      })
+      .on('error', err => {
+        console.log('Hay un error en la reply: ' + JSON.stringify(err))
+      })
+  } catch (error) {
+    console.log('replyDb error: ' + error)
+  }
 }
 
 /**
@@ -80,15 +84,14 @@ export function replyDb(db, config, options) {
  * TODO: No utilizar hasta no separar la base local de la del servidor
  * TODO: Evitar utilizar esta función
  */
-export function deleteLocalDb(db) {
-  db.destroy()
-    .then(response => {
-      console.log('Local database destroy')
-      console.log(JSON.stringify(response))
-    })
-    .catch(err => {
-      console.log('deleteLocalDb error: ' + err)
-    })
+export async function deleteLocalDb(db) {
+  try {
+    const response = await db.destroy()
+    console.log('Local database destroy')
+    console.log(JSON.stringify(response))
+  } catch (error) {
+    console.log('deleteLocalDb error: ' + error)
+  }
 }
 
 /**
@@ -96,17 +99,16 @@ export function deleteLocalDb(db) {
  * @param db { String } - local database name
  * @param doc { String } - new document
  */
-export function createDoc(db, doc) {
+export async function createDoc(db, doc) {
   console.log('Estoy en createDoc')
-  db.put(doc)
-    .then(response => {
-      // Comprobamos que existe la lista de usuarios - solo en desarrollo
-      console.log('document create')
-      console.log(JSON.stringify(response))
-    })
-    .catch(err => {
-      console.log('createDoc error: ' + err)
-    })
+  try {
+    const response = await db.put(doc)
+    // Comprobamos que existe la lista de usuarios - solo en desarrollo
+    console.log('document create')
+    console.log(JSON.stringify(response))
+  } catch (error) {
+    console.log('createDoc error: ' + error)
+  }
 }
 
 /**
@@ -139,14 +141,15 @@ export function updateDoc(db, docId, data) {
  * @param db { String } - local database name
  * @param docId { String } - document id
  */
-export function fetchDoc(db, docId) {
-  db.get(docId)
-    .then(doc => {
-      console.log('documento recuperado: ' + JSON.stringify(doc))
-    })
-    .catch(err => {
-      console.log('fetchDoc error: ' + err)
-    })
+export async function fetchDoc(db, docId) {
+  console.log('Estoy en fetchDoc')
+  try {
+    const doc = db.get(docId)
+    console.log('documento recuperado: ' + JSON.stringify(doc))
+    return doc
+  } catch (error) {
+    console.log('fetchDoc error: ' + error)
+  }
 }
 
 /**
@@ -175,15 +178,14 @@ export function deleteDoc(db, docId) {
  * @param db { String } - local database name
  * @param options { Array } - options
  */
-export function fetchDocs(db, options) {
-  db.allDocs(options)
-    .then(results => {
-      console.log('Todos los documentos han sido recuperados')
-      console.log(JSON.stringify(results))
-    })
-    .catch(err => {
-      console.log('fetchDocs error: ' + err)
-    })
+export async function fetchAllDocs(db, options) {
+  try {
+    const results = await db.allDocs(options)
+    console.log('Todos los documentos han sido recuperados')
+    console.log(JSON.stringify(results))
+  } catch (error) {
+    console.log('fetchDocs error: ' + error)
+  }
 }
 
 /**
