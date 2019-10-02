@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 // import { createDb } from '@services/database'
 
 // import HomePage from '@pages/HomePage'
@@ -38,11 +38,14 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters('user', { user: 'USER' }),
+    ...mapState('user', { user: state => state.user }),
+    // ...mapGetters('user', { user: 'USER' }),
     ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
     userIsAuthenticated() {
-      console.log('Comprobando si el usuario está autenticado')
+      console.log(
+        'Comprobando si el usuario está autenticado: ' + console.log(this.user)
+      )
       return this.user !== null && this.user !== undefined
     }
   },

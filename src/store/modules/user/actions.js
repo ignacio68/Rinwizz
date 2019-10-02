@@ -395,9 +395,12 @@ export default {
       // Comprobamos que existe la base de datos de usuarios
       const usersDb = await createDb('users')
 
-      // Recuperamos la información del usuario desde la base de datos
+      // Recuperamos la información del usuario desde la base de datos local
       const localUser = await fetchDoc(usersDb, userId)
       console.log('El user es: ' + JSON.stringify(localUser))
+
+      // Actualizamos los datos del user en caché
+      commit('SET_USER', localUser)
     } catch (error) {
       console.log('signUserUp error: ' + error)
       commit('shared/SET_ERROR', null, { root: true })

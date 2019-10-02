@@ -2,15 +2,54 @@
   <v-ons-page>
     <div class="container">
       <h3>settings</h3>
+      <!-- Botones para probrar funcionalidades -- Se pueden eliminar -->
+      <div class="buttonsGroup">
+        <v-ons-button
+          class="logOutButton__button"
+          name="logOutButton"
+          :disabled="false"
+          ripple="true"
+          @click.prevent="logOutUser"
+        >Logout User</v-ons-button>
+
+        <v-ons-button
+          class="deleteButton__button"
+          name="deleteButton"
+          :disabled="false"
+          ripple="true"
+          @click.prevent="deleteUser"
+        >Delete User</v-ons-button>
+
+        <v-ons-button
+          class="toJSON__button"
+          name="toJSONButton"
+          :disabled="false"
+          ripple="true"
+          @click.prevent="toJSON"
+        >User JSON</v-ons-button>
+      </div>
     </div>
   </v-ons-page>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'settings',
   data() {
     return {}
+  },
+  methods: {
+    ...mapActions('user', ['LOGOUT_USER', 'DELETE_USER', 'TO_JSON']),
+    logOutUser() {
+      this.LOGOUT_USER()
+    },
+    deleteUser() {
+      this.DELETE_USER()
+    },
+    toJSON() {
+      this.TO_JSON()
+    }
   }
 }
 </script>
