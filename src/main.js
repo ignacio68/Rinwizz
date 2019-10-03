@@ -4,7 +4,7 @@
  * @copyright Ignacio López-Amor Pinillos 2019
  * @author Ignacio López-Amor Pinillos <ignaciolopezamor@gmail.com>
  * @license MIT
- * @version 0.3.0
+ * @version 0.4.0
  */
 
 /*
@@ -119,6 +119,13 @@ let app
 
 firebaseAuth().onAuthStateChanged(user => {
   console.log('Estoy en firebase.auth().onAuthStateChanged')
+  if (user) {
+    store.commit('user/SET_USER', user)
+    store.dispatch('user/AUTO_SIGN_IN')
+    console.log('El usuario es: ' + JSON.stringify(user))
+  } else {
+    console.log('No existe user')
+  }
   if (!app) {
     app = new Vue({
       el: '#app',
@@ -157,14 +164,8 @@ firebaseAuth().onAuthStateChanged(user => {
             console.log('No se encuentra el idioma del navegador')
           }
         }
-        if (user) {
-          this.$store.commit('user/SET_USER', user)
-          this.$store.dispatch('user/AUTO_SIGN_IN', user)
-          console.log('El usuario es: ' + JSON.stringify(user))
-        } else {
-          console.log('No existe user')
-        }
-      }
+      },
+      created() {}
     })
   }
 })

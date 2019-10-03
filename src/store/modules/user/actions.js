@@ -382,16 +382,17 @@ export default {
    *
    * @param {String} user - id y email del usuario
    */
-  // TODO: Revisar la utilización del user y newUser.
-  async [AUTO_SIGN_IN]({ commit }, user) {
+  async [AUTO_SIGN_IN]({ state, commit }) {
     console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
     try {
+      const user = state.user
       const userId = user.uid
-      console.log('AUTO_SIGN_IN user es: ' + userId)
+      console.log('AUTO_SIGN_IN user es: ' + user)
 
       // Comprobamos que existe la base de datos de usuarios
       const usersDb = await createDb('users')
+      console.log('SI existe usersDb: ' + JSON.stringify(usersDb))
 
       // Recuperamos la información del usuario desde la base de datos local
       const localUser = await fetchDoc(usersDb, userId)
@@ -403,6 +404,10 @@ export default {
       console.log('signUserUp error: ' + error)
       commit('shared/SET_ERROR', null, { root: true })
     }
+  },
+
+  prueba() {
+    console.log('Esto es una prueba')
   },
 
   /**

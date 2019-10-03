@@ -11,8 +11,8 @@ export function createDb(nameDb) {
   try {
     const db = new PouchDB(nameDb, { auto_compaction: true })
     console.log('SI existe db' + JSON.stringify(db))
-    // console.log(JSON.stringify(db))
     return db
+    // return db
   } catch (error) {
     console.log('createDb error: ' + error)
   }
