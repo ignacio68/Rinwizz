@@ -10,11 +10,15 @@ export const AUTH_ERROR = 'AUTH_ERROR'
 export const USER_ERROR = 'USER_ERROR'
 
 // local dataBases
-
+// user
 export const CREATE_USER_LOCAL_DB = 'CREATE_USER_LOCAL_DB'
 export const UPDATE_USER_LOCAL_DB = 'UPDATE_USER_LOCAL_DB' // TODO: revisar uso
 export const GET_USER_DATA_LOCAL_DB = 'GET_USER_DATA_LOCAL_DB'
 export const REMOVE_USER_LOCAL_DB = 'REMOVE_USER_LOCAL_DB'
+// alerts
+export const CREATE_ALERTS_LOCAL_DB = 'CREATE_ALERTS_LOCAL_DB'
+export const PUT_ALERT_LOCAL_DB = 'PUT_ALERT_LOCAL_DB'
+export const GET_ALERTS = 'GET_ALERTS'
 
 // location
 export const GET_CURRENT_POSITION = 'GET_CURRENT_POSITION'

@@ -1,4 +1,4 @@
 export default {
-  loadedAlerts: [],
+  alerts: [],
   numAlerts: 0
 }

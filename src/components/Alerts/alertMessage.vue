@@ -75,20 +75,20 @@ export default {
   },
   props: {
     /**
-     * Acono del emisor
+     * Nombre de usuario
+     */
+    userName: {
+      type: String,
+      default: ''
+    },
+    /**
+     * Icono del emisor
      */
     userAvatar: {
       type: String,
       default: ''
     },
     altAvatar: {
-      type: String,
-      default: ''
-    },
-    /**
-     * Nombre de usuario
-     */
-    userName: {
       type: String,
       default: ''
     },
@@ -122,6 +122,22 @@ export default {
     linkButton: {
       type: String,
       default: ''
+    },
+    location: {
+      type: String,
+      default: ''
+    },
+    entities: {
+      type: Object,
+      default: {}
+    },
+    extendedEntities: {
+      type: Object,
+      default: {}
+    },
+    favoriteCount: {
+      type: Number,
+      default: 0
     }
   },
   data() {

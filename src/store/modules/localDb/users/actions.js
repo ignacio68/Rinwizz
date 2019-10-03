@@ -25,49 +25,42 @@ export default {
       root: true
     })
     try {
-      console.log('Estoy en userLocalDb')
       const user = JSON.parse(JSON.stringify(userSample))
-      if (user) {
-        console.log('CREATE_USER_LOCAL_DB: existe el user')
-        user._id = newUser.id
-        user.email = newUser.email
-        user.name = newUser.name
-        user.phone = newUser.phone
-        user.avatar = newUser.avatar
-        user.providerId = newUser.providerId
-        user.creationDate = newUser.creationDate
-        user.lastSignInDate = newUser.lastSignInDate
-        user.isAnonymous = newUser.isAnonymous
-        user.isVerified = newUser.isVerified
-        console.log('el user es: ' + JSON.stringify(user))
+      user._id = newUser.id
+      user.email = newUser.email
+      user.name = newUser.name
+      user.phone = newUser.phone
+      user.avatar = newUser.avatar
+      user.providerId = newUser.providerId
+      user.creationDate = newUser.creationDate
+      user.lastSignInDate = newUser.lastSignInDate
+      user.isAnonymous = newUser.isAnonymous
+      user.isVerified = newUser.isVerified
+      console.log('el user es: ' + JSON.stringify(user))
 
-        await commit('user/SET_USER', user, { root: true })
+      await commit('user/SET_USER', user, { root: true })
 
-        // Recuperamos la base de datos de usuarios almacenada en caché
-        const db = await getters.USERS_LOCAL_DB
-        // console.log('La base de datos es: ' + JSON.stringify(db))
-        // Creamos el documento del usuario
-        await createDoc(db, user)
-        // Establecemos la configuración
-        const config = JSON.parse(JSON.stringify(configSample))
-        config._id = user._id
-        config.dbName = 'users'
-        config.remote = cloudantConfig.url + '/' + config.dbName
-        console.log('La configuración es: ' + JSON.stringify(config))
+      // Recuperamos la base de datos de usuarios almacenada en caché
+      const db = await getters.USERS_LOCAL_DB
+      // console.log('La base de datos es: ' + JSON.stringify(db))
+      // Creamos el documento del usuario
+      await createDoc(db, user)
+      // Establecemos la configuración
+      const config = JSON.parse(JSON.stringify(configSample))
+      config._id = user._id
+      config.dbName = 'users'
+      config.remote = cloudantConfig.url + '/' + config.dbName
+      console.log('La configuración es: ' + JSON.stringify(config))
 
-        // Establecemos las opciones
-        const options = JSON.parse(JSON.stringify(optionsSample))
-        options.auth.username = authUsers.key
-        options.auth.password = authUsers.password
-        options.doc_ids.push(user._id)
-        console.log('Las opciones son: ' + JSON.stringify(options))
+      // Establecemos las opciones
+      const options = JSON.parse(JSON.stringify(optionsSample))
+      options.auth.username = authUsers.key
+      options.auth.password = authUsers.password
+      options.doc_ids.push(user._id)
+      console.log('Las opciones son: ' + JSON.stringify(options))
 
-        // Replicamos y sincronizamos la base de datos
-        await replyDb(db, config, options)
-      } else {
-        commit('shared/SET_ERROR', null, { root: true })
-        console.log('error, no existe el usuario')
-      }
+      // Replicamos y sincronizamos la base de datos
+      await replyDb(db, config, options)
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('Ha habido un error en CREATE_USER_LOCAL_DB: ' + error)

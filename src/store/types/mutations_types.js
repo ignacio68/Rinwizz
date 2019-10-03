@@ -1,20 +1,20 @@
 // alerts
 export const SET_LOADED_ALERTS = 'SET_LOADED_ALERTS'
-export const CREATE_ALERT = 'CREATE_ALERT'
-export const SET_NUM_ALERTS = 'SET_NUM_ALERTS'
+export const SET_ALERT = 'SET_ALERT'
 
 // errors
 export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
 
 // local databases
+// user
 export const SET_USERS_LOCAL_DB = 'SET_USERS_LOCAL_DB'
 export const SET_USER_LOCAL_DB = 'SET_USER_LOCAL_DB'
 export const SET_FOLLOWINGS = 'SET_FOLLOWINGS'
 export const SET_FOLLOWERS = 'SET_FOLLOWERS'
 export const GET_USERS_LOCAL_DB = 'GET_USERS_LOCAL_DB'
-
+// alerts
 export const SET_ALERTS_LOCAL_DB = 'SET_ALERTS_LOCAL_DB'
-export const SET_USER_ALERTS_LOCAL_DB = 'SET_USER_ALERTS_LOCAL_DB'
+export const SET_USER_ALERT_LOCAL_DB = 'SET_USER_ALERT_LOCAL_DB'
 
 // location
 export const SET_WATCH_ID = 'SET_WATCH_ID'

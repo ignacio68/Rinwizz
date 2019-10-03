@@ -37,35 +37,12 @@ export default {
       isOpen: false
     }
   },
-  created() {
-    console.log('AppSplitter.created()')
-  },
-  async beforeMount() {
+  beforeMount() {
     // Load the users database
     console.log('AppSplitter.beforeMount()')
-    try {
-      // Establecemos la configuración
-      const alertsConfig = await JSON.parse(JSON.stringify(configSample))
-      // const timeStamp = await Date.now()
-      // config._id = timeStamp + "/" + user._id
-      alertsConfig.dbName = 'alerts'
-      alertsConfig.remote = cloudantConfig.url + '/' + alertsConfig.dbName
-      console.log('La configuración es: ' + JSON.stringify(alertsConfig))
-
-      // Establecemos las opciones
-      const alertsOptions = await JSON.parse(JSON.stringify(optionsSample))
-      alertsOptions.auth.username = authAlerts.key
-      alertsOptions.auth.password = authAlerts.password
-      // options.doc_ids.push(user._id)
-      console.log('Las opciones son: ' + JSON.stringify(alertsOptions))
-
-      // Load the alerts database
-      const alertsDb = await createDb('alerts')
-      // Replicamos y sincronizamos la base de datos
-      await replyDb(alertsDb, alertsConfig, alertsOptions)
-    } catch (error) {
-      console.log('AppSplitter_beforeMounted error: ' + error)
-    }
+  },
+  created() {
+    console.log('AppSplitter.created()')
   },
   computed: {},
   methods: {}

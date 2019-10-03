@@ -43,12 +43,6 @@ import i18n from '@setup/i18n'
 // import VuexGeolocation from 'vuex-geolocation'
 
 /**
- *  Import database services
- */
-
-// import { createDb } from '@services/database'
-
-/**
  * Import Timer
  * TODO: Revisar si importar directamente en el componente
  */
@@ -100,17 +94,6 @@ Vue.config.productionTip = process.env.NODE_ENV === 'production'
  * Load Onsen
  */
 Vue.use(VueOnsen)
-
-/**
- * Load PouchDB
- */
-// PouchDB.plugin(require('pouchdb-find'))
-// PouchDB.plugin(require('pouchdb-live-find'))
-// PouchDB.plugin(require('pouchdb-authentication'))
-// Vue.use(pouchVue, {
-//   pouch: PouchDB,
-//   defaultDB: 'alertDatabase'
-// })
 
 /**
  * Load vuex-geolocation

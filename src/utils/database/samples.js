@@ -63,20 +63,19 @@ export const userSample = {
 /* *************** ALERT SAMPLE *************** */
 
 export const alertSample = {
-  _id: '', // usuario._id + creationDate
+  _id: '', // creationDate + usuario._id
   type: 'alert',
   title: '', // título de la alerta
   text: '', // texto completo
-  user: '', // _id del autor de la alerta
-  // user: {
-  //  id: ''  _id del emisor
-  //  name: '',
-  //  screenName: '',
-  //  avatar: '',
-  //  location: '',
-  //  url: '',
-  //  description: ''
-  // },
+  user: {
+    _id: '', // _id del autor de la alerta
+    name: '',
+    screenName: '',
+    avatar: '',
+    location: '',
+    url: '',
+    description: ''
+  },
   creationDate: 0, // fecha de la creación de la alerta
   endDate: 0, // caducidad de la alerta
   link: '', // link de la alerta
@@ -108,7 +107,7 @@ export const alertSample = {
   favoriteCount: 0 // numero de veces que la alerta ha sido clicada como favorita
 }
 
-/* *************** CONFIG SAMPLE *************** */
+/* *************** CONFIG DATABSE SAMPLE *************** */
 
 export const configSample = {
   _id: '',
@@ -118,7 +117,7 @@ export const configSample = {
   remote: ''
 }
 
-/* *************** OPTIONSSAMPLE *************** */
+/* *************** OPTIONS DATABASE SAMPLE *************** */
 
 export const optionsSample = {
   live: true,
@@ -134,4 +133,16 @@ export const optionsSample = {
   view: '',
   selector: '',
   since: null
+}
+
+/* *************** OPTIONS FETCH A BATCH OF DOCUMENTS *************** */
+
+export const optionsFetchBatchDocsSample = {
+  include_docs: true,
+  attachments: false,
+  startkey: '',
+  endkey: '',
+  limit: 0,
+  descending: false,
+  key: ''
 }

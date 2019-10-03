@@ -175,6 +175,6 @@ export async function fetchAllDocs(db, options) {
       'Todos los documentos han sido recuperados' + JSON.stringify(results)
     )
   } catch (error) {
-    console.log('fetchDocs error: ' + error)
+    console.log('fetchAllDocs error: ' + error)
   }
 }

@@ -38,13 +38,14 @@ export default {
     return {}
   },
   computed: {
-    ...mapState('user', { user: state => state.user }),
+    ...mapState('user', { user: state => state.user }), // preferible usar getters
     // ...mapGetters('user', { user: 'USER' }),
     ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
     userIsAuthenticated() {
       console.log(
-        'Comprobando si el usuario está autenticado: ' + console.log(this.user)
+        'Comprobando si el usuario está autenticado: ' +
+          console.log(JSON.stringify(this.user))
       )
       return this.user !== null && this.user !== undefined
     }

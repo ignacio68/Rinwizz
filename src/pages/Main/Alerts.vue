@@ -1,6 +1,9 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar
+      class="customToolbar"
+      :pageTitle="$t('lang.pages.alerts.toolbar')"
+    ></the-custom-toolbar>
 
     <div class="content">
       <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
@@ -13,8 +16,8 @@
       </h5>
       <h5 v-if="isVerified" class="dummyText">Estás verificado</h5>
 
-      <!-- Alerts list -->
-      <v-ons-list class="alertsList">
+      <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
+      <v-ons-list v-if="alerts > 0" class="alertsList">
         <v-ons-list-item
           :modifier="md ? 'nodivider' : ''"
           class="alertsList__item"
@@ -22,18 +25,22 @@
           :key="alert.id"
         >
           <alert-message
-            :userAvatar="alert.userAvatar"
+            :userName="alert.user.name"
+            :userAvatar="alert.user.avatar"
             :altAvatar="alert.userName + ' icon'"
-            :userName="alert.userName"
             :referenceDate="referenceDate"
-            :startDate="alert.startDate"
+            :startDate="alert.creationDate"
             :endDate="alert.endDate"
-            :alertTitle="alert.alertTitle"
-            :alertText="alert.alertText"
+            :alertTitle="alert.title"
+            :alertText="alert.text"
             :phoneButton="$t('lang.components.alerts.phoneButton')"
             :linkButton="$t('lang.components.alerts.linkButton')"
-            @phoneButtonEvent="toPhone(alert.alertPhone)"
-            @linkButtonEvent="toLink(alert.alertLink)"
+            @phoneButtonEvent="toPhone(alert.phone)"
+            @linkButtonEvent="toLink(alert.link)"
+            :location="alert.location.city"
+            :entities="alert.entities"
+            :extendedEntities="alert.extendedEntities"
+            :favoriteCount="alert.favoriteCount"
           ></alert-message>
         </v-ons-list-item>
       </v-ons-list>
@@ -55,44 +62,27 @@
         <v-ons-button @click.prevent="cancel">Cancel</v-ons-button>
         <v-ons-button @click.prevent="createAlert">Ok</v-ons-button>
       </v-ons-modal>
-
-      <!-- Botones para probrar funcionalidades -- Se pueden eliminar -->
-      <div class="buttonsGroup">
-        <v-ons-button
-          class="logOutButton__button"
-          name="logOutButton"
-          :disabled="false"
-          ripple="true"
-          @click.prevent="logOutUser"
-        >Logout User</v-ons-button>
-
-        <v-ons-button
-          class="deleteButton__button"
-          name="deleteButton"
-          :disabled="false"
-          ripple="true"
-          @click.prevent="deleteUser"
-        >Delete User</v-ons-button>
-
-        <v-ons-button
-          class="toJSON__button"
-          name="toJSONButton"
-          :disabled="false"
-          ripple="true"
-          @click.prevent="toJSON"
-        >User JSON</v-ons-button>
-      </div>
     </div>
-    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
-      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
+
+    <!-- Botón para lanzar el editor de alertas -->
+    <v-ons-fab
+      position="bottom right"
+      ripple="true"
+      @click.prevent="isModalVisible = true"
+    >
+      <v-ons-icon
+        class="alertScript__icon"
+        icon="ion-edit, material:zmdi-email-open"
+      ></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import alertMessage from '@components/Alerts/alertMessage'
 import alertScript from '@components/Alerts/alertScript'
+
 export default {
   name: 'alerts',
   components: {
@@ -137,6 +127,10 @@ export default {
       numAlerts: 0
     }
   },
+  async beforeMount() {
+    await this.CREATE_ALERTS_LOCAL_DB()
+    await this.GET_ALERTS()
+  },
   mounted() {
     console.log('montado Alerts.vue')
     this.numAlerts = document.getElementsByClassName('alertsList__item').length
@@ -149,13 +143,10 @@ export default {
       isVerified: state => state.user.isVerified,
       userAvatar: state => state.user.avatar
     }),
-    ...mapGetters('alerts', {
-      alerts: 'LOADED_ALERTS'
-    })
+    ...mapGetters('alertsLocalDb', { alerts: 'ALERTS_LOCAL_DB' })
   },
   methods: {
-    ...mapActions('user', ['LOGOUT_USER', 'DELETE_USER', 'TO_JSON']), // solo en producción luego borrar
-    ...mapMutations('alerts', [' SET_NUM_ALERTS']),
+    ...mapActions('alertsLocalDb', ['CREATE_ALERTS_LOCAL_DB', 'GET_ALERTS']),
 
     toPhone(phone) {
       console.log('phone to: ' + phone)
@@ -187,15 +178,6 @@ export default {
       // this.$VOnsModal('preHide', event => {
       //   console.log('Se cierra el modal')
       // })
-    },
-    logOutUser() {
-      this.LOGOUT_USER()
-    },
-    deleteUser() {
-      this.DELETE_USER()
-    },
-    toJSON() {
-      this.TO_JSON()
     }
   }
 }
@@ -223,23 +205,5 @@ export default {
 }
 .alertScript__icon {
   color: white;
-}
-.logOutButton {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.toJSONButton {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.buttonsGroup {
-  margin-left: 16px;
-  margin-right: 16px;
-}
-.button {
-  margin-top: 8px;
-  width: 100%;
-  background-color: red;
-  border-radius: 18px;
 }
 </style>

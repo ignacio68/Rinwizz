@@ -1,5 +1,5 @@
 // alerts
-export const LOADED_ALERTS = 'LOADED_ALERTS'
+export const GET_ALERTS = 'GET_ALERTS'
 export const NUM_ALERTS = 'NUM_ALERTS'
 
 // errors
@@ -10,9 +10,11 @@ export const USER_LOCATION = 'USER_LOCATION'
 export const USER_ADDRESS = 'USER_ADDRESS'
 
 // local databases
+// users
 export const USERS_LOCAL_DB = 'USERS_LOCAL_DB'
 export const GET_USER_FOLLOWINGS = 'GET_USER_FOLLOWINGS'
 export const GET_USER_FOLLOWERS = 'GET_USER_FOLLOWERS'
+// alerts
 export const ALERTS_LOCAL_DB = 'ALERTS_LOCAL_DB'
 
 // navigator

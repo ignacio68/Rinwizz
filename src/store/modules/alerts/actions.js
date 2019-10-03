@@ -1,4 +1,4 @@
-import { firebaseDb } from '@services/firebase'
+import { alertSample } from '@utils/database'
 
 import { CREATE_ALERT, LOAD_ALERTS } from '@store/types/actions_types'
 
@@ -8,90 +8,55 @@ export default {
    *
    * @param {Object} alertData - Datos de la alerta
    */
-  [CREATE_ALERT]: ({ commit }, alertData) => {
+  async [CREATE_ALERT]({ state, commit, dispatch }, user, alertData) {
     console.log('Estoy en createAlert')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    const alert = {
-      endDate: alertData.endDate,
-      title: alertData.title,
-      text: alertData.text,
-      link: alertData.link,
-      phone: alertData.alertPhone || '' // utilizar por defecto el guardado en Firebase
+    try {
+      // creamos el timeStamp
+      const startDate = Date.now()
+      console.log('La fecha de inicio de la alerta es: ' + startDate)
+
+      // Damos formato a la alerta
+      const alert = await JSON.parse(JSON.stringify(alertSample))
+      alert._id = startDate + '/' + user._id
+      alert.title = alertData.title
+      alert.text = alertData.text
+      alert.user = user
+      alert.creationDate = startDate
+      alert.endDate = alertData.endDate
+      alert.link = alertData.link
+      alert.phone = alertData.phone
+      alert.location = alertData.location
+      alert.entities = alertData.entities
+      alert.extendedEntities = alertData.extendedEntities
+      alert.favoriteCount = alertData.favoriteCount
+      console.log('el alert es: ' + JSON.stringify(alert))
+
+      await dispatch('alertsLocalDb/PUT_ALERT_LOCAL_DB'.alert, { root: true })
+    } catch (error) {
+      commit('shared/SET_ERROR', null, { root: true })
+      console.log('CREATE_ALERT es: ' + error)
     }
-    const startDate = Date.now()
-    let key
-    // Genera una nueva alerta en la base de datos
-    firebaseDb
-      .ref('alerts')
-      .push(alert)
-      .then(data => {
-        key = data.key
-        return key
-      })
-      // Actualizamos con la fecha de inicio de la alerta
-      // TODO: Hacerlo al crear la alerta
-      .then(key => {
-        // const startDate = Date.now()
-        return firebaseDb
-          .ref('alerts')
-          .child(key)
-          .update({ startDate: startDate })
-      })
-      // Añadimos el resto de la alerta a la base de datos local
-      .then(() => {
-        commit('CREATE_ALERT', {
-          ...alert,
-          id: key,
-          startDate: startDate
-        })
-        console.log(alert)
-        console.log(key)
-      })
-      .catch(error => {
-        commit('shared/SET_ERROR', null, { root: true })
-        console.log(error)
-      })
   },
 
   /**
+   *   DEPRECATED
+   *
    * Recuperamos las alertas de la base de datos
-   * Este punto hay que revisarlo a fondo
-   * cuando se desarrolle el proyecto
    *
    */
-  [LOAD_ALERTS]: ({ commit }) => {
+  async [LOAD_ALERTS]({ commit, dispatch }) {
+    console.log('Estoy en LOAD_ALERTS')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    console.log('Estoy en action:loadAlerts')
-    firebaseDb
-      .ref('alerts')
-      .once('value')
-      .then(data => {
-        console.log('Ahora estoy dentro de la base de datos /alert')
-        const alerts = [] // utilizar un objeto {}
-        const obj = data.val()
-        console.log(obj)
-        for (let key in obj) {
-          alerts.push({
-            id: key,
-            creatorId: obj[key].creatorId,
-            userIcon: obj[key].userIcon,
-            userName: obj[key].userName,
-            startDate: obj[key].startDate,
-            endDate: obj[key].endDate,
-            alertTitle: obj[key].title,
-            alertText: obj[key].text,
-            alertLink: obj[key].link,
-            alertPhone: obj[key].phone
-          })
-        }
-        commit('SET_LOADED_ALERTS', alerts)
+    try {
+      // Recuperamos las alertas de la base de datos
+      const alerts = await dispatch('alertsAlertsDb/GET_ALERTS', null, {
+        root: true
       })
-      .catch(error => {
-        commit('shared/SET_ERROR', error, { root: true })
-        console.log(error)
-      })
-    /**
-     * Cuenta las alertas disponibles
-     */
+      console.log('Las alertas son: ' + JSON.stringify(alerts))
+    } catch (error) {
+      commit('shared/SET_ERROR', null, { root: true })
+      console.log('LOAD_ALERTS error: ' + error)
+    }
   }
 }

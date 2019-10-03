@@ -10,7 +10,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="logOutUser"
-        >Logout User</v-ons-button>
+          >Logout User</v-ons-button
+        >
 
         <v-ons-button
           class="deleteButton__button"
@@ -18,7 +19,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="deleteUser"
-        >Delete User</v-ons-button>
+          >Delete User</v-ons-button
+        >
 
         <v-ons-button
           class="toJSON__button"
@@ -26,7 +28,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toJSON"
-        >User JSON</v-ons-button>
+          >User JSON</v-ons-button
+        >
       </div>
     </div>
   </v-ons-page>
@@ -54,4 +57,23 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.logOutButton {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.toJSONButton {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.buttonsGroup {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.button {
+  margin-top: 8px;
+  width: 100%;
+  background-color: red;
+  border-radius: 18px;
+}
+</style>

@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'alert-script',
@@ -131,6 +131,7 @@ export default {
     console.log('montado alertScript.vue')
   },
   computed: {
+    ...mapGetters('user', { user: 'USER' }),
     /**
      * Comprueba si el formulario es válido
      * los campos de título o texto deben de tener contenido
@@ -163,7 +164,8 @@ export default {
       if (!this.formIsValid) {
         return
       }
-      console.log('Estoy en onCreateAlert.startDate= ' + this.startDate)
+
+      // console.log('Estoy en onCreateAlert.startDate= ' + this.startDate)
       // Almacenamos los datos de la alerta
       // let parseEndDate = endDate.getTime()
       // this.finalDate = this.startDate + this.endDate
@@ -175,7 +177,7 @@ export default {
       }
       console.log(alertData)
       // Escribimos la alerta en la base de datos de Firebase
-      this.CREATE_ALERT(alertData)
+      this.CREATE_ALERT(this.user, alertData)
       // this.$router.push('/meetups')
       this.$emit('onCreateAlert')
       // ¡¡¡¡DA ERROR!!!!
@@ -211,5 +213,8 @@ export default {
 }
 .alertCard_verifiedIcon {
   color: blue;
+}
+.alertList__item-endDate {
+  font-size: 8px;
 }
 </style>

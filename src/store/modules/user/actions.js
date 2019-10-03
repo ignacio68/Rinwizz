@@ -73,22 +73,20 @@ export default {
         // Actualizamos el perfil de firebase con el displayName
         await dispatch('SET_USER_PROFILE', { displayName: newUser.name })
 
-        // Creamos al nuevo usuario en memoria
+        // Creamos al nuevo usuario en caché
         commit('SET_USER', newUser)
 
         // Creamos la base de datos local de usuarios
-        const usersDb = createDb('users')
+        const usersDb = await createDb('users')
         console.log('UsersDb es: ' + JSON.stringify(usersDb))
-        await commit('usersLocalDb/SET_USERS_LOCAL_DB', usersDb, { root: true })
 
-        // creamos la base de datos local de usuario (PouchDB)
+        // Creamos la base de datos en caché
+        commit('usersLocalDb/SET_USERS_LOCAL_DB', usersDb, { root: true })
+
+        // Creamos la base de del usuario (PouchDB)
         await dispatch('usersLocalDb/CREATE_USER_LOCAL_DB', newUser, {
           root: true
         })
-
-        // TODO: eliminar, utilizamos Cloudant
-        // Añadimos los datos a la base de datos (Realtime Database)
-        // await dispatch('userDb/CREATE_USER_DB', newUser, { root: true })
 
         console.log('Hay un nuevo usuario: ' + state.user.name)
         // Enviamos el email de confirmación
