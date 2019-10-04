@@ -386,9 +386,9 @@ export default {
     console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
     try {
-      const user = state.user
-      const userId = user.uid
-      console.log('AUTO_SIGN_IN user es: ' + user)
+      // const user = state.user
+      const userId = state.user.uid
+      console.log('AUTO_SIGN_IN user es: ' + userId)
 
       // Comprobamos que existe la base de datos de usuarios
       const usersDb = await createDb('users')

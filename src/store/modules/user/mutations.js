@@ -13,9 +13,13 @@ export default {
    * @param {object} newUser - Datos del nuevo usuario
    */
   [SET_USER]: (state, newUser) => {
+    // if (newUser.uid) {
+    //   const userId = newUser.uid
+    //   newUser._id = userId
+    //   delete newUser.uid
+    // }
     state.user = newUser
-    console.log('estoy en SET_USER')
-    console.log('El id de usuario es: ' + JSON.stringify(newUser))
+    console.log('SET_USER, el usuario es: ' + JSON.stringify(newUser))
   },
   /**
    * Resetea el usuario

@@ -2,7 +2,11 @@
   <v-ons-card class="alertCard">
     <div class="content">
       <v-ons-row class="row">
-        <img class="alertCard__userAvatar" :src="userAvatar" :alt="altAvatar" />
+        <img
+          class="alertCard__userAvatar"
+          :src="userAvatar"
+          :alt="altAvatar"
+        />
         <h3 class="alertCard_userName">{{ userName }}</h3>
         <v-ons-icon
           v-if="isVerified"
@@ -40,7 +44,10 @@
             ></textarea>
           </v-ons-list-item>
           <v-ons-list-item class="alertList__item">
-            <label for="endDate" class="alertList__item-label">
+            <label
+              for="endDate"
+              class="alertList__item-label"
+            >
               {{ $t('lang.components.alertScript.end') }}
             </label>
             <v-ons-select
@@ -53,8 +60,7 @@
                 v-for="option in options"
                 :value="option.value"
                 :key="option.id"
-                >{{ option.text }}</option
-              >
+              >{{ option.text }}</option>
             </v-ons-select>
           </v-ons-list-item>
           <v-ons-list-item class="alertList__item">
@@ -75,7 +81,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'alert-script',
@@ -131,7 +137,7 @@ export default {
     console.log('montado alertScript.vue')
   },
   computed: {
-    ...mapGetters('user', { user: 'USER' }),
+    ...mapState('user', ['user']),
     /**
      * Comprueba si el formulario es válido
      * los campos de título o texto deben de tener contenido
@@ -174,10 +180,12 @@ export default {
         endDate: this.alertEndDate,
         link: this.alertLink
       }
-      console.log(alertData)
-      // Escribimos la alerta en la base de datos de Firebase
-      this.CREATE_ALERT(this.user, alertData)
-      // this.$router.push('/meetups')
+      console.log('El emisor de la alerta es: ' + this.user.name)
+      console.log('alertScript alerta es: ' + JSON.stringify(alertData))
+
+      // Llamamos a la ación para escibir la alerta
+      this.CREATE_ALERT(alertData)
+
       this.$emit('onCreateAlert')
       // ¡¡¡¡DA ERROR!!!!
       // Reseteamos los campos de la alerta

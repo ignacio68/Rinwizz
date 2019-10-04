@@ -1,16 +1,25 @@
 <template>
   <v-ons-toolbar inline>
-    <div class="left">
-      <slot name="left">
-        <v-ons-back-button v-if="backLabel">
-          {{ backLabel }}
-        </v-ons-back-button>
-      </slot>
-    </div>
-    <div class="center">
-      <slot>{{ pageTitle }}</slot>
-    </div>
-    <div class="rigth"><slot></slot></div>
+    <template
+      #left
+      class="left"
+    >
+      <v-ons-back-button v-if="backLabel">
+        {{ backLabel }}
+      </v-ons-back-button>
+    </template>
+    <template
+      #default
+      class="center"
+    >
+      <p>
+        {{ pageTitle }}
+      </p>
+    </template>
+    <template
+      #right
+      class="rigth"
+    ></template>
   </v-ons-toolbar>
 </template>
 

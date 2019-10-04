@@ -8,13 +8,18 @@ export default {
    *
    * @param {Object} alertData - Datos de la alerta
    */
-  async [CREATE_ALERT]({ state, commit, dispatch }, user, alertData) {
+  async [CREATE_ALERT]({ getters, commit, dispatch, rootGetters }, alertData) {
     console.log('Estoy en createAlert')
     commit('shared/CLEAR_ERROR', null, { root: true })
+    const user = rootGetters['user/USER']
+    if (alertData) {
+      console.log('la alerta es: ' + JSON.stringify(alertData))
+    }
     try {
       // creamos el timeStamp
       const startDate = Date.now()
       console.log('La fecha de inicio de la alerta es: ' + startDate)
+      console.log('El autor es: ' + user.name)
 
       // Damos formato a la alerta
       const alert = await JSON.parse(JSON.stringify(alertSample))

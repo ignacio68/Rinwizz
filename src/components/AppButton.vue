@@ -1,7 +1,9 @@
-<template>
-  <button :style="styles" @click="handleClick">
+<template v-slot>
+  <button
+    :style="styles"
+    @click="handleClick"
+  >
     <!-- @slot Use this slot to place the button content -->
-    <slot></slot>
   </button>
 </template>
 

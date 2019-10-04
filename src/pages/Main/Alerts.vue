@@ -11,13 +11,22 @@
       <h5 class="dummyText">
         Este es tu Avatar
         <span>
-          <img class="alertCard__userAvatar" :src="userAvatar" />
+          <img
+            class="alertCard__userAvatar"
+            :src="userAvatar"
+          />
         </span>
       </h5>
-      <h5 v-if="isVerified" class="dummyText">Estás verificado</h5>
+      <h5
+        v-if="isVerified"
+        class="dummyText"
+      >Estás verificado</h5>
 
       <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
-      <v-ons-list v-if="alerts > 0" class="alertsList">
+      <v-ons-list
+        v-if="alerts > 0"
+        class="alertsList"
+      >
         <v-ons-list-item
           :modifier="md ? 'nodivider' : ''"
           class="alertsList__item"
@@ -138,12 +147,17 @@ export default {
     console.log('El nombre del usuario es: ' + this.userName)
   },
   computed: {
-    ...mapState('user', {
-      userName: state => state.user.name,
-      isVerified: state => state.user.isVerified,
-      userAvatar: state => state.user.avatar
-    }),
-    ...mapGetters('alertsLocalDb', { alerts: 'ALERTS_LOCAL_DB' })
+    ...mapState('user', ['user']),
+    ...mapGetters('alertsLocalDb', { alerts: 'ALERTS_LOCAL_DB' }),
+    userName() {
+      return this.user.name
+    },
+    isVerified() {
+      return this.user.isVerified
+    },
+    userAvatar() {
+      return this.user.avatar
+    }
   },
   methods: {
     ...mapActions('alertsLocalDb', ['CREATE_ALERTS_LOCAL_DB', 'GET_ALERTS']),
