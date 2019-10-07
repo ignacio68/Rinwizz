@@ -64,7 +64,7 @@ export default {
           phone: '',
           isVerified: user.emailVerified,
           isAnonymous: user.isAnonymous,
-          avatar: '../../../assets/user_icon.png',
+          avatar: '@assets/user_icon.png',
           providerId: user.providerId,
           creationDate: user.metadata.creationTime,
           lastSignInDate: user.metadata.lastSignInTime

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 // import { createDb } from '@services/database'
 
 // import HomePage from '@pages/HomePage'
@@ -38,8 +38,7 @@ export default {
     return {}
   },
   computed: {
-    ...mapState('user', { user: state => state.user }), // preferible usar getters
-    // ...mapGetters('user', { user: 'USER' }),
+    ...mapGetters('user', { user: 'USER' }),
     ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
     userIsAuthenticated() {

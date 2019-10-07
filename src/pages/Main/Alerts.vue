@@ -1,9 +1,6 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar
-      class="customToolbar"
-      :pageTitle="$t('lang.pages.alerts.toolbar')"
-    ></the-custom-toolbar>
+    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
 
     <div class="content">
       <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
@@ -11,22 +8,13 @@
       <h5 class="dummyText">
         Este es tu Avatar
         <span>
-          <img
-            class="alertCard__userAvatar"
-            :src="userAvatar"
-          />
+          <img class="alertCard__userAvatar" src="src/assets/Real-Madrid-logo-256.png" />
         </span>
       </h5>
-      <h5
-        v-if="isVerified"
-        class="dummyText"
-      >Estás verificado</h5>
+      <h5 v-if="isVerified" class="dummyText">Estás verificado</h5>
 
       <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
-      <v-ons-list
-        v-if="alerts"
-        class="alertsList"
-      >
+      <v-ons-list v-if="alerts" class="alertsList">
         <v-ons-list-item
           :modifier="md ? 'nodivider' : ''"
           class="alertsList__item"
@@ -74,15 +62,8 @@
     </div>
 
     <!-- Botón para lanzar el editor de alertas -->
-    <v-ons-fab
-      position="bottom right"
-      ripple="true"
-      @click.prevent="isModalVisible = true"
-    >
-      <v-ons-icon
-        class="alertScript__icon"
-        icon="ion-edit, material:zmdi-email-open"
-      ></v-ons-icon>
+    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
+      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -145,13 +126,13 @@ export default {
     console.log('montado Alerts.vue')
     this.numAlerts = document.getElementsByClassName('alertsList__item').length
     console.log('El número de alertas es: ' + this.numAlerts)
-    console.log('El nombre del usuario es: ' + this.userName)
+    console.log('El nombre del usuario es: ' + this.user.name)
   },
   computed: {
-    ...mapState('user', ['user']),
+    ...mapGetters('user', { user: 'USER' }),
     // ...mapGetters('alertsLocalDb', { alerts: 'ALERTS_LOCAL_DB' }),
     userName() {
-      return this.user.name
+      return this.user.displayName
     },
     isVerified() {
       return this.user.isVerified

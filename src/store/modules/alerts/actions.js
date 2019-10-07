@@ -25,7 +25,7 @@ export default {
 
       // Damos formato a la alerta
       const alert = await JSON.parse(JSON.stringify(alertSample))
-      alert._id = startDate + '/' + user._id
+      alert._id = user._id + ':' + startDate + '-' + user._id
       alert.title = alertData.title
       alert.text = alertData.text
       alert.user = user

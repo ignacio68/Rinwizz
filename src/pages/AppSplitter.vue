@@ -20,7 +20,7 @@
 
 <script>
 // import { DbConfig } from '@services/database'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { createDb, replyDb } from '@services/database'
 import { cloudantConfig, authAlerts } from '@setup/cloudant'
 import { configSample, optionsSample } from '@utils/database'
@@ -37,15 +37,18 @@ export default {
       isOpen: false
     }
   },
-  beforeMount() {
+  async beforeMount() {
     // Load the users database
     console.log('AppSplitter.beforeMount()')
+    await this.AUTO_SIGN_IN()
   },
   created() {
     console.log('AppSplitter.created()')
   },
   computed: {},
-  methods: {}
+  methods: {
+    ...mapActions('user', ['AUTO_SIGN_IN'])
+  }
 }
 </script>
 

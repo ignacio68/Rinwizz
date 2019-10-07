@@ -95,6 +95,7 @@ export default {
 
       // Recuperamos todas las alertas de la base de datos
       const alerts = await fetchAllDocs(db, options)
+      console.log('las alertas recuperadas son: ' + alerts)
       return alerts
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })

@@ -89,6 +89,11 @@ import TheCustomtoolbar from '@components/Shared/TheCustomToolbar' // NOTA: Redi
  * Global Config
  */
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
+// Error handler
+Vue.config.errorHandler = (err, vm, info) => {
+  console.log('****errorHandler: ' + err.message)
+  console.log('****errorHandler info: ' + info)
+}
 
 /**
  * Load Onsen
@@ -162,7 +167,7 @@ firebaseAuth().onAuthStateChanged(user => {
         console.log('Estoy en Main.created')
         if (user) {
           store.commit('user/SET_USER', user)
-          await store.dispatch('user/AUTO_SIGN_IN')
+          // await store.dispatch('user/AUTO_SIGN_IN')
           console.log('El usuario es: ' + JSON.stringify(user))
         } else {
           console.log('No existe user')
