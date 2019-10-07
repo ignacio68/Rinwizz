@@ -24,7 +24,7 @@
 
       <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
       <v-ons-list
-        v-if="alerts > 0"
+        v-if="alerts"
         class="alertsList"
       >
         <v-ons-list-item
@@ -129,6 +129,7 @@ export default {
           alertLink: 'https://www.atleticodemadrid.com/entradas'
         }
       },
+      alerts: {},
       isModalVisible: false,
       // userAvatar: '@assets/Real-Madrid-logo-256.png',
       // userName: null,
@@ -138,7 +139,7 @@ export default {
   },
   async beforeMount() {
     await this.CREATE_ALERTS_LOCAL_DB()
-    await this.GET_ALERTS()
+    this.alerts = await this.GET_ALERTS()
   },
   mounted() {
     console.log('montado Alerts.vue')
@@ -148,7 +149,7 @@ export default {
   },
   computed: {
     ...mapState('user', ['user']),
-    ...mapGetters('alertsLocalDb', { alerts: 'ALERTS_LOCAL_DB' }),
+    // ...mapGetters('alertsLocalDb', { alerts: 'ALERTS_LOCAL_DB' }),
     userName() {
       return this.user.name
     },
@@ -171,12 +172,13 @@ export default {
     },
     cancel() {
       this.isModalVisible = false
-      this.toHomePage()
+      // this.toHomePage()
     },
-    createAlert() {
-      this.isAlertVisible = false
+    async createAlert() {
+      this.isModalVisible = false
       this.$refs.alertScript.onCreateAlert()
-      this.toHomePage()
+      this.alerts = await this.GET_ALERTS()
+      // this.toHomePage()
     },
     // Establece la fecha de referencia según la configuración del timer
     loadDate() {

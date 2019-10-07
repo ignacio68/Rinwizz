@@ -1,5 +1,5 @@
 import { createDb, createDoc, replyDb, fetchAllDocs } from '@services/database'
-import { cloudantConfig, authUsers } from '@setup/cloudant'
+import { cloudantConfig, authAlerts } from '@setup/cloudant'
 import {
   configSample,
   optionsSample,
@@ -30,7 +30,7 @@ export default {
       commit('SET_ALERTS_LOCAL_DB', alertsDb)
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
-      console.log('CREATE_ULERTS_LOCAL_DB error: ' + error)
+      console.log('CREATE_ALERTS_LOCAL_DB error: ' + error)
     }
   },
 
@@ -39,7 +39,7 @@ export default {
    * @param {object} newAlert - Parametros de la alerta
    */
   async [PUT_ALERT_LOCAL_DB]({ getters, commit }, newAlert) {
-    console.log('CREATE_USER_ALERT_LOCAL_DB')
+    console.log('Estoy en PUT_ALERT_LOCAL_DB')
     console.log('el _id del usuario es: ' + newAlert._id)
 
     commit('shared/CLEAR_ERROR', null, {
@@ -55,32 +55,32 @@ export default {
       await createDoc(db, newAlert)
       // Establecemos la configuración
       const config = JSON.parse(JSON.stringify(configSample))
-      config._id = alert._id
+      config._id = newAlert._id
       config.dbName = 'alerts'
       config.remote = cloudantConfig.url + '/' + config.dbName
       console.log('La configuración es: ' + JSON.stringify(config))
 
       // Establecemos las opciones
       const options = JSON.parse(JSON.stringify(optionsSample))
-      options.auth.username = authUsers.key
-      options.auth.password = authUsers.password
-      options.doc_ids.push(alert._id)
+      options.auth.username = authAlerts.key
+      options.auth.password = authAlerts.password
+      // options.doc_ids.push(newAlert._id)
       console.log('Las opciones son: ' + JSON.stringify(options))
 
       // Replicamos y sincronizamos la base de datos
       await replyDb(db, config, options)
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
-      console.log('CREATE_USER_ALERT_LOCAL_DB error: ' + error)
+      console.log('PUT_ALERT_LOCAL_DB error: ' + error)
     }
   },
 
   /**
-   * Recuperamos las alertas de la base d e datos local
+   * Recuperamos las alertas de la base de datos local
    *
    */
   async [GET_ALERTS]({ getters, commit }) {
-    console.log('CREATE_USER_ALERT_LOCAL_DB')
+    console.log('GET_ALERTS')
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })

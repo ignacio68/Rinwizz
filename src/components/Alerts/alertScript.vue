@@ -178,7 +178,13 @@ export default {
         title: this.alertTitle,
         text: this.alertText,
         endDate: this.alertEndDate,
-        link: this.alertLink
+        link: this.alertLink,
+        // FIXME: valores actuales solo para desarrollo
+        phone: '',
+        location: '',
+        entities: '',
+        extendedEntities: '',
+        favoriteCount: 0
       }
       console.log('El emisor de la alerta es: ' + this.user.name)
       console.log('alertScript alerta es: ' + JSON.stringify(alertData))

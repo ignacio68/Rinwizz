@@ -14,6 +14,8 @@ export default {
     const user = rootGetters['user/USER']
     if (alertData) {
       console.log('la alerta es: ' + JSON.stringify(alertData))
+    } else {
+      console.log('No existe la alerta ')
     }
     try {
       // creamos el timeStamp
@@ -28,7 +30,7 @@ export default {
       alert.text = alertData.text
       alert.user = user
       alert.creationDate = startDate
-      alert.endDate = alertData.endDate
+      alert.endDate = startDate + alertData.endDate
       alert.link = alertData.link
       alert.phone = alertData.phone
       alert.location = alertData.location
@@ -37,7 +39,7 @@ export default {
       alert.favoriteCount = alertData.favoriteCount
       console.log('el alert es: ' + JSON.stringify(alert))
 
-      await dispatch('alertsLocalDb/PUT_ALERT_LOCAL_DB'.alert, { root: true })
+      await dispatch('alertsLocalDb/PUT_ALERT_LOCAL_DB', alert, { root: true })
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('CREATE_ALERT es: ' + error)
