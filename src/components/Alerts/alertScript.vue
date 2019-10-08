@@ -2,11 +2,7 @@
   <v-ons-card class="alertCard">
     <div class="content">
       <v-ons-row class="row">
-        <img
-          class="alertCard__userAvatar"
-          :src="userAvatar"
-          :alt="altAvatar"
-        />
+        <img class="alertCard__userAvatar" :src="userAvatar" :alt="altAvatar" />
         <h3 class="alertCard_userName">{{ userName }}</h3>
         <v-ons-icon
           v-if="isVerified"
@@ -44,10 +40,7 @@
             ></textarea>
           </v-ons-list-item>
           <v-ons-list-item class="alertList__item">
-            <label
-              for="endDate"
-              class="alertList__item-label"
-            >
+            <label for="endDate" class="alertList__item-label">
               {{ $t('lang.components.alertScript.end') }}
             </label>
             <v-ons-select
@@ -60,7 +53,8 @@
                 v-for="option in options"
                 :value="option.value"
                 :key="option.id"
-              >{{ option.text }}</option>
+                >{{ option.text }}</option
+              >
             </v-ons-select>
           </v-ons-list-item>
           <v-ons-list-item class="alertList__item">

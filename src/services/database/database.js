@@ -12,6 +12,7 @@ export function createDb(nameDb) {
   try {
     db = new PouchDB(nameDb, { auto_compaction: true })
     // console.log('SI existe db' + JSON.stringify(db))
+    return db
   } catch (error) {
     console.log('createDb error: ' + error)
   }
@@ -98,9 +99,11 @@ export async function deleteLocalDb(db) {
  */
 export async function createDoc(db, doc) {
   console.log('Estoy en createDoc')
+  let response
   try {
-    const response = await db.put(doc)
+    response = await db.put(doc)
     console.log('document create' + JSON.stringify(response))
+    return response
   } catch (error) {
     console.log('createDoc error: ' + error)
   }
@@ -136,10 +139,11 @@ export function updateDoc(db, docId, data) {
  * @param db { String } - local database name
  * @param docId { String } - document id
  */
-export function fetchDoc(db, docId) {
+export async function fetchDoc(db, docId) {
   console.log('Estoy en fetchDoc')
+  let doc
   try {
-    const doc = db.get(docId)
+    doc = await db.get(docId)
     console.log('documento recuperado: ' + JSON.stringify(doc))
     return doc
   } catch (error) {
@@ -172,9 +176,9 @@ export function deleteDoc(db, docId) {
  * @param db { String } - local database name
  * @param options { Array } - options
  */
-export function fetchAllDocs(db, options) {
+export async function fetchAllDocs(db, options) {
   try {
-    const docs = db.allDocs(options)
+    const docs = await db.allDocs(options)
     console.log(
       'Todos los documentos han sido recuperados' + JSON.stringify(docs)
     )

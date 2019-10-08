@@ -1,3 +1,4 @@
+// TODO: convertirlo en servicio
 import { storage } from '@services/firebase'
 
 import { PUT_FILE } from '@store/types/actions_types'

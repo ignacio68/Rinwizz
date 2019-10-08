@@ -19,11 +19,8 @@
 </template>
 
 <script>
-// import { DbConfig } from '@services/database'
-import { mapGetters, mapMutations, mapActions } from 'vuex'
-import { createDb, replyDb } from '@services/database'
-import { cloudantConfig, authAlerts } from '@setup/cloudant'
-import { configSample, optionsSample } from '@utils/database'
+import { mapGetters, mapMutations } from 'vuex'
+import { createDb, fetchDoc } from '@services/database'
 import Settings from './Settings'
 import HomePage from './HomePage'
 
@@ -40,8 +37,18 @@ export default {
   },
   async created() {
     console.log('AppSplitter.created()')
-    // Load the users database
-    await this.AUTO_SIGN_IN()
+    const usersDb = createDb('users')
+    if (usersDb) {
+      await fetchDoc(usersDb, this.user.uid)
+        .then(localUserdb => {
+          this.SET_USER(localUserdb)
+        })
+        .catch(error => {
+          console.log('fetchDoc error: ' + error)
+        })
+    } else {
+      console.log('No hay base de datos de usuarios')
+    }
   },
   beforeMount() {
     console.log('AppSplitter.beforeMount()')
@@ -49,9 +56,11 @@ export default {
   mounted() {
     console.log('AppSplitter.mounted()')
   },
-  computed: {},
+  computed: {
+    ...mapGetters('user', { user: 'USER' })
+  },
   methods: {
-    ...mapActions('user', ['AUTO_SIGN_IN'])
+    ...mapMutations('user', ['SET_USER'])
   }
 }
 </script>

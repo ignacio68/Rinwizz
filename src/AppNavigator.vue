@@ -10,7 +10,6 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-// import { createDb } from '@services/database'
 
 // import HomePage from '@pages/HomePage'
 import AppSplitter from '@pages/AppSplitter'
@@ -54,7 +53,6 @@ export default {
   },
   methods: {
     ...mapMutations('navigator', ['PUSH', 'POP']),
-    // ...mapMutations('usersLocalDb', ['SET_LOCAL_DB']),
 
     storePop() {
       this.POP()

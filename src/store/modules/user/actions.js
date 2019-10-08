@@ -382,30 +382,40 @@ export default {
    *
    * @param {String} user - id y email del usuario
    */
-  [AUTO_SIGN_IN]:({ getters, commit }) => {
+  async [AUTO_SIGN_IN]({ getters, commit }) {
     console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
     const user = getters.USER
-    let usersDb
-
-    try {
-      // Comprobamos que existe la base de datos de usuarios
-      usersDb = createDb('users')
-      // console.log('SI existe usersDb: ' + JSON.stringify(usersDb))
-    } catch (error) {
-      console.log('signUserUp error: ' + error)
-      commit('shared/SET_ERROR', null, { root: true })
-    }
+    const usersDb = createDb('users')
     if (usersDb) {
-      // Recuperamos la información del usuario desde la base de datos local
-      const localUser = fetchDoc(usersDb, user.uid)
-      console.log('El user es: ' + JSON.stringify(localUser))
-
-      // Actualizamos los datos del user en caché
-      commit('SET_USER', localUser)
-
-      return localUser
+      try {
+        const localUserDb = await fetchDoc(usersDb, user.uid)
+        commit('SET_USER', localUserDb)
+      } catch (error) {
+        console.log('AUTO_SIGN_IN error: ' + error)
+      }
+    } else {
+      console.log('AUTO_SIGN_IN error: no se ha creado la base de datos')
     }
+
+    //   // Comprobamos que existe la base de datos de usuarios
+    //   usersDb = createDb('users')
+    //   // console.log('SI existe usersDb: ' + JSON.stringify(usersDb))
+    // } catch (error) {
+    //   console.log('AUTO_SIGN_IN error: ' + error)
+    //   commit('shared/SET_ERROR', null, { root: true })
+    // }
+    // if (usersDb) {
+    //   // Recuperamos la información del usuario desde la base de datos local
+    //   const localUser = fetchDoc(usersDb, user.uid)
+    //   console.lo' + error)
+    // try {g('El user es: ' + JSON.stringify(localUser))
+
+    //   // Actualizamos los datos del user en caché
+    //   commit('SET_USER', localUser)
+
+    //   return localUser
+    // }
   },
 
   prueba() {

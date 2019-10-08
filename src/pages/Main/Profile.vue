@@ -12,11 +12,7 @@
         <v-ons-list class="profileList">
           <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
             <div class="left profileList__item-label">
-              <label for="textImput">
-                {{
-                $t('lang.pages.profile.main.list.input.name')
-                }}
-              </label>
+              <label for="textImput">{{ $t('lang.pages.profile.main.list.input.name') }}</label>
             </div>
             <div class="center profileList__item-input">
               <v-ons-input
@@ -32,11 +28,7 @@
           </v-ons-list-item>
           <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
             <div class="left profileList__item-label">
-              <label for="textImput">
-                {{
-                $t('lang.pages.profile.main.list.input.email')
-                }}
-              </label>
+              <label for="textImput">{{ $t('lang.pages.profile.main.list.input.email') }}</label>
             </div>
             <div class="center profileList__item-input">
               <v-ons-input id="email" type="email" :placeholder="userEmail" float disabled />
@@ -44,11 +36,7 @@
           </v-ons-list-item>
           <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
             <div class="left profileList__item-label">
-              <label for="textImput">
-                {{
-                $t('lang.pages.profile.main.list.input.location')
-                }}
-              </label>
+              <label for="textImput">{{ $t('lang.pages.profile.main.list.input.location') }}</label>
             </div>
             <div class="center profileList__item-input">
               <v-ons-input
@@ -61,11 +49,9 @@
               />
             </div>
           </v-ons-list-item>
-          <v-ons-list-header class="profileList__header">
-            {{
-            $t('lang.pages.profile.main.list.header1')
-            }}
-          </v-ons-list-header>
+          <v-ons-list-header
+            class="profileList__header"
+          >{{ $t('lang.pages.profile.main.list.header1') }}</v-ons-list-header>
         </v-ons-list>
       </form>
 
@@ -83,6 +69,27 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
+document.addEventListener(
+  'init',
+  event => {
+    if (event.target.matches('#profile')) {
+      console.log('profile is initiated.')
+    }
+  },
+  false
+)
+
+document.addEventListener(
+  'show',
+  event => {
+    if (event.target.matches('#profile')) {
+      console.log('profile is show.')
+    }
+  },
+  false
+)
+
 export default {
   name: 'profile',
   data() {
@@ -92,8 +99,14 @@ export default {
       location: ''
     }
   },
+  created() {
+    console.log('Profile.vue created()')
+  },
+  beforeMount() {
+    console.log('Profile.vue beforeMount()')
+  },
   mounted() {
-    console.log('montado Profile.vue')
+    console.log('Profile.vue mounted()')
   },
   computed: {
     ...mapGetters('user', { user: 'USER' }),

@@ -79,7 +79,7 @@ export default {
    * Recuperamos las alertas de la base de datos local
    *
    */
-  [GET_ALERTS]: ({ getters, commit }) => {
+  async [GET_ALERTS]({ getters, commit }) {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
@@ -93,7 +93,7 @@ export default {
       // límite de alertas a recuperar -- PRUEBA
       options.limits = 10
       // Recuperamos todas las alertas de la base de datos
-      alerts = fetchAllDocs(db, options)
+      alerts = await fetchAllDocs(db, options)
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('GET_ALERTS error: ' + error)

@@ -1,50 +1,32 @@
 <template>
   <div class="countdown">
     <v-ons-row>
-      <div
-        v-if="days > 0"
-        class="countdown__day"
-      >
+      <div v-if="days > 0" class="countdown__day">
         <span class="number">{{ days }}</span>
         <!--div class="format">{{ wordString.day }}</div-->
         <div>Dias</div>
       </div>
-      <div
-        v-if="hours > 0"
-        class="countdown__hour"
-      >
+      <div v-if="hours > 0" class="countdown__hour">
         <span class="number">{{ hours }}</span>
         <!--div class="format">{{ wordString.hours }}</div-->
         <div>Horas</div>
       </div>
-      <div
-        v-if="minutes > 0"
-        class="countdown__min"
-      >
+      <div v-if="minutes > 0" class="countdown__min">
         <span class="number">{{ minutes }}</span>
         <!--div class="format">{{ wordString.minutes }}</div-->
         <div>Minutos</div>
       </div>
-      <div
-        v-if="seconds > 0"
-        class="countdown__sec"
-      >
+      <div v-if="seconds > 0" class="countdown__sec">
         <span class="number">{{ seconds }}</span>
         <!--div class="format">{{ wordString.seconds }}</div-->
         <div>Seg</div>
       </div>
-      <div
-        v-if="finish"
-        class="finish"
-      >
+      <div v-if="finish" class="finish">
         <!-- TODO: INTERNACIONALIZAR -->
         <h3>FINALIZADA</h3>
       </div>
     </v-ons-row>
-    <div
-      class="countdown__status"
-      :class="statusType"
-    >{{ statusText }}</div>
+    <div class="countdown__status" :class="statusType">{{ statusText }}</div>
   </div>
 </template>
 <script>
