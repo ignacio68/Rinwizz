@@ -131,7 +131,7 @@ firebaseAuth().onAuthStateChanged(user => {
       store,
       render: h => h(AppNavigator),
       beforeCreate() {
-        console.log('Estoy en Main.beforeCreate()')
+        console.log('Estoy en Main beforeCreate()')
         // Shortcut for Material Design, IOS & web
         Vue.prototype.md = this.$ons.platform.isAndroid()
         Vue.prototype.ios = this.$ons.platform.isIOS()
@@ -164,14 +164,20 @@ firebaseAuth().onAuthStateChanged(user => {
         }
       },
       async created() {
-        console.log('Estoy en Main.created')
+        console.log('Main created()')
         if (user) {
           store.commit('user/SET_USER', user)
           // await store.dispatch('user/AUTO_SIGN_IN')
-          console.log('El usuario es: ' + JSON.stringify(user))
+          // console.log('El usuario es: ' + JSON.stringify(user))
         } else {
           console.log('No existe user')
         }
+      },
+      beforeMount() {
+        console.log('Main beforeMount()')
+      },
+      mounted() {
+        console.log('Main mounted()')
       }
     })
   }

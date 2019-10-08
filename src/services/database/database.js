@@ -8,13 +8,17 @@ import PouchDB from 'pouchdb-browser'
  */
 export function createDb(nameDb) {
   console.log('Estoy en createDb')
+  let db
   try {
-    const db = new PouchDB(nameDb, { auto_compaction: true })
-    console.log('SI existe db' + JSON.stringify(db))
-    return db
-    // return db
+    db = new PouchDB(nameDb, { auto_compaction: true })
+    // console.log('SI existe db' + JSON.stringify(db))
   } catch (error) {
     console.log('createDb error: ' + error)
+  }
+
+  if (db) {
+    console.log('SI existe db' + JSON.stringify(db))
+    return db
   }
 }
 
@@ -27,7 +31,7 @@ export async function replyDb(db, config, options) {
   console.log('Estoy en replyDb')
   try {
     const remote = config.remote
-    console.log('Remote es: ' + remote)
+    // console.log('Remote es: ' + remote)
     await db.replicate
       .from(remote, { doc_ids: options.doc_ids })
       .on('change', info => {
@@ -132,10 +136,10 @@ export function updateDoc(db, docId, data) {
  * @param db { String } - local database name
  * @param docId { String } - document id
  */
-export async function fetchDoc(db, docId) {
+export function fetchDoc(db, docId) {
   console.log('Estoy en fetchDoc')
   try {
-    const doc = await db.get(docId)
+    const doc = db.get(docId)
     console.log('documento recuperado: ' + JSON.stringify(doc))
     return doc
   } catch (error) {
@@ -168,12 +172,13 @@ export function deleteDoc(db, docId) {
  * @param db { String } - local database name
  * @param options { Array } - options
  */
-export async function fetchAllDocs(db, options) {
+export function fetchAllDocs(db, options) {
   try {
-    const results = await db.allDocs(options)
+    const docs = db.allDocs(options)
     console.log(
-      'Todos los documentos han sido recuperados' + JSON.stringify(results)
+      'Todos los documentos han sido recuperados' + JSON.stringify(docs)
     )
+    return docs
   } catch (error) {
     console.log('fetchAllDocs error: ' + error)
   }

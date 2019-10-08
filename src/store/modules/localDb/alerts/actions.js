@@ -16,14 +16,14 @@ import {
  * Creamos la bas ede datos local de las alertas
  */
 export default {
-  async [CREATE_ALERTS_LOCAL_DB]({ commit }) {
-    console.log('CREATE_ALERTS_LOCAL_DB')
+  [CREATE_ALERTS_LOCAL_DB]: ({ commit }) => {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
     try {
+      console.log('CREATE_ALERTS_LOCAL_DB')
       // Creamos la base de datos local
-      const alertsDb = await createDb('alerts')
+      const alertsDb = createDb('alerts')
       console.log('alertsDb es: ' + JSON.stringify(alertsDb))
 
       // creamos la base de datos en caché
@@ -58,14 +58,14 @@ export default {
       config._id = newAlert._id
       config.dbName = 'alerts'
       config.remote = cloudantConfig.url + '/' + config.dbName
-      console.log('La configuración es: ' + JSON.stringify(config))
+      // console.log('La configuración es: ' + JSON.stringify(config))
 
       // Establecemos las opciones
       const options = JSON.parse(JSON.stringify(optionsSample))
       options.auth.username = authAlerts.key
       options.auth.password = authAlerts.password
       // options.doc_ids.push(newAlert._id)
-      console.log('Las opciones son: ' + JSON.stringify(options))
+      // console.log('Las opciones son: ' + JSON.stringify(options))
 
       // Replicamos y sincronizamos la base de datos
       await replyDb(db, config, options)
@@ -79,27 +79,28 @@ export default {
    * Recuperamos las alertas de la base de datos local
    *
    */
-  async [GET_ALERTS]({ getters, commit }) {
-    console.log('GET_ALERTS')
+  [GET_ALERTS]: ({ getters, commit }) => {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
+    let alerts
+    // Recuperamos la base de datos de usuarios almacenada en caché
+    const db = getters.ALERTS_LOCAL_DB
     try {
-      // Recuperamos la base de datos de usuarios almacenada en caché
-      const db = await getters.ALERTS_LOCAL_DB
-
+      console.log('GET_ALERTS')
       // Establecemos la configuración -- Recuperarla como parametro
       const options = JSON.parse(JSON.stringify(optionsFetchBatchDocsSample))
       // límite de alertas a recuperar -- PRUEBA
       options.limits = 10
-
       // Recuperamos todas las alertas de la base de datos
-      const alerts = await fetchAllDocs(db, options)
-      console.log('las alertas recuperadas son: ' + alerts)
-      return alerts
+      alerts = fetchAllDocs(db, options)
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('GET_ALERTS error: ' + error)
+    }
+    if (alerts) {
+      console.log('las alertas recuperadas son: ' + JSON.stringify(alerts))
+      return alerts
     }
   }
 }

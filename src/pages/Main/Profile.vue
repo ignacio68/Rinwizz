@@ -2,6 +2,7 @@
   <v-ons-page id="profile">
     <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.profile.toolbar')"></the-custom-toolbar>
     <div class="content">
+      <h5 class="dummyText">Hola {{ userName }} estas son tus alertas</h5>
       <div class="picture">
         <!-- <img src="../../assets/user_icon.png" alt="user icon" class="picture__frame-photo"> -->
         <img src="src/assets/user_icon.png" alt="user photo" class="picture__frame-photo" />
@@ -96,13 +97,12 @@ export default {
   },
   computed: {
     ...mapGetters('user', { user: 'USER' }),
-
     userEmail() {
       const userEmail = this.user.email
       console.log('el email el usuario es: ' + userEmail)
     },
     userName() {
-      const userName = this.user.displayName
+      const userName = this.user.name
       console.log('el nombre de usuario es: ' + userName)
     },
     userPhoto() {

@@ -72,8 +72,8 @@ export default {
    * @param {Object} updateUser  Actualiza el usuario de la base de datos local
    */
   // TODO: UTILIZAR USER/user - Revisar
-  [UPDATE_USER_LOCAL_DB]: ({ state }, updateUser) => {
-    const usersLocalDb = state.usersLocalDb
+  [UPDATE_USER_LOCAL_DB]: ({ getters }, updateUser) => {
+    const usersLocalDb = getters.USERS_LOCAL_DB
     usersLocalDb.update({
       name: updateUser.name,
       location: updateUser.location
@@ -87,8 +87,8 @@ export default {
    * @param {Object} data Dato del usuario solicitado
    * @returns {String} Devuelve el dato del usuario solicitado
    */
-  [GET_USER_DATA_LOCAL_DB]: ({ state }, user) => {
-    const usersLocalDb = state.usersLocalDb
+  [GET_USER_DATA_LOCAL_DB]: ({ getters }, user) => {
+    const usersLocalDb = getters.USERS_LOCAL_DB
     return usersLocalDb.get(user)
   },
 
@@ -96,8 +96,8 @@ export default {
    * TODO: Revisarlo todo
    * Elimina el usuario de la base de datos local
    */
-  [REMOVE_USER_LOCAL_DB]: ({ state }, user) => {
-    const usersLocalDb = state.usersLocalDb
+  [REMOVE_USER_LOCAL_DB]: ({ getters }, user) => {
+    const usersLocalDb = getters.USERS_LOCAL_DB
     usersLocalDb.deleteDatabase(user)
   }
 }

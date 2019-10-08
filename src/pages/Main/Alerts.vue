@@ -1,6 +1,9 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar
+      class="customToolbar"
+      :pageTitle="$t('lang.pages.alerts.toolbar')"
+    ></the-custom-toolbar>
 
     <div class="content">
       <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
@@ -8,13 +11,22 @@
       <h5 class="dummyText">
         Este es tu Avatar
         <span>
-          <img class="alertCard__userAvatar" src="src/assets/Real-Madrid-logo-256.png" />
+          <img
+            class="alertCard__userAvatar"
+            src="src/assets/Real-Madrid-logo-256.png"
+          />
         </span>
       </h5>
-      <h5 v-if="isVerified" class="dummyText">Estás verificado</h5>
+      <h5
+        v-if="isVerified"
+        class="dummyText"
+      >Estás verificado</h5>
 
       <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
-      <v-ons-list v-if="alerts" class="alertsList">
+      <v-ons-list
+        v-if="alerts"
+        class="alertsList"
+      >
         <v-ons-list-item
           :modifier="md ? 'nodivider' : ''"
           class="alertsList__item"
@@ -62,8 +74,15 @@
     </div>
 
     <!-- Botón para lanzar el editor de alertas -->
-    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
-      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
+    <v-ons-fab
+      position="bottom right"
+      ripple="true"
+      @click.prevent="isModalVisible = true"
+    >
+      <v-ons-icon
+        class="alertScript__icon"
+        icon="ion-edit, material:zmdi-email-open"
+      ></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -72,6 +91,26 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 import alertMessage from '@components/Alerts/alertMessage'
 import alertScript from '@components/Alerts/alertScript'
+
+document.addEventListener(
+  'init',
+  event => {
+    if (event.target.matches('#alerts')) {
+      console.log('alerts is initiated.')
+    }
+  },
+  false
+)
+
+document.addEventListener(
+  'show',
+  event => {
+    if (event.target.matches('#alerts')) {
+      console.log('alerts is show.')
+    }
+  },
+  false
+)
 
 export default {
   name: 'alerts',
@@ -88,28 +127,7 @@ export default {
   },
   data() {
     return {
-      alerts_old: {
-        RealMadrid: {
-          userAvatar: 'src/assets/Real-Madrid-logo-256.png',
-          userName: 'Real Madrid',
-          endDate: 2563698,
-          alertTitle: 'Asientos partido Real Madrid-Barcelona',
-          alertText:
-            'Todavía quedan algunos asientos libres para el Clásico de esta tarde',
-          alertPhone: '',
-          alertLink: 'https://www.realmadrid.com/entradas'
-        },
-        AtleticoMadrid: {
-          userAvatar: 'src/assets/Atletico-Madrid-logo-256.png',
-          userName: 'Atlético de Madrid',
-          endDate: 4589752,
-          alertTitle: 'Palco VIP partido Atlético-Celta',
-          alertText:
-            'Tenemos un palco Vip en el primer anfiteatro para el partido de esta noche. 1.000€',
-          alertPhone: '',
-          alertLink: 'https://www.atleticodemadrid.com/entradas'
-        }
-      },
+      // user: {},
       alerts: {},
       isModalVisible: false,
       // userAvatar: '@assets/Real-Madrid-logo-256.png',
@@ -118,12 +136,19 @@ export default {
       numAlerts: 0
     }
   },
-  async beforeMount() {
-    await this.CREATE_ALERTS_LOCAL_DB()
+  async created() {
+    console.log('Alerts.vue created()')
+    // Load the users database
+    // this.user = await this.AUTO_SIGN_IN()
+    // Load the alerts database
+    this.CREATE_ALERTS_LOCAL_DB()
     this.alerts = await this.GET_ALERTS()
   },
+  beforeMount() {
+    console.log('Alerts.vue beforeMount()')
+  },
   mounted() {
-    console.log('montado Alerts.vue')
+    console.log('Alerts.vue mounted()')
     this.numAlerts = document.getElementsByClassName('alertsList__item').length
     console.log('El número de alertas es: ' + this.numAlerts)
     console.log('El nombre del usuario es: ' + this.user.name)
@@ -132,7 +157,7 @@ export default {
     ...mapGetters('user', { user: 'USER' }),
     // ...mapGetters('alertsLocalDb', { alerts: 'ALERTS_LOCAL_DB' }),
     userName() {
-      return this.user.displayName
+      return this.user.name
     },
     isVerified() {
       return this.user.isVerified
@@ -142,6 +167,7 @@ export default {
     }
   },
   methods: {
+    // ...mapActions('user', ['AUTO_SIGN_IN']),
     ...mapActions('alertsLocalDb', ['CREATE_ALERTS_LOCAL_DB', 'GET_ALERTS']),
 
     toPhone(phone) {

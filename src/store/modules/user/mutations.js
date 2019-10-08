@@ -18,8 +18,9 @@ export default {
     //   newUser._id = userId
     //   delete newUser.uid
     // }
+    console.log('mutation SET_USER')
     state.user = newUser
-    console.log('SET_USER, el usuario es: ' + JSON.stringify(newUser))
+    // console.log('SET_USER, el usuario es: ' + JSON.stringify(newUser))
   },
   /**
    * Resetea el usuario
@@ -38,11 +39,11 @@ export default {
   [UPDATE_USER]: (state, userData) => {
     console.log('Estoy UPDATE_USER')
     const user = state.user
-    console.log('El user es: ' + JSON.stringify(user))
+    // console.log('El user es: ' + JSON.stringify(user))
     const updatedUser = { ...user, ...userData }
-    console.log('El nuevo user es: ' + JSON.stringify(updatedUser))
+    // console.log('El nuevo user es: ' + JSON.stringify(updatedUser))
     state.user = updatedUser
-    console.log('state.user es: ' + JSON.stringify(state.user))
+    // console.log('state.user es: ' + JSON.stringify(state.user))
   },
   /**
    * Establece la credencial del usuario

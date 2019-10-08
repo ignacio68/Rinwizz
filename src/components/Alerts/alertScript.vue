@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'alert-script',
@@ -133,11 +133,16 @@ export default {
       ]
     }
   },
+  created() {
+    console.log('alertScript.vue created()')
+  },
+  beforeMount() {
+    console.log('alertScript.vue beforeMount()')
+  },
   mounted() {
-    console.log('montado alertScript.vue')
+    console.log('alertScript.vue mounted()')
   },
   computed: {
-    ...mapState('user', ['user']),
     /**
      * Comprueba si el formulario es válido
      * los campos de título o texto deben de tener contenido
@@ -186,7 +191,6 @@ export default {
         extendedEntities: '',
         favoriteCount: 0
       }
-      console.log('El emisor de la alerta es: ' + this.user.name)
       console.log('alertScript alerta es: ' + JSON.stringify(alertData))
 
       // Llamamos a la ación para escibir la alerta

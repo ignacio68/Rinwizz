@@ -1,5 +1,5 @@
 <template>
-  <v-ons-splitter>
+  <v-ons-splitter id="appSplitter">
     <v-ons-splitter-side
       collapse
       swipeable
@@ -26,6 +26,7 @@ import { cloudantConfig, authAlerts } from '@setup/cloudant'
 import { configSample, optionsSample } from '@utils/database'
 import Settings from './Settings'
 import HomePage from './HomePage'
+
 export default {
   name: 'AppSplitter',
   components: {
@@ -37,13 +38,16 @@ export default {
       isOpen: false
     }
   },
-  async beforeMount() {
+  async created() {
+    console.log('AppSplitter.created()')
     // Load the users database
-    console.log('AppSplitter.beforeMount()')
     await this.AUTO_SIGN_IN()
   },
-  created() {
-    console.log('AppSplitter.created()')
+  beforeMount() {
+    console.log('AppSplitter.beforeMount()')
+  },
+  mounted() {
+    console.log('AppSplitter.mounted()')
   },
   computed: {},
   methods: {

@@ -21,6 +21,12 @@ import Welcome from '@pages/Shared/Welcome'
 export default {
   name: 'AppNavigator',
 
+  data() {
+    return {}
+  },
+  created() {
+    console.log('AppNavigator created()')
+  },
   beforeMount() {
     console.log('AppNavigator beforeMount()')
     if (!this.userIsAuthenticated) {
@@ -32,20 +38,17 @@ export default {
     }
   },
   mounted() {
-    console.log('Estoy en AppNavigator.mounted')
-  },
-  data() {
-    return {}
+    console.log('AppNavigator mounted()')
   },
   computed: {
     ...mapGetters('user', { user: 'USER' }),
     ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
     userIsAuthenticated() {
-      console.log(
-        'Comprobando si el usuario está autenticado: ' +
-          console.log(JSON.stringify(this.user))
-      )
+      // console.log(
+      //   'Comprobando si el usuario está autenticado: ' +
+      //     console.log(JSON.stringify(this.user))
+      // )
       return this.user !== null && this.user !== undefined
     }
   },

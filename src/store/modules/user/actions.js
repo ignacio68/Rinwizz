@@ -382,27 +382,29 @@ export default {
    *
    * @param {String} user - id y email del usuario
    */
-  async [AUTO_SIGN_IN]({ state, commit }) {
+  [AUTO_SIGN_IN]:({ getters, commit }) => {
     console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
+    const user = getters.USER
+    let usersDb
+
     try {
-      // const user = state.user
-      const userId = state.user.uid
-      console.log('AUTO_SIGN_IN user es: ' + userId)
-
       // Comprobamos que existe la base de datos de usuarios
-      const usersDb = await createDb('users')
-      console.log('SI existe usersDb: ' + JSON.stringify(usersDb))
-
+      usersDb = createDb('users')
+      // console.log('SI existe usersDb: ' + JSON.stringify(usersDb))
+    } catch (error) {
+      console.log('signUserUp error: ' + error)
+      commit('shared/SET_ERROR', null, { root: true })
+    }
+    if (usersDb) {
       // Recuperamos la información del usuario desde la base de datos local
-      const localUser = await fetchDoc(usersDb, userId)
+      const localUser = fetchDoc(usersDb, user.uid)
       console.log('El user es: ' + JSON.stringify(localUser))
 
       // Actualizamos los datos del user en caché
       commit('SET_USER', localUser)
-    } catch (error) {
-      console.log('signUserUp error: ' + error)
-      commit('shared/SET_ERROR', null, { root: true })
+
+      return localUser
     }
   },
 

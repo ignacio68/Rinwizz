@@ -1,5 +1,5 @@
 <template>
-  <v-ons-page>
+  <v-ons-page id="homePage">
     <v-ons-tabbar
       position="bottom"
       swipeable
@@ -15,6 +15,26 @@ import { mapMutations } from 'vuex'
 import Alerts from './Main/Alerts'
 import Profile from './Main/Profile'
 import Search from './Main/Search'
+
+document.addEventListener(
+  'init',
+  event => {
+    if (event.target.matches('#homePage')) {
+      console.log('homePage is initiated.')
+    }
+  },
+  false
+)
+
+document.addEventListener(
+  'show',
+  event => {
+    if (event.target.matches('#homePage')) {
+      console.log('homePage is show.')
+    }
+  },
+  false
+)
 
 export default {
   name: 'homePage',
@@ -40,6 +60,17 @@ export default {
       ],
       numAlerts: '8'
     }
+  },
+  created() {
+    console.log('homePage.created()')
+    // Load the users database
+    // await this.AUTO_SIGN_IN()
+  },
+  beforeMount() {
+    console.log('homePage.beforeMount()')
+  },
+  mounted() {
+    console.log('homePage.mounted()')
   },
   computed: {
     index: {
