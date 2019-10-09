@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 
 // import HomePage from '@pages/HomePage'
 import AppSplitter from '@pages/AppSplitter'
@@ -40,14 +40,19 @@ export default {
     console.log('AppNavigator mounted()')
   },
   computed: {
-    ...mapGetters('user', { user: 'USER' }),
+    // ...mapGetters('user', { user: 'USER' }),
+    ...mapState('user', ['user']),
     ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
     userIsAuthenticated() {
-      // console.log(
-      //   'Comprobando si el usuario está autenticado: ' +
-      //     console.log(JSON.stringify(this.user))
-      // )
+      if (this.user) {
+        console.log(
+          'Comprobando si el usuario está autenticado: ' +
+            console.log(this.user._id)
+        )
+      } else {
+        console.log('No hay user')
+      }
       return this.user !== null && this.user !== undefined
     }
   },

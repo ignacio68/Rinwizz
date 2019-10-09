@@ -1,8 +1,5 @@
 <template>
-  <v-ons-splitter
-    id="appSplitter"
-    v-if="ready"
-  >
+  <v-ons-splitter id="appSplitter" v-if="ready">
     <v-ons-splitter-side
       collapse
       swipeable
@@ -22,11 +19,11 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { createDb, fetchDoc } from '@services/database'
 import Settings from './Settings'
 import HomePage from './HomePage'
-// import syncDataSatatus from 'mixins'
+import asyncDataStatus from '@mixins/asyncDataStatus'
 
 export default {
   name: 'AppSplitter',
@@ -34,31 +31,27 @@ export default {
     Settings,
     HomePage
   },
+  mixins: [asyncDataStatus],
   data() {
     return {
-      isOpen: false,
-      ready: false
+      isOpen: false
     }
   },
   async created() {
     console.log('AppSplitter.created()')
-    const usersDb = createDb('users')
-    if (usersDb) {
-      await fetchDoc(usersDb, this.user.uid)
-        .then(localUserDb => {
-          this.SET_USER(localUserDb)
-          return localUserDb
-        })
-        .then(localUserDb => {
-          this.ready = true
-          console.log('ready es: ' + this.ready)
-        })
-        .catch(error => {
-          console.log('fetchDoc error: ' + error)
-        })
-    } else {
-      console.log('No hay base de datos de usuarios')
-    }
+    await this.AUTO_SIGN_IN()
+    // const usersDb = createDb('users')
+    // if (usersDb) {
+    //   await fetchDoc(usersDb, this.user._id)
+    //     .then(localUserDb => {
+    //       this.SET_USER(localUserDb)
+    //     })
+    //     .catch(error => {
+    //       console.log('fetchDoc error: ' + error)
+    //     })
+    // } else {
+    //   console.log('No hay base de datos de usuarios')
+    // }
   },
   beforeMount() {
     console.log('AppSplitter.beforeMount()')
@@ -70,7 +63,8 @@ export default {
     ...mapGetters('user', { user: 'USER' })
   },
   methods: {
-    ...mapMutations('user', ['SET_USER'])
+    ...mapMutations('user', ['SET_USER']),
+    ...mapActions('user', ['AUTO_SIGN_IN'])
   }
 }
 </script>

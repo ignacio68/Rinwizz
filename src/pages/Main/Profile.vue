@@ -1,18 +1,30 @@
 <template>
   <v-ons-page id="profile">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.profile.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar
+      class="customToolbar"
+      :pageTitle="$t('lang.pages.profile.toolbar')"
+    ></the-custom-toolbar>
     <div class="content">
       <h5 class="dummyText">Hola {{ userName }} estas son tus alertas</h5>
       <div class="picture">
         <!-- <img src="../../assets/user_icon.png" alt="user icon" class="picture__frame-photo"> -->
-        <img src="src/assets/user_icon.png" alt="user photo" class="picture__frame-photo" />
+        <img
+          src="src/assets/user_icon.png"
+          alt="user photo"
+          class="picture__frame-photo"
+        />
       </div>
       <h2>La foto es: {{ userPhoto }}</h2>
       <form>
         <v-ons-list class="profileList">
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="profileList__item"
+          >
             <div class="left profileList__item-label">
-              <label for="textImput">{{ $t('lang.pages.profile.main.list.input.name') }}</label>
+              <label for="textImput">
+                {{ $t('lang.pages.profile.main.list.input.name') }}
+              </label>
             </div>
             <div class="center profileList__item-input">
               <v-ons-input
@@ -26,17 +38,33 @@
               />
             </div>
           </v-ons-list-item>
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="profileList__item"
+          >
             <div class="left profileList__item-label">
-              <label for="textImput">{{ $t('lang.pages.profile.main.list.input.email') }}</label>
+              <label for="textImput">
+                {{ $t('lang.pages.profile.main.list.input.email') }}
+              </label>
             </div>
             <div class="center profileList__item-input">
-              <v-ons-input id="email" type="email" :placeholder="userEmail" float disabled />
+              <v-ons-input
+                id="email"
+                type="email"
+                :placeholder="userEmail"
+                float
+                disabled
+              />
             </div>
           </v-ons-list-item>
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="profileList__item"
+          >
             <div class="left profileList__item-label">
-              <label for="textImput">{{ $t('lang.pages.profile.main.list.input.location') }}</label>
+              <label for="textImput">
+                {{ $t('lang.pages.profile.main.list.input.location') }}
+              </label>
             </div>
             <div class="center profileList__item-input">
               <v-ons-input
@@ -49,9 +77,9 @@
               />
             </div>
           </v-ons-list-item>
-          <v-ons-list-header
-            class="profileList__header"
-          >{{ $t('lang.pages.profile.main.list.header1') }}</v-ons-list-header>
+          <v-ons-list-header class="profileList__header">
+            {{ $t('lang.pages.profile.main.list.header1') }}
+          </v-ons-list-header>
         </v-ons-list>
       </form>
 
@@ -62,7 +90,8 @@
         :disabled="false"
         ripple="true"
         @click.prevent="onSave"
-      >{{ $t('lang.pages.profile.main.button') }}</v-ons-button>
+        >{{ $t('lang.pages.profile.main.button') }}</v-ons-button
+      >
     </div>
   </v-ons-page>
 </template>
@@ -111,20 +140,20 @@ export default {
   computed: {
     ...mapGetters('user', { user: 'USER' }),
     userEmail() {
-      const userEmail = this.user.email
-      console.log('el email el usuario es: ' + userEmail)
+      console.log('el email el usuario es: ' + this.user.email)
+      return this.user.email
     },
     userName() {
-      const userName = this.user.name
-      console.log('el nombre de usuario es: ' + userName)
+      console.log('el nombre de usuario es: ' + this.user.name)
+      return this.user.name
     },
     userPhoto() {
-      const userPhoto = this.user.avatar
-      console.log('la foto del usuario es: ' + userPhoto)
+      console.log('la foto del usuario es: ' + this.user.avatar)
+      return this.user.avatar
     },
     userLocation() {
-      const userLocation = this.user.location
-      console.log('la localización del usuario es: ' + userLocation)
+      console.log('la localización del usuario es: ' + this.user.location)
+      return this.user.location
     }
   },
   methods: {

@@ -6,10 +6,7 @@
     ></the-custom-toolbar>
 
     <div class="content">
-      <v-ons-pull-hook
-        :action="onUpdatedAlerts"
-        id="pullHook"
-      >
+      <v-ons-pull-hook :action="onUpdatedAlerts" id="pullHook">
         <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
         <h5 class="dummyText">Hola {{ userName }} estas son tus alertas</h5>
         <h5 class="dummyText">
@@ -21,16 +18,10 @@
             />
           </span>
         </h5>
-        <h5
-          v-if="isVerified"
-          class="dummyText"
-        >Estás verificado</h5>
+        <h5 v-if="isVerified" class="dummyText">Estás verificado</h5>
 
         <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
-        <v-ons-list
-          v-if="alerts"
-          class="alertsList"
-        >
+        <v-ons-list v-if="alerts" class="alertsList">
           <v-ons-list-item
             :modifier="md ? 'nodivider' : ''"
             class="alertsList__item"

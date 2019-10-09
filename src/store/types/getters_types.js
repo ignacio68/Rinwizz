@@ -32,4 +32,3 @@ export const SOCIAL_BUTTONS = 'SOCIAL_BUTTONS'
 
 // user
 export const USER = 'USER'
-export const USER_ID = 'USER_ID'

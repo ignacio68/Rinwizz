@@ -57,14 +57,14 @@ export default {
 
         // Añadimos los datos del nuevo usuario
         const newUser = {
-          id: user.uid,
+          _id: user.uid,
           email: user.email,
           // password: registeredUser.password,
           name: registeredUser.name,
           phone: '',
           isVerified: user.emailVerified,
           isAnonymous: user.isAnonymous,
-          avatar: '@assets/user_icon.png',
+          avatar: 'src/assets/user_icon.png',
           providerId: user.providerId,
           creationDate: user.metadata.creationTime,
           lastSignInDate: user.metadata.lastSignInTime
@@ -382,14 +382,18 @@ export default {
    *
    * @param {String} user - id y email del usuario
    */
-  async [AUTO_SIGN_IN]({ getters, commit }) {
+  async [AUTO_SIGN_IN]({ state, getters, commit, dispatch }) {
     console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    const user = getters.USER
+    // const user = getters.USER
+    const user = state.user
     const usersDb = createDb('users')
     if (usersDb) {
+      commit('usersLocalDb/SET_USERS_LOCAL_DB', usersDb, { root: true })
       try {
-        const localUserDb = await fetchDoc(usersDb, user.uid)
+        // TODO: replicar y sincronizar el doc del usuario con la base de datos remota
+        // await dispatch('usersLocalDb/CREATE_USER_LOCAL_DB')
+        const localUserDb = await fetchDoc(usersDb, user._id)
         commit('SET_USER', localUserDb)
       } catch (error) {
         console.log('AUTO_SIGN_IN error: ' + error)
@@ -439,7 +443,7 @@ export default {
     }
     // console.log(userUpdated)
     // commit('setUser', userUpdated)
-    const userId = state.user.id
+    const userId = state.user._id
     // FIXME: Actualizamos los datos en Firebase Realtime Database
     firebaseDb
       .ref('users/' + userId)

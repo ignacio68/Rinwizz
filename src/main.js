@@ -163,9 +163,14 @@ firebaseAuth().onAuthStateChanged(user => {
           }
         }
       },
-      created() {
+      async created() {
         console.log('Main created()')
-        this.$store.commit('user/SET_USER', user)
+        if (user) {
+          this.$store.commit('user/SET_USER', user)
+          // await store.dispatch('user/AUTO_SIGN_IN')
+        } else {
+          console.log('No existe el user')
+        }
       },
       beforeMount() {
         console.log('Main beforeMount()')

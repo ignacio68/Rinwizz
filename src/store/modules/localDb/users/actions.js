@@ -26,7 +26,7 @@ export default {
     })
     try {
       const user = JSON.parse(JSON.stringify(userSample))
-      user._id = newUser.id
+      user._id = newUser._id
       user.email = newUser.email
       user.name = newUser.name
       user.phone = newUser.phone
