@@ -1,6 +1,6 @@
-const path = require('path')
-const fs = require('fs')
-const prettier = require('prettier')
+import { resolve } from 'path'
+import { writeFile } from 'fs'
+import { format } from 'prettier'
 
 const aliases = {
   '@': '.',
@@ -9,6 +9,7 @@ const aliases = {
   '@assets': 'src/assets',
   '@components': 'src/components',
   '@locales': 'src/locales',
+  '@mixins': 'src/mixins',
   '@pages': 'src/router/pages',
   '@services': 'src/router/services',
   '@setup': 'src/setup',
@@ -17,22 +18,20 @@ const aliases = {
   '@utils': 'src/utils'
 }
 
-module.exports = {
-  webpack: {},
-  jest: {},
-  jsconfig: {}
-}
+export const webpack = {}
+export const jest = {}
+export const jsconfig = {}
 
 for (const alias in aliases) {
   const aliasTo = aliases[alias]
-  module.exports.webpack[alias] = resolveSrc(aliasTo)
+  webpack[alias] = resolveSrc(aliasTo)
   const aliasHasExtension = /\.\w+$/.test(aliasTo)
-  module.exports.jest[`^${alias}$`] = aliasHasExtension
+  jest[`^${alias}$`] = aliasHasExtension
     ? `<rootDir>/${aliasTo}`
     : `<rootDir>/${aliasTo}/index.js`
-  module.exports.jest[`^${alias}/(.*)$`] = `<rootDir>/${aliasTo}/$1`
-  module.exports.jsconfig[alias + '/*'] = [aliasTo + '/*']
-  module.exports.jsconfig[alias] = aliasTo.includes('/index.')
+  jest[`^${alias}/(.*)$`] = `<rootDir>/${aliasTo}/$1`
+  jsconfig[alias + '/*'] = [aliasTo + '/*']
+  jsconfig[alias] = aliasTo.includes('/index.')
     ? [aliasTo]
     : [
         aliasTo + '/index.js',
@@ -44,16 +43,16 @@ for (const alias in aliases) {
 }
 
 const jsconfigTemplate = require('./jsconfig.template') || {}
-const jsconfigPath = path.resolve(__dirname, 'jsconfig.json')
+const jsconfigPath = resolve(__dirname, 'jsconfig.json')
 
-fs.writeFile(
+writeFile(
   jsconfigPath,
-  prettier.format(
+  format(
     JSON.stringify({
       ...jsconfigTemplate,
       compilerOptions: {
         ...(jsconfigTemplate.compilerOptions || {}),
-        paths: module.exports.jsconfig
+        paths: jsconfig
       }
     }),
     {
@@ -72,5 +71,5 @@ fs.writeFile(
 )
 
 function resolveSrc(_path) {
-  return path.resolve(__dirname, _path)
+  return resolve(__dirname, _path)
 }

@@ -1,5 +1,8 @@
 <template>
-  <v-ons-splitter id="appSplitter">
+  <v-ons-splitter
+    id="appSplitter"
+    v-if="ready"
+  >
     <v-ons-splitter-side
       collapse
       swipeable
@@ -23,6 +26,7 @@ import { mapGetters, mapMutations } from 'vuex'
 import { createDb, fetchDoc } from '@services/database'
 import Settings from './Settings'
 import HomePage from './HomePage'
+// import syncDataSatatus from 'mixins'
 
 export default {
   name: 'AppSplitter',
@@ -32,7 +36,8 @@ export default {
   },
   data() {
     return {
-      isOpen: false
+      isOpen: false,
+      ready: false
     }
   },
   async created() {
@@ -40,8 +45,13 @@ export default {
     const usersDb = createDb('users')
     if (usersDb) {
       await fetchDoc(usersDb, this.user.uid)
-        .then(localUserdb => {
-          this.SET_USER(localUserdb)
+        .then(localUserDb => {
+          this.SET_USER(localUserDb)
+          return localUserDb
+        })
+        .then(localUserDb => {
+          this.ready = true
+          console.log('ready es: ' + this.ready)
         })
         .catch(error => {
           console.log('fetchDoc error: ' + error)

@@ -32,6 +32,7 @@ module.exports = {
       .set('@assets', resolve('src/assets'))
       .set('@components', resolve('src/components'))
       .set('@locales', resolve('src/locales'))
+      .set('@mixins', resolve('src/mixins'))
       .set('@pages', resolve('src/pages'))
       .set('@services', resolve('src/services'))
       .set('@setup', resolve('src/setup'))
