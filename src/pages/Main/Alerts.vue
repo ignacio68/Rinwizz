@@ -1,9 +1,6 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar
-      class="customToolbar"
-      :pageTitle="$t('lang.pages.alerts.toolbar')"
-    ></the-custom-toolbar>
+    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
 
     <div class="content">
       <v-ons-pull-hook :action="onUpdatedAlerts" id="pullHook">
@@ -12,10 +9,7 @@
         <h5 class="dummyText">
           Este es tu Avatar
           <span>
-            <img
-              class="alertCard__userAvatar"
-              src="src/assets/Real-Madrid-logo-256.png"
-            />
+            <img class="alertCard__userAvatar" src="src/assets/Real-Madrid-logo-256.png" />
           </span>
         </h5>
         <h5 v-if="isVerified" class="dummyText">Estás verificado</h5>
@@ -70,15 +64,8 @@
     </div>
 
     <!-- Botón para lanzar el editor de alertas -->
-    <v-ons-fab
-      position="bottom right"
-      ripple="true"
-      @click.prevent="isModalVisible = true"
-    >
-      <v-ons-icon
-        class="alertScript__icon"
-        icon="ion-edit, material:zmdi-email-open"
-      ></v-ons-icon>
+    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
+      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -169,6 +156,7 @@ export default {
   },
   computed: {
     ...mapGetters('alertsLocalDb', { updatedAlerts: 'ALERTS_LOCAL_DB' }),
+    ...mapState('user', ['user']),
     // ...mapGetters('user', { user: 'USER' }),
     userName() {
       return this.user.name
