@@ -1,21 +1,36 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar
+      class="customToolbar"
+      :pageTitle="$t('lang.pages.alerts.toolbar')"
+    ></the-custom-toolbar>
 
     <div class="content">
-      <v-ons-pull-hook :action="onUpdatedAlerts" id="pullHook">
+      <v-ons-pull-hook
+        :action="onUpdatedAlerts"
+        id="pullHook"
+      >
         <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
         <h5 class="dummyText">Hola {{ userName }} estas son tus alertas</h5>
         <h5 class="dummyText">
           Este es tu Avatar
           <span>
-            <img class="alertCard__userAvatar" src="src/assets/Real-Madrid-logo-256.png" />
+            <img
+              class="alertCard__userAvatar"
+              src="src/assets/Real-Madrid-logo-256.png"
+            />
           </span>
         </h5>
-        <h5 v-if="isVerified" class="dummyText">Estás verificado</h5>
+        <h5
+          v-if="isVerified"
+          class="dummyText"
+        >Estás verificado</h5>
 
         <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
-        <v-ons-list v-if="alerts" class="alertsList">
+        <v-ons-list
+          v-if="alerts"
+          class="alertsList"
+        >
           <v-ons-list-item
             :modifier="md ? 'nodivider' : ''"
             class="alertsList__item"
@@ -64,8 +79,15 @@
     </div>
 
     <!-- Botón para lanzar el editor de alertas -->
-    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
-      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
+    <v-ons-fab
+      position="bottom right"
+      ripple="true"
+      @click.prevent="isModalVisible = true"
+    >
+      <v-ons-icon
+        class="alertScript__icon"
+        icon="ion-edit, material:zmdi-email-open"
+      ></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -152,20 +174,18 @@ export default {
     this.numAlerts = document.getElementsByClassName('alertsList__item').length
     console.log('El número de alertas es: ' + this.numAlerts)
     console.log('El nombre del usuario es: ' + this.user.name)
-    console.log('El email del usuario es: ' + this.user.email)
   },
   computed: {
     ...mapGetters('alertsLocalDb', { updatedAlerts: 'ALERTS_LOCAL_DB' }),
-    ...mapState('user', ['user']),
-    // ...mapGetters('user', { user: 'USER' }),
+    ...mapGetters('user', { user: 'USER' }),
     userName() {
       return this.user.name
     },
     isVerified() {
-      return this.user.isVerified
+      return this.userisVerified
     },
     userAvatar() {
-      return this.user.avatar
+      return this.useravatar
     }
   },
   methods: {
@@ -194,7 +214,8 @@ export default {
     },
     // Establece la fecha de referencia según la configuración del timer
     loadDate() {
-      // Si no hay alertas o todas están caducadas parar el timer o no arrancar
+      // TODO: Si no hay alertas o todas están caducadas parar el timer o no arrancar
+      // TODO: utilizar nexTick para incrementar cada segundo
       this.referenceDate = Date.now()
       console.log('La fecha de referencia es:' + this.referenceDate)
     },
