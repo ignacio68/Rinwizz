@@ -135,10 +135,10 @@ export default {
   data() {
     return {
       // user: {},
-      alerts: {},
+      // alerts: {},
       isModalVisible: false,
       // userAvatar: '@assets/Real-Madrid-logo-256.png',
-      // userName: null,
+      userName: null,
       referenceDate: '',
       numAlerts: 0
     }
@@ -164,7 +164,7 @@ export default {
     //   console.log('No hay base de datos de alertas')
     // }
     this.CREATE_ALERTS_LOCAL_DB()
-    this.alerts = await this.GET_ALERTS()
+    // this.alerts = await this.GET_ALERTS()
   },
   beforeMount() {
     console.log('Alerts.vue beforeMount()')
@@ -176,16 +176,18 @@ export default {
     console.log('El nombre del usuario es: ' + this.user.name)
   },
   computed: {
-    ...mapGetters('alertsLocalDb', { updatedAlerts: 'ALERTS_LOCAL_DB' }),
     ...mapGetters('user', { user: 'USER' }),
-    userName() {
-      return this.user.name
-    },
+    ...mapGetters('alertsLocalDb', { alerts: 'ALERTS_LOCAL_DB' }),
+
     isVerified() {
       return this.userisVerified
     },
     userAvatar() {
       return this.useravatar
+    },
+    userName() {
+      return this.user.name
+      console.log('watch userName: ' + this.user.name)
     }
   },
   methods: {
@@ -209,8 +211,8 @@ export default {
       this.alerts = await this.GET_ALERTS()
       // this.toHomePage()
     },
-    onUpdatedAlerts() {
-      this.alerts = this.updatedAlerts
+    async onUpdatedAlerts() {
+      this.alerts = await this.GET_ALERTS()
     },
     // Establece la fecha de referencia según la configuración del timer
     loadDate() {

@@ -1,5 +1,5 @@
 <template>
-  <v-ons-splitter id="appSplitter" v-if="ready">
+  <v-ons-splitter id="appSplitter" v-if="isReady">
     <v-ons-splitter-side
       collapse
       swipeable

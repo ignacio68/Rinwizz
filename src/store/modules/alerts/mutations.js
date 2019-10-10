@@ -6,9 +6,9 @@ export default {
    *
    * @param {Object} alerts
    */
-  [SET_LOADED_ALERTS]: (state, alerts) => {
-    console.log('Estoy en setLoadedAlerts')
-    state.loadedAlerts = alerts
+  [SET_LOADED_ALERTS]: (state, loadedAlerts) => {
+    console.log('SET_LOADED_ALERTS')
+    state.loadedAlerts = loadedAlerts
     console.log(state.loadedAlerts)
   },
   /**
@@ -17,6 +17,7 @@ export default {
    * @param {Object} alert
    */
   [SET_ALERT]: (state, alert) => {
+    console.log('SET_ALERT')
     state.alerts.push(alert)
   }
 }
