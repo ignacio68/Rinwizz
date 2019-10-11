@@ -138,7 +138,7 @@ export default {
       // alerts: {},
       isModalVisible: false,
       // userAvatar: '@assets/Real-Madrid-logo-256.png',
-      userName: null,
+      // userName: null,
       referenceDate: '',
       numAlerts: 0
     }
@@ -187,7 +187,7 @@ export default {
     },
     userName() {
       return this.user.name
-      console.log('watch userName: ' + this.user.name)
+      console.log('userName: ' + this.user.name)
     }
   },
   methods: {

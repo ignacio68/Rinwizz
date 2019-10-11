@@ -1,8 +1,9 @@
-import { createDoc, replyDb } from '@services/database'
+import { createDb, createDoc, replyDb } from '@services/database'
 import { cloudantConfig, authUsers } from '@setup/cloudant'
 import { userSample, configSample, optionsSample } from '@utils/database'
 
 import {
+  CREATE_ALL_USERS_LOCAL_DB,
   CREATE_USER_LOCAL_DB,
   UPDATE_USER_LOCAL_DB,
   GET_USER_DATA_LOCAL_DB,
@@ -10,7 +11,22 @@ import {
 } from '@store/types/actions_types'
 
 export default {
-  // TODO: ¡¡REPASAR TODO URGENTEMENTE!!
+  /**
+   *  Crea la base de datos de todos los usuarios
+   *
+   * @param {}
+   */
+  [CREATE_ALL_USERS_LOCAL_DB]: ({ commit }) => {
+    console.log('estoy en CREATE_ALL_USER_LOCAL_DB')
+    createDb('users', { auto_compaction: true })
+      .then(allUsersDb => {
+        commit('SET_ALL_USERS_LOCAL_DB', allUsersDb)
+        return allUsersDb
+      })
+      .catch(error => {
+        console.log('CREATE_ALL_USER_LOCAL_DB error es:' + error)
+      })
+  },
 
   /**
    * Crea la base de datos local del usuario
@@ -81,7 +97,7 @@ export default {
   },
 
   /**
-   * TODO: Revisarlo todo
+   * TODO: Revisarlo todo, hacerlo desde el getter
    * Recupera los datos del usuario de la base de datos local
    *
    * @param {Object} data Dato del usuario solicitado

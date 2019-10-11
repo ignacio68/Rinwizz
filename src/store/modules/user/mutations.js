@@ -22,7 +22,7 @@ export default {
     console.log('mutation SET_USER')
     // Guardamos el nuevo usuario en el store
     state.user = newUser
-    console.log('SET_USER, el _id del usuario es: ' + JSON.stringify(newUser))
+    console.log('SET_USER, el _id del usuario es: ' + newUser._id)
   },
   /**
    * Resetea el usuario

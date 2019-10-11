@@ -2,27 +2,19 @@ import PouchDB from 'pouchdb-browser'
 
 /**
  * Create database
- * @param config { Object } - parametros necesarios para crear la base de datos
  *
- * TODO: separar la réplica y la sincronización
+ * @param nameDb { String } - nombre de la base de datos
+ * @param config { Object } - parametros opcionales para crear la base de datos
  */
-export function createDb(nameDb) {
-  console.log('Estoy en createDb')
-  let db
-  try {
-    db = new PouchDB(nameDb, { auto_compaction: true })
-    // console.log('SI existe db' + JSON.stringify(db))
-    return db
-  } catch (error) {
-    console.log('createDb error: ' + error)
-  }
-
-  if (db) {
-    console.log('SI existe db' + JSON.stringify(db))
-    return db
-  }
-}
-
+export const createDb = (nameDb, options) =>
+  new Promise((resolve, reject) => {
+    const db = PouchDB(nameDb, options)
+    if (db) {
+      resolve(db)
+    } else {
+      reject('No se ha podido crear la db')
+    }
+  })
 /**
  * Replicate and sync with the remote dataBase
  * @param remote { String } - remote database URL

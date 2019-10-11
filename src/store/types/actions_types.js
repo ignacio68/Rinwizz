@@ -11,6 +11,7 @@ export const USER_ERROR = 'USER_ERROR'
 
 // local dataBases
 // user
+export const CREATE_ALL_USERS_LOCAL_DB = 'CREATE_ALL_USERS_LOCAL_DB'
 export const CREATE_USER_LOCAL_DB = 'CREATE_USER_LOCAL_DB'
 export const UPDATE_USER_LOCAL_DB = 'UPDATE_USER_LOCAL_DB' // TODO: revisar uso
 export const GET_USER_DATA_LOCAL_DB = 'GET_USER_DATA_LOCAL_DB'

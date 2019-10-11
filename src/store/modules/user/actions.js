@@ -77,11 +77,14 @@ export default {
         commit('SET_USER', newUser)
 
         // Creamos la base de datos local de usuarios
-        const usersDb = await createDb('users')
-        console.log('UsersDb es: ' + JSON.stringify(usersDb))
+        await dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB', null, {
+          root: true
+        })
+        // const usersDb = await createDb('users')
+        // console.log('UsersDb es: ' + JSON.stringify(usersDb))
 
-        // Creamos la base de datos en caché
-        commit('usersLocalDb/SET_USERS_LOCAL_DB', usersDb, { root: true })
+        // // Creamos la base de datos en caché
+        // commit('usersLocalDb/SET_ALL_USERS_LOCAL_DB', usersDb, { root: true })
 
         // Creamos la base de del usuario (PouchDB)
         await dispatch('usersLocalDb/CREATE_USER_LOCAL_DB', newUser, {
@@ -173,7 +176,7 @@ export default {
    * @param {*} commit
    * @param {String} user
    */
-  async [LOGIN_USER]({ commit, dispatch }, logInUser) {
+  async [LOGIN_USER]({ getters, commit, dispatch, rootGetters }, logInUser) {
     console.log('Estoy en LOGIN_USER')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // Comprueba que el usuario existe en Firebase
@@ -187,7 +190,12 @@ export default {
       console.log('config._id es: ' + userId)
 
       // Recuperamos la información de la base de datos
-      const db = await createDb('users')
+      await dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB', null, {
+        root: true
+      })
+
+      const db = rootGetters['usersLocalDb/USERS_LOCAL_DB']
+      // const db = await createDb('users')
 
       // Establecemos los parametros de la confguracion
       const config = await JSON.parse(JSON.stringify(configSample))
@@ -382,44 +390,24 @@ export default {
    *
    * @param {String} user - id y email del usuario
    */
-  async [AUTO_SIGN_IN]({ state, getters, commit, dispatch }) {
+  [AUTO_SIGN_IN]: ({ getters, commit, dispatch }) => {
     console.log('Estoy en AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    // const user = getters.USER
-    const user = state.user
-    const usersDb = createDb('users')
-    if (usersDb) {
-      commit('usersLocalDb/SET_USERS_LOCAL_DB', usersDb, { root: true })
-      try {
+    const userId = getters.USER_ID
+    console.log('USER_ID: ' + userId)
+    // Creamos la base de datos local de usuarios
+    dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB', null, {
+      root: true
+    })
+      .then(allUsersDb => {
         // TODO: replicar y sincronizar el doc del usuario con la base de datos remota
         // await dispatch('usersLocalDb/CREATE_USER_LOCAL_DB')
-        const localUserDb = await fetchDoc(usersDb, user._id)
-        commit('SET_USER', localUserDb)
-      } catch (error) {
+        const user = fetchDoc(allUsersDb, userId)
+        commit('SET_USER', user)
+      })
+      .catch(error => {
         console.log('AUTO_SIGN_IN error: ' + error)
-      }
-    } else {
-      console.log('AUTO_SIGN_IN error: no se ha creado la base de datos')
-    }
-
-    //   // Comprobamos que existe la base de datos de usuarios
-    //   usersDb = createDb('users')
-    //   // console.log('SI existe usersDb: ' + JSON.stringify(usersDb))
-    // } catch (error) {
-    //   console.log('AUTO_SIGN_IN error: ' + error)
-    //   commit('shared/SET_ERROR', null, { root: true })
-    // }
-    // if (usersDb) {
-    //   // Recuperamos la información del usuario desde la base de datos local
-    //   const localUser = fetchDoc(usersDb, user.uid)
-    //   console.lo' + error)
-    // try {g('El user es: ' + JSON.stringify(localUser))
-
-    //   // Actualizamos los datos del user en caché
-    //   commit('SET_USER', localUser)
-
-    //   return localUser
-    // }
+      })
   },
 
   prueba() {

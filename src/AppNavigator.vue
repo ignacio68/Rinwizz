@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 // import HomePage from '@pages/HomePage'
 import AppSplitter from '@pages/AppSplitter'
@@ -32,6 +32,7 @@ export default {
       this.PUSH(Welcome)
       console.log('El usuario NO está autenticado')
     } else {
+      // this.CREATE_ALL_USERS_LOCAL_DB()
       this.PUSH(AppSplitter)
       console.log('El usuario SI está autenticado')
     }
@@ -40,15 +41,15 @@ export default {
     console.log('AppNavigator mounted()')
   },
   computed: {
-    // ...mapGetters('user', { user: 'USER' }),
-    ...mapState('user', ['user']),
+    ...mapGetters('user', { user: 'USER' }),
+    // ...mapState('user', ['user']),
     ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
     userIsAuthenticated() {
       if (this.user) {
         console.log(
           'Comprobando si el usuario está autenticado: ' +
-            console.log(this.user._id)
+            console.log(this.user.email)
         )
       } else {
         console.log('No hay user')
@@ -58,6 +59,7 @@ export default {
   },
   methods: {
     ...mapMutations('navigator', ['PUSH', 'POP']),
+    ...mapActions('usersLocalDb', ['CREATE_ALL_USERS_LOCAL_DB']),
 
     storePop() {
       this.POP()

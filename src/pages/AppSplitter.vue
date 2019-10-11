@@ -1,5 +1,5 @@
 <template>
-  <v-ons-splitter id="appSplitter" v-if="isReady">
+  <v-ons-splitter id="appSplitter">
     <v-ons-splitter-side
       collapse
       swipeable
@@ -20,7 +20,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import { createDb, fetchDoc } from '@services/database'
+import { fetchDoc } from '@services/database'
 import Settings from './Settings'
 import HomePage from './HomePage'
 import asyncDataStatus from '@mixins/asyncDataStatus'

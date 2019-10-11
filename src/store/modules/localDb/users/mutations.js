@@ -1,8 +1,7 @@
 // TODO: revisar si es de utilidad
 
 import {
-  SET_USERS_LOCAL_DB,
-  GET_USERS_LOCAL_DB,
+  SET_ALL_USERS_LOCAL_DB,
   SET_USER_LOCAL_DB,
   SET_FOLLOWINGS,
   SET_FOLLOWERS
@@ -10,17 +9,12 @@ import {
 
 export default {
   // Creamos la base de datos de usuarios
-  [SET_USERS_LOCAL_DB]: (state, localDb) => {
+  [SET_ALL_USERS_LOCAL_DB]: (state, localDb) => {
     console.log(
       'estoy en SET_USERS_LOCAL_DB y la base de datos es: ' +
         JSON.stringify(localDb)
     )
     state.usersLocalDb = localDb
-  },
-  // Recuperamos la base de datos de usuarios
-  // TODO: a eliminar
-  [GET_USERS_LOCAL_DB]: state => {
-    return state.usersLocalDb
   },
 
   [SET_USER_LOCAL_DB]: (state, localDb) => {
