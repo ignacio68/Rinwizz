@@ -11,7 +11,7 @@
         id="pullHook"
       >
         <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
-        <h5 class="dummyText">Hola {{ userName }} estas son tus alertas</h5>
+        <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
         <h5 class="dummyText">
           Este es tu Avatar
           <span>
@@ -67,10 +67,10 @@
         name="alertModal"
       >
         <alert-script
-          :userAvatar="userAvatar"
-          :altAvatar="userAvatar + ' icon'"
-          :userName="userName"
-          :isVerified="isVerified"
+          :userAvatar="user.avatar"
+          :altAvatar="user.avatar + ' icon'"
+          :userName="user.name"
+          :isVerified="user.isVerified"
           ref="alertScript"
         ></alert-script>
         <v-ons-button @click.prevent="cancel">Cancel</v-ons-button>
@@ -134,11 +134,8 @@ export default {
   },
   data() {
     return {
-      // user: {},
-      // alerts: {},
       isModalVisible: false,
       // userAvatar: '@assets/Real-Madrid-logo-256.png',
-      // userName: null,
       referenceDate: '',
       numAlerts: 0
     }
@@ -176,19 +173,25 @@ export default {
     console.log('El nombre del usuario es: ' + this.user.name)
   },
   computed: {
-    ...mapGetters('user', { user: 'USER' }),
-    ...mapGetters('alertsLocalDb', { alerts: 'ALERTS_LOCAL_DB' }),
+    // ...mapGetters('user',  ['USER'] ),
+    // ...mapGetters('alertsLocalDb', { alerts: 'ALERTS_LOCAL_DB' }),
+    user () {
+     return  this.$store.getters['user/USER']
+    },
+    alerts() {
+      return  this.$store.getters['alertsLocalDb/ALERTS_LOCAL_DB']
+    },
 
     isVerified() {
-      return this.userisVerified
+      return this.$store.getters['user/USER_IS_VERIFIED']
     },
-    userAvatar() {
-      return this.useravatar
-    },
-    userName() {
-      return this.user.name
-      console.log('userName: ' + this.user.name)
-    }
+    // userAvatar() {
+    //   return this.useravatar
+    // },
+    // userName() {
+    //   return this.user.name
+    //   console.log('userName: ' + this.user.name)
+    // }
   },
   methods: {
     // ...mapMutations('alertsLocalDb', ['SET_ALERTS_LOCAL_DB']),

@@ -69,7 +69,7 @@ export default {
         }
         // Datos del nuevo usuario
         const newUser = {
-          id: result.user.uid,
+          _id: result.user.uid,
           email: result.user.email,
           name: result.user.displayName,
           phone: result.user.phoneNumber,

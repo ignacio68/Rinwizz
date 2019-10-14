@@ -6,15 +6,25 @@ import PouchDB from 'pouchdb-browser'
  * @param nameDb { String } - nombre de la base de datos
  * @param config { Object } - parametros opcionales para crear la base de datos
  */
-export const createDb = (nameDb, options) =>
-  new Promise((resolve, reject) => {
+// export const createDb = (nameDb, options) =>
+//   new Promise((resolve, reject) => {
+//     const db = PouchDB(nameDb, options)
+//     if (db) {
+//       resolve(db)
+//     } else {
+//       reject('No se ha podido crear la db')
+//     }
+//   })
+export const createDb = (nameDb, options) => {
+  try {
     const db = PouchDB(nameDb, options)
-    if (db) {
-      resolve(db)
-    } else {
-      reject('No se ha podido crear la db')
-    }
-  })
+    console.log('Creada la base de datos: ' + JSON.stringify(db))
+    return db
+  } catch {
+    console.log('No se ha podido crear la db')
+  }
+}
+
 /**
  * Replicate and sync with the remote dataBase
  * @param remote { String } - remote database URL
@@ -127,21 +137,38 @@ export function updateDoc(db, docId, data) {
 }
 
 /**
- * Fetch a docuemnt
+ * Fetch a document - Async
  * @param db { String } - local database name
  * @param docId { String } - document id
  */
-export async function fetchDoc(db, docId) {
+export function fetchDoc(db, docId) {
   console.log('Estoy en fetchDoc')
-  let doc
   try {
-    doc = await db.get(docId)
+    const doc = db.get(docId)
     console.log('documento recuperado: ' + JSON.stringify(doc))
     return doc
   } catch (error) {
     console.log('fetchDoc error: ' + error)
   }
 }
+
+// /**
+//  * Fetch a document - Promesa
+//  * @param db { String } - local database name
+//  * @param docId { String } - document id
+//  */
+// export const fetchDoc = (db, docId) =>
+//   new Promise((resolve, reject) => {
+//     console.log('Estoy en fetchDoc')
+//     db.get(docId)
+//       .then(doc => {
+//         console.log('recuperado el usuario: ' + JSON.stringify(doc))
+//         resolve(doc)
+//       })
+//       .catch(error => {
+//         reject(error)
+//       })
+//   })
 
 /**
  * Delete document

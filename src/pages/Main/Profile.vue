@@ -5,7 +5,7 @@
       :pageTitle="$t('lang.pages.profile.toolbar')"
     ></the-custom-toolbar>
     <div class="content">
-      <h5 class="dummyText">Hola {{ userName }} estas son tus alertas</h5>
+      <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
       <div class="picture">
         <!-- <img src="../../assets/user_icon.png" alt="user icon" class="picture__frame-photo"> -->
         <img
@@ -14,7 +14,7 @@
           class="picture__frame-photo"
         />
       </div>
-      <h2>La foto es: {{ userPhoto }}</h2>
+      <h2>La foto es: {{ user.avatar }}</h2>
       <form>
         <v-ons-list class="profileList">
           <v-ons-list-item
@@ -30,7 +30,7 @@
               <v-ons-input
                 id="name"
                 type="name"
-                :placeholder="userName"
+                :placeholder="user.name"
                 float
                 modifier="transparent"
                 v-model="name"
@@ -51,7 +51,7 @@
               <v-ons-input
                 id="email"
                 type="email"
-                :placeholder="userEmail"
+                :placeholder="user.email"
                 float
                 disabled
               />
@@ -70,7 +70,7 @@
               <v-ons-input
                 id="location"
                 type="text"
-                :placeholder="userLocation"
+                :placeholder="user.location"
                 float
                 modifier="transparent"
                 v-model="location"
@@ -90,34 +90,13 @@
         :disabled="false"
         ripple="true"
         @click.prevent="onSave"
-        >{{ $t('lang.pages.profile.main.button') }}</v-ons-button
-      >
+      >{{ $t('lang.pages.profile.main.button') }}</v-ons-button>
     </div>
   </v-ons-page>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
-document.addEventListener(
-  'init',
-  event => {
-    if (event.target.matches('#profile')) {
-      console.log('profile is initiated.')
-    }
-  },
-  false
-)
-
-document.addEventListener(
-  'show',
-  event => {
-    if (event.target.matches('#profile')) {
-      console.log('profile is show.')
-    }
-  },
-  false
-)
+// import { mapGetters } from 'vuex'
 
 export default {
   name: 'profile',
@@ -137,24 +116,35 @@ export default {
   mounted() {
     console.log('Profile.vue mounted()')
   },
-  computed: {
-    ...mapGetters('user', { user: 'USER' }),
-    userEmail() {
-      console.log('el email el usuario es: ' + this.user.email)
-      return this.user.email
-    },
-    userName() {
-      console.log('el nombre de usuario es: ' + this.user.name)
-      return this.user.name
-    },
-    userPhoto() {
-      console.log('la foto del usuario es: ' + this.user.avatar)
-      return this.user.avatar
-    },
-    userLocation() {
-      console.log('la localización del usuario es: ' + this.user.location)
-      return this.user.location
+  watch: {
+    user(value) {
+      if (value !== null && value !== undefined) {
+        return this.user()
+      }
     }
+  },
+
+  computed: {
+    // ...mapGetters('user', ['USER']),
+    user() {
+      return this.$store.getters['user/USER']
+    }
+    // userEmail() {
+    //   console.log('el email el usuario es: ' + this.user.email)
+    //   return this.user.email
+    // },
+    // userName() {
+    //   console.log('el nombre de usuario es: ' + this.user.name)
+    //   return this.user.name
+    // },
+    // userPhoto() {
+    //   console.log('la foto del usuario es: ' + this.user.avatar)
+    //   return this.user.avatar
+    // },
+    // userLocation() {
+    //   console.log('la localización del usuario es: ' + this.user.location)
+    //   return this.user.location
+    // }
   },
   methods: {
     /**
@@ -163,7 +153,7 @@ export default {
      */
     onSave() {
       const newUser = {}
-      newUser.userName = this.userName
+      newUser.name = this.userName
       newUser.location = this.userLocation
       this.$store.dispatch('user/updatedUserInfo', newUser)
       console.log('Guardo los cambios')

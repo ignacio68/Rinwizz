@@ -390,28 +390,20 @@ export default {
    *
    * @param {String} user - id y email del usuario
    */
-  [AUTO_SIGN_IN]: ({ getters, commit, dispatch }) => {
-    console.log('Estoy en AUTO_SIGN_IN')
+  async [AUTO_SIGN_IN]({ getters, commit }) {
+    console.log('AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
+    // Recuperamos el _id del usuario
     const userId = getters.USER_ID
     console.log('USER_ID: ' + userId)
     // Creamos la base de datos local de usuarios
-    dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB', null, {
-      root: true
-    })
-      .then(allUsersDb => {
-        // TODO: replicar y sincronizar el doc del usuario con la base de datos remota
-        // await dispatch('usersLocalDb/CREATE_USER_LOCAL_DB')
-        const user = fetchDoc(allUsersDb, userId)
-        commit('SET_USER', user)
-      })
-      .catch(error => {
-        console.log('AUTO_SIGN_IN error: ' + error)
-      })
-  },
-
-  prueba() {
-    console.log('Esto es una prueba')
+    const allUsersDb = await createDb('users', { auto_compaction: true })
+    console.log('allUsersDb: ' + JSON.stringify(allUsersDb))
+    console.log('userId: ' + JSON.stringify(userId))
+    commit('usersLocalDb/SET_ALL_USERS_LOCAL_DB', allUsersDb, { root: true })
+    const user = await fetchDoc(allUsersDb, userId)
+    console.log('Establecemos el usuario: ' + JSON.stringify(user))
+    commit('SET_USER', user)
   },
 
   /**
