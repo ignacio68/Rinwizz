@@ -77,6 +77,8 @@ import 'onsenui/esm/elements/ons-progress-circular' // TODO: REVISAR SU UTILIZAC
  */
 import AppNavigator from './AppNavigator'
 
+// import Fake from './Fake'
+
 /**
  * Import Components
  */
@@ -130,6 +132,7 @@ firebaseAuth().onAuthStateChanged(user => {
       i18n,
       store,
       render: h => h(AppNavigator),
+      // render: h => h(Fake),
       beforeCreate() {
         console.log('Estoy en Main beforeCreate()')
         // Shortcut for Material Design, IOS & web
@@ -167,7 +170,8 @@ firebaseAuth().onAuthStateChanged(user => {
         console.log('Main created()')
         if (user) {
           this.$store.commit('user/SET_USER', user)
-          // await store.dispatch('user/AUTO_SIGN_IN')
+          // const myUser = this.$store.state.user['user']
+          // console.log('myUser es: ' + JSON.stringify(myUser))
         } else {
           console.log('No existe el user')
         }

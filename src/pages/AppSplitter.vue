@@ -19,8 +19,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
-import { fetchDoc } from '@services/database'
+import { mapActions } from 'vuex'
 import Settings from './Settings'
 import HomePage from './HomePage'
 import asyncDataStatus from '@mixins/asyncDataStatus'
@@ -39,19 +38,9 @@ export default {
   },
   async created() {
     console.log('AppSplitter.created()')
+    // const myUser = this.$store.getters['user/user']
+    // console.log('myUser es: ' + JSON.stringify(myUser))
     await this.AUTO_SIGN_IN()
-    // const usersDb = createDb('users')
-    // if (usersDb) {
-    //   await fetchDoc(usersDb, this.user._id)
-    //     .then(localUserDb => {
-    //       this.SET_USER(localUserDb)
-    //     })
-    //     .catch(error => {
-    //       console.log('fetchDoc error: ' + error)
-    //     })
-    // } else {
-    //   console.log('No hay base de datos de usuarios')
-    // }
   },
   beforeMount() {
     console.log('AppSplitter.beforeMount()')
@@ -59,14 +48,10 @@ export default {
   mounted() {
     console.log('AppSplitter.mounted()')
   },
-  computed: {
-    ...mapGetters('user', { user: 'USER' })
-  },
   methods: {
-    ...mapMutations('user', ['SET_USER']),
     ...mapActions('user', ['AUTO_SIGN_IN'])
   }
 }
 </script>
 
-<style></style>
+<style scoped></style>

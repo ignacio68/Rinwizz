@@ -395,14 +395,15 @@ export default {
     commit('shared/CLEAR_ERROR', null, { root: true })
     // Recuperamos el _id del usuario
     const userId = getters.USER_ID
-    console.log('USER_ID: ' + userId)
     // Creamos la base de datos local de usuarios
     const allUsersDb = await createDb('users', { auto_compaction: true })
-    console.log('allUsersDb: ' + JSON.stringify(allUsersDb))
-    console.log('userId: ' + JSON.stringify(userId))
     commit('usersLocalDb/SET_ALL_USERS_LOCAL_DB', allUsersDb, { root: true })
+    // Replicamos la base de datos externa
+    // TODO: desarrollar
+    // await replyDb(allUsersDb, config, options)
+    // Recuperamos los datos del usuario
     const user = await fetchDoc(allUsersDb, userId)
-    console.log('Establecemos el usuario: ' + JSON.stringify(user))
+    // Guardamos los datos del usuario en caché
     commit('SET_USER', user)
   },
 

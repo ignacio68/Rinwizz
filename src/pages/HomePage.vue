@@ -1,11 +1,6 @@
 <template>
   <v-ons-page id="homePage">
-    <v-ons-tabbar
-      position="bottom"
-      swipeable
-      :tabs="tabs"
-      :index.sync="index"
-    ></v-ons-tabbar>
+    <v-ons-tabbar position="bottom" swipeable :tabs="tabs" :index.sync="index"></v-ons-tabbar>
   </v-ons-page>
 </template>
 
@@ -64,7 +59,6 @@ export default {
   created() {
     console.log('homePage.created()')
     // Load the users database
-    // await this.AUTO_SIGN_IN()
   },
   beforeMount() {
     console.log('homePage.beforeMount()')
@@ -75,7 +69,7 @@ export default {
   computed: {
     index: {
       get() {
-        return this.$store.getters['navigator/index']
+        return this.$store.getters['navigator/INDEX']
       },
       set(newValue) {
         this.SET(newValue)

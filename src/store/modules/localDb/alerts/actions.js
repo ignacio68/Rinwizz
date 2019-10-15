@@ -27,7 +27,7 @@ export default {
       console.log('alertsDb es: ' + JSON.stringify(alertsDb))
 
       // creamos la base de datos en caché
-      commit('SET_ALERTS_LOCAL_DB', alertsDb)
+      commit('SET_ALL_ALERTS_LOCAL_DB', alertsDb)
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('CREATE_ALERTS_LOCAL_DB error: ' + error)

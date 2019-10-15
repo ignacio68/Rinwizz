@@ -1,36 +1,21 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar
-      class="customToolbar"
-      :pageTitle="$t('lang.pages.alerts.toolbar')"
-    ></the-custom-toolbar>
+    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
 
     <div class="content">
-      <v-ons-pull-hook
-        :action="onUpdatedAlerts"
-        id="pullHook"
-      >
+      <v-ons-pull-hook :action="onUpdatedAlerts" id="pullHook">
         <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
         <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
         <h5 class="dummyText">
           Este es tu Avatar
           <span>
-            <img
-              class="alertCard__userAvatar"
-              src="src/assets/Real-Madrid-logo-256.png"
-            />
+            <img class="alertCard__userAvatar" src="src/assets/Real-Madrid-logo-256.png" />
           </span>
         </h5>
-        <h5
-          v-if="isVerified"
-          class="dummyText"
-        >Estás verificado</h5>
+        <h5 v-if="!isVerified" class="dummyText">No estás verificado</h5>
 
         <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
-        <v-ons-list
-          v-if="alerts"
-          class="alertsList"
-        >
+        <v-ons-list v-if="alerts" class="alertsList">
           <v-ons-list-item
             :modifier="md ? 'nodivider' : ''"
             class="alertsList__item"
@@ -79,23 +64,16 @@
     </div>
 
     <!-- Botón para lanzar el editor de alertas -->
-    <v-ons-fab
-      position="bottom right"
-      ripple="true"
-      @click.prevent="isModalVisible = true"
-    >
-      <v-ons-icon
-        class="alertScript__icon"
-        icon="ion-edit, material:zmdi-email-open"
-      ></v-ons-icon>
+    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
+      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-import { createDb, fetchAllDocs } from '@services/database'
-import { optionsFetchBatchDocsSample } from '@utils/database'
+// import { createDb, fetchAllDocs } from '@services/database'
+// import { optionsFetchBatchDocsSample } from '@utils/database'
 import alertMessage from '@components/Alerts/alertMessage'
 import alertScript from '@components/Alerts/alertScript'
 
@@ -137,10 +115,11 @@ export default {
       isModalVisible: false,
       // userAvatar: '@assets/Real-Madrid-logo-256.png',
       referenceDate: '',
-      numAlerts: 0
+      numAlerts: 0,
+      alerts: {}
     }
   },
-  async created() {
+  created() {
     console.log('Alerts.vue created()')
     // Load the alerts database    const usersDb = createDb('users')
     // const alertsDb = createDb('alerts')
@@ -152,7 +131,7 @@ export default {
     //   await fetchAllDocs(alertsDb, this.user.uid)
     //     .then(allAlerts => {
     //       this.alerts = allAlerts
-    //       this.SET_ALERTS_LOCAL_DB(alerts)
+    //       this.SET_ALL_ALERTS_LOCAL_DB(alerts)
     //     })
     //     .catch(error => {
     //       console.log('fetchAllDocs error: ' + error)
@@ -160,7 +139,7 @@ export default {
     // } else {
     //   console.log('No hay base de datos de alertas')
     // }
-    this.CREATE_ALERTS_LOCAL_DB()
+    // this.CREATE_ALERTS_LOCAL_DB()
     // this.alerts = await this.GET_ALERTS()
   },
   beforeMount() {
@@ -175,16 +154,17 @@ export default {
   computed: {
     // ...mapGetters('user',  ['USER'] ),
     // ...mapGetters('alertsLocalDb', { alerts: 'ALERTS_LOCAL_DB' }),
-    user () {
-     return  this.$store.getters['user/USER']
+    user() {
+      return this.$store.state.user['user']
     },
-    alerts() {
-      return  this.$store.getters['alertsLocalDb/ALERTS_LOCAL_DB']
-    },
+    // alerts() {
+    //   return this.$store.getters['alertsLocalDb/ALERTS_LOCAL_DB']
+    // },
 
     isVerified() {
-      return this.$store.getters['user/USER_IS_VERIFIED']
-    },
+      // return this.$store.getters['user/USER_IS_VERIFIED']
+      return this.$store.state.user['user'].isVerified
+    }
     // userAvatar() {
     //   return this.useravatar
     // },
@@ -194,7 +174,7 @@ export default {
     // }
   },
   methods: {
-    // ...mapMutations('alertsLocalDb', ['SET_ALERTS_LOCAL_DB']),
+    // ...mapMutations('alertsLocalDb', ['SET_ALL_ALERTS_LOCAL_DB']),
     ...mapActions('alertsLocalDb', ['CREATE_ALERTS_LOCAL_DB', 'GET_ALERTS']),
 
     toPhone(phone) {

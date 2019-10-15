@@ -41,16 +41,14 @@ export default {
     console.log('AppNavigator mounted()')
   },
   computed: {
-    ...mapGetters('user', { user: 'USER' }),
-    // ...mapState('user', ['user']),
+    // ...mapGetters('user', { user: 'USER' }),
+    ...mapState('user', ['user']),
     ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
     userIsAuthenticated() {
+      console.log('Comprobando si el usuario está autenticado')
       if (this.user) {
-        console.log(
-          'Comprobando si el usuario está autenticado: ' +
-            console.log(this.user.email)
-        )
+        console.log('hay user: ' + this.user.email)
       } else {
         console.log('No hay user')
       }
