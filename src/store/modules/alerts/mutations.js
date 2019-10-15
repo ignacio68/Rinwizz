@@ -1,4 +1,8 @@
-import { SET_LOADED_ALERTS, SET_ALERT } from '@store/types/mutations_types'
+import {
+  SET_LOADED_ALERTS,
+  SET_ALERT,
+  RESET_ALERTS
+} from '@store/types/mutations_types'
 
 export default {
   /**
@@ -11,13 +15,20 @@ export default {
     state.loadedAlerts = loadedAlerts
     console.log(state.loadedAlerts)
   },
+
   /**
+   * TODO: Revisar y posiblemente eliminar
    * Añade una alerta nueva al objeto loadedAlerts en el State
    *
    * @param {Object} alert
    */
   [SET_ALERT]: (state, alert) => {
     console.log('SET_ALERT')
-    state.alerts.push(alert)
-  }
+    state.loadedAlerts.push(alert)
+  },
+
+  /**
+   * Reseteamos las alertas
+   */
+  [RESET_ALERTS]: state => (state.loadedAlerts = null)
 }

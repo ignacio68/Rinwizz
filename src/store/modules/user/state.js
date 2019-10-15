@@ -24,5 +24,5 @@ export default {
   oobCode: '',
   actionCode: '',
   continueUrl: '',
-  user: {}
+  user: null
 }

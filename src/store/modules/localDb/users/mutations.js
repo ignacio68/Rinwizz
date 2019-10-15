@@ -11,8 +11,7 @@ export default {
   // Creamos la base de datos de usuarios
   [SET_ALL_USERS_LOCAL_DB]: (state, localDb) => {
     console.log(
-      'estoy en SET_USERS_LOCAL_DB y la base de datos es: ' +
-        JSON.stringify(localDb)
+      'estoy en SET_ALL_USERS_LOCAL_DB y la base de datos es: ' + localDb
     )
     state.usersLocalDb = localDb
   },

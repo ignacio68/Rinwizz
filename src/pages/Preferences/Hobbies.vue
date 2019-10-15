@@ -4,9 +4,7 @@
       <p>{{ $t('lang.pages.hobbies.main') }}</p>
       <br />
       <!------ DEPORTES ------->
-      <v-ons-list-title class="preferences__list-title"
-        >Deportes</v-ons-list-title
-      >
+      <v-ons-list-title class="preferences__list-title">Deportes</v-ons-list-title>
       <v-ons-list class="sports__list">
         <v-ons-list-item
           class="preferences__list-item"
@@ -15,11 +13,7 @@
           tappable
         >
           <label class="left">
-            <v-ons-checkbox
-              :input-id="'checkbox-' + $index"
-              :value="sport"
-              v-model="checkedSports"
-            ></v-ons-checkbox>
+            <v-ons-checkbox :input-id="'checkbox-' + $index" :value="sport" v-model="checkedSports"></v-ons-checkbox>
           </label>
           <label class="center" :for="'checkbox-' + $index">{{ sport }}</label>
         </v-ons-list-item>
@@ -41,16 +35,16 @@
               v-model="checkedEntertainments"
             ></v-ons-checkbox>
           </label>
-          <label class="center" :for="'checkbox-' + $index">{{
+          <label class="center" :for="'checkbox-' + $index">
+            {{
             entertainment
-          }}</label>
+            }}
+          </label>
         </v-ons-list-item>
       </v-ons-list>
 
       <!------ COMIDA Y BEBIDA ------->
-      <v-ons-list-title class="preferences__list-title"
-        >Comida y bebida</v-ons-list-title
-      >
+      <v-ons-list-title class="preferences__list-title">Comida y bebida</v-ons-list-title>
       <v-ons-list class="preferences__list">
         <v-ons-list-item
           class="preferences__list-item"
@@ -59,11 +53,7 @@
           tappable
         >
           <label class="left">
-            <v-ons-checkbox
-              :input-id="'checkbox-' + $index"
-              :value="food"
-              v-model="checkedFoods"
-            ></v-ons-checkbox>
+            <v-ons-checkbox :input-id="'checkbox-' + $index" :value="food" v-model="checkedFoods"></v-ons-checkbox>
           </label>
           <label class="center" :for="'checkbox-' + $index">{{ food }}</label>
         </v-ons-list-item>
@@ -77,8 +67,7 @@
           :disabled="false"
           ripple="true"
           @click.prevent="updateHobbies"
-          >{{ $t('lang.pages.hobbies.button') }}</v-ons-button
-        >
+        >{{ $t('lang.pages.hobbies.button') }}</v-ons-button>
       </div>
     </div>
   </v-ons-page>
@@ -106,18 +95,18 @@ export default {
   methods: {
     ...mapMutations('navigator', ['PUSH']),
     ...mapMutations('user', ['UPDATE_USER']),
-    async updateHobbies() {
-      const data = {
+    updateHobbies() {
+      const userData = {
         preferences: { sports: [], entertainments: [], foods: [] }
       }
-      data.preferences.sports.push(this.checkedSports)
-      data.preferences.entertainments.push(this.checkedEntertainments)
-      data.preferences.foods.push(this.checkedFoods)
-      await this.UPDATE_USER(data)
-      await this.toUserLocation()
+      userData.preferences.sports.push(this.checkedSports)
+      userData.preferences.entertainments.push(this.checkedEntertainments)
+      userData.preferences.foods.push(this.checkedFoods)
+      this.UPDATE_USER(userData)
+      this.toUserLocation()
     },
-    async toUserLocation() {
-      await this.PUSH(Greetings)
+    toUserLocation() {
+      this.PUSH(Greetings)
     }
   }
 }

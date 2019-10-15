@@ -1,6 +1,7 @@
 // alerts
 export const SET_LOADED_ALERTS = 'SET_LOADED_ALERTS'
 export const SET_ALERT = 'SET_ALERT'
+export const RESET_ALERTS = 'RESET_ALERTS'
 
 // errors
 export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
@@ -37,6 +38,6 @@ export const SET_LANGUAGE = 'SET_LANGUAGE'
 
 // user
 export const SET_USER = 'SET_USER'
-export const CLEAR_USER = 'CLEAR_USER'
+export const RESET_USER = 'RESET_USER'
 export const UPDATE_USER = 'UPDATE_USER'
 export const SET_CREDENTIAL = 'SET_CREDENTIAL'

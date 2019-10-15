@@ -1,6 +1,6 @@
 import {
   SET_USER,
-  CLEAR_USER,
+  RESET_USER,
   UPDATE_USER,
   SET_CREDENTIAL
 } from '@store/types/mutations_types'
@@ -31,7 +31,7 @@ export default {
    *
    * @param {*} state
    */
-  [CLEAR_USER]: state => {
+  [RESET_USER]: state => {
     state.user = null
   },
   /**
@@ -43,11 +43,8 @@ export default {
   [UPDATE_USER]: (state, userData) => {
     console.log('Estoy UPDATE_USER')
     const user = state.user
-    // console.log('El user es: ' + JSON.stringify(user))
     const updatedUser = { ...user, ...userData }
-    // console.log('El nuevo user es: ' + JSON.stringify(updatedUser))
     state.user = updatedUser
-    // console.log('state.user es: ' + JSON.stringify(state.user))
   },
   /**
    * Establece la credencial del usuario

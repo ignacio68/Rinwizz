@@ -89,17 +89,17 @@ export default {
       await this.CURRENT_ADDRESS()
     },
 
-    async updateUserLocation() {
-      const data = { location: '', address: [] }
-      data.location = this.userLocation
-      data.address.push(this.userAddress)
-      await this.UPDATE_USER(data)
-      await this.toGreetings()
+    updateUserLocation() {
+      const userData = { location: '', address: [] }
+      userData.location = this.userLocation
+      userData.address.push(this.userAddress)
+      this.UPDATE_USER(userData)
+      this.toGreetings()
     },
-    async toGreetings() {
+    toGreetings() {
       console.log('Los datos de usuario son: ' + user)
       // await updateDoc('users', this.user.id, this.user)
-      await this.REPLACE(Greetings)
+      this.REPLACE(Greetings)
     },
     changeShowMarkers() {
       return (this.showMarkers = !this.showMarkers)

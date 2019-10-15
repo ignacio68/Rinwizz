@@ -118,8 +118,8 @@ export default {
     error() {
       console.log('Error')
     },
-    async toGender() {
-      await this.PUSH(gender)
+    toGender() {
+      this.PUSH(gender)
     }
   }
 }

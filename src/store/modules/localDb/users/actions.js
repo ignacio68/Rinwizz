@@ -21,7 +21,7 @@ export default {
     createDb('users', { auto_compaction: true })
       .then(allUsersDb => {
         commit('SET_ALL_USERS_LOCAL_DB', allUsersDb)
-        return allUsersDb
+        // return allUsersDb
       })
       .catch(error => {
         console.log('CREATE_ALL_USER_LOCAL_DB error es:' + error)
@@ -35,48 +35,50 @@ export default {
    */
   async [CREATE_USER_LOCAL_DB]({ state, getters, commit }, newUser) {
     console.log('estoy en CREATE_USER_LOCAL_DB')
-    console.log('el _id del usuario es: ' + newUser.id)
+    console.log('el _id del usuario es: ' + newUser._id)
 
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
     try {
       const user = JSON.parse(JSON.stringify(userSample))
-      user._id = newUser._id
-      user.email = newUser.email
-      user.name = newUser.name
-      user.phone = newUser.phone
-      user.avatar = newUser.avatar
-      user.providerId = newUser.providerId
-      user.creationDate = newUser.creationDate
-      user.lastSignInDate = newUser.lastSignInDate
-      user.isAnonymous = newUser.isAnonymous
-      user.isVerified = newUser.isVerified
+      // user._id = newUser._id
+      // user.email = newUser.email
+      // user.name = newUser.name
+      // user.phone = newUser.phone
+      // user.avatar = newUser.avatar
+      // user.providerId = newUser.providerId
+      // user.creationDate = newUser.creationDate
+      // user.lastSignInDate = newUser.lastSignInDate
+      // user.isAnonymous = newUser.isAnonymous
+      // user.isVerified = newUser.isVerified
+      for (let key in user) {
+        user[key] = newUser[key]
+      }
       console.log('el user es: ' + JSON.stringify(user))
 
-      await commit('user/SET_USER', user, { root: true })
+      // await commit('user/SET_USER', user, { root: true })
 
       // Recuperamos la base de datos de usuarios almacenada en caché
       const db = await getters.USERS_LOCAL_DB
-      // console.log('La base de datos es: ' + JSON.stringify(db))
       // Creamos el documento del usuario
       await createDoc(db, user)
-      // Establecemos la configuración
-      const config = JSON.parse(JSON.stringify(configSample))
-      config._id = user._id
-      config.dbName = 'users'
-      config.remote = cloudantConfig.url + '/' + config.dbName
-      console.log('La configuración es: ' + JSON.stringify(config))
+      // // Establecemos la configuración
+      // const config = JSON.parse(JSON.stringify(configSample))
+      // config._id = user._id
+      // config.dbName = 'users'
+      // config.remote = cloudantConfig.url + '/' + config.dbName
+      // console.log('La configuración es: ' + JSON.stringify(config))
 
-      // Establecemos las opciones
-      const options = JSON.parse(JSON.stringify(optionsSample))
-      options.auth.username = authUsers.key
-      options.auth.password = authUsers.password
-      options.doc_ids.push(user._id)
-      console.log('Las opciones son: ' + JSON.stringify(options))
+      // // Establecemos las opciones
+      // const options = JSON.parse(JSON.stringify(optionsSample))
+      // options.auth.username = authUsers.key
+      // options.auth.password = authUsers.password
+      // options.doc_ids.push(user._id)
+      // console.log('Las opciones son: ' + JSON.stringify(options))
 
-      // Replicamos y sincronizamos la base de datos
-      await replyDb(db, config, options)
+      // // Replicamos y sincronizamos la base de datos
+      // await replyDb(db, config, options)
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('Ha habido un error en CREATE_USER_LOCAL_DB: ' + error)

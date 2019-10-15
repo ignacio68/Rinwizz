@@ -94,10 +94,15 @@ import TheCustomtoolbar from '@components/Shared/TheCustomToolbar' // NOTA: Redi
  * Global Config
  */
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
-// Error handler
+
+// GESTION DE ERRORES
+window.onerror = function(message, source, line, column, error) {
+  console.log('Error: ' + message)
+}
+
 Vue.config.errorHandler = (err, vm, info) => {
-  console.log('****errorHandler: ' + err.message)
-  console.log('****errorHandler info: ' + info)
+  console.log('****errorHandler: ' + err.toString())
+  console.log('Info: ' + info)
 }
 
 /**
@@ -167,6 +172,8 @@ firebaseAuth().onAuthStateChanged(user => {
           } else {
             console.log('No se encuentra el idioma del navegador')
           }
+          this.$store.dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB')
+          this.$store.dispatch('alertsLocalDb/CREATE_ALERTS_LOCAL_DB')
         }
       },
       async created() {

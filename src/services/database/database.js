@@ -6,24 +6,25 @@ import PouchDB from 'pouchdb-browser'
  * @param nameDb { String } - nombre de la base de datos
  * @param config { Object } - parametros opcionales para crear la base de datos
  */
-// export const createDb = (nameDb, options) =>
-//   new Promise((resolve, reject) => {
-//     const db = PouchDB(nameDb, options)
-//     if (db) {
-//       resolve(db)
-//     } else {
-//       reject('No se ha podido crear la db')
-//     }
-//   })
-export const createDb = (nameDb, options) => {
-  try {
+export const createDb = (nameDb, options) =>
+  new Promise((resolve, reject) => {
     const db = PouchDB(nameDb, options)
-    console.log('Creada la base de datos: ' + JSON.stringify(db))
-    return db
-  } catch {
-    console.log('No se ha podido crear la db')
-  }
-}
+    if (db) {
+      console.log('Creada la base de datos')
+      resolve(db)
+    } else {
+      reject('No se ha podido crear la db')
+    }
+  })
+// export const createDb = (nameDb, options) => {
+//   try {
+//     const db = PouchDB(nameDb, options)
+//     console.log('Creada la base de datos: ' + JSON.stringify(db))
+//     return db
+//   } catch {
+//     console.log('No se ha podido crear la db')
+//   }
+// }
 
 /**
  * Replicate and sync with the remote dataBase
@@ -112,7 +113,7 @@ export async function createDoc(db, doc) {
 }
 
 /**
- * TODO: Revisar
+ * TODO: Revisar para subir solo los datos a cambiar
  * Update a document
  * @param db { String } - local database
  * @param docId { String } - document id
@@ -129,7 +130,7 @@ export function updateDoc(db, docId, data) {
       return db.get(docId)
     })
     .then(doc => {
-      console.log(JSON.stringify(doc))
+      console.log('updateDoc: ' + JSON.stringify(doc))
     })
     .catch(err => {
       console.log('updateDoc error: ' + err)

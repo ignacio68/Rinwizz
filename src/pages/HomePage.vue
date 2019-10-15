@@ -1,6 +1,6 @@
 <template>
   <v-ons-page id="homePage">
-    <v-ons-tabbar position="bottom" swipeable :tabs="tabs" :index.sync="index"></v-ons-tabbar>
+    <v-ons-tabbar position="bottom" :tabs="tabs" :index.sync="index"></v-ons-tabbar>
   </v-ons-page>
 </template>
 
@@ -35,6 +35,24 @@ export default {
   name: 'homePage',
   data() {
     return {
+      // tabs: [
+      //   {
+      //     label: this.$tc('lang.pages.homePage.tabbar', 0),
+      //     icon: 'ion-ios-bell, material:md-notifications',
+      //     page: Alerts,
+      //     badge: 6
+      //   },
+      //   {
+      //     label: this.$tc('lang.pages.homePage.tabbar', 1),
+      //     icon: 'ion-camera, material:md-camera',
+      //     page: Profile
+      //   },
+      //   {
+      //     label: this.$tc('lang.pages.homePage.tabbar', 2),
+      //     icon: 'ion-search, material:md-search',
+      //     page: Search
+      //   }
+      // ],
       tabs: [
         {
           label: this.$tc('lang.pages.homePage.tabbar', 0),
@@ -46,11 +64,6 @@ export default {
           label: this.$tc('lang.pages.homePage.tabbar', 1),
           icon: 'ion-camera, material:md-camera',
           page: Profile
-        },
-        {
-          label: this.$tc('lang.pages.homePage.tabbar', 2),
-          icon: 'ion-search, material:md-search',
-          page: Search
         }
       ],
       numAlerts: '8'

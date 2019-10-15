@@ -59,14 +59,14 @@ export default {
   methods: {
     ...mapMutations('navigator', ['PUSH']),
     ...mapMutations('user', ['UPDATE_USER']),
-    async updateGender() {
-      const data = { personal: { age: '', gender: '' } }
-      data.personal.gender = this.selectedGender
-      await this.UPDATE_USER(data)
-      await this.toHobbies()
+    updateGender() {
+      const userData = { personal: { age: '', gender: '' } }
+      userData.personal.gender = this.selectedGender
+      this.UPDATE_USER(userData)
+      this.toHobbies()
     },
-    async toHobbies() {
-      await this.PUSH(Hobbies)
+    toHobbies() {
+      this.PUSH(Hobbies)
     }
   }
 }

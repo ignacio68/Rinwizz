@@ -64,7 +64,8 @@ export default {
           phone: '',
           isVerified: user.emailVerified,
           isAnonymous: user.isAnonymous,
-          avatar: 'src/assets/user_icon.png',
+          avatar:
+            'https://firebasestorage.googleapis.com/v0/b/rinwizz-app.appspot.com/o/pwqhMnXx8ZMN06BeobDxJOZ5kDC2%2Favatar%2FpwqhMnXx8ZMN06BeobDxJOZ5kDC2..jpg?alt=media&token=8e64b798-eb08-46ec-a794-5d658e994301',
           providerId: user.providerId,
           creationDate: user.metadata.creationTime,
           lastSignInDate: user.metadata.lastSignInTime
@@ -77,14 +78,9 @@ export default {
         commit('SET_USER', newUser)
 
         // Creamos la base de datos local de usuarios
-        await dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB', null, {
-          root: true
-        })
-        // const usersDb = await createDb('users')
-        // console.log('UsersDb es: ' + JSON.stringify(usersDb))
-
-        // // Creamos la base de datos en caché
-        // commit('usersLocalDb/SET_ALL_USERS_LOCAL_DB', usersDb, { root: true })
+        // await dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB', null, {
+        //   root: true
+        // })
 
         // Creamos la base de del usuario (PouchDB)
         await dispatch('usersLocalDb/CREATE_USER_LOCAL_DB', newUser, {
@@ -177,7 +173,7 @@ export default {
    * @param {String} user
    */
   async [LOGIN_USER]({ getters, commit, dispatch, rootGetters }, logInUser) {
-    console.log('Estoy en LOGIN_USER')
+    console.log('LOGIN_USER')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // Comprueba que el usuario existe en Firebase
     try {
@@ -185,42 +181,8 @@ export default {
         logInUser.email,
         logInUser.password
       )
-      const userId = user.uid
-      console.log('LOGIN_USER user: ' + JSON.stringify(user))
-      console.log('config._id es: ' + userId)
-
-      // Recuperamos la información de la base de datos
-      await dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB', null, {
-        root: true
-      })
-
-      const db = rootGetters['usersLocalDb/USERS_LOCAL_DB']
-      // const db = await createDb('users')
-
-      // Establecemos los parametros de la confguracion
-      const config = await JSON.parse(JSON.stringify(configSample))
-      config._id = userId
-      config.dbName = 'users'
-      config.remote = cloudantConfig.url + '/' + config.dbName
-
-      console.log('La configuración es: ' + JSON.stringify(config))
-
-      // Establecemos las opciones
-      const options = await JSON.parse(JSON.stringify(optionsSample))
-      options.auth.username = authUsers.key
-      options.auth.password = authUsers.password
-      options.doc_ids.push(userId)
-      console.log('Las opciones son: ' + JSON.stringify(options))
-
-      // Replicamos y sincronizamos la base de datos
-      await replyDb(db, config, options)
-
-      // Recuperamos la información del usuario
-      const localUser = await fetchDoc(db, userId)
-
       // Establecemos la información de usuario en caché
-      commit('SET_USER', localUser)
-      console.log('El user es: ' + JSON.stringify(localUser))
+      commit('SET_USER', user)
 
       // Lanzamos la página principal
       commit('navigator/REPLACE', AppSplitter, {
@@ -243,10 +205,9 @@ export default {
     firebaseAuth()
       .signOut()
       .then(result => {
-        commit('CLEAR_USER')
-        // TODO: Revisar si funciona la eliminacion de las alertas
-        commit('alerts/SET_LOADED_ALERTS', null, { root: true })
-        console.log(result)
+        commit('RESET_USER')
+        commit('alerts/RESET_ALERTS', null, { root: true })
+        console.log('LOGOUT_USER')
       })
       .then(commit('navigator/PUSH', LogIn, { root: true }))
       .catch(error => {
@@ -273,7 +234,7 @@ export default {
   /**
    * Elimina el usuario
    */
-  [DELETE_USER]: ({ commit, dispatch, state }) => {
+  [DELETE_USER]: ({ state, commit, dispatch }) => {
     console.log('Estoy en deleteUser')
     commit('shared/CLEAR_ERROR', null, { root: true })
     dispatch('GET_CREDENTIAL')
@@ -284,6 +245,7 @@ export default {
       .reauthenticateAndRetrieveDataWithCredential(credential)
       .then(() => {
         dispatch('DELETE_FIREBASE_USER_ACCOUNT')
+        commit('RESET_USER')
       })
       .catch(error => {
         console.log('DELETE_USER error: ' + error)
@@ -374,7 +336,7 @@ export default {
       .delete()
       .then(() => {
         console.log('Usuario eliminado')
-        commit('CLEAR_USER')
+        commit('RESET_USER')
         commit('navigator/REPLACE', Welcome, {
           root: true
         })
@@ -390,17 +352,37 @@ export default {
    *
    * @param {String} user - id y email del usuario
    */
-  async [AUTO_SIGN_IN]({ state, getters, commit }) {
+  async [AUTO_SIGN_IN]({ state, getters, commit, rootGetters }) {
     console.log('AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // Recuperamos el _id del usuario
     const userId = getters.USER_ID
+    // TODO: repasar la creación de la base de datos
+    // const allUsersDb = rootGetters['usersLocalDb/USERS_LOCAL_DB']
+    // console.log('allUsersDb: ' + JSON.stringify(allUsersDb))
     // Creamos la base de datos local de usuarios
     const allUsersDb = await createDb('users', { auto_compaction: true })
     commit('usersLocalDb/SET_ALL_USERS_LOCAL_DB', allUsersDb, { root: true })
+    console.log('allUsersDb: ' + JSON.stringify(allUsersDb))
     // Replicamos la base de datos externa
     // TODO: desarrollar
-    // await replyDb(allUsersDb, config, options)
+    // Establecemos los parametros de la confguracion
+    const config = JSON.parse(JSON.stringify(configSample))
+    config._id = userId
+    config.dbName = 'users'
+    config.remote = cloudantConfig.url + '/' + config.dbName
+
+    console.log('La configuración es: ' + JSON.stringify(config))
+
+    // Establecemos las opciones
+    const options = JSON.parse(JSON.stringify(optionsSample))
+    options.auth.username = authUsers.key
+    options.auth.password = authUsers.password
+    options.doc_ids.push(userId)
+    console.log('Las opciones son: ' + JSON.stringify(options))
+
+    // Replicamos y sincronizamos la base de datos
+    await replyDb(allUsersDb, config, options)
     // Recuperamos los datos del usuario
     const user = await fetchDoc(allUsersDb, userId)
     // Guardamos los datos del usuario en caché
