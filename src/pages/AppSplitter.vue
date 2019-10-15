@@ -38,8 +38,6 @@ export default {
   },
   async created() {
     console.log('AppSplitter.created()')
-    // const myUser = this.$store.getters['user/user']
-    // console.log('myUser es: ' + JSON.stringify(myUser))
     await this.AUTO_SIGN_IN()
   },
   beforeMount() {

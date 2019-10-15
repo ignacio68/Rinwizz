@@ -12,7 +12,7 @@ export default {
       'estoy en SET_ALL_ALERTS_LOCAL_DB y la base de datos es: ' +
         JSON.stringify(localDb)
     )
-    state.alertsLocalDb = localDb
+    state.allAlertsLocalDb = localDb
   },
 
   // Creamos en caché la base de datos de las alertas del usuario

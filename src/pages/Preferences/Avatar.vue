@@ -38,8 +38,7 @@
         :disabled="false"
         ripple="true"
         @click.prevent="toGender"
-        >{{ $t('lang.pages.avatar.button') }}</v-ons-button
-      >
+      >{{ $t('lang.pages.avatar.button') }}</v-ons-button>
     </div>
   </v-ons-page>
 </template>
@@ -55,7 +54,8 @@ export default {
     return {
       platform: '',
       imageUrl: '',
-      image: null
+      image: null,
+      userId = this.$store.state.user['user']._id
     }
   },
   created() {
@@ -71,7 +71,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', { userId: 'USER_ID' })
+    // ...mapGetters('user', { userId: 'USER_ID' })
   },
   methods: {
     ...mapMutations('navigator', ['PUSH']),

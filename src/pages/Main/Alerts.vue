@@ -1,21 +1,36 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar
+      class="customToolbar"
+      :pageTitle="$t('lang.pages.alerts.toolbar')"
+    ></the-custom-toolbar>
 
     <div class="content">
-      <v-ons-pull-hook :action="onUpdatedAlerts" id="pullHook">
+      <v-ons-pull-hook
+        :action="onUpdatedAlerts"
+        id="pullHook"
+      >
         <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
         <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
         <h5 class="dummyText">
           Este es tu Avatar
           <span>
-            <img class="alertCard__userAvatar" src="src/assets/Real-Madrid-logo-256.png" />
+            <img
+              class="alertCard__userAvatar"
+              src="src/assets/Real-Madrid-logo-256.png"
+            />
           </span>
         </h5>
-        <h5 v-if="!isVerified" class="dummyText">No estás verificado</h5>
+        <h5
+          v-if="!isVerified"
+          class="dummyText"
+        >No estás verificado</h5>
 
         <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
-        <v-ons-list v-if="alerts" class="alertsList">
+        <v-ons-list
+          v-if="alerts"
+          class="alertsList"
+        >
           <v-ons-list-item
             :modifier="md ? 'nodivider' : ''"
             class="alertsList__item"
@@ -64,8 +79,15 @@
     </div>
 
     <!-- Botón para lanzar el editor de alertas -->
-    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
-      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
+    <v-ons-fab
+      position="bottom right"
+      ripple="true"
+      @click.prevent="isModalVisible = true"
+    >
+      <v-ons-icon
+        class="alertScript__icon"
+        icon="ion-edit, material:zmdi-email-open"
+      ></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -152,18 +174,15 @@ export default {
     console.log('El nombre del usuario es: ' + this.user.name)
   },
   computed: {
-    // ...mapGetters('user',  ['USER'] ),
+    ...mapGetters('user', { user: 'USER' }),
     // ...mapGetters('alertsLocalDb', { alerts: 'ALERTS_LOCAL_DB' }),
-    user() {
-      return this.$store.state.user['user']
-    },
     // alerts() {
     //   return this.$store.getters['alertsLocalDb/ALERTS_LOCAL_DB']
     // },
 
     isVerified() {
       // return this.$store.getters['user/USER_IS_VERIFIED']
-      return this.$store.state.user['user'].isVerified
+      return user.isVerified
     }
     // userAvatar() {
     //   return this.useravatar
@@ -233,6 +252,7 @@ export default {
   margin-left: 2%;
 }
 .alertsList__item {
+  font-size: 12px;
 }
 .fab {
   background-color: #e06257;

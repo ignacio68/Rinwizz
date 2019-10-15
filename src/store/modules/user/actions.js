@@ -390,7 +390,7 @@ export default {
    *
    * @param {String} user - id y email del usuario
    */
-  async [AUTO_SIGN_IN]({ getters, commit }) {
+  async [AUTO_SIGN_IN]({ state, getters, commit }) {
     console.log('AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // Recuperamos el _id del usuario

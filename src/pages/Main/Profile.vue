@@ -1,16 +1,26 @@
 <template>
   <v-ons-page id="profile">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.profile.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar
+      class="customToolbar"
+      :pageTitle="$t('lang.pages.profile.toolbar')"
+    ></the-custom-toolbar>
     <div class="content">
       <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
       <div class="picture">
         <!-- <img src="../../assets/user_icon.png" alt="user icon" class="picture__frame-photo"> -->
-        <img src="src/assets/user_icon.png" alt="user photo" class="picture__frame-photo" />
+        <img
+          src="../../assets/user_icon.png"
+          alt="user photo"
+          class="picture__frame-photo"
+        />
       </div>
       <h2>La foto es: {{ user.avatar }}</h2>
       <form>
         <v-ons-list class="profileList">
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="profileList__item"
+          >
             <div class="left profileList__item-label">
               <label for="textImput">{{ $t('lang.pages.profile.main.list.input.name') }}</label>
             </div>
@@ -26,15 +36,26 @@
               />
             </div>
           </v-ons-list-item>
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="profileList__item"
+          >
             <div class="left profileList__item-label">
               <label for="textImput">{{ $t('lang.pages.profile.main.list.input.email') }}</label>
             </div>
             <div class="center profileList__item-input">
-              <v-ons-input id="email" type="email" :placeholder="user.email" float disabled />
+              <v-ons-input
+                id="email"
+                type="email"
+                :placeholder="user.email"
+                float
+              />
             </div>
           </v-ons-list-item>
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="profileList__item"
+          >
             <div class="left profileList__item-label">
               <label for="textImput">{{ $t('lang.pages.profile.main.list.input.location') }}</label>
             </div>
@@ -49,9 +70,7 @@
               />
             </div>
           </v-ons-list-item>
-          <v-ons-list-header
-            class="profileList__header"
-          >{{ $t('lang.pages.profile.main.list.header1') }}</v-ons-list-header>
+          <v-ons-list-header class="profileList__header">{{ $t('lang.pages.profile.main.list.header1') }}</v-ons-list-header>
         </v-ons-list>
       </form>
 
@@ -68,7 +87,7 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'profile',
@@ -93,38 +112,19 @@ export default {
   //     console.log('WATCH: El usuario ha cambiado')
   //   }
   // },
-  watch: {
-    user(value) {
-      if (value) {
-        console.log('Hay que actualizar el user')
-      } else {
-        console.log('No ha cambiado nada')
-      }
-      deep: true
-    }
-  },
+  // watch: {
+  //   user(value) {
+  //     if (value) {
+  //       console.log('Hay que actualizar el user')
+  //     } else {
+  //       console.log('No ha cambiado nada')
+  //     }
+  //     deep: true
+  //   }
+  // },
 
   computed: {
-    // ...mapGetters('user', ['USER']),
-    user() {
-      return this.$store.state.user['user']
-    }
-    // userEmail() {
-    //   console.log('el email el usuario es: ' + this.user.email)
-    //   return this.user.email
-    // },
-    // userName() {
-    //   console.log('el nombre de usuario es: ' + this.user.name)
-    //   return this.user.name
-    // },
-    // userPhoto() {
-    //   console.log('la foto del usuario es: ' + this.user.avatar)
-    //   return this.user.avatar
-    // },
-    // userLocation() {
-    //   console.log('la localización del usuario es: ' + this.user.location)
-    //   return this.user.location
-    // }
+    ...mapGetters('user', { user: 'USER' })
   },
   methods: {
     /**

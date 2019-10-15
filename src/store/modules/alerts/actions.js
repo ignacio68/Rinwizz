@@ -8,7 +8,7 @@ export default {
    *
    * @param {Object} alertData - Datos de la alerta
    */
-  async [CREATE_ALERT]({ getters, commit, dispatch, rootGetters }, alertData) {
+  [CREATE_ALERT]: ({ commit, __, rootGetters }, alertData) => {
     console.log('Estoy en createAlert')
     commit('shared/CLEAR_ERROR', null, { root: true })
     const user = rootGetters['user/USER']
@@ -24,7 +24,7 @@ export default {
       console.log('El autor es: ' + user.name)
 
       // Damos formato a la alerta
-      const alert = await JSON.parse(JSON.stringify(alertSample))
+      const alert = JSON.parse(JSON.stringify(alertSample))
       alert._id = user._id + ':' + startDate + '-' + user._id
       alert.title = alertData.title
       alert.text = alertData.text
@@ -39,10 +39,10 @@ export default {
       alert.favoriteCount = alertData.favoriteCount
       console.log('el alert es: ' + JSON.stringify(alert))
 
-      await dispatch('alertsLocalDb/PUT_ALERT_LOCAL_DB', alert, { root: true })
+      commit('localDb/alerts/SET_USER_ALERT_LOCAL_DB', alert, { root: true })
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
-      console.log('CREATE_ALERT es: ' + error)
+      console.log('CREATE_ALERT error: ' + error)
     }
   },
 
@@ -57,7 +57,7 @@ export default {
     commit('shared/CLEAR_ERROR', null, { root: true })
     try {
       // Recuperamos las alertas de la base de datos
-      const alerts = await dispatch('alertsAlertsDb/GET_ALERTS', null, {
+      const alerts = await dispatch('localDb/alerts/GET_ALERTS', null, {
         root: true
       })
       console.log('Las alertas son: ' + JSON.stringify(alerts))

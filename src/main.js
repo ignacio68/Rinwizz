@@ -77,6 +77,9 @@ import 'onsenui/esm/elements/ons-progress-circular' // TODO: REVISAR SU UTILIZAC
  */
 import AppNavigator from './AppNavigator'
 
+/**
+ * TODO: Se utiliza para pruebas, en producción eliminar
+ */
 // import Fake from './Fake'
 
 /**
@@ -134,7 +137,7 @@ firebaseAuth().onAuthStateChanged(user => {
       render: h => h(AppNavigator),
       // render: h => h(Fake),
       beforeCreate() {
-        console.log('Estoy en Main beforeCreate()')
+        console.log('Main beforeCreate()')
         // Shortcut for Material Design, IOS & web
         Vue.prototype.md = this.$ons.platform.isAndroid()
         Vue.prototype.ios = this.$ons.platform.isIOS()
@@ -170,8 +173,6 @@ firebaseAuth().onAuthStateChanged(user => {
         console.log('Main created()')
         if (user) {
           this.$store.commit('user/SET_USER', user)
-          // const myUser = this.$store.state.user['user']
-          // console.log('myUser es: ' + JSON.stringify(myUser))
         } else {
           console.log('No existe el user')
         }
