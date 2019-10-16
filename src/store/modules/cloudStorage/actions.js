@@ -14,8 +14,8 @@ export default {
    */
   [PUT_FILE]: ({ commit }, fileData) => {
     commit('shared/CLEAR_ERROR', null, { root: true })
-    const filename = fileData.avatar.name
-    const ext = filename.slice(filename.lastIndexOf('.'))
+    const fileName = fileData.avatar.name
+    const ext = fileName.slice(fileName.lastIndexOf('.'))
     console.log('Estoy en PUT_FILE y el file es: ' + fileData.metadata)
     // const userStorageRef = storageRef.child(fileData.userId)
     switch (fileData.metadata) {

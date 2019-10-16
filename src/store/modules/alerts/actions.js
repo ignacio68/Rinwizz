@@ -39,7 +39,7 @@ export default {
       alert.favoriteCount = alertData.favoriteCount
       console.log('el alert es: ' + JSON.stringify(alert))
 
-      commit('localDb/alerts/SET_USER_ALERT_LOCAL_DB', alert, { root: true })
+      commit('alertsLocalDb/SET_USER_ALERT_LOCAL_DB', alert, { root: true })
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('CREATE_ALERT error: ' + error)
@@ -57,7 +57,7 @@ export default {
     commit('shared/CLEAR_ERROR', null, { root: true })
     try {
       // Recuperamos las alertas de la base de datos
-      const alerts = await dispatch('localDb/alerts/GET_ALERTS', null, {
+      const alerts = await dispatch('alertsLocalDb/GET_ALERTS', null, {
         root: true
       })
       console.log('Las alertas son: ' + JSON.stringify(alerts))
