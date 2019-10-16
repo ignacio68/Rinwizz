@@ -40,9 +40,10 @@
             ></textarea>
           </v-ons-list-item>
           <v-ons-list-item class="alertList__item">
-            <label for="endDate" class="alertList__item-label">
-              {{ $t('lang.components.alertScript.end') }}
-            </label>
+            <label
+              for="endDate"
+              class="alertList__item-label"
+            >{{ $t('lang.components.alertScript.end') }}</label>
             <v-ons-select
               class="alertList__item-endDate"
               name="endDate"
@@ -53,8 +54,7 @@
                 v-for="option in options"
                 :value="option.value"
                 :key="option.id"
-                >{{ option.text }}</option
-              >
+              >{{ option.text }}</option>
             </v-ons-select>
           </v-ons-list-item>
           <v-ons-list-item class="alertList__item">
@@ -129,12 +129,6 @@ export default {
   },
   created() {
     console.log('alertScript.vue created()')
-  },
-  beforeMount() {
-    console.log('alertScript.vue beforeMount()')
-  },
-  mounted() {
-    console.log('alertScript.vue mounted()')
   },
   computed: {
     /**

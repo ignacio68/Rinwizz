@@ -142,9 +142,6 @@ export default {
   created() {
     console.log('LogIn.created')
   },
-  mounted() {
-    console.log('LogIn.mounted')
-  },
   computed: {
     ...mapGetters('errors', { errorMessage: 'ERROR_MESSAGE' }),
     ...mapGetters('shared', { isError: 'ERROR' }),

@@ -73,12 +73,6 @@ export default {
     console.log('homePage.created()')
     // Load the users database
   },
-  beforeMount() {
-    console.log('homePage.beforeMount()')
-  },
-  mounted() {
-    console.log('homePage.mounted()')
-  },
   computed: {
     index: {
       get() {

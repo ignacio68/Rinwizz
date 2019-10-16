@@ -5,18 +5,26 @@
         <h1 class="header">{{ $t('lang.pages.welcome.header') }}</h1>
         <p class="secondary-text">{{ $t('lang.pages.welcome.text') }}</p>
         <v-ons-list class="list" modifier>
-          <v-ons-list-item class="list__item" modifier="nodivider">{{
+          <v-ons-list-item class="list__item" modifier="nodivider">
+            {{
             $t('lang.pages.welcome.text1')
-          }}</v-ons-list-item>
-          <v-ons-list-item class="list__item" modifier="nodivider">{{
+            }}
+          </v-ons-list-item>
+          <v-ons-list-item class="list__item" modifier="nodivider">
+            {{
             $t('lang.pages.welcome.text2')
-          }}</v-ons-list-item>
-          <v-ons-list-item class="list__item" modifier="nodivider">{{
+            }}
+          </v-ons-list-item>
+          <v-ons-list-item class="list__item" modifier="nodivider">
+            {{
             $t('lang.pages.welcome.text3')
-          }}</v-ons-list-item>
-          <v-ons-list-item class="list__item" modifier="nodivider">{{
+            }}
+          </v-ons-list-item>
+          <v-ons-list-item class="list__item" modifier="nodivider">
+            {{
             $t('lang.pages.welcome.text4')
-          }}</v-ons-list-item>
+            }}
+          </v-ons-list-item>
         </v-ons-list>
         <v-ons-row class="buttons">
           <v-ons-button
@@ -24,8 +32,7 @@
             modifier
             ripple="true"
             @click.prevent="toSignUp"
-            >{{ $t('lang.pages.welcome.signup') }}</v-ons-button
-          >
+          >{{ $t('lang.pages.welcome.signup') }}</v-ons-button>
         </v-ons-row>
       </v-ons-col>
     </div>
@@ -39,9 +46,6 @@ import SignUp from '@pages/User/SignUp'
 
 export default {
   name: 'welcome',
-  mounted() {
-    console.log('estoy en Welcome.mounted')
-  },
   methods: {
     ...mapMutations('navigator', ['REPLACE']),
     toSignUp() {

@@ -27,17 +27,11 @@ export default {
     console.log('AppNavigator created()')
   },
   beforeMount() {
-    console.log('AppNavigator beforeMount()')
     if (!this.userIsAuthenticated) {
       this.PUSH(Welcome)
-      console.log('El usuario NO está autenticado')
     } else {
       this.PUSH(AppSplitter)
-      console.log('El usuario SI está autenticado')
     }
-  },
-  mounted() {
-    console.log('AppNavigator mounted()')
   },
   computed: {
     ...mapGetters('user', { user: 'USER' }),
@@ -46,9 +40,9 @@ export default {
     userIsAuthenticated() {
       console.log('Comprobando si el usuario está autenticado')
       if (this.user) {
-        console.log('hay user: ' + this.user.email)
       } else {
-        console.log('No hay user')
+        // SOLO EN PRODUCCIÓN
+        console.log('EL USUARIO NO ESTÁ AUTENTICADO')
       }
       return this.user !== null && this.user !== undefined
     }

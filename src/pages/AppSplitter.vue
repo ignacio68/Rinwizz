@@ -40,12 +40,6 @@ export default {
     console.log('AppSplitter.created()')
     await this.AUTO_SIGN_IN()
   },
-  beforeMount() {
-    console.log('AppSplitter.beforeMount()')
-  },
-  mounted() {
-    console.log('AppSplitter.mounted()')
-  },
   methods: {
     ...mapActions('user', ['AUTO_SIGN_IN'])
   }

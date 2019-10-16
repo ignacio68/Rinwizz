@@ -81,12 +81,6 @@ export default {
   created() {
     console.log('Profile.vue created()')
   },
-  beforeMount() {
-    console.log('Profile.vue beforeMount()')
-  },
-  mounted() {
-    console.log('Profile.vue mounted()')
-  },
   // watch: {
   //   user() {
   //     console.log('WATCH: El usuario ha cambiado')

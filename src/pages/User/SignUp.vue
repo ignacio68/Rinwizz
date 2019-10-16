@@ -228,9 +228,6 @@ export default {
   created() {
     console.log('Estoy en SignUp.created')
   },
-  mounted() {
-    console.log('Estoy en SignUp.mounted')
-  },
   computed: {
     ...mapGetters('errors', { errorMessage: 'ERROR_MESSAGE' }),
     ...mapGetters('shared', { isError: 'ERROR', actionPass: 'ACTION_PASS' }),

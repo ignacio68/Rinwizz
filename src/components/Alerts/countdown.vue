@@ -62,12 +62,6 @@ export default {
   created() {
     console.log('countdown.vue created()')
   },
-  beforeMount() {
-    console.log('countdown.vue beforeMount()')
-  },
-  mounted() {
-    console.log('countdown.vue mounted()')
-  },
   methods: {
     timerCount() {
       let endTimer = this.startDate + this.endDate
