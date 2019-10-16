@@ -6,8 +6,6 @@
     <div class="content">
       <v-ons-row>
         <p class="alertCard__emissionAlert">{{ shortDate }}</p>
-      </v-ons-row>
-      <v-ons-row>
         <!-- h4 class="alertCard__countDown">{{ days }}:{{ hours }}:{{ minutes }}:{{ seconds }}</h4 -->
         <countdown
           class="alertCard__countDown"
@@ -18,40 +16,42 @@
         ></countdown>
       </v-ons-row>
 
-      <v-ons-row>
-        <v-ons-col width="21%">
-          <img :src="userAvatar" :alt="altAvatar" class="alertCard__userAvatar" />
-        </v-ons-col>
-        <v-ons-col>
+      <v-ons-col width="20%" class="leftCol">
+        <img :src="userAvatar" :alt="altAvatar" class="alertCard__userAvatar" />
+      </v-ons-col>
+
+      <v-ons-col class="rigthCol">
+        <div></div>
+        <!-- <v-ons-row>
           <h3 class="alertCard__userName">{{ userName }}</h3>
-        </v-ons-col>
-      </v-ons-row>
+        </v-ons-row>
 
-      <v-ons-row>
-        <h2 class="alertCard__title">{{ alertTitle }}</h2>
-      </v-ons-row>
+        <v-ons-row>
+          <h2 class="alertCard__title">{{ alertTitle }}</h2>
+        </v-ons-row>
 
-      <v-ons-row>
-        <p class="alertCard__text">{{ alertText }}</p>
-      </v-ons-row>
+        <v-ons-row>
+          <p class="alertCard__text">{{ alertText }}</p>
+        </v-ons-row>
 
-      <v-ons-row>
-        <div class="alertCard-buttons">
-          <v-ons-button
-            class="alertCard__button"
-            ripple="true"
-            @click.prevent="onPhoneClick()"
-          >{{ phoneButton }}</v-ons-button>
-          <v-ons-button
-            class="alertCard__button"
-            ripple="true"
-            @click.prevent="onLinkClick()"
-          >{{ linkButton }}</v-ons-button>
-          <v-ons-button class="alertCard__button" ripple="true">
-            <v-ons-icon icon="ion-share, material:md-share" />
-          </v-ons-button>
-        </div>
-      </v-ons-row>
+        <v-ons-row>
+          <div class="alertCard-buttons">
+            <v-ons-button
+              class="alertCard__button"
+              ripple="true"
+              @click.prevent="onPhoneClick()"
+            >{{ phoneButton }}</v-ons-button>
+            <v-ons-button
+              class="alertCard__button"
+              ripple="true"
+              @click.prevent="onLinkClick()"
+            >{{ linkButton }}</v-ons-button>
+            <v-ons-button class="alertCard__button" ripple="true">
+              <v-ons-icon icon="ion-share, material:md-share" />
+            </v-ons-button>
+          </div>
+        </v-ons-row>-->
+      </v-ons-col>
     </div>
   </div>
   <!-- /v-ons-card -->
@@ -185,8 +185,15 @@ export default {
 </script>
 
 <style scoped>
+.leftCol {
+  border: 2px solid darkslategrey;
+}
+.rigthCol {
+  margin: 5px;
+  border: 2px solid darkred;
+}
 .alertCard {
-  border: 1px solid red;
+  border: 2px solid red;
 }
 .alertCard__emissionAlert {
   border: 1px solid pink;

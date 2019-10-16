@@ -1,46 +1,33 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar
-      class="customToolbar"
-      :pageTitle="$t('lang.pages.alerts.toolbar')"
-    ></the-custom-toolbar>
+    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
 
     <div class="content">
-      <v-ons-pull-hook
-        :action="onUpdatedAlerts"
-        id="pullHook"
-      >
+      <v-ons-pull-hook :action="onUpdatedAlerts" id="pullHook">
         <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
-        <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
-        <h5 class="dummyText">
-          Este es tu Avatar
-          <span>
-            <img
-              class="alertCard__userAvatar"
-              :src="user.avatar"
-            />
-          </span>
-        </h5>
-        <h5
-          v-if="!isVerified"
-          class="dummyText"
-        >No estás verificado</h5>
+        <div id="dummy">
+          <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
+          <h5 class="dummyText">
+            Este es tu Avatar
+            <span>
+              <img class="alertCard__userAvatar" :src="user.avatar" />
+            </span>
+          </h5>
+          <h5 v-if="!isVerified" class="dummyText">No estás verificado</h5>
+        </div>
 
         <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
-        <v-ons-list
-          v-if="alerts"
-          class="alertsList"
-        >
+        <v-ons-list v-if="alerts" class="alertsList">
           <v-ons-list-item
             :modifier="md ? 'nodivider' : ''"
             class="alertsList__item"
-            v-for="alert in alerts"
-            :key="alert.id"
+            v-for="alert in fakeAlerts"
+            :key="alert._id"
           >
             <alert-message
               :userName="alert.user.name"
               :userAvatar="alert.user.avatar"
-              :altAvatar="alert.userName + ' icon'"
+              :altAvatar="alert.user.name + ' icon'"
               :referenceDate="referenceDate"
               :startDate="alert.creationDate"
               :endDate="alert.endDate"
@@ -79,15 +66,8 @@
     </div>
 
     <!-- Botón para lanzar el editor de alertas -->
-    <v-ons-fab
-      position="bottom right"
-      ripple="true"
-      @click.prevent="isModalVisible = true"
-    >
-      <v-ons-icon
-        class="alertScript__icon"
-        icon="ion-edit, material:zmdi-email-open"
-      ></v-ons-icon>
+    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
+      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -133,22 +113,56 @@ export default {
   data() {
     return {
       isModalVisible: false,
-      referenceDate: ''
+      referenceDate: '',
+      fakeAlerts: {
+        alert1: {
+          _id:
+            '4rOdkM3mVmW1rTM3nttoIbjMldc2:1570465573591-4rOdkM3mVmW1rTM3nttoIbjMldc2',
+          title: 'prueba',
+          text: 'esta es una alerta de prueba',
+          user: {
+            _id: '4rOdkM3mVmW1rTM3nttoIbjMldc2',
+            name: 'Pepe',
+            screenName: '',
+            avatar: '../../../assets/user_icon.jpg',
+            location: 'Madrid',
+            url: '',
+            description: ''
+          },
+          creationDate: 1570465573591,
+          endDate: 1570487173591,
+          link: 'www.rinwizz.com',
+          phone: '',
+          location: {
+            id: '',
+            lat: '',
+            lng: '',
+            address: {
+              houseNumber: '',
+              road: '',
+              suburb: '',
+              city: 'Madrid',
+              county: '',
+              state: '',
+              postcode: '',
+              country: '',
+              countryCode: ''
+            }
+          }
+        }
+      }
     }
   },
   async created() {
     console.log('Alerts.vue created()')
-    // this.alerts = await this.GET_ALERTS()
   },
   computed: {
     ...mapGetters('user', { user: 'USER' }),
+    ...mapGetters('alerts', { alerts: 'GET_ALERTS' }),
     // ...mapGetters('alertsLocalDb', { alerts: 'GET_ALERTS_LOCAL_DB' }),
     // alerts() {
     //   return this.$store.getters['alertsLocalDb/GET_ALERTS_LOCAL_DB']
     // },
-    alerts() {
-      return this.GET_ALERTS()
-    },
     isVerified() {
       return this.user.isVerified
     },
@@ -157,7 +171,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('alertsLocalDb', ['GET_ALERTS']),
+    ...mapActions('alerts', ['LOAD_ALERTS']),
 
     toPhone(phone) {
       console.log('phone to: ' + phone)
@@ -176,7 +190,7 @@ export default {
       // this.toHomePage()
     },
     async onUpdatedAlerts() {
-      this.alerts = await this.GET_ALERTS()
+      this.alerts = await this.LOAD_ALERTS()
     },
     // Establece la fecha de referencia según la configuración del timer
     loadDate() {
@@ -199,11 +213,14 @@ export default {
 </script>
 
 <style scoped>
-#id {
+#alerts {
   background-color: cornflowerblue;
 }
 .toolbar__center {
   color: white;
+}
+#dummy {
+  border: 2px solid orangered;
 }
 .dummyText {
   margin-left: 16px;
@@ -215,12 +232,14 @@ export default {
 .alertsList {
   width: 96%;
   margin-left: 2%;
+  border: 2px solids red;
 }
 .alertsList__item {
   font-size: 12px;
+  border: 1px solid rebeccapurple;
 }
 .fab {
-  background-color: #e06257;
+  background-color: blue;
 }
 .modal {
   background: white;

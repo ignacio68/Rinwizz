@@ -13,7 +13,7 @@ export default {
   [SET_LOADED_ALERTS]: (state, loadedAlerts) => {
     console.log('SET_LOADED_ALERTS')
     state.loadedAlerts = loadedAlerts
-    console.log(state.loadedAlerts)
+    console.log('loadedAlerts: ' + state.loadedAlerts)
   },
 
   /**

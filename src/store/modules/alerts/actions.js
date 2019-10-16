@@ -1,3 +1,4 @@
+import { createDoc } from '@services/database'
 import { setAlert } from '@utils/database'
 
 import { CREATE_ALERT, LOAD_ALERTS } from '@store/types/actions_types'
@@ -8,39 +9,22 @@ export default {
    *
    * @param {Object} alertData - Datos de la alerta
    */
-  [CREATE_ALERT]: ({ commit, __, rootGetters }, alertData) => {
+  async [CREATE_ALERT]({ _, commit, __, rootGetters }, alertData) {
     console.log('Estoy en createAlert')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    const user = rootGetters['user/USER']
-    if (alertData) {
-      console.log('la alerta es: ' + JSON.stringify(alertData))
-    } else {
-      console.log('No existe la alerta ')
-    }
     try {
+      const userId = rootGetters['user/USER_ID']
+      const alertsDb = rootGetters['alertsLocalDb/GET_ALERTS_LOCAL_DB']
       // creamos el timeStamp
       const startDate = Date.now()
-      console.log('La fecha de inicio de la alerta es: ' + startDate)
-      console.log('El autor es: ' + user.name)
-
+      alertData._id = userId + ':' + startDate
+      alertData.creationDate = startDate
+      alertData.endDate += startDate
       // Damos formato a la alerta
       const alert = setAlert(alertData)
-      // const alert = JSON.parse(JSON.stringify(alertSample))
-      // alert._id = user._id + ':' + startDate + '-' + user._id
-      // alert.title = alertData.title
-      // alert.text = alertData.text
-      // alert.user = user
-      // alert.creationDate = startDate
-      // alert.endDate = startDate + alertData.endDate
-      // alert.link = alertData.link
-      // alert.phone = alertData.phone
-      // alert.location = alertData.location
-      // alert.entities = alertData.entities
-      // alert.extendedEntities = alertData.extendedEntities
-      // alert.favoriteCount = alertData.favoriteCount
       console.log('el alert es: ' + JSON.stringify(alert))
-
-      commit('alertsLocalDb/SET_USER_ALERT_LOCAL_DB', alert, { root: true })
+      // Creamos la alerta en la base de datos local
+      await createDoc(alertsDb, alert)
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('CREATE_ALERT error: ' + error)
@@ -48,8 +32,6 @@ export default {
   },
 
   /**
-   *   DEPRECATED
-   *
    * Recuperamos las alertas de la base de datos
    *
    */
@@ -61,7 +43,8 @@ export default {
       const alerts = await dispatch('alertsLocalDb/GET_ALERTS', null, {
         root: true
       })
-      console.log('Las alertas son: ' + JSON.stringify(alerts))
+      return alerts
+      // console.log('Las alertas son: ' + JSON.stringify(alerts))
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('LOAD_ALERTS error: ' + error)

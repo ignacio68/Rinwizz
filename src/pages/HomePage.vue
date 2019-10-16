@@ -59,11 +59,6 @@ export default {
           icon: 'ion-ios-bell, material:md-notifications',
           page: Alerts,
           badge: 6
-        },
-        {
-          label: this.$tc('lang.pages.homePage.tabbar', 1),
-          icon: 'ion-camera, material:md-camera',
-          page: Profile
         }
       ],
       numAlerts: '8'

@@ -102,9 +102,8 @@ export async function deleteLocalDb(db) {
  */
 export async function createDoc(db, doc) {
   console.log('Estoy en createDoc')
-  let response
   try {
-    response = await db.put(doc)
+    const response = await db.put(doc)
     console.log('document create' + JSON.stringify(response))
     return response
   } catch (error) {
@@ -197,6 +196,7 @@ export function deleteDoc(db, docId) {
  * @param options { Array } - options
  */
 export async function fetchAllDocs(db, options) {
+  console.log('fetchAllDocs db: ' + JSON.stringify(db))
   try {
     const docs = await db.allDocs(options)
     console.log(

@@ -13,6 +13,6 @@ export default {
   // Creamos en caché la base de datos de las alertas del usuario
   // TODO: revisar su utilidad
   [SET_USER_ALERT_LOCAL_DB]: (state, localDb) => {
-    state.userAlertsLocalDb = localDb
+    state.userAlertsLocalDb.push(localDb)
   }
 }
