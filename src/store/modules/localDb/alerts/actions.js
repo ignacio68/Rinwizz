@@ -1,10 +1,6 @@
 import { createDb, createDoc, replyDb, fetchAllDocs } from '@services/database'
 import { cloudantConfig, authAlerts } from '@setup/cloudant'
-import {
-  configSample,
-  optionsSample,
-  optionsFetchBatchDocsSample
-} from '@utils/database'
+import { setConfig, setOptions, setFetchBatchOptions } from '@utils/database'
 
 import {
   CREATE_ALERTS_LOCAL_DB,
@@ -49,19 +45,19 @@ export default {
       // TODO: get alert para añadir a la base de datos local de alertas
 
       // Recuperamos la base de datos de usuarios almacenada en caché
-      const db = await getters.ALERTS_LOCAL_DB
+      const db = await getters.GET_ALERTS_LOCAL_DB
       // console.log('La base de datos es: ' + JSON.stringify(db))
       // Creamos el documento del usuario
       await createDoc(db, newAlert)
       // Establecemos la configuración
-      const config = JSON.parse(JSON.stringify(configSample))
+      const config = setConfig()
       config._id = newAlert._id
       config.dbName = 'alerts'
       config.remote = cloudantConfig.url + '/' + config.dbName
       // console.log('La configuración es: ' + JSON.stringify(config))
 
       // Establecemos las opciones
-      const options = JSON.parse(JSON.stringify(optionsSample))
+      const options = setOptions()
       options.auth.username = authAlerts.key
       options.auth.password = authAlerts.password
       // options.doc_ids.push(newAlert._id)
@@ -83,24 +79,22 @@ export default {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
-    let alerts
-    // Recuperamos la base de datos de usuarios almacenada en caché
-    const db = getters.ALERTS_LOCAL_DB
+    // Recuperamos la base de datos de alertas almacenada en caché
+    const db = getters.GET_ALERTS_LOCAL_DB
+    console.log('alerts db es: ' + JSON.stringify(db))
     try {
-      console.log('GET_ALERTS')
+      console.log('action GET_ALERTS')
       // Establecemos la configuración -- Recuperarla como parametro
-      const options = JSON.parse(JSON.stringify(optionsFetchBatchDocsSample))
+      const options = setFetchBatchOptions()
       // límite de alertas a recuperar -- PRUEBA
       options.limits = 10
       // Recuperamos todas las alertas de la base de datos
-      alerts = await fetchAllDocs(db, options)
+      const alerts = await fetchAllDocs(db, options)
+      console.log('Las alertas son: ' + JSON.stringify(alerts))
+      return alerts
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('GET_ALERTS error: ' + error)
-    }
-    if (alerts) {
-      console.log('las alertas recuperadas son: ' + JSON.stringify(alerts))
-      return alerts
     }
   }
 }

@@ -1,4 +1,4 @@
-import { alertSample } from '@utils/database'
+import { setAlert } from '@utils/database'
 
 import { CREATE_ALERT, LOAD_ALERTS } from '@store/types/actions_types'
 
@@ -24,19 +24,20 @@ export default {
       console.log('El autor es: ' + user.name)
 
       // Damos formato a la alerta
-      const alert = JSON.parse(JSON.stringify(alertSample))
-      alert._id = user._id + ':' + startDate + '-' + user._id
-      alert.title = alertData.title
-      alert.text = alertData.text
-      alert.user = user
-      alert.creationDate = startDate
-      alert.endDate = startDate + alertData.endDate
-      alert.link = alertData.link
-      alert.phone = alertData.phone
-      alert.location = alertData.location
-      alert.entities = alertData.entities
-      alert.extendedEntities = alertData.extendedEntities
-      alert.favoriteCount = alertData.favoriteCount
+      const alert = setAlert(alertData)
+      // const alert = JSON.parse(JSON.stringify(alertSample))
+      // alert._id = user._id + ':' + startDate + '-' + user._id
+      // alert.title = alertData.title
+      // alert.text = alertData.text
+      // alert.user = user
+      // alert.creationDate = startDate
+      // alert.endDate = startDate + alertData.endDate
+      // alert.link = alertData.link
+      // alert.phone = alertData.phone
+      // alert.location = alertData.location
+      // alert.entities = alertData.entities
+      // alert.extendedEntities = alertData.extendedEntities
+      // alert.favoriteCount = alertData.favoriteCount
       console.log('el alert es: ' + JSON.stringify(alert))
 
       commit('alertsLocalDb/SET_USER_ALERT_LOCAL_DB', alert, { root: true })

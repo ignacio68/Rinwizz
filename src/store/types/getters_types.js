@@ -14,7 +14,7 @@ export const USERS_LOCAL_DB = 'USERS_LOCAL_DB'
 export const GET_USER_FOLLOWINGS = 'GET_USER_FOLLOWINGS'
 export const GET_USER_FOLLOWERS = 'GET_USER_FOLLOWERS'
 // alerts
-export const ALERTS_LOCAL_DB = 'ALERTS_LOCAL_DB'
+export const GET_ALERTS_LOCAL_DB = 'GET_ALERTS_LOCAL_DB'
 
 // navigator
 export const PAGE_STACK = 'PAGE_STACK'

@@ -19,11 +19,9 @@ export default {
       newUser._id = newUser.uid
       state.user = newUser
       // state.user = { ...state.user, newUser }
-      console.log('SET_USER, el usuario es: ' + JSON.stringify(state.user))
     } else {
       state.user = newUser
       // state.user = { ...state.user, newUser }
-      console.log('SET_USER, el usuario es: ' + JSON.stringify(state.user))
     }
   },
   /**

@@ -1,7 +1,5 @@
-import { ALERTS_LOCAL_DB } from '@store/types/getters_types'
+import { GET_ALERTS_LOCAL_DB } from '@store/types/getters_types'
 
 export default {
-  [ALERTS_LOCAL_DB]: state => {
-    return state.allAlertsLocalDb
-  }
+  [GET_ALERTS_LOCAL_DB]: state => state.allAlertsLocalDb
 }

@@ -25,7 +25,6 @@ export default {
     state.error = false
     // const errorMessage = ''
     // commit('errors/SET_ERROR_MESSAGE', errorMessage, { root: true })
-    console.log('Limpio los errores')
   },
   /**
    * Comprueba si la acción ha sido ejecutada
@@ -34,7 +33,6 @@ export default {
    */
   [SET_ACTION_PASS]: (state, payload) => {
     state.actionPass = payload
-    console.log('La acción ha sido ejecutada: ' + state.actionPass)
   },
   /**
    *Establece la plattaforma en la que corre la app

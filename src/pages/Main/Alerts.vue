@@ -1,21 +1,36 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar
+      class="customToolbar"
+      :pageTitle="$t('lang.pages.alerts.toolbar')"
+    ></the-custom-toolbar>
 
     <div class="content">
-      <v-ons-pull-hook :action="onUpdatedAlerts" id="pullHook">
+      <v-ons-pull-hook
+        :action="onUpdatedAlerts"
+        id="pullHook"
+      >
         <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
         <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
         <h5 class="dummyText">
           Este es tu Avatar
           <span>
-            <img class="alertCard__userAvatar" :src="user.avatar" />
+            <img
+              class="alertCard__userAvatar"
+              :src="user.avatar"
+            />
           </span>
         </h5>
-        <h5 v-if="!isVerified" class="dummyText">No estás verificado</h5>
+        <h5
+          v-if="!isVerified"
+          class="dummyText"
+        >No estás verificado</h5>
 
         <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
-        <v-ons-list v-if="alerts" class="alertsList">
+        <v-ons-list
+          v-if="alerts"
+          class="alertsList"
+        >
           <v-ons-list-item
             :modifier="md ? 'nodivider' : ''"
             class="alertsList__item"
@@ -64,16 +79,21 @@
     </div>
 
     <!-- Botón para lanzar el editor de alertas -->
-    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
-      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
+    <v-ons-fab
+      position="bottom right"
+      ripple="true"
+      @click.prevent="isModalVisible = true"
+    >
+      <v-ons-icon
+        class="alertScript__icon"
+        icon="ion-edit, material:zmdi-email-open"
+      ></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-// import { createDb, fetchAllDocs } from '@services/database'
-// import { optionsFetchBatchDocsSample } from '@utils/database'
+import { mapGetters, mapActions } from 'vuex'
 import alertMessage from '@components/Alerts/alertMessage'
 import alertScript from '@components/Alerts/alertScript'
 
@@ -113,66 +133,31 @@ export default {
   data() {
     return {
       isModalVisible: false,
-      // userAvatar: '@assets/Real-Madrid-logo-256.png',
-      referenceDate: '',
-      numAlerts: 0,
-      alerts: {}
+      referenceDate: ''
     }
   },
-  created() {
+  async created() {
     console.log('Alerts.vue created()')
-    // Load the alerts database    const usersDb = createDb('users')
-    // const alertsDb = createDb('alerts')
-    // if (alertsDb) {
-    //   // Establecemos la configuración -- Recuperarla como parametro
-    //   const options = JSON.parse(JSON.stringify(optionsFetchBatchDocsSample))
-    //   // límite de alertas a recuperar -- PRUEBA
-    //   options.limits = 10
-    //   await fetchAllDocs(alertsDb, this.user.uid)
-    //     .then(allAlerts => {
-    //       this.alerts = allAlerts
-    //       this.SET_ALL_ALERTS_LOCAL_DB(alerts)
-    //     })
-    //     .catch(error => {
-    //       console.log('fetchAllDocs error: ' + error)
-    //     })
-    // } else {
-    //   console.log('No hay base de datos de alertas')
-    // }
-    // this.CREATE_ALERTS_LOCAL_DB()
     // this.alerts = await this.GET_ALERTS()
-  },
-  beforeMount() {
-    console.log('Alerts.vue beforeMount()')
-  },
-  mounted() {
-    console.log('Alerts.vue mounted()')
-    this.numAlerts = document.getElementsByClassName('alertsList__item').length
-    console.log('El número de alertas es: ' + this.numAlerts)
-    console.log('El nombre del usuario es: ' + this.user.name)
   },
   computed: {
     ...mapGetters('user', { user: 'USER' }),
-    // ...mapGetters('alertsLocalDb', { alerts: 'ALERTS_LOCAL_DB' }),
+    // ...mapGetters('alertsLocalDb', { alerts: 'GET_ALERTS_LOCAL_DB' }),
     // alerts() {
-    //   return this.$store.getters['alertsLocalDb/ALERTS_LOCAL_DB']
+    //   return this.$store.getters['alertsLocalDb/GET_ALERTS_LOCAL_DB']
     // },
-
+    alerts() {
+      return this.GET_ALERTS()
+    },
     isVerified() {
-      // return this.$store.getters['user/USER_IS_VERIFIED']
       return this.user.isVerified
+    },
+    numAlerts() {
+      return this.alerts.length
     }
-    // userAvatar() {
-    //   return this.useravatar
-    // },
-    // userName() {
-    //   return this.user.name
-    //   console.log('userName: ' + this.user.name)
-    // }
   },
   methods: {
-    // ...mapMutations('alertsLocalDb', ['SET_ALL_ALERTS_LOCAL_DB']),
-    ...mapActions('alertsLocalDb', ['CREATE_ALERTS_LOCAL_DB', 'GET_ALERTS']),
+    ...mapActions('alertsLocalDb', ['GET_ALERTS']),
 
     toPhone(phone) {
       console.log('phone to: ' + phone)
@@ -188,7 +173,6 @@ export default {
     async createAlert() {
       this.isModalVisible = false
       this.$refs.alertScript.onCreateAlert()
-      this.alerts = await this.GET_ALERTS()
       // this.toHomePage()
     },
     async onUpdatedAlerts() {
