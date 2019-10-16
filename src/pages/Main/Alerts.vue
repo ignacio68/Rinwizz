@@ -226,7 +226,7 @@ export default {
   margin-right: 16px;
 }
 .alertCard__userAvatar {
-  width: 60%;
+  width: 20%;
 }
 .alertsList {
   width: 96%;

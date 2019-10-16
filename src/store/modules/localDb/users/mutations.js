@@ -1,38 +1,62 @@
 // TODO: revisar si es de utilidad
+import pull from 'lodash/pull'
 
 import {
   SET_ALL_USERS_LOCAL_DB,
   SET_USER_LOCAL_DB,
-  SET_FOLLOWINGS,
-  SET_FOLLOWERS
+  SET_FOLLOWING,
+  REMOVE_FOLLOWING,
+  SET_FOLLOWER
 } from '@store/types/mutations_types'
 
 export default {
-  // Creamos la base de datos de usuarios
+  /**
+   * Crea la base de datos de usuarios en caché
+   *
+   * @param {Object} localDb - base de datos de usuarios
+   */
   [SET_ALL_USERS_LOCAL_DB]: (state, localDb) => {
-    console.log(
-      'estoy en SET_ALL_USERS_LOCAL_DB y la base de datos es: ' + localDb
-    )
     state.usersLocalDb = localDb
   },
 
+  /**
+   * Crea la base de datos del usuario en caché
+   *
+   * @param {Object} localDb - base de datos del usuario
+   */
   [SET_USER_LOCAL_DB]: (state, localDb) => {
-    console.log(
-      'estoy en SET_user_LOCAL_DB y la base de datos es: ' +
-        JSON.stringify(localDb)
-    )
     state.userLocalDb = localDb
   },
 
-  [SET_FOLLOWINGS]: (state, userFollowings) => {
-    // Creamos la base de datos de followings
-    console.log('estoy en SET_FOLLOWINGS')
-    state.userLocalDb.followings = userFollowings
+  /**
+   * Añade un usuario a seguir
+   *
+   * @param {Array} userFollowing - nombres de los followings
+   */
+  [SET_FOLLOWING]: (state, userFollowing) => {
+    state.userLocalDb.followings.push(userFollowing)
   },
 
-  [SET_FOLLOWERS]: (state, userFollowers) => {
+  /**
+   * Elimina un usuario que se sigue
+   *
+   * @param {Array} userFollowing - nombres de los followings
+   */
+  [REMOVE_FOLLOWING]: (state, userFollowing) => {
+    state.userLocalDb.followings = pull(
+      state.userLocalDb.followings,
+      userFollowing
+    )
+  },
+
+  /**
+   * TODO: revisar
+   * Añade un seguidoer del usuario
+   *
+   * @param {Array} userFollower - nombres de los followuers
+   */
+  [SET_FOLLOWER]: (state, userFollower) => {
     // Creamos la base de datos de followers
-    console.log('estoy en SET_FOLLOWINGS')
-    state.userLocalDb.followers = userFollowers
+    state.userLocalDb.followers.push(userFollower)
   }
 }

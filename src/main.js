@@ -127,7 +127,8 @@ Vue.use(VueTimers)
  */
 // Object.values(OnsenComponents).forEach(component => Vue.component(component.name, component)); // For ESM
 // Vue.component('the-preloader', ThePreloader) // Preloader
-Vue.component('the-custom-toolbar', TheCustomtoolbar) // Toolbar común
+// Toolbar común
+Vue.component('the-custom-toolbar', TheCustomtoolbar)
 // Vue.component('app-alert', AlertCmp) // Alerta de errores
 
 let app
