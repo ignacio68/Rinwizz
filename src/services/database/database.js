@@ -199,9 +199,7 @@ export async function fetchAllDocs(db, options) {
   console.log('fetchAllDocs db: ' + JSON.stringify(db))
   try {
     const docs = await db.allDocs(options)
-    console.log(
-      'Todos los documentos han sido recuperados' + JSON.stringify(docs)
-    )
+    console.log('fetchAllDocs: ' + JSON.stringify(docs))
     return docs
   } catch (error) {
     console.log('fetchAllDocs error: ' + error)

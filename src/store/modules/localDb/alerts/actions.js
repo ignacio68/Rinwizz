@@ -83,7 +83,7 @@ export default {
       root: true
     })
     // Recuperamos la base de datos de alertas almacenada en caché
-    const db = getters.GET_ALERTS_LOCAL_DB
+    const alertsDb = getters.GET_ALERTS_LOCAL_DB
     // console.log('alerts db es: ' + JSON.stringify(db))
     try {
       console.log('action GET_ALERTS')
@@ -92,9 +92,9 @@ export default {
       // límite de alertas a recuperar -- PRUEBA
       options.limits = 10
       // Recuperamos todas las alertas de la base de datos
-      const alerts = await fetchAllDocs(db, options)
-      console.log('Las alertas son: ' + alerts)
-      commit('alerts/SET_LOADED_ALERTS', alerts, { root: true })
+      const alerts = await fetchAllDocs(alertsDb, options)
+      // console.log('Las alertas son: ' + alerts)
+      // commit('alerts/SET_LOADED_ALERTS', alerts, { root: true })
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('GET_ALERTS error: ' + error)

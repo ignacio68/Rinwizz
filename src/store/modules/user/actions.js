@@ -201,7 +201,7 @@ export default {
         commit('alerts/RESET_ALERTS', null, { root: true })
         console.log('LOGOUT_USER')
       })
-      .then(commit('navigator/REPLACE', LogIn, { root: true }))
+      .then(commit('navigator/PUSH', LogIn, { root: true }))
       .catch(error => {
         console.log('LOGOUT_USER error: ' + error)
         commit('shared/SET_ERROR', null, { root: true })
