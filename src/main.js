@@ -173,7 +173,7 @@ firebaseAuth().onAuthStateChanged(user => {
           } else {
             console.log('No se encuentra el idioma del navegador')
           }
-          this.$store.dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB')
+          // this.$store.dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB')
           this.$store.dispatch('alertsLocalDb/CREATE_ALERTS_LOCAL_DB')
         }
       },

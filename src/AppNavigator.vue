@@ -38,12 +38,6 @@ export default {
     ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
 
     userIsAuthenticated() {
-      console.log('Comprobando si el usuario está autenticado')
-      if (this.user) {
-      } else {
-        // SOLO EN PRODUCCIÓN
-        console.log('EL USUARIO NO ESTÁ AUTENTICADO')
-      }
       return this.user !== null && this.user !== undefined
     }
   },

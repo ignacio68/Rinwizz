@@ -17,6 +17,7 @@ export default {
    */
   [SET_ALL_USERS_LOCAL_DB]: (state, localDb) => {
     state.usersLocalDb = localDb
+    console.log('SET_ALL_USERS_LOCAL_DB: ' + JSON.stringify(state.usersLocalDb))
   },
 
   /**

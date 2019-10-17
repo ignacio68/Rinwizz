@@ -40,10 +40,16 @@ export default {
     commit('shared/CLEAR_ERROR', null, { root: true })
     try {
       // Recuperamos las alertas de la base de datos
-      const alerts = await dispatch('alertsLocalDb/GET_ALERTS', null, {
+      await dispatch('alertsLocalDb/GET_ALERTS', null, {
         root: true
       })
-      return alerts
+        .then(alerts => {
+          console.log('Recuperando las alertas!!' + JSON.stringify(alerts))
+          commit('SET_LOADED_ALERTS', alerts)
+        })
+        .catch(error => {
+          console.log('LOAD_ALERTS error: ' + error)
+        })
       // console.log('Las alertas son: ' + JSON.stringify(alerts))
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })

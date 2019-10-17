@@ -1,27 +1,42 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.alerts.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar
+      class="customToolbar"
+      :pageTitle="$t('lang.pages.alerts.toolbar')"
+    ></the-custom-toolbar>
 
     <div class="content">
-      <v-ons-pull-hook :action="onUpdatedAlerts" id="pullHook">
+      <v-ons-pull-hook
+        :action="onUpdatedAlerts"
+        id="pullHook"
+      >
         <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
         <div id="dummy">
           <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
           <h5 class="dummyText">
             Este es tu Avatar
             <span>
-              <img class="alertCard__userAvatar" :src="user.avatar" />
+              <img
+                class="alertCard__userAvatar"
+                :src="user.avatar"
+              />
             </span>
           </h5>
-          <h5 v-if="!isVerified" class="dummyText">No estás verificado</h5>
+          <h5
+            v-if="!isVerified"
+            class="dummyText"
+          >No estás verificado</h5>
         </div>
 
         <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
-        <v-ons-list v-if="alerts" class="alertsList">
+        <v-ons-list
+          v-if="alerts"
+          class="alertsList"
+        >
           <v-ons-list-item
             :modifier="md ? 'nodivider' : ''"
             class="alertsList__item"
-            v-for="alert in fakeAlerts"
+            v-for="alert in alerts"
             :key="alert._id"
           >
             <alert-message
@@ -66,8 +81,15 @@
     </div>
 
     <!-- Botón para lanzar el editor de alertas -->
-    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
-      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
+    <v-ons-fab
+      position="bottom right"
+      ripple="true"
+      @click.prevent="isModalVisible = true"
+    >
+      <v-ons-icon
+        class="alertScript__icon"
+        icon="ion-edit, material:zmdi-email-open"
+      ></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -155,14 +177,11 @@ export default {
   },
   async created() {
     console.log('Alerts.vue created()')
+    await this.LOAD_ALERTS()
   },
   computed: {
     ...mapGetters('user', { user: 'USER' }),
     ...mapGetters('alerts', { alerts: 'GET_ALERTS' }),
-    // ...mapGetters('alertsLocalDb', { alerts: 'GET_ALERTS_LOCAL_DB' }),
-    // alerts() {
-    //   return this.$store.getters['alertsLocalDb/GET_ALERTS_LOCAL_DB']
-    // },
     isVerified() {
       return this.user.isVerified
     },

@@ -16,14 +16,12 @@ module.exports = {
       enableInSFC: true
     }
   },
-  configureWebpack: {
-    plugins: [
-      // new BundleAnalyzerPlugin()
-    ] /* ,
-    resolve: {
-      alias: require('./aliases.config').webpack
-    } */
+
+  css: {
+    // Enable CSS source maps.
+    sourceMap: true
   },
+
   chainWebpack: config => {
     config.resolve.alias
       .set('@', resolve('.'))

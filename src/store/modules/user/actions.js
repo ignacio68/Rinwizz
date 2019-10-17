@@ -1,7 +1,4 @@
 import { firebaseAuth, firebaseDb } from '@services/firebase'
-import { createDb, fetchDoc, replyDb } from '@services/database'
-import { cloudantConfig, authUsers } from '@setup/cloudant'
-import { configSample, optionsSample } from '@utils/database'
 
 import {
   SIGNUP_USER,
@@ -77,15 +74,10 @@ export default {
         // Creamos al nuevo usuario en caché
         commit('SET_USER', newUser)
 
-        // Creamos la base de datos local de usuarios
-        // await dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB', null, {
+        // Creamos la base del usuario (PouchDB)
+        // await dispatch('usersLocalDb/CREATE_USER_LOCAL_DB', newUser, {
         //   root: true
         // })
-
-        // Creamos la base de del usuario (PouchDB)
-        await dispatch('usersLocalDb/CREATE_USER_LOCAL_DB', newUser, {
-          root: true
-        })
 
         console.log('Hay un nuevo usuario: ' + state.user.name)
         // Enviamos el email de confirmación
@@ -172,7 +164,7 @@ export default {
    * @param {*} commit
    * @param {String} user
    */
-  async [LOGIN_USER]({ getters, commit, dispatch, rootGetters }, logInUser) {
+  async [LOGIN_USER]({ commit, dispatch }, logInUser) {
     console.log('LOGIN_USER')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // Comprueba que el usuario existe en Firebase
@@ -209,7 +201,7 @@ export default {
         commit('alerts/RESET_ALERTS', null, { root: true })
         console.log('LOGOUT_USER')
       })
-      .then(commit('navigator/PUSH', LogIn, { root: true }))
+      .then(commit('navigator/REPLACE', LogIn, { root: true }))
       .catch(error => {
         console.log('LOGOUT_USER error: ' + error)
         commit('shared/SET_ERROR', null, { root: true })
@@ -352,41 +344,22 @@ export default {
    *
    * @param {String} user - id y email del usuario
    */
-  async [AUTO_SIGN_IN]({ state, getters, commit, rootGetters }) {
+  async [AUTO_SIGN_IN]({ commit, dispatch }) {
     console.log('AUTO_SIGN_IN')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // Recuperamos el _id del usuario
-    const userId = getters.USER_ID
-    // TODO: repasar la creación de la base de datos
-    // const allUsersDb = rootGetters['usersLocalDb/USERS_LOCAL_DB']
-    // console.log('allUsersDb: ' + JSON.stringify(allUsersDb))
-    // Creamos la base de datos local de usuarios
-    const allUsersDb = await createDb('users', { auto_compaction: true })
-    commit('usersLocalDb/SET_ALL_USERS_LOCAL_DB', allUsersDb, { root: true })
-    console.log('allUsersDb: ' + JSON.stringify(allUsersDb))
-    // Replicamos la base de datos externa
-    // TODO: desarrollar
-    // Establecemos los parametros de la confguracion
-    const config = JSON.parse(JSON.stringify(configSample))
-    config._id = userId
-    config.dbName = 'users'
-    config.remote = cloudantConfig.url + '/' + config.dbName
-
-    console.log('La configuración es: ' + JSON.stringify(config))
-
-    // Establecemos las opciones
-    const options = JSON.parse(JSON.stringify(optionsSample))
-    options.auth.username = authUsers.key
-    options.auth.password = authUsers.password
-    options.doc_ids.push(userId)
-    console.log('Las opciones son: ' + JSON.stringify(options))
-
-    // Replicamos y sincronizamos la base de datos
-    await replyDb(allUsersDb, config, options)
-    // Recuperamos los datos del usuario
-    const user = await fetchDoc(allUsersDb, userId)
-    // Guardamos los datos del usuario en caché
-    commit('SET_USER', user)
+    // const userId = getters.USER_ID
+    try {
+      // Recuperamos la base de datos de los usuarios
+      await dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB', null, {
+        root: true
+      })
+      await dispatch('usersLocalDb/REPLY_USERS_DB', null, { root: true })
+      // Recuperamos los datos del usuario
+      await dispatch('usersLocalDb/FETCH_USER', null, { root: true })
+    } catch (error) {
+      console.log('AUTO_SIGN_IN error: ' + error)
+    }
   },
 
   /**
@@ -397,26 +370,23 @@ export default {
    * @param {Object} user - datos del usuario para actualizar
    */
   // TODO: repasar todo, actualizar base de datos
-  [UPDATED_USER_PROFILE]: ({ commit, state }, user) => {
+  [UPDATED_USER_PROFILE]: ({ getters, commit, state }, user) => {
     console.log('Estoy en UPDATED_USER_PROFILE')
     commit('shared/CLEAR_ERROR', null, { root: true })
     const userUpdated = {
       // userIcon: user.userIcon, // por el momento utilizar direcciones URL
       userName: user.userName
     }
-    // console.log(userUpdated)
-    // commit('setUser', userUpdated)
-    const userId = state.user._id
-    // FIXME: Actualizamos los datos en Firebase Realtime Database
+    const userId = getters.USER_ID
+    // Actualizamos los datos en Firebase Realtime Database
     firebaseDb
       .ref('users/' + userId)
       .update(userUpdated)
       .then(() => {
         console.log(
-          'Actualizada en Firebase la base de datos del usuario: ' + user
+          'Actualizada en Firebase la base de datos del usuario: ' +
+            user.userName
         )
-        // Actualizamos los datos en LokiJS
-        // dispatch('localDataBase/updateUser', userUpdated, { root: true })
       })
       // TODO: revisar y actualizar errores
       .catch(error => {

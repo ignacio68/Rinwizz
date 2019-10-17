@@ -16,13 +16,20 @@
         ></countdown>
       </v-ons-row>
 
-      <v-ons-col width="20%" class="leftCol">
-        <img :src="userAvatar" :alt="altAvatar" class="alertCard__userAvatar" />
+      <v-ons-col
+        width="20%"
+        class="leftCol"
+      >
+        <img
+          :src="userAvatar"
+          :alt="altAvatar"
+          class="alertCard__userAvatar"
+        />
       </v-ons-col>
 
       <v-ons-col class="rigthCol">
         <div></div>
-        <!-- <v-ons-row>
+        <v-ons-row>
           <h3 class="alertCard__userName">{{ userName }}</h3>
         </v-ons-row>
 
@@ -46,11 +53,14 @@
               ripple="true"
               @click.prevent="onLinkClick()"
             >{{ linkButton }}</v-ons-button>
-            <v-ons-button class="alertCard__button" ripple="true">
+            <v-ons-button
+              class="alertCard__button"
+              ripple="true"
+            >
               <v-ons-icon icon="ion-share, material:md-share" />
             </v-ons-button>
           </div>
-        </v-ons-row>-->
+        </v-ons-row>
       </v-ons-col>
     </div>
   </div>
