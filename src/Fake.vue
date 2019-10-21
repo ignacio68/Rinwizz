@@ -21,19 +21,18 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   name: 'fake',
-  beforeCreate() {
-    console.log('Fake beforeCreated()')
-    this.LOAD_ALERTS()
+  data() {
+    return {
+      alerts: {}
+    }
   },
+  // beforeCreate() {
+  //   console.log('Fake beforeCreated()')
+  //   this.LOAD_ALERTS()
+  // },
   created() {
     console.log('Fake created()')
     this.AUTO_SIGN_IN()
-  },
-  beforeMount() {
-    console.log('Fake beforeMount()')
-  },
-  mounted() {
-    console.log('Fake mounted()')
   },
   computed: {
     ...mapGetters('user', { user: 'USER' }),

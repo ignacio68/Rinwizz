@@ -39,44 +39,39 @@ export async function replyDb(db, config, options) {
     await db.replicate
       .from(remote, { doc_ids: options.doc_ids })
       .on('change', info => {
-        console.log('La reply ha cambiado: ' + JSON.stringify(info))
+        console.log('reply is changed: ' + JSON.stringify(info))
       })
       .on('complete', info => {
-        console.log('La reply se ha completado: ' + JSON.stringify(info))
-        db.sync(remote, options)
-          .on('change', info => {
-            console.log('La sync ha cambiado: ' + JSON.stringify(info))
-          })
-          .on('complete', info => {
-            console.log('La sync se ha completado: ' + JSON.stringify(info))
-          })
-          .on('paused', err => {
-            console.log('La sync está pausada: ' + JSON.stringify(err))
-          })
-          .on('active', () => {
-            console.log('La sync está trabajando')
-          })
-          .on('denied', err => {
-            console.log('Se ha denegado la sync: ' + JSON.stringify(err))
-          })
-          .on('error', err => {
-            console.log('Hay un error en la sync: ' + JSON.stringify(err))
-          })
+        console.log('reply is completed: ' + JSON.stringify(info))
       })
       .on('paused', err => {
-        console.log('La reply está pausada: ' + JSON.stringify(err))
+        console.log('reply is paused: ' + JSON.stringify(err))
       })
       .on('active', () => {
-        console.log('La reply está trabajando')
+        console.log('reply is working')
       })
       .on('denied', err => {
-        console.log('Se ha denegado la reply: ' + JSON.stringify(err))
+        console.log('reply denied: ' + JSON.stringify(err))
       })
       .on('error', err => {
-        console.log('Hay un error en la reply: ' + JSON.stringify(err))
+        console.log('peply error: ' + JSON.stringify(err))
       })
   } catch (error) {
     console.log('replyDb error: ' + error)
+  }
+}
+
+/**
+ * Sync remote and local database
+ *
+ * @param {String} remote - Remote database to sync
+ * @param {Object} options - Options
+ */
+export async function syncDb(db, remote, options) {
+  try {
+    await db.sync(remote, options)
+  } catch (error) {
+    console.log('syncDb error: ' + error)
   }
 }
 

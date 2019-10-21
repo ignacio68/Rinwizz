@@ -61,6 +61,7 @@ export default {
           phone: '',
           isVerified: user.emailVerified,
           isAnonymous: user.isAnonymous,
+          // TODO: solo para producción
           avatar:
             'https://firebasestorage.googleapis.com/v0/b/rinwizz-app.appspot.com/o/pwqhMnXx8ZMN06BeobDxJOZ5kDC2%2Favatar%2FpwqhMnXx8ZMN06BeobDxJOZ5kDC2..jpg?alt=media&token=8e64b798-eb08-46ec-a794-5d658e994301',
           providerId: user.providerId,
