@@ -31,11 +31,12 @@ export const createDb = (nameDb, options) =>
  * @param remote { String } - remote database URL
  * @param options { Object }
  */
-export async function replyDb(db, config, options) {
+export async function replyDb(replyData) {
   console.log('Estoy en replyDb')
+  const db = replyData.db
+  const remote = replyData.config.remote
+  const options = replyData.options
   try {
-    const remote = config.remote
-    // console.log('Remote es: ' + remote)
     await db.replicate
       .from(remote, { doc_ids: options.doc_ids })
       .on('change', info => {
@@ -65,11 +66,33 @@ export async function replyDb(db, config, options) {
  * Sync remote and local database
  *
  * @param {String} remote - Remote database to sync
- * @param {Object} options - Options
+ * @param {syncData} options - Options
  */
-export async function syncDb(db, remote, options) {
+export async function syncDb(syncData) {
   try {
-    await db.sync(remote, options)
+    const db = syncData.db
+    const remote = syncData.config.remote
+    const options = syncData.options
+    await db
+      .sync(remote, options)
+      .on('change', info => {
+        console.log('sync is changed: ' + JSON.stringify(info))
+      })
+      .on('complete', info => {
+        console.log('sync is completed: ' + JSON.stringify(info))
+      })
+      .on('paused', err => {
+        console.log('sync is paused: ' + JSON.stringify(err))
+      })
+      .on('active', () => {
+        console.log('sync is working')
+      })
+      .on('denied', err => {
+        console.log('sync denied: ' + JSON.stringify(err))
+      })
+      .on('error', err => {
+        console.log('sync error: ' + JSON.stringify(err))
+      })
   } catch (error) {
     console.log('syncDb error: ' + error)
   }

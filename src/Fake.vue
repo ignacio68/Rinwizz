@@ -23,7 +23,7 @@ export default {
   name: 'fake',
   data() {
     return {
-      alerts: {}
+      fakeAlerts: {}
     }
   },
   // beforeCreate() {
@@ -35,12 +35,12 @@ export default {
     this.AUTO_SIGN_IN()
   },
   computed: {
-    ...mapGetters('user', { user: 'USER' }),
-    ...mapGetters('alerts', { alerts: 'GET_ALERTS' })
+    ...mapGetters('user', { user: 'USER' })
+    // ...mapGetters('alerts', { fakeAlerts: 'GET_ALERTS' })
   },
   methods: {
-    ...mapActions('user', ['AUTO_SIGN_IN']),
-    ...mapActions('alerts', ['LOAD_ALERTS'])
+    ...mapActions('user', ['AUTO_SIGN_IN'])
+    // ...mapActions('alerts', ['LOAD_ALERTS'])
   }
 }
 </script>

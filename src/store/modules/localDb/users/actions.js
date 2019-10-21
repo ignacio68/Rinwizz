@@ -74,7 +74,7 @@ export default {
       config._id = userId
       config.dbName = 'users'
       config.remote = cloudantConfig.url + '/' + config.dbName
-      console.log('La configuración es: ' + JSON.stringify(config))
+      // console.log('La configuración es: ' + JSON.stringify(config))
 
       // TODO: convertir en función
       // Establecemos las opciones
@@ -82,86 +82,35 @@ export default {
       options.auth.username = authUsers.key
       options.auth.password = authUsers.password
       options.doc_ids.push(userId)
-      console.log('Las opciones son: ' + JSON.stringify(options))
-
+      // console.log('Las opciones son: ' + JSON.stringify(options))
+      const replyData = { db: allUsersDb, config, options: options }
       // Replicamos y sincronizamos la base de datos
-      await replyDb(allUsersDb, config, options)
-        .then(response => {
-          if (status === 'onChange') {
-            console.log('La réplica del USERS ha cambiado')
-            // dispatch('FETCH_USER')
-          } else if (status === 'onComplete') {
-            console.log('La réplica del USERS se ha completado')
-            // const remote = config.remote
-            // dispatch('SYNC_USERS_DB', allUsersDb, remote, options)
-          } else {
-            console.log('La réplisca o está pausada o denegada o hay un error')
-          }
-        })
-        .catch(error => {
-          console.log('REPLY_USERS_DB error: ' + error)
-        })
+      await replyDb(replyData).then(() => {
+        dispatch('SYNC_USERS_DB', { replyData })
+      })
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('REPLY_USERS_DB error: ' + error)
     }
   },
 
-  // .on('change', info => {
-  //   dispatch('FETCH_USER')
-  //   console.log('reply is changed: ' + JSON.stringify(info))
-  // })
-  // .on('complete', info => {
-  //   console.log('reply is completed: ' + JSON.stringify(info))
-  //   const remote = config.remote
-  //   dispatch('SYNC_USERS_DB', allUsersDb, remote, options)
-  // })
-  // .on('paused', err => {
-  //   console.log('reply is paused: ' + JSON.stringify(err))
-  // })
-  // .on('active', () => {
-  //   console.log('reply is working')
-  // })
-  // .on('denied', err => {
-  //   console.log('reply denied: ' + JSON.stringify(err))
-  // })
-  // .on('error', err => {
-  //   console.log('peply error: ' + JSON.stringify(err))
-  // })
-
   /**
    * Replicamos la base de datos de usuarios para tenerla siempre actualizada
    *
    * @param {}
    */
-  async [SYNC_USERS_DB]({ commit, dispatch }, db, remote, options) {
+  async [SYNC_USERS_DB]({ commit, dispatch }, { syncData }) {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
     try {
-      await syncDb(db, remote, options)
-        .on('change', info => {
-          console.log('La sync ha cambiado: ' + JSON.stringify(info))
-          dispatch('FETCH_USER')
-        })
-        .on('complete', info => {
-          console.log('La sync se ha completado: ' + JSON.stringify(info))
-        })
-        .on('paused', err => {
-          console.log('La sync está pausada: ' + JSON.stringify(err))
-        })
-        .on('active', () => {
-          console.log('La sync está trabajando')
-        })
-        .on('denied', err => {
-          console.log('Se ha denegado la sync: ' + JSON.stringify(err))
-        })
-        .on('error', err => {
-          console.log('Hay un error en la sync: ' + JSON.stringify(err))
-        })
+      await syncDb(syncData).then(() => {
+        console.log('SYNC_USERS_DB: el usuario ha cambiado')
+        dispatch('FETCH_USER')
+      })
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
-      console.log('REPLY_USERS_DB error: ' + error)
+      console.log('SYNC_USERS_DB error: ' + error)
     }
   },
 
