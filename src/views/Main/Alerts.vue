@@ -2,7 +2,7 @@
   <v-ons-page id="alerts">
     <the-custom-toolbar
       class="customToolbar"
-      :pageTitle="$t('lang.pages.alerts.toolbar')"
+      :pageTitle="$t('lang.views.alerts.toolbar')"
     ></the-custom-toolbar>
 
     <div class="content">

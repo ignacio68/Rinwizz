@@ -37,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- User init preferences pages
+- User init preferences views
 - Leaflet Maps
 
 ## [0.1.4] - 2019-05-09

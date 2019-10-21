@@ -1,10 +1,10 @@
 <template>
   <v-ons-page class="main">
     <!--the-custom-toolbar
-      :pageTitle="$t('lang.pages.signup.toolbar.title')" >
+      :pageTitle="$t('lang.views.signup.toolbar.title')" >
     </the-custom-toolbar-->
     <div class="container">
-      <p class="mainText">{{ $t('lang.pages.signup.main.text1') }}</p>
+      <p class="mainText">{{ $t('lang.views.signup.main.text1') }}</p>
 
       <!-------SIGNUP WITH EMAIL & PASSWORD ------>
 
@@ -24,7 +24,7 @@
             <div class="center">
               <v-ons-input
                 type="name"
-                :placeholder="$t('lang.pages.signup.input.name')"
+                :placeholder="$t('lang.views.signup.input.name')"
                 float
                 modifier="underbar transparent"
                 v-model="name"
@@ -49,7 +49,7 @@
               <v-ons-input
                 type="email"
                 minlength="6"
-                :placeholder="$t('lang.pages.signup.input.email')"
+                :placeholder="$t('lang.views.signup.input.email')"
                 required
                 float
                 modifier="underbar transparent"
@@ -75,7 +75,7 @@
                 type="text"
                 input-id="password"
                 minlength="8"
-                :placeholder="$t('lang.pages.signup.input.password')"
+                :placeholder="$t('lang.views.signup.input.password')"
                 required
                 float
                 modifier="underbar transparent"
@@ -118,7 +118,7 @@
           :disabled="false"
           ripple="true"
           @click.prevent="onSignUp"
-          >{{ $t('lang.pages.signup.button') }}</v-ons-button
+          >{{ $t('lang.views.signup.button') }}</v-ons-button
         >
       </div>
 
@@ -126,7 +126,7 @@
 
       <div class="socialText">
         <p class="socialButtons__text">
-          {{ $t('lang.pages.signup.main.socialText') }}
+          {{ $t('lang.views.signup.main.socialText') }}
         </p>
         <v-ons-row class="socialButtons__list">
           <circle-button
@@ -145,7 +145,7 @@
       <!------ TERMS OF USE & POLICY PRIVACITY ------>
 
       <div class="privacy">
-        <i18n class="privacy__text" path="lang.pages.signup.main.text3">
+        <i18n class="privacy__text" path="lang.views.signup.main.text3">
           <span
             class="privacy__text-link"
             @click.prevent="toTerms"
@@ -164,7 +164,7 @@
       <!-- I HAVE A USER ACCOUNT -->
 
       <p class="logInText" @click.prevent="toLogIn">
-        {{ $t('lang.pages.signup.main.text2') }}
+        {{ $t('lang.views.signup.main.text2') }}
       </p>
     </div>
 
@@ -193,9 +193,9 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 
-import Personal from '@pages/Preferences/Personal'
-import TermsOfService from '@pages/Shared/TermsOfService'
-import PrivacyPolicy from '@pages/Shared/PrivacyPolicy'
+import Personal from '@views/Preferences/Personal'
+import TermsOfService from '@views/Shared/TermsOfService'
+import PrivacyPolicy from '@views/Shared/PrivacyPolicy'
 import LogIn from './LogIn'
 // import SignUpButton from '../../components/Shared/SignUpButton'
 import CircleButton from '@components/Shared/CircleButton'
@@ -234,10 +234,10 @@ export default {
     ...mapGetters('social', { socialButtons: 'SOCIAL_BUTTONS' }),
 
     terms() {
-      return this.$t('lang.pages.signup.main.terms')
+      return this.$t('lang.views.signup.main.terms')
     },
     privacy() {
-      return this.$t('lang.pages.signup.main.privacy')
+      return this.$t('lang.views.signup.main.privacy')
     }
   },
   methods: {

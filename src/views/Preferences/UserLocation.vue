@@ -2,7 +2,7 @@
   <v-ons-page id="userLocation">
     <div class="content">
       <v-ons-col class="col">
-        <h3 class="text">{{ $t('lang.pages.userLocation.main') }}</h3>
+        <h3 class="text">{{ $t('lang.views.userLocation.main') }}</h3>
         <div class="map">
           <location-map
             :location="userLocation"
@@ -12,7 +12,7 @@
         </div>
         <div class="address">
           <p>
-            {{ $t('lang.pages.userLocation.address') }}
+            {{ $t('lang.views.userLocation.address') }}
             <span>
               <h5>{{ userAddress.suburb }}</h5>
             </span>
@@ -27,7 +27,7 @@
               :disabled="false"
               ripple="true"
               @click.prevent="updateUserLocation"
-              >{{ $t('lang.pages.userLocation.button') }}</v-ons-button
+              >{{ $t('lang.views.userLocation.button') }}</v-ons-button
             >
           </div>
           <div class="showMarkersButton">

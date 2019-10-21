@@ -18,9 +18,9 @@ import {
   TO_JSON
 } from '@store/types/actions_types'
 
-import AppSplitter from '@pages/AppSplitter'
-import Welcome from '@pages/Shared/Welcome'
-import LogIn from '@pages/User/LogIn'
+import AppSplitter from '@views/AppSplitter'
+import Welcome from '@views/Shared/Welcome'
+import LogIn from '@views/User/LogIn'
 
 export default {
   /**

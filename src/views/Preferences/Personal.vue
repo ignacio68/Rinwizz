@@ -1,7 +1,7 @@
 <template>
   <v-ons-page id="personal">
     <div class="content">
-      <h4>{{ $t('lang.pages.personal.main') }}</h4>
+      <h4>{{ $t('lang.views.personal.main') }}</h4>
       <br />
       <div class="gender">
         <v-ons-button
@@ -11,7 +11,7 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toAvatar"
-          >{{ $t('lang.pages.personal.button') }}</v-ons-button
+          >{{ $t('lang.views.personal.button') }}</v-ons-button
         >
       </div>
     </div>

@@ -2,27 +2,27 @@
   <v-ons-page class="main">
     <div class="content">
       <v-ons-col class="col">
-        <h1 class="header">{{ $t('lang.pages.welcome.header') }}</h1>
-        <p class="secondary-text">{{ $t('lang.pages.welcome.text') }}</p>
+        <h1 class="header">{{ $t('lang.views.welcome.header') }}</h1>
+        <p class="secondary-text">{{ $t('lang.views.welcome.text') }}</p>
         <v-ons-list class="list" modifier>
           <v-ons-list-item class="list__item" modifier="nodivider">
             {{
-            $t('lang.pages.welcome.text1')
+            $t('lang.views.welcome.text1')
             }}
           </v-ons-list-item>
           <v-ons-list-item class="list__item" modifier="nodivider">
             {{
-            $t('lang.pages.welcome.text2')
+            $t('lang.views.welcome.text2')
             }}
           </v-ons-list-item>
           <v-ons-list-item class="list__item" modifier="nodivider">
             {{
-            $t('lang.pages.welcome.text3')
+            $t('lang.views.welcome.text3')
             }}
           </v-ons-list-item>
           <v-ons-list-item class="list__item" modifier="nodivider">
             {{
-            $t('lang.pages.welcome.text4')
+            $t('lang.views.welcome.text4')
             }}
           </v-ons-list-item>
         </v-ons-list>
@@ -32,7 +32,7 @@
             modifier
             ripple="true"
             @click.prevent="toSignUp"
-          >{{ $t('lang.pages.welcome.signup') }}</v-ons-button>
+          >{{ $t('lang.views.welcome.signup') }}</v-ons-button>
         </v-ons-row>
       </v-ons-col>
     </div>
@@ -42,7 +42,7 @@
 <script>
 import { mapMutations } from 'vuex'
 
-import SignUp from '@pages/User/SignUp'
+import SignUp from '@views/User/SignUp'
 
 export default {
   name: 'welcome',

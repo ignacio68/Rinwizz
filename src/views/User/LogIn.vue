@@ -2,7 +2,7 @@
   <v-ons-page class="main">
     <the-custom-toolbar
       class="customToolbar"
-      :pageTitle="$t('lang.pages.login.toolbar.title')"
+      :pageTitle="$t('lang.views.login.toolbar.title')"
       :backLabel="volver"
     ></the-custom-toolbar>
     <div class="container">
@@ -20,7 +20,7 @@
               <v-ons-input
                 type="email"
                 minlength="6"
-                :placeholder="$t('lang.pages.login.input.email')"
+                :placeholder="$t('lang.views.login.input.email')"
                 required
                 float
                 modifier="underbar transparent"
@@ -40,7 +40,7 @@
                 type="text"
                 input-id="password"
                 minlength="8"
-                :placeholder="$t('lang.pages.login.input.password')"
+                :placeholder="$t('lang.views.login.input.password')"
                 required
                 float
                 modifier="underbar transparent"
@@ -77,7 +77,7 @@
             <p
               class="forgotPassword"
               @click.prevent="onForgotPassword"
-            >{{ $t('lang.pages.login.main.text1') }}</p>
+            >{{ $t('lang.views.login.main.text1') }}</p>
           </v-ons-list-item>
         </v-ons-list>
       </form>
@@ -92,12 +92,12 @@
         :disabled="buttonActive"
         ripple="true"
         @click.prevent="onLognIn"
-      >{{ $t('lang.pages.login.button') }}</v-ons-button>
+      >{{ $t('lang.views.login.button') }}</v-ons-button>
 
       <!------ LOGIN WITH SOCIAL BUTTONS ------>
 
       <div class="socialText">
-        <p class="socialButtons__text">{{ $t('lang.pages.login.main.socialText') }}</p>
+        <p class="socialButtons__text">{{ $t('lang.views.login.main.socialText') }}</p>
         <v-ons-row class="socialButtons__list">
           <circle-button
             v-for="(socialButton, $index) in socialButtons"
@@ -114,7 +114,7 @@
 
       <!-- SIGNUP BUTTON -->
       <div>
-        <p class="text__button" @click.prevent="toSignUp">{{ $t('lang.pages.login.main.text2') }}</p>
+        <p class="text__button" @click.prevent="toSignUp">{{ $t('lang.views.login.main.text2') }}</p>
       </div>
     </div>
   </v-ons-page>

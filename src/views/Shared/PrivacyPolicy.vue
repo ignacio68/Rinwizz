@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     toolbarTitle() {
-      return this.$t('lang.pages.privacy.toolbar.title')
+      return this.$t('lang.views.privacy.toolbar.title')
     }
   },
   methods: {

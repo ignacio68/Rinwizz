@@ -41,25 +41,25 @@ export default {
     return {
       // tabs: [
       //   {
-      //     label: this.$tc('lang.pages.homePage.tabbar', 0),
+      //     label: this.$tc('lang.views.homePage.tabbar', 0),
       //     icon: 'ion-ios-bell, material:md-notifications',
       //     page: Alerts,
       //     badge: 6
       //   },
       //   {
-      //     label: this.$tc('lang.pages.homePage.tabbar', 1),
+      //     label: this.$tc('lang.views.homePage.tabbar', 1),
       //     icon: 'ion-camera, material:md-camera',
       //     page: Profile
       //   },
       //   {
-      //     label: this.$tc('lang.pages.homePage.tabbar', 2),
+      //     label: this.$tc('lang.views.homePage.tabbar', 2),
       //     icon: 'ion-search, material:md-search',
       //     page: Search
       //   }
       // ],
       tabs: [
         {
-          label: this.$tc('lang.pages.homePage.tabbar', 0),
+          label: this.$tc('lang.views.homePage.tabbar', 0),
           icon: 'ion-ios-bell, material:md-notifications',
           page: Alerts,
           badge: 6

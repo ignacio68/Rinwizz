@@ -1,7 +1,7 @@
 <template>
   <v-ons-page id="gender">
     <div class="content">
-      <p>{{ $t('lang.pages.gender.main') }}</p>
+      <p>{{ $t('lang.views.gender.main') }}</p>
       <v-ons-list>
         <v-ons-list-item
           v-for="(gender, $index) in genders"
@@ -30,7 +30,7 @@
           :disabled="false"
           ripple="true"
           @click.prevent="updateGender"
-          >{{ $t('lang.pages.gender.button') }}</v-ons-button
+          >{{ $t('lang.views.gender.button') }}</v-ons-button
         >
       </div>
     </div>
@@ -53,7 +53,7 @@ export default {
     /*
     // TODO: INTERNACIONALIZAR!!
     genders() {
-      return this.$tc('lang.pages.gender.genders')
+      return this.$tc('lang.views.gender.genders')
     }, */
   },
   methods: {

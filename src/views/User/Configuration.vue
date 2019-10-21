@@ -45,7 +45,7 @@
         :disabled="false"
         ripple="true"
         @click.prevent="onSave"
-        >{{ $t('lang.pages.configuration.button') }}</v-ons-button
+        >{{ $t('lang.views.configuration.button') }}</v-ons-button
       >
     </div>
   </v-ons-page>
@@ -54,7 +54,7 @@
 <script>
 import { mapMutations, mapActions } from 'vuex'
 
-import HomePage from '@pages/HomePage'
+import HomePage from '@views/HomePage'
 
 export default {
   name: 'configuration',
@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     toolbarTitle() {
-      return this.$t('lang.pages.configuration.toolbar')
+      return this.$t('lang.views.configuration.toolbar')
     }
   },
   methods: {

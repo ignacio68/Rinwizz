@@ -1,7 +1,7 @@
 <template>
   <v-ons-page id="preferences">
     <div class="content">
-      <p>{{ $t('lang.pages.hobbies.main') }}</p>
+      <p>{{ $t('lang.views.hobbies.main') }}</p>
       <br />
       <!------ DEPORTES ------->
       <v-ons-list-title class="preferences__list-title">Deportes</v-ons-list-title>
@@ -67,7 +67,7 @@
           :disabled="false"
           ripple="true"
           @click.prevent="updateHobbies"
-        >{{ $t('lang.pages.hobbies.button') }}</v-ons-button>
+        >{{ $t('lang.views.hobbies.button') }}</v-ons-button>
       </div>
     </div>
   </v-ons-page>

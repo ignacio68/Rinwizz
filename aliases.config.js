@@ -10,7 +10,7 @@ const aliases = {
   '@components': 'src/components',
   '@locales': 'src/locales',
   '@mixins': 'src/mixins',
-  '@pages': 'src/pages',
+  '@views': 'src/views',
   '@services': 'src/services',
   '@setup': 'src/setup',
   '@store': 'src/store',

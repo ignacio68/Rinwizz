@@ -1,6 +1,6 @@
 <template>
   <v-ons-page id="search">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.search.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.views.search.toolbar')"></the-custom-toolbar>
     <div class="content">
       <h1>Página de búsquedas</h1>
       <!-- <v-ons-col class="col">
@@ -13,7 +13,7 @@
         </div>
         <div class="address">
           <p>
-            {{ $t('lang.pages.userLocation.address') }}
+            {{ $t('lang.views.userLocation.address') }}
             <span>
               <h5>{{ userAddress.suburb }}</h5>
             </span>

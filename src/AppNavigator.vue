@@ -11,11 +11,11 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 
-// import HomePage from '@pages/HomePage'
-import AppSplitter from '@pages/AppSplitter'
-import Welcome from '@pages/Shared/Welcome'
-// import UserLocation from '@pages/Preferences/UserLocation'
-// import Avatar from '@pages/Preferences/Avatar'
+// import HomePage from '@views/HomePage'
+import AppSplitter from '@views/AppSplitter'
+import Welcome from '@views/Shared/Welcome'
+// import UserLocation from '@views/Preferences/UserLocation'
+// import Avatar from '@views/Preferences/Avatar'
 
 export default {
   name: 'AppNavigator',

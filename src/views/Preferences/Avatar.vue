@@ -1,7 +1,7 @@
 <template>
   <v-ons-page id="avatar">
     <div class="content">
-      <h5>{{ $t('lang.pages.avatar.main') }}</h5>
+      <h5>{{ $t('lang.views.avatar.main') }}</h5>
       <!-- TODO: mostrar icono cuando no haya imágen elegida -->
       <img
         v-if="imageUrl !== ''"
@@ -18,7 +18,7 @@
         ripple="true"
         @click.prevent="getAvatar"
       >
-        {{ $t('lang.pages.avatar.avatarButton') }}
+        {{ $t('lang.views.avatar.avatarButton') }}
         <v-ons-input
           v-if="platform === 'pc'"
           style="display: none"
@@ -38,7 +38,7 @@
         :disabled="false"
         ripple="true"
         @click.prevent="toGender"
-      >{{ $t('lang.pages.avatar.button') }}</v-ons-button>
+      >{{ $t('lang.views.avatar.button') }}</v-ons-button>
     </div>
   </v-ons-page>
 </template>

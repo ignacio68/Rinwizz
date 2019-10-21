@@ -2,7 +2,7 @@ import { firebaseAuth } from '@services/firebase'
 
 import { DISPATCH_SIGNUP, SOCIAL_SIGNUP } from '@store/types/actions_types'
 
-import HomePage from '@pages/HomePage'
+import HomePage from '@views/HomePage'
 
 export default {
   /**

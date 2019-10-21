@@ -26,7 +26,7 @@
       '@config': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\config',
       // '@firebases': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\firebase',
       '@locales': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\locales',
-      '@pages': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\pages',
+      '@views': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\views',
       '@stores': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\store',
       '@modules': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\store\\modules',
       '@utils': 'C:\\Users\\administrador.LOPEZAMOR\\Rinwizz\\src\\utils'

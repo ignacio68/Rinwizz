@@ -1,6 +1,6 @@
 <template>
   <v-ons-page id="profile">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.pages.profile.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.views.profile.toolbar')"></the-custom-toolbar>
     <div class="content">
       <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
       <div class="picture">
@@ -11,7 +11,7 @@
         <v-ons-list class="profileList">
           <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
             <div class="left profileList__item-label">
-              <label for="textImput">{{ $t('lang.pages.profile.main.list.input.name') }}</label>
+              <label for="textImput">{{ $t('lang.views.profile.main.list.input.name') }}</label>
             </div>
             <div class="center profileList__item-input">
               <v-ons-input
@@ -27,7 +27,7 @@
           </v-ons-list-item>
           <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
             <div class="left profileList__item-label">
-              <label for="textImput">{{ $t('lang.pages.profile.main.list.input.email') }}</label>
+              <label for="textImput">{{ $t('lang.views.profile.main.list.input.email') }}</label>
             </div>
             <div class="center profileList__item-input">
               <v-ons-input id="email" type="email" :placeholder="user.email" float />
@@ -35,7 +35,7 @@
           </v-ons-list-item>
           <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="profileList__item">
             <div class="left profileList__item-label">
-              <label for="textImput">{{ $t('lang.pages.profile.main.list.input.location') }}</label>
+              <label for="textImput">{{ $t('lang.views.profile.main.list.input.location') }}</label>
             </div>
             <div class="center profileList__item-input">
               <v-ons-input
@@ -50,7 +50,7 @@
           </v-ons-list-item>
           <v-ons-list-header
             class="profileList__header"
-          >{{ $t('lang.pages.profile.main.list.header1') }}</v-ons-list-header>
+          >{{ $t('lang.views.profile.main.list.header1') }}</v-ons-list-header>
         </v-ons-list>
       </form>
 
@@ -61,7 +61,7 @@
         :disabled="false"
         ripple="true"
         @click.prevent="onSave"
-      >{{ $t('lang.pages.profile.main.button') }}</v-ons-button>
+      >{{ $t('lang.views.profile.main.button') }}</v-ons-button>
     </div>
   </v-ons-page>
 </template>
