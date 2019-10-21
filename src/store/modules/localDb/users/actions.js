@@ -1,5 +1,11 @@
-import { cloudantConfig, authUsers } from '@setup/cloudant'
-import { createDb, createDoc, replyDb, fetchDoc } from '@services/database'
+// import { cloudantConfig, authUsers } from '@setup/cloudant'
+import {
+  createDb,
+  createDoc,
+  replyDb,
+  fetchDoc,
+  syncDb
+} from '@services/database'
 import { setConfig, setOptions, setDoc } from '@utils/database'
 
 import {
@@ -11,7 +17,6 @@ import {
   UPDATE_USER_LOCAL_DB,
   REMOVE_USER_LOCAL_DB
 } from '@store/types/actions_types'
-import { syncDb } from '../../../../services/database/database'
 
 export default {
   /**
@@ -25,7 +30,7 @@ export default {
       .then(allUsersDb => {
         // Guardamos la base de datos en caché
         commit('SET_ALL_USERS_LOCAL_DB', allUsersDb)
-        return allUsersDb
+        // return allUsersDb
       })
       .catch(error => {
         console.log('CREATE_ALL_USER_LOCAL_DB error: ' + error)
@@ -68,25 +73,18 @@ export default {
       const userId = rootGetters['user/USER_ID']
       const allUsersDb = getters['USERS_LOCAL_DB']
 
-      // TODO: convertir en función
       // Establecemos los parametros de la confguracion
-      const config = setConfig()
-      config._id = userId
-      config.dbName = 'users'
-      config.remote = cloudantConfig.url + '/' + config.dbName
-      // console.log('La configuración es: ' + JSON.stringify(config))
+      const config = setConfig(userId, 'users')
 
-      // TODO: convertir en función
       // Establecemos las opciones
-      const options = setOptions()
-      options.auth.username = authUsers.key
-      options.auth.password = authUsers.password
-      options.doc_ids.push(userId)
-      // console.log('Las opciones son: ' + JSON.stringify(options))
-      const replyData = { db: allUsersDb, config, options: options }
+      const options = setOptions(userId)
+
+      const replyData = { db: allUsersDb, config: config, options: options }
       // Replicamos y sincronizamos la base de datos
       await replyDb(replyData).then(() => {
-        dispatch('SYNC_USERS_DB', { replyData })
+        console.log('REPLY_USERS_DB´realizada')
+        const syncData = replyData
+        dispatch('SYNC_USERS_DB', { syncData })
       })
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
@@ -97,17 +95,20 @@ export default {
   /**
    * Replicamos la base de datos de usuarios para tenerla siempre actualizada
    *
-   * @param {}
+   * @param {Object} syncData
    */
   async [SYNC_USERS_DB]({ commit, dispatch }, { syncData }) {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
+    console.log('syncData: ' + syncData)
     try {
-      await syncDb(syncData).then(() => {
-        console.log('SYNC_USERS_DB: el usuario ha cambiado')
-        dispatch('FETCH_USER')
-      })
+      console.log('SYNC_USERS_DB preparada')
+      const sync = await syncDb(syncData)
+      // .then(sync => {
+      //   console.log('SYNC_USERS_DB realizada: ' + JSON.stringify(sync))
+      //   // dispatch('FETCH_USER')
+      console.log('SYNC_USERS_DB realizada: ' + JSON.stringify(sync))
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('SYNC_USERS_DB error: ' + error)

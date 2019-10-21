@@ -3,7 +3,7 @@
     <div>
       <h1>FAKE PAGE!!</h1>
       <br />
-      <p>user is: {{ user.name }}</p>
+      <p>user is: {{ fakeUser.name }}</p>
     </div>
     <div id="alerts">
       <v-ons-list-item
@@ -18,29 +18,34 @@
   </div>
 </template>
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'fake',
   data() {
     return {
-      fakeAlerts: {}
+      fakeUser: {
+        name: 'pepito'
+      }
+      // fakeAlerts: {}
     }
   },
-  // beforeCreate() {
-  //   console.log('Fake beforeCreated()')
-  //   this.LOAD_ALERTS()
-  // },
-  created() {
+  beforeCreate() {
+    console.log('Fake beforeCreated()')
+  },
+  async created() {
     console.log('Fake created()')
-    this.AUTO_SIGN_IN()
+    await this.CREATE_ALERTS_LOCAL_DB()
+    await this.LOAD_ALERTS()
+    //  this.AUTO_SIGN_IN()
   },
   computed: {
-    ...mapGetters('user', { user: 'USER' })
-    // ...mapGetters('alerts', { fakeAlerts: 'GET_ALERTS' })
+    // ...mapGetters('user', { fakeUser: 'USER' }),
+    ...mapGetters('alerts', { fakeAlerts: 'GET_ALERTS' })
   },
   methods: {
-    ...mapActions('user', ['AUTO_SIGN_IN'])
-    // ...mapActions('alerts', ['LOAD_ALERTS'])
+    // ...mapActions('user', ['AUTO_SIGN_IN']),
+    ...mapActions('alertsLocalDb', ['CREATE_ALERTS_LOCAL_DB']),
+    ...mapActions('alerts', ['LOAD_ALERTS'])
   }
 }
 </script>

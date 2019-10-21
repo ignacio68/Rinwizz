@@ -8,6 +8,7 @@ import {
 export default {
   // Creamos en caché la base de datos de alertas
   [SET_ALL_ALERTS_LOCAL_DB]: (state, localDb) => {
+    console.log('SET_ALL_ALERTS_LOCAL_DB: ' + localDb)
     state.allAlertsLocalDb = localDb
   },
   // Creamos en caché la base de datos de las alertas del usuario

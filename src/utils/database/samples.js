@@ -112,8 +112,6 @@ export const alertSample = {
 export const configSample = {
   _id: '',
   dbName: '',
-  apiKey: '',
-  apiPassword: '',
   remote: ''
 }
 

@@ -1,9 +1,20 @@
-import { createDb, createDoc, replyDb, fetchAllDocs } from '@services/database'
-import { cloudantConfig, authAlerts } from '@setup/cloudant'
-import { setConfig, setOptions, setFetchBatchOptions } from '@utils/database'
+import {
+  createDb,
+  createDoc,
+  replyDb,
+  syncDb,
+  fetchAllDocs
+} from '@services/database'
+import {
+  setConfig,
+  setAlertsOptions,
+  setFetchBatchOptions
+} from '@utils/database'
 
 import {
   CREATE_ALERTS_LOCAL_DB,
+  REPLY_ALERTS_DB,
+  SYNC_ALERTS_DB,
   PUT_ALERT_LOCAL_DB,
   GET_ALERTS
 } from '@store/types/actions_types'
@@ -12,41 +23,86 @@ import {
  * Creamos la bas ede datos local de las alertas
  */
 export default {
-  [CREATE_ALERTS_LOCAL_DB]: ({ commit }) => {
+  [CREATE_ALERTS_LOCAL_DB]: ({ commit, dispatch }) => {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
 
     console.log('CREATE_ALERTS_LOCAL_DB')
     // Creamos la base de datos local
-    createDb('alerts', { auto_compaction: true })
-      .then(alertsDb => {
-        console.log('alertsDb es: ' + JSON.stringify(alertsDb))
+    try {
+      createDb('alerts', { auto_compaction: true })
+        .then(alertsDb => {
+          console.log('alertsDb es: ' + JSON.stringify(alertsDb))
+          // creamos la base de datos en caché
+          commit('SET_ALL_ALERTS_LOCAL_DB', alertsDb)
+        })
+        .then(() => {
+          // replicamos la base de datos remota
+          dispatch('REPLY_ALERTS_DB')
+        })
+    } catch (error) {
+      commit('shared/SET_ERROR', null, { root: true })
+      console.log('CREATE_ALERTS_LOCAL_DB error: ' + error)
+    }
+  },
 
-        // creamos la base de datos en caché
-        commit('SET_ALL_ALERTS_LOCAL_DB', alertsDb)
+  /**
+   * Replicamos la base de datos de las alertas
+   *
+   * @param {}
+   */
+  async [REPLY_ALERTS_DB]({ getters, commit, dispatch, rootGetters }) {
+    commit('shared/CLEAR_ERROR', null, {
+      root: true
+    })
+    try {
+      const AlertsDb = getters.GET_ALERTS_LOCAL_DB
+      // TODO: utilizar cuando no se utilice FAke
+      // const fetchFollowings = rootGetters['user/USER_FOLLOWING']
 
-        // replicamos la base de datos
-        // Establecemos la configuración
-        const config = setConfig()
-        // config._id = newAlert._id
-        config.dbName = 'alerts'
-        config.remote = cloudantConfig.url + '/' + config.dbName
+      // Establecemos la configuración
+      const config = setConfig(null, 'alerts')
+      // '4rOdkM3mVmW1rTM3nttoIbjMldc2:1570465573591-4rOdkM3mVmW1rTM3nttoIbjMldc2',
 
-        // Establecemos las opciones
-        const options = setOptions()
-        options.auth.username = authAlerts.key
-        options.auth.password = authAlerts.password
-        // options.doc_ids.push(newAlert._id)
+      // Establecemos las opciones
+      const options = setAlertsOptions()
+      options.doc_ids = null
 
-        // Replicamos y sincronizamos la base de datos
-        replyDb(alertsDb, config, options)
+      const replyData = { db: AlertsDb, config: config, options: options }
+      // Replicamos y sincronizamos la base de datos
+      replyDb(replyData).then(() => {
+        console.log('ReplyDb realizada')
+        const syncData = replyData
+        dispatch('SYNC_ALERTS_DB', { syncData })
       })
+    } catch (error) {
+      console.log('REPLY_ALERTS_DB error: ' + error)
+      commit('shared/SET_ERROR', null, { root: true })
+    }
+  },
 
-      .catch(error => {
-        commit('shared/SET_ERROR', null, { root: true })
-        console.log('CREATE_ALERTS_LOCAL_DB error: ' + error)
-      })
+  /**
+   * Sincronizamos la base de datos
+   *
+   * @param {Object} syncData
+   */
+  async [SYNC_ALERTS_DB]({ commit, dispatch }, { syncData }) {
+    commit('shared/CLEAR_ERROR', null, {
+      root: true
+    })
+    console.log('syncData: ' + syncData)
+    try {
+      console.log('SYNC_ALERTS_DB preparada')
+      const sync = await syncDb(syncData)
+      // .then(sync => {
+      //   console.log('SYNC_USERS_DB realizada: ' + JSON.stringify(sync))
+      //   // dispatch('FETCH_USER')
+      console.log('SYNC_USERS_DB realizada: ' + JSON.stringify(sync))
+    } catch (error) {
+      commit('shared/SET_ERROR', null, { root: true })
+      console.log('SYNC_USERS_DB error: ' + error)
+    }
   },
 
   /**
@@ -95,6 +151,7 @@ export default {
       const alerts = await fetchAllDocs(alertsDb, options)
       // console.log('Las alertas son: ' + alerts)
       // commit('alerts/SET_LOADED_ALERTS', alerts, { root: true })
+      return alerts
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('GET_ALERTS error: ' + error)

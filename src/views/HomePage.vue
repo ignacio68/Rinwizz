@@ -1,15 +1,11 @@
 <template>
   <v-ons-page id="homePage">
-    <v-ons-tabbar
-      position="bottom"
-      :tabs="tabs"
-      :index.sync="index"
-    ></v-ons-tabbar>
+    <v-ons-tabbar position="bottom" :tabs="tabs" :index.sync="index"></v-ons-tabbar>
   </v-ons-page>
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations } from 'vuex'
 
 import Alerts from './Main/Alerts'
 import Profile from './Main/Profile'
@@ -70,8 +66,6 @@ export default {
   },
   async created() {
     console.log('homePage.created()')
-    // Load the alerts
-    await this.LOAD_ALERTS
   },
   computed: {
     index: {
@@ -84,8 +78,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('navigator', ['SET']),
-    ...mapActions('alerts', ['LOAD_ALERTS'])
+    ...mapMutations('navigator', ['SET'])
   }
 }
 </script>

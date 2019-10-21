@@ -36,6 +36,8 @@ export const UPDATE_USER_LOCAL_DB = 'UPDATE_USER_LOCAL_DB' // TODO: revisar uso
 export const REMOVE_USER_LOCAL_DB = 'REMOVE_USER_LOCAL_DB'
 // alerts
 export const CREATE_ALERTS_LOCAL_DB = 'CREATE_ALERTS_LOCAL_DB'
+export const REPLY_ALERTS_DB = 'REPLY_ALERTS_DB'
+export const SYNC_ALERTS_DB = 'SYNC_ALERTS_DB'
 export const PUT_ALERT_LOCAL_DB = 'PUT_ALERT_LOCAL_DB'
 export const GET_ALERTS = 'GET_ALERTS'
 

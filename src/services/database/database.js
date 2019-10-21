@@ -37,6 +37,8 @@ export async function replyDb(replyData) {
   const remote = replyData.config.remote
   const options = replyData.options
   try {
+    console.log('db: ' + db)
+    console.log('remote: ' + remote)
     await db.replicate
       .from(remote, { doc_ids: options.doc_ids })
       .on('change', info => {
@@ -69,10 +71,11 @@ export async function replyDb(replyData) {
  * @param {syncData} options - Options
  */
 export async function syncDb(syncData) {
+  console.log('syncDb: ')
+  const db = syncData.db
+  const remote = syncData.config.remote
+  const options = syncData.options
   try {
-    const db = syncData.db
-    const remote = syncData.config.remote
-    const options = syncData.options
     await db
       .sync(remote, options)
       .on('change', info => {
