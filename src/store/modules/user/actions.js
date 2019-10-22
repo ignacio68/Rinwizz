@@ -25,6 +25,7 @@ export default {
   },
 
   /**
+   * TODO: Sólo para pruebas
    * Mostramos los datos del usuario en formato JSON
    */
   [TO_JSON]: ({ state }) => {
