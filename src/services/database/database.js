@@ -8,7 +8,9 @@ import PouchDB from 'pouchdb-browser'
  */
 export const createDb = (nameDb, options) =>
   new Promise((resolve, reject) => {
-    const db = PouchDB(nameDb, options)
+    // let db = PouchDB(nameDb, options)
+    let db =
+      options !== void 0 ? new PouchDB(nameDb, options) : new PouchDB(name)
     if (db) {
       console.log('Creada la base de datos')
       resolve(db)
@@ -39,26 +41,25 @@ export async function replyDb(replyData) {
   try {
     console.log('db: ' + db)
     console.log('remote: ' + remote)
-    await db.replicate
-      .from(remote, { doc_ids: options.doc_ids })
-      .on('change', info => {
-        console.log('reply is changed: ' + JSON.stringify(info))
-      })
-      .on('complete', info => {
-        console.log('reply is completed: ' + JSON.stringify(info))
-      })
-      .on('paused', err => {
-        console.log('reply is paused: ' + JSON.stringify(err))
-      })
-      .on('active', () => {
-        console.log('reply is working')
-      })
-      .on('denied', err => {
-        console.log('reply denied: ' + JSON.stringify(err))
-      })
-      .on('error', err => {
-        console.log('peply error: ' + JSON.stringify(err))
-      })
+    await db.replicate.from(remote, { doc_ids: options.doc_ids })
+    // .on('change', info => {
+    //   console.log('reply is changed: ' + JSON.stringify(info))
+    // })
+    // .on('complete', info => {
+    //   console.log('reply is completed: ' + JSON.stringify(info))
+    // })
+    // .on('paused', err => {
+    //   console.log('reply is paused: ' + JSON.stringify(err))
+    // })
+    // .on('active', () => {
+    //   console.log('reply is working')
+    // })
+    // .on('denied', err => {
+    //   console.log('reply denied: ' + JSON.stringify(err))
+    // })
+    // .on('error', err => {
+    //   console.log('peply error: ' + JSON.stringify(err))
+    // })
   } catch (error) {
     console.log('replyDb error: ' + error)
   }
@@ -76,28 +77,44 @@ export async function syncDb(syncData) {
   const remote = syncData.config.remote
   const options = syncData.options
   try {
-    await db
-      .sync(remote, options)
-      .on('change', info => {
-        console.log('sync is changed: ' + JSON.stringify(info))
-      })
-      .on('complete', info => {
-        console.log('sync is completed: ' + JSON.stringify(info))
-      })
-      .on('paused', err => {
-        console.log('sync is paused: ' + JSON.stringify(err))
-      })
-      .on('active', () => {
-        console.log('sync is working')
-      })
-      .on('denied', err => {
-        console.log('sync denied: ' + JSON.stringify(err))
-      })
-      .on('error', err => {
-        console.log('sync error: ' + JSON.stringify(err))
-      })
+    await db.sync(remote, options)
+    // .on('change', info => {
+    //   console.log('sync is changed: ' + JSON.stringify(info))
+    // })
+    // .on('complete', info => {
+    //   console.log('sync is completed: ' + JSON.stringify(info))
+    // })
+    // .on('paused', err => {
+    //   console.log('sync is paused: ' + JSON.stringify(err))
+    // })
+    // .on('active', () => {
+    //   console.log('sync is working')
+    // })
+    // .on('denied', err => {
+    //   console.log('sync denied: ' + JSON.stringify(err))
+    // })
+    // .on('error', err => {
+    //   console.log('sync error: ' + JSON.stringify(err))
+    // })
   } catch (error) {
     console.log('syncDb error: ' + error)
+  }
+}
+
+/**
+ * Detect changes in local database
+ *
+ * @param changeData { Object } - local database name & options
+ */
+export async function changeDb(changeData) {
+  const db = changeData.db
+  const options = changeData.options
+  try {
+    await db.changes(options).on('change', result => {
+      return result
+    })
+  } catch (error) {
+    console.log('changeDb error: ' + error)
   }
 }
 

@@ -133,6 +133,19 @@ export const optionsSample = {
   since: null
 }
 
+/* *************** OPTIONS CHANGE DATABASE SAMPLE *************** */
+
+export const optionsChangeSample = {
+  live: true,
+  include_docs: true,
+  since: 'now',
+  limit: null,
+  filter: '',
+  doc_ids: [],
+  query_params: {},
+  view: '',
+  selector: ''
+}
 /* *************** OPTIONS FETCH A BATCH OF DOCUMENTS *************** */
 
 export const optionsFetchBatchDocsSample = {

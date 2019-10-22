@@ -6,9 +6,14 @@ module.exports = {
     browser: true
   },
   extends: [
+    // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
     'plugin:vue/essential',
     'plugin:prettier/recommended',
     '@vue/standard'
+  ],
+  // required to lint *.vue files
+  plugins: [
+    'vue'
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',

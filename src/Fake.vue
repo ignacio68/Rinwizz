@@ -23,29 +23,26 @@ export default {
   name: 'fake',
   data() {
     return {
-      fakeUser: {
-        name: 'pepito'
-      }
-      // fakeAlerts: {}
+      // fakeUser: {
+      //   name: 'pepito'
+      // }
+      fakeAlerts: {}
     }
   },
-  beforeCreate() {
-    console.log('Fake beforeCreated()')
-  },
+  beforeCreate() {},
   async created() {
-    console.log('Fake created()')
-    await this.CREATE_ALERTS_LOCAL_DB()
-    await this.LOAD_ALERTS()
-    //  this.LOAD_USER()
+    // await this.CREATE_ALERTS_LOCAL_DB()
+    // await this.LOAD_ALERTS()
+    await this.AUTO_SIGN_IN()
   },
   computed: {
-    // ...mapGetters('user', { fakeUser: 'USER' }),
-    ...mapGetters('alerts', { fakeAlerts: 'GET_ALERTS' })
+    ...mapGetters('user', { fakeUser: 'USER' })
+    // ...mapGetters('alerts', { fakeAlerts: 'GET_ALERTS' })
   },
   methods: {
-    // ...mapActions('user', ['LOAD_USER']),
-    ...mapActions('alertsLocalDb', ['CREATE_ALERTS_LOCAL_DB']),
-    ...mapActions('alerts', ['LOAD_ALERTS'])
+    ...mapActions('user', ['AUTO_SIGN_IN'])
+    // ...mapActions('alertsLocalDb', ['CREATE_ALERTS_LOCAL_DB']),
+    // ...mapActions('alerts', ['LOAD_ALERTS'])
   }
 }
 </script>
