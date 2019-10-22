@@ -34,6 +34,9 @@ export default {
    */
   [CREATE_ALL_USERS_LOCAL_DB]: ({ commit }) => {
     console.log('estoy en CREATE_ALL_USER_LOCAL_DB')
+    commit('shared/CLEAR_ERROR', null, {
+      root: true
+    })
     createDb('users', { auto_compaction: true })
       .then(allUsersDb => {
         // Guardamos la base de datos en caché
@@ -41,6 +44,7 @@ export default {
         // return allUsersDb
       })
       .catch(error => {
+        commit('shared/SET_ERROR', null, { root: true })
         console.log('CREATE_ALL_USER_LOCAL_DB error: ' + error)
       })
   },
@@ -74,9 +78,6 @@ export default {
    * @param {}
    */
   async [REPLY_USERS_DB]({ getters, commit, dispatch, rootGetters }) {
-    commit('shared/CLEAR_ERROR', null, {
-      root: true
-    })
     try {
       const userId = rootGetters['user/USER_ID']
       const allUsersDb = getters['USERS_LOCAL_DB']
@@ -92,7 +93,8 @@ export default {
       await replyDb(replyData).then(() => {
         console.log('REPLY_USERS_DB´realizada')
         const syncData = replyData
-        dispatch('SYNC_USERS_DB', { syncData })
+        syncDb(syncData)
+        // dispatch('SYNC_USERS_DB', { syncData })
       })
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
@@ -106,17 +108,14 @@ export default {
    * @param {Object} syncData
    */
   async [SYNC_USERS_DB]({ commit, dispatch }, { syncData }) {
-    commit('shared/CLEAR_ERROR', null, {
-      root: true
-    })
     console.log('syncData: ' + syncData)
     try {
       console.log('SYNC_USERS_DB preparada')
-      await syncDb(syncData).then(() => {
-        console.log('SYNC_USERS_DB realizada')
-        const changeData = syncData
-        dispatch('CHANGE_USER_DB', changeData)
-      })
+      await syncDb(syncData)
+      // .then(() => {
+      console.log('SYNC_USERS_DB realizada')
+      // const changeData = syncData
+      // await dispatch('CHANGE_USER_DB', changeData)
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('SYNC_USERS_DB error: ' + error)
@@ -128,17 +127,14 @@ export default {
    *
    * @param {} data
    */
-  async [CHANGE_USER_DB]({ commit, dispatch }, data) {
-    commit('shared/CLEAR_ERROR', null, {
-      root: true
-    })
+  async [CHANGE_USER_DB]({ getters, commit, dispatch, rootGetters }) {
     console.log('CHANGE_USER_DB')
     try {
-      const userDb = data.db
-      const userId = data.config.userId
+      const userDb = getters['USERS_LOCAL_DB']
+      const userId = rootGetters['user/USER_ID']
       const options = setChangeOptions(userId)
       const changeData = { db: userDb, options: options }
-      await changeDb(changeData).then(change => {
+      await changeDb(changeData).on('change', change => {
         dispatch('FETCH_USER')
         console.log('CHANGE_USER_DB: ' + change)
       })

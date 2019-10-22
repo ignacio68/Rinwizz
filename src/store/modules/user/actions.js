@@ -16,6 +16,9 @@ export default {
       await dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB', null, {
         root: true
       })
+      dispatch('usersLocalDb/CHANGE_USER_DB', null, {
+        root: true
+      })
       await dispatch('usersLocalDb/REPLY_USERS_DB', null, { root: true })
       // Recuperamos los datos del usuario
       // await dispatch('usersLocalDb/FETCH_USER', null, { root: true })

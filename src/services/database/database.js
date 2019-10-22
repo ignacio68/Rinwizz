@@ -6,27 +6,19 @@ import PouchDB from 'pouchdb-browser'
  * @param nameDb { String } - nombre de la base de datos
  * @param config { Object } - parametros opcionales para crear la base de datos
  */
+
 export const createDb = (nameDb, options) =>
   new Promise((resolve, reject) => {
     // let db = PouchDB(nameDb, options)
-    let db =
+    const db =
       options !== void 0 ? new PouchDB(nameDb, options) : new PouchDB(name)
     if (db) {
       console.log('Creada la base de datos')
       resolve(db)
     } else {
-      reject('No se ha podido crear la db')
+      reject(console.log('No se ha podido crear la db'))
     }
   })
-// export const createDb = (nameDb, options) => {
-//   try {
-//     const db = PouchDB(nameDb, options)
-//     console.log('Creada la base de datos: ' + JSON.stringify(db))
-//     return db
-//   } catch {
-//     console.log('No se ha podido crear la db')
-//   }
-// }
 
 /**
  * Replicate and sync with the remote dataBase
@@ -38,31 +30,37 @@ export async function replyDb(replyData) {
   const db = replyData.db
   const remote = replyData.config.remote
   const options = replyData.options
-  try {
-    console.log('db: ' + db)
-    console.log('remote: ' + remote)
-    await db.replicate.from(remote, { doc_ids: options.doc_ids })
-    // .on('change', info => {
-    //   console.log('reply is changed: ' + JSON.stringify(info))
-    // })
-    // .on('complete', info => {
-    //   console.log('reply is completed: ' + JSON.stringify(info))
-    // })
-    // .on('paused', err => {
-    //   console.log('reply is paused: ' + JSON.stringify(err))
-    // })
-    // .on('active', () => {
-    //   console.log('reply is working')
-    // })
-    // .on('denied', err => {
-    //   console.log('reply denied: ' + JSON.stringify(err))
-    // })
-    // .on('error', err => {
-    //   console.log('peply error: ' + JSON.stringify(err))
-    // })
-  } catch (error) {
-    console.log('replyDb error: ' + error)
-  }
+  return new Promise((resolve, reject) => {
+    db.replicate
+      .from(remote, { doc_ids: options.doc_ids })
+      .on('complete', resolve)
+      .on('error', reject)
+  })
+  // try {
+  //   console.log('db: ' + db)
+  //   console.log('remote: ' + remote)
+  //   await db.replicate.from(remote, { doc_ids: options.doc_ids })
+  //   // .on('change', info => {
+  //   //   console.log('reply is changed: ' + JSON.stringify(info))
+  //   // })
+  //   // .on('complete', info => {
+  //   //   console.log('reply is completed: ' + JSON.stringify(info))
+  //   // })
+  //   // .on('paused', err => {
+  //   //   console.log('reply is paused: ' + JSON.stringify(err))
+  //   // })
+  //   // .on('active', () => {
+  //   //   console.log('reply is working')
+  //   // })
+  //   // .on('denied', err => {
+  //   //   console.log('reply denied: ' + JSON.stringify(err))
+  //   // })
+  //   // .on('error', err => {
+  //   //   console.log('peply error: ' + JSON.stringify(err))
+  //   // })
+  // } catch (error) {
+  //   console.log('replyDb error: ' + error)
+  // }
 }
 
 /**
@@ -71,34 +69,39 @@ export async function replyDb(replyData) {
  * @param {String} remote - Remote database to sync
  * @param {syncData} options - Options
  */
-export async function syncDb(syncData) {
-  console.log('syncDb: ')
+export function syncDb(syncData) {
   const db = syncData.db
   const remote = syncData.config.remote
   const options = syncData.options
-  try {
-    await db.sync(remote, options)
-    // .on('change', info => {
-    //   console.log('sync is changed: ' + JSON.stringify(info))
-    // })
-    // .on('complete', info => {
-    //   console.log('sync is completed: ' + JSON.stringify(info))
-    // })
-    // .on('paused', err => {
-    //   console.log('sync is paused: ' + JSON.stringify(err))
-    // })
-    // .on('active', () => {
-    //   console.log('sync is working')
-    // })
-    // .on('denied', err => {
-    //   console.log('sync denied: ' + JSON.stringify(err))
-    // })
-    // .on('error', err => {
-    //   console.log('sync error: ' + JSON.stringify(err))
-    // })
-  } catch (error) {
-    console.log('syncDb error: ' + error)
-  }
+  return new Promise((resolve, reject) => {
+    db.sync(remote, options)
+      .on('complete', resolve)
+      .on('error', reject)
+  })
+  // try {
+  //   console.log('syncDb: ')
+  //   db.sync(remote, options)
+  //     .on('change', info => {
+  //       console.log('sync is changed: ' + JSON.stringify(info))
+  //     })
+  //     .on('complete', info => {
+  //       console.log('sync is completed: ' + JSON.stringify(info))
+  //     })
+  //     .on('paused', err => {
+  //       console.log('sync is paused: ' + JSON.stringify(err))
+  //     })
+  //     .on('active', () => {
+  //       console.log('sync is working')
+  //     })
+  //     .on('denied', err => {
+  //       console.log('sync denied: ' + JSON.stringify(err))
+  //     })
+  //     .on('error', err => {
+  //       console.log('sync error: ' + JSON.stringify(err))
+  //     })
+  // } catch (error) {
+  //   console.log('syncDb error: ' + error)
+  // }
 }
 
 /**
@@ -106,17 +109,28 @@ export async function syncDb(syncData) {
  *
  * @param changeData { Object } - local database name & options
  */
-export async function changeDb(changeData) {
+export const changeDb = changeData => {
   const db = changeData.db
+  console.log('db: ' + db)
   const options = changeData.options
-  try {
-    await db.changes(options).on('change', result => {
-      return result
+  db.changes(options)
+    .on('change', change => console.log('change ha cambiado: ' + change))
+    .on('error', err => {
+      console.log('sync error: ' + JSON.stringify(err))
     })
-  } catch (error) {
-    console.log('changeDb error: ' + error)
-  }
 }
+
+// export async function changeDb(changeData) {
+//   const db = changeData.db
+//   const options = changeData.options
+//   try {
+//     await db.changes(options).on('change', result => {
+//       return result
+//     })
+//   } catch (error) {
+//     console.log('changeDb error: ' + error)
+//   }
+// }
 
 /**
  * Delete local database

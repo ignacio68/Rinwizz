@@ -1,4 +1,4 @@
-import { SET_CREDENTIAL } from '.@store/types/mutations_types'
+import { SET_CREDENTIAL } from '@store/types/mutations_types'
 
 export default {
   /**
