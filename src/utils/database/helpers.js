@@ -4,8 +4,11 @@ import {
   alertSample,
   configSample,
   optionsSample,
+  optionsChangeSample,
   optionsFetchBatchDocsSample
 } from '@utils/database'
+
+// TODO: Revisar completamente
 
 export const setDoc = docData => {
   const doc = JSON.parse(JSON.stringify(userSample))
@@ -35,6 +38,12 @@ export const setOptions = usersIds => {
   const options = JSON.parse(JSON.stringify(optionsSample))
   options.auth.username = authUsers.key
   options.auth.password = authUsers.password
+  options.doc_ids.push(usersIds)
+  return options
+}
+
+export const setChangeOptions = usersIds => {
+  const options = JSON.parse(JSON.stringify(optionsChangeSample))
   options.doc_ids.push(usersIds)
   return options
 }

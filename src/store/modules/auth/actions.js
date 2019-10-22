@@ -1,9 +1,19 @@
-/**
-import { ACTION } from '@store/types/actions_types'
+import {
+  SIGNUP_USER,
+  SET_USER_PROFILE,
+  APPLY_ACTION_CODE,
+  SEND_EMAIL_VERIFICATION,
+  LOGIN_USER,
+  LOGOUT_USER,
+  ON_AUTH_STATE_CHANGE,
+  DELETE_USER,
+  GET_CREDENTIAL,
+  REAUTHENTICATE_USER,
+  DELETE_FIREBASE_USER_ACCOUNT,
+  UPDATED_USER_PROFILE,
+  IS_USER_ACTIVE
+} from '@store/types/actions_types'
 
 export default {
-  [ACTION]: () => {
-
-  }
+  [ACTION]: () => {}
 }
-**/

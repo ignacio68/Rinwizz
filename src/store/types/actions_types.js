@@ -30,8 +30,9 @@ export const USER_ERROR = 'USER_ERROR'
 export const CREATE_ALL_USERS_LOCAL_DB = 'CREATE_ALL_USERS_LOCAL_DB'
 export const CREATE_USER_LOCAL_DB = 'CREATE_USER_LOCAL_DB'
 export const REPLY_USERS_DB = 'REPLY_USERS_DB'
-export const FETCH_USER = 'FETCH_USER'
 export const SYNC_USERS_DB = 'SYNC_USERS_DB'
+export const CHANGE_USER_DB = 'CHANGE_USER_DB'
+export const FETCH_USER = 'FETCH_USER'
 export const UPDATE_USER_LOCAL_DB = 'UPDATE_USER_LOCAL_DB' // TODO: revisar uso
 export const REMOVE_USER_LOCAL_DB = 'REMOVE_USER_LOCAL_DB'
 // alerts

@@ -3,16 +3,24 @@ import {
   createDb,
   createDoc,
   replyDb,
-  fetchDoc,
-  syncDb
+  syncDb,
+  changeDb,
+  fetchDoc
 } from '@services/database'
-import { setConfig, setOptions, setDoc } from '@utils/database'
+
+import {
+  setConfig,
+  setOptions,
+  setDoc,
+  setChangeOptions
+} from '@utils/database'
 
 import {
   CREATE_ALL_USERS_LOCAL_DB,
   CREATE_USER_LOCAL_DB,
   REPLY_USERS_DB,
   SYNC_USERS_DB,
+  CHANGE_USER_DB,
   FETCH_USER,
   UPDATE_USER_LOCAL_DB,
   REMOVE_USER_LOCAL_DB
@@ -104,14 +112,39 @@ export default {
     console.log('syncData: ' + syncData)
     try {
       console.log('SYNC_USERS_DB preparada')
-      const sync = await syncDb(syncData)
-      // .then(sync => {
-      //   console.log('SYNC_USERS_DB realizada: ' + JSON.stringify(sync))
-      //   // dispatch('FETCH_USER')
-      console.log('SYNC_USERS_DB realizada: ' + JSON.stringify(sync))
+      await syncDb(syncData).then(() => {
+        console.log('SYNC_USERS_DB realizada')
+        const changeData = syncData
+        dispatch('CHANGE_USER_DB', changeData)
+      })
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('SYNC_USERS_DB error: ' + error)
+    }
+  },
+
+  /**
+   * Detecta los cambios en labase de datos local del usuario
+   *
+   * @param {} data
+   */
+  async [CHANGE_USER_DB]({ commit, dispatch }, data) {
+    commit('shared/CLEAR_ERROR', null, {
+      root: true
+    })
+    console.log('CHANGE_USER_DB')
+    try {
+      const userDb = data.db
+      const userId = data.config.userId
+      const options = setChangeOptions(userId)
+      const changeData = { db: userDb, options: options }
+      await changeDb(changeData).then(change => {
+        dispatch('FETCH_USER')
+        console.log('CHANGE_USER_DB: ' + change)
+      })
+    } catch (error) {
+      commit('shared/SET_ERROR', null, { root: true })
+      console.log('CHANGE_USER_DB error: ' + error)
     }
   },
 
