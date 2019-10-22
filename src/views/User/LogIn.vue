@@ -158,7 +158,7 @@ export default {
   methods: {
     ...mapMutations('navigator', ['REPLACE']),
     ...mapActions('social', ['DISPATCH_SIGNUP']),
-    ...mapActions('user', ['LOGIN_USER']),
+    ...mapActions('auth', ['LOGIN_USER']),
 
     onLognIn() {
       console.log('onLognIn')

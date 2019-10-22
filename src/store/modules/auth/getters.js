@@ -1,9 +1,5 @@
-/**
-import { GETTER } from '@store/types/getters_types'
+import { GET_CREDENTIAL } from '@store/types/getters_types'
 
 export default {
-  [GETTER]: () => {
-
-  }
+  [GET_CREDENTIAL]: state => state.credential
 }
-**/

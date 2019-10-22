@@ -36,14 +36,14 @@ export default {
     console.log('Fake created()')
     await this.CREATE_ALERTS_LOCAL_DB()
     await this.LOAD_ALERTS()
-    //  this.AUTO_SIGN_IN()
+    //  this.LOAD_USER()
   },
   computed: {
     // ...mapGetters('user', { fakeUser: 'USER' }),
     ...mapGetters('alerts', { fakeAlerts: 'GET_ALERTS' })
   },
   methods: {
-    // ...mapActions('user', ['AUTO_SIGN_IN']),
+    // ...mapActions('user', ['LOAD_USER']),
     ...mapActions('alertsLocalDb', ['CREATE_ALERTS_LOCAL_DB']),
     ...mapActions('alerts', ['LOAD_ALERTS'])
   }

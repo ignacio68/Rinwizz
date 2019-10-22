@@ -38,10 +38,10 @@ export default {
   },
   async created() {
     console.log('AppSplitter.created()')
-    await this.AUTO_SIGN_IN()
+    await this.LOAD_USER()
   },
   methods: {
-    ...mapActions('user', ['AUTO_SIGN_IN'])
+    ...mapActions('user', ['LOAD_USER'])
   }
 }
 </script>

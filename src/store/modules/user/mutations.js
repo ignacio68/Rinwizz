@@ -1,9 +1,4 @@
-import {
-  SET_USER,
-  RESET_USER,
-  UPDATE_USER,
-  SET_CREDENTIAL
-} from '@store/types/mutations_types'
+import { SET_USER, RESET_USER, UPDATE_USER } from '@store/types/mutations_types'
 
 export default {
   /**
@@ -43,12 +38,5 @@ export default {
     const user = state.user
     const updatedUser = { ...user, ...userData }
     state.user = updatedUser
-  },
-  /**
-   * Establece la credencial del usuario
-   */
-  [SET_CREDENTIAL]: (state, credential) => {
-    state.credential = credential
-    console.log('credential es: ' + credential)
   }
 }

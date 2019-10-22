@@ -1,3 +1,6 @@
+// auth
+export const SET_CREDENTIAL = 'SET_CREDENTIAL'
+
 // alerts
 export const SET_LOADED_ALERTS = 'SET_LOADED_ALERTS'
 export const SET_ALERT = 'SET_ALERT'
@@ -41,4 +44,3 @@ export const SET_LANGUAGE = 'SET_LANGUAGE'
 export const SET_USER = 'SET_USER'
 export const RESET_USER = 'RESET_USER'
 export const UPDATE_USER = 'UPDATE_USER'
-export const SET_CREDENTIAL = 'SET_CREDENTIAL'

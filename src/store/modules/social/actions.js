@@ -88,7 +88,7 @@ export default {
         )
         // Actualizamos el perfil de firebase con el displayName
         dispatch(
-          'user/SET_USER_PROFILE',
+          'auth/SET_USER_PROFILE',
           {
             displayName: newUser.name,
             photoURL: newUser.avatar
