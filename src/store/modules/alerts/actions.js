@@ -38,22 +38,17 @@ export default {
   async [LOAD_ALERTS]({ commit, dispatch }) {
     console.log('Estoy en LOAD_ALERTS')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    try {
-      // Recuperamos las alertas de la base de datos
-      await dispatch('alertsLocalDb/GET_ALERTS', null, {
-        root: true
+    // Recuperamos las alertas de la base de datos
+    await dispatch('alertsLocalDb/GET_ALERTS', null, {
+      root: true
+    })
+      .then(alerts => {
+        console.log('Recuperando las alertas!!' + JSON.stringify(alerts))
+        commit('SET_LOADED_ALERTS', alerts)
       })
-        .then(alerts => {
-          console.log('Recuperando las alertas!!' + JSON.stringify(alerts))
-          commit('SET_LOADED_ALERTS', alerts)
-        })
-        .catch(error => {
-          console.log('LOAD_ALERTS error: ' + error)
-        })
-      // console.log('Las alertas son: ' + JSON.stringify(alerts))
-    } catch (error) {
-      commit('shared/SET_ERROR', null, { root: true })
-      console.log('LOAD_ALERTS error: ' + error)
-    }
+      .catch(error => {
+        commit('shared/SET_ERROR', null, { root: true })
+        console.log('LOAD_ALERTS error: ' + error)
+      })
   }
 }

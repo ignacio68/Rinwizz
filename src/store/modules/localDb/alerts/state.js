@@ -1,4 +1,4 @@
 export default {
-  allAlertsLocalDb: {}, // base de datos de las alertas
+  alertsLocalDb: {}, // base de datos de las alertas
   userAlertsLocalD: {} // base de datos de las alertas del usuario
 }

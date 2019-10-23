@@ -1,4 +1,9 @@
-import { cloudantConfig, authUsers, authAlerts } from '@setup/cloudant'
+import {
+  cloudantConfig,
+  authUsers,
+  authAlerts,
+  authFakeAlerts
+} from '@setup/cloudant'
 import {
   userSample,
   alertSample,
@@ -52,6 +57,14 @@ export const setAlertsOptions = usersIds => {
   const options = JSON.parse(JSON.stringify(replyOptionsSample))
   options.auth.username = authAlerts.key
   options.auth.password = authAlerts.password
+  options.doc_ids.push(usersIds)
+  return options
+}
+
+export const setFakeAlertsOptions = usersIds => {
+  const options = JSON.parse(JSON.stringify(replyOptionsSample))
+  options.auth.username = authFakeAlerts.key
+  options.auth.password = authFakeAlerts.password
   options.doc_ids.push(usersIds)
   return options
 }

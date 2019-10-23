@@ -8,6 +8,7 @@ import {
 import {
   setConfig,
   setAlertsOptions,
+  setFakeAlertsOptions,
   setFetchBatchOptions
 } from '@utils/database'
 
@@ -23,28 +24,26 @@ import {
  * Creamos la bas ede datos local de las alertas
  */
 export default {
-  [CREATE_ALERTS_LOCAL_DB]: ({ commit, dispatch }) => {
+  [CREATE_ALERTS_LOCAL_DB]: ({ commit, dispatch }, nameDb) => {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
 
     console.log('CREATE_ALERTS_LOCAL_DB')
     // Creamos la base de datos local
-    try {
-      createDb('alerts', { auto_compaction: true })
-        .then(alertsDb => {
-          console.log('alertsDb es: ' + JSON.stringify(alertsDb))
-          // creamos la base de datos en caché
-          commit('SET_ALL_ALERTS_LOCAL_DB', alertsDb)
-        })
-        .then(() => {
-          // replicamos la base de datos remota
-          dispatch('REPLY_ALERTS_DB')
-        })
-    } catch (error) {
-      commit('shared/SET_ERROR', null, { root: true })
-      console.log('CREATE_ALERTS_LOCAL_DB error: ' + error)
-    }
+    createDb(nameDb, { auto_compaction: true })
+      .then(alertsDb => {
+        console.log('alertsDb es: ' + JSON.stringify(alertsDb))
+        // creamos la base de datos en caché
+        commit('SET_ALERTS_LOCAL_DB', alertsDb)
+      })
+      .then(() => {
+        dispatch('REPLY_ALERTS_DB')
+      })
+      .catch(error => {
+        commit('shared/SET_ERROR', null, { root: true })
+        console.log('CREATE_ALERTS_LOCAL_DB error: ' + error.message)
+      })
   },
 
   /**
@@ -56,30 +55,32 @@ export default {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
-    try {
-      const AlertsDb = getters.GET_ALERTS_LOCAL_DB
-      // TODO: utilizar cuando no se utilice FAke
-      // const fetchFollowings = rootGetters['user/USER_FOLLOWING']
+    const alertsDb = getters.GET_ALERTS_LOCAL_DB
+    // TODO: utilizar cuando no se utilice FAke
+    // const fetchFollowings = rootGetters['user/USER_FOLLOWING']
 
-      // Establecemos la configuración
-      const config = setConfig(null, 'alerts')
-      // '4rOdkM3mVmW1rTM3nttoIbjMldc2:1570465573591-4rOdkM3mVmW1rTM3nttoIbjMldc2',
+    // Establecemos la configuración
+    const config = setConfig(null, 'alerts')
+    // '4rOdkM3mVmW1rTM3nttoIbjMldc2:1570465573591-4rOdkM3mVmW1rTM3nttoIbjMldc2',
 
-      // Establecemos las opciones
-      const options = setAlertsOptions()
-      options.doc_ids = null
+    // Establecemos las opciones
+    // const options = setAlertsOptions()
+    // TODO: Solo para producción
+    const options = setFakeAlertsOptions(null)
+    options.doc_ids = null
 
-      const replyData = { db: AlertsDb, config: config, options: options }
-      // Replicamos y sincronizamos la base de datos
-      replyDb(replyData).then(() => {
-        console.log('ReplyDb realizada')
+    const replyData = { db: alertsDb, config: config, options: options }
+    // Replicamos y sincronizamos la base de datos
+    await replyDb(replyData)
+      .then(info => {
+        console.log('ReplyDb realizada' + JSON.stringify(info))
         const syncData = replyData
         dispatch('SYNC_ALERTS_DB', { syncData })
       })
-    } catch (error) {
-      console.log('REPLY_ALERTS_DB error: ' + error)
-      commit('shared/SET_ERROR', null, { root: true })
-    }
+      .catch(error => {
+        commit('shared/SET_ERROR', null, { root: true })
+        console.log('REPLY_ALERTS_DB error: ' + error.message)
+      })
   },
 
   /**
@@ -91,18 +92,13 @@ export default {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
-    console.log('syncData: ' + syncData)
-    try {
-      console.log('SYNC_ALERTS_DB preparada')
-      const sync = await syncDb(syncData)
-      // .then(sync => {
-      //   console.log('SYNC_USERS_DB realizada: ' + JSON.stringify(sync))
-      //   // dispatch('FETCH_USER')
-      console.log('SYNC_USERS_DB realizada: ' + JSON.stringify(sync))
-    } catch (error) {
-      commit('shared/SET_ERROR', null, { root: true })
-      console.log('SYNC_USERS_DB error: ' + error)
-    }
+    console.log('SYNC_ALERTS_DB preparada')
+    await syncDb(syncData)
+      .then(() => dispatch('GET_ALERTS'))
+      .catch(error => {
+        commit('shared/SET_ERROR', null, { root: true })
+        console.log('SYNC_USERS_DB error: ' + error.messager)
+      })
   },
 
   /**
@@ -126,7 +122,7 @@ export default {
       await createDoc(db, newAlert)
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
-      console.log('PUT_ALERT_LOCAL_DB error: ' + error)
+      console.log('PUT_ALERT_LOCAL_DB error: ' + error.message)
     }
   },
 
@@ -140,6 +136,7 @@ export default {
     })
     // Recuperamos la base de datos de alertas almacenada en caché
     const alertsDb = getters.GET_ALERTS_LOCAL_DB
+
     // console.log('alerts db es: ' + JSON.stringify(db))
     try {
       console.log('action GET_ALERTS')
@@ -148,13 +145,18 @@ export default {
       // límite de alertas a recuperar -- PRUEBA
       options.limits = 10
       // Recuperamos todas las alertas de la base de datos
-      const alerts = await fetchAllDocs(alertsDb, options)
+      await fetchAllDocs(alertsDb, options).then(result => {
+        const alerts = []
+        let fetchAlerts = result.rows.map(row => {
+          alerts.length.push(row.doc)
+        })
+        console.log('GET_ALERTS: ' + JSON.stringify(fetchAlerts))
+      })
       // console.log('Las alertas son: ' + alerts)
       // commit('alerts/SET_LOADED_ALERTS', alerts, { root: true })
-      return alerts
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
-      console.log('GET_ALERTS error: ' + error)
+      console.log('GET_ALERTS error: ' + error.message)
     }
   }
 }

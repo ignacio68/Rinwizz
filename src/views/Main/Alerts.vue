@@ -156,7 +156,7 @@ export default {
   async created() {
     console.log('Alerts.vue created()')
     // Load the alerts
-    await this.CREATE_ALERTS_LOCAL_DB()
+    await this.CREATE_ALERTS_LOCAL_DB('alerts')
     await this.LOAD_ALERTS()
   },
   computed: {

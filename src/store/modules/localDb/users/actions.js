@@ -44,7 +44,7 @@ export default {
       })
       .catch(error => {
         commit('shared/SET_ERROR', null, { root: true })
-        console.log('CREATE_ALL_USER_LOCAL_DB error: ' + error)
+        console.log('CREATE_ALL_USER_LOCAL_DB error: ' + error.message)
       })
   },
 
@@ -66,7 +66,7 @@ export default {
       await createDoc(userDb, user)
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
-      console.log('CREATE_USER_LOCAL_DB error: ' + error)
+      console.log('CREATE_USER_LOCAL_DB error: ' + error.message)
     }
   },
 
@@ -76,22 +76,26 @@ export default {
    * @param {}
    */
   async [REPLY_USERS_DB]({ getters, commit, dispatch, rootGetters }) {
-    try {
-      const userId = rootGetters['user/USER_ID']
-      const userDb = getters.USERS_LOCAL_DB
-      const config = setConfig(userId, 'users')
-      const options = setOptions(userId)
-      const replyData = { db: userDb, config: config, options: options }
-      // Replicamos y sincronizamos la base de datos
-      await replyDb(replyData).then(info => {
+    commit('shared/CLEAR_ERROR', null, {
+      root: true
+    })
+
+    const userId = rootGetters['user/USER_ID']
+    const userDb = getters.USERS_LOCAL_DB
+    const config = setConfig(userId, 'users')
+    const options = setOptions(userId)
+    const replyData = { db: userDb, config: config, options: options }
+    // Replicamos y sincronizamos la base de datos
+    await replyDb(replyData)
+      .then(info => {
         console.log('REPLY_USERS_DB realizada: ' + JSON.stringify(info))
         const syncData = replyData
         dispatch('SYNC_USERS_DB', { syncData })
       })
-    } catch (error) {
-      commit('shared/SET_ERROR', null, { root: true })
-      console.log('REPLY_USERS_DB error: ' + error)
-    }
+      .catch(error => {
+        commit('shared/SET_ERROR', null, { root: true })
+        console.log('REPLY_ALERTS_DB error: ' + error.message)
+      })
   },
 
   /**
@@ -100,13 +104,16 @@ export default {
    * @param {Object} syncData
    */
   async [SYNC_USERS_DB]({ commit, dispatch }, { syncData }) {
-    try {
-      console.log('SYNC_USERS_DB preparada')
-      await syncDb(syncData).then(() => dispatch('FETCH_USER'))
-    } catch (error) {
-      commit('shared/SET_ERROR', null, { root: true })
-      console.log('SYNC_USERS_DB error: ' + error)
-    }
+    commit('shared/CLEAR_ERROR', null, {
+      root: true
+    })
+    console.log('SYNC_USERS_DB preparada')
+    await syncDb(syncData)
+      .then(() => dispatch('FETCH_USER'))
+      .catch(error => {
+        commit('shared/SET_ERROR', null, { root: true })
+        console.log('SYNC_USERS_DB error: ' + error.message)
+      })
   },
 
   /**
@@ -127,7 +134,7 @@ export default {
       })
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
-      console.log('CHANGE_USER_DB error: ' + error)
+      console.log('CHANGE_USER_DB error: ' + error.message)
     }
   },
 
@@ -148,7 +155,7 @@ export default {
       commit('user/SET_USER', user, { root: true })
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
-      console.log('FETCH_USER error: ' + error)
+      console.log('FETCH_USER error: ' + error.message)
     }
   },
 

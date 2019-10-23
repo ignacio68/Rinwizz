@@ -256,13 +256,24 @@ export function deleteDoc(db, docId) {
  * @param db { String } - local database name
  * @param options { Array } - options
  */
+// export async function fetchAllDocs(db, options) {
+//   console.log('fetchAllDocs db: ' + JSON.stringify(db))
+//   try {
+//     const docs = await db.allDocs(options)
+//     console.log('fetchAllDocs: ' + JSON.stringify(docs))
+//   } catch (error) {
+//     console.log('fetchAllDocs error: ' + error)
+//   }
+// }
 export async function fetchAllDocs(db, options) {
-  console.log('fetchAllDocs db: ' + JSON.stringify(db))
-  try {
-    const docs = await db.allDocs(options)
-    console.log('fetchAllDocs: ' + JSON.stringify(docs))
-    return docs
-  } catch (error) {
-    console.log('fetchAllDocs error: ' + error)
-  }
+  console.log('fetchAllDocs')
+  return new Promise((resolve, reject) => {
+    const doc = db.allDocs(options)
+    if (doc) {
+      resolve(doc)
+      console.log('fetchAllDocs: ' + JSON.stringify(doc))
+    } else {
+      reject(console.log('no se han podido recuperar los documentos'))
+    }
+  })
 }
