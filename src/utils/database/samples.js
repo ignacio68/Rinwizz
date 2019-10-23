@@ -111,13 +111,13 @@ export const alertSample = {
 
 export const configSample = {
   _id: '',
-  dbName: '',
+  local: '',
   remote: ''
 }
 
 /* *************** OPTIONS DATABASE SAMPLE *************** */
 
-export const optionsSample = {
+export const replyOptionsSample = {
   live: true,
   retry: true,
   continuos: true,
@@ -135,7 +135,7 @@ export const optionsSample = {
 
 /* *************** OPTIONS CHANGE DATABASE SAMPLE *************** */
 
-export const optionsChangeSample = {
+export const changeOptionsSample = {
   live: true,
   include_docs: true,
   since: 'now',

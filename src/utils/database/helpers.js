@@ -3,8 +3,8 @@ import {
   userSample,
   alertSample,
   configSample,
-  optionsSample,
-  optionsChangeSample,
+  replyOptionsSample,
+  changeOptionsSample,
   optionsFetchBatchDocsSample
 } from '@utils/database'
 
@@ -26,16 +26,16 @@ export const setAlert = docData => {
   return doc
 }
 
-export const setConfig = (userId, dbName) => {
+export const setConfig = (userId, local) => {
   const config = JSON.parse(JSON.stringify(configSample))
   config._id = userId
-  config.dbName = 'users'
+  config.dbName = local
   config.remote = cloudantConfig.url + '/' + config.dbName
   return config
 }
 
 export const setOptions = usersIds => {
-  const options = JSON.parse(JSON.stringify(optionsSample))
+  const options = JSON.parse(JSON.stringify(replyOptionsSample))
   options.auth.username = authUsers.key
   options.auth.password = authUsers.password
   options.doc_ids.push(usersIds)
@@ -43,13 +43,13 @@ export const setOptions = usersIds => {
 }
 
 export const setChangeOptions = usersIds => {
-  const options = JSON.parse(JSON.stringify(optionsChangeSample))
+  const options = JSON.parse(JSON.stringify(changeOptionsSample))
   options.doc_ids.push(usersIds)
   return options
 }
 
 export const setAlertsOptions = usersIds => {
-  const options = JSON.parse(JSON.stringify(optionsSample))
+  const options = JSON.parse(JSON.stringify(replyOptionsSample))
   options.auth.username = authAlerts.key
   options.auth.password = authAlerts.password
   options.doc_ids.push(usersIds)
