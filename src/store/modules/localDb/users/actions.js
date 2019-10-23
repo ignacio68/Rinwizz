@@ -90,11 +90,12 @@ export default {
 
       const replyData = { db: allUsersDb, config: config, options: options }
       // Replicamos y sincronizamos la base de datos
-      await replyDb(replyData).then(() => {
-        console.log('REPLY_USERS_DB´realizada')
+      await replyDb(replyData).then(info => {
+        console.log('REPLY_USERS_DB realizada: ' + JSON.stringify(info))
         const syncData = replyData
-        syncDb(syncData)
-        // dispatch('SYNC_USERS_DB', { syncData })
+        // const sync = syncDb(syncData)
+        // console.log('sync: ' + JSON.stringify(sync))
+        dispatch('SYNC_USERS_DB', { syncData })
       })
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
@@ -111,11 +112,9 @@ export default {
     console.log('syncData: ' + syncData)
     try {
       console.log('SYNC_USERS_DB preparada')
-      await syncDb(syncData)
-      // .then(() => {
-      console.log('SYNC_USERS_DB realizada')
-      // const changeData = syncData
-      // await dispatch('CHANGE_USER_DB', changeData)
+      await syncDb(syncData).then(info =>
+        console.log('SYNC_USERS_DB realizada: ' + info)
+      )
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('SYNC_USERS_DB error: ' + error)
@@ -134,9 +133,9 @@ export default {
       const userId = rootGetters['user/USER_ID']
       const options = setChangeOptions(userId)
       const changeData = { db: userDb, options: options }
-      await changeDb(changeData).on('change', change => {
-        dispatch('FETCH_USER')
+      await changeDb(changeData).then('change', change => {
         console.log('CHANGE_USER_DB: ' + change)
+        dispatch('FETCH_USER')
       })
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })

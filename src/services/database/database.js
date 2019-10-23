@@ -33,31 +33,35 @@ export async function replyDb(replyData) {
   return new Promise((resolve, reject) => {
     db.replicate
       .from(remote, { doc_ids: options.doc_ids })
-      .on('complete', resolve)
-      .on('error', reject)
+      .on('complete', info => resolve(info))
+      .on('error', error => reject(error))
   })
   // try {
   //   console.log('db: ' + db)
   //   console.log('remote: ' + remote)
-  //   await db.replicate.from(remote, { doc_ids: options.doc_ids })
-  //   // .on('change', info => {
-  //   //   console.log('reply is changed: ' + JSON.stringify(info))
-  //   // })
-  //   // .on('complete', info => {
-  //   //   console.log('reply is completed: ' + JSON.stringify(info))
-  //   // })
-  //   // .on('paused', err => {
-  //   //   console.log('reply is paused: ' + JSON.stringify(err))
-  //   // })
-  //   // .on('active', () => {
-  //   //   console.log('reply is working')
-  //   // })
-  //   // .on('denied', err => {
-  //   //   console.log('reply denied: ' + JSON.stringify(err))
-  //   // })
-  //   // .on('error', err => {
-  //   //   console.log('peply error: ' + JSON.stringify(err))
-  //   // })
+  //   await db.replicate
+  //     .from(remote, { doc_ids: options.doc_ids })
+  //     .on('change', info => {
+  //       console.log('reply is changed: ' + JSON.stringify(info))
+  //     })
+  //     .on('complete', info => onComplete(info))
+
+  //     // {
+  //     //   console.log('reply is completed: ' + JSON.stringify(info))
+  //     // }
+
+  //     .on('paused', err => {
+  //       console.log('reply is paused: ' + JSON.stringify(err))
+  //     })
+  //     .on('active', () => {
+  //       console.log('reply is working')
+  //     })
+  //     .on('denied', err => {
+  //       console.log('reply denied: ' + JSON.stringify(err))
+  //     })
+  //     .on('error', err => {
+  //       console.log('peply error: ' + JSON.stringify(err))
+  //     })
   // } catch (error) {
   //   console.log('replyDb error: ' + error)
   // }
@@ -75,8 +79,8 @@ export function syncDb(syncData) {
   const options = syncData.options
   return new Promise((resolve, reject) => {
     db.sync(remote, options)
-      .on('complete', resolve)
-      .on('error', reject)
+      .on('complete', info => resolve(info))
+      .on('error', error => reject(error))
   })
   // try {
   //   console.log('syncDb: ')
@@ -111,13 +115,12 @@ export function syncDb(syncData) {
  */
 export const changeDb = changeData => {
   const db = changeData.db
-  console.log('db: ' + db)
   const options = changeData.options
-  db.changes(options)
-    .on('change', change => console.log('change ha cambiado: ' + change))
-    .on('error', err => {
-      console.log('sync error: ' + JSON.stringify(err))
-    })
+  return new Promise((resolve, reject) => {
+    db.changes(options)
+      .on('complete', change => resolve(change))
+      .on('error', error => resolve(error))
+  })
 }
 
 // export async function changeDb(changeData) {
