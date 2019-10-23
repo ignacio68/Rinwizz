@@ -7,7 +7,7 @@ import {
 } from '@services/database'
 import {
   setConfig,
-  setAlertsOptions,
+  // setAlertsOptions,
   setFakeAlertsOptions,
   setFetchBatchOptions
 } from '@utils/database'
@@ -60,7 +60,7 @@ export default {
     // const fetchFollowings = rootGetters['user/USER_FOLLOWING']
 
     // Establecemos la configuración
-    const config = setConfig(null, 'alerts')
+    const config = setConfig(null, 'alerts-fake')
     // '4rOdkM3mVmW1rTM3nttoIbjMldc2:1570465573591-4rOdkM3mVmW1rTM3nttoIbjMldc2',
 
     // Establecemos las opciones
@@ -145,12 +145,14 @@ export default {
       // límite de alertas a recuperar -- PRUEBA
       options.limits = 10
       // Recuperamos todas las alertas de la base de datos
-      await fetchAllDocs(alertsDb, options).then(result => {
-        const alerts = []
-        let fetchAlerts = result.rows.map(row => {
-          alerts.length.push(row.doc)
-        })
-        console.log('GET_ALERTS: ' + JSON.stringify(fetchAlerts))
+      fetchAllDocs(alertsDb, options).then(result => {
+        // console.log('rows: ' + JSON.stringify(result.rows))
+        // let alerts = []
+        // let fetchAlerts = result.rows.map(row => {
+        //   alerts.push(row.doc)
+        // })
+        commit('alerts/SET_LOADED_ALERTS', result, { root: true })
+        console.log('GET_ALERTS: ' + JSON.stringify(result))
       })
       // console.log('Las alertas son: ' + alerts)
       // commit('alerts/SET_LOADED_ALERTS', alerts, { root: true })

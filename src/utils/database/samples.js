@@ -150,10 +150,10 @@ export const changeOptionsSample = {
 
 export const optionsFetchBatchDocsSample = {
   include_docs: true,
-  attachments: false,
+  attachments: true,
   startkey: '',
+  limits: null,
   endkey: '',
-  limit: 0,
   descending: false,
   key: ''
 }

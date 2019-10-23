@@ -74,9 +74,13 @@ export async function replyDb(replyData) {
  * @param {syncData} options - Options
  */
 export function syncDb(syncData) {
+  console.log('syncDb:')
   const db = syncData.db
+  console.log('db: ' + db)
   const remote = syncData.config.remote
+  console.log('remote: ' + JSON.stringify(remote))
   const options = syncData.options
+  console.log('option: ' + JSON.stringify(options))
   return new Promise((resolve, reject) => {
     db.sync(remote, options)
       .on('change', info => {
@@ -265,15 +269,29 @@ export function deleteDoc(db, docId) {
 //     console.log('fetchAllDocs error: ' + error)
 //   }
 // }
-export async function fetchAllDocs(db, options) {
-  console.log('fetchAllDocs')
-  return new Promise((resolve, reject) => {
-    const doc = db.allDocs(options)
-    if (doc) {
-      resolve(doc)
-      console.log('fetchAllDocs: ' + JSON.stringify(doc))
-    } else {
-      reject(console.log('no se han podido recuperar los documentos'))
-    }
+export const fetchAllDocs = (db, options) => {
+  console.log('fetchAllDocs options: ' + JSON.stringify(options))
+  let data = []
+  return new Promise(resolve => {
+    db.allDocs(options)
+      .then(result => {
+        console.log('fetchAllDocs: ' + JSON.stringify(result))
+        // let data = []
+        let docs = result.rows.map(row => {
+          data.push(row.doc)
+        })
+        console.log('data: ' + JSON.stringify(data))
+        resolve(data)
+      })
+      .catch(error => console.log(error))
   })
 }
+
+// return new Promise((resolve, reject) => {
+//   db.allDocs(options)
+//     .then(results => {
+//       resolve(results)
+//       console.log('fetchAllDocs: ' + JSON.stringify(results))
+//     })
+//     .catch(error => reject(error))
+// })
