@@ -112,9 +112,7 @@ export default {
     console.log('syncData: ' + syncData)
     try {
       console.log('SYNC_USERS_DB preparada')
-      await syncDb(syncData).then(info =>
-        console.log('SYNC_USERS_DB realizada: ' + info)
-      )
+      await syncDb(syncData).then(() => dispatch('CHANGE_USER_DB'))
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('SYNC_USERS_DB error: ' + error)

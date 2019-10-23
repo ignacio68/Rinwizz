@@ -79,7 +79,10 @@ export function syncDb(syncData) {
   const options = syncData.options
   return new Promise((resolve, reject) => {
     db.sync(remote, options)
-      .on('complete', info => resolve(info))
+      .on('change', info => {
+        console.log('syncDb change: ' + JSON.stringify(info))
+        resolve()
+      })
       .on('error', error => reject(error))
   })
   // try {
@@ -118,8 +121,11 @@ export const changeDb = changeData => {
   const options = changeData.options
   return new Promise((resolve, reject) => {
     db.changes(options)
-      .on('complete', change => resolve(change))
-      .on('error', error => resolve(error))
+      .on('change', change => {
+        console.log('changeDb is changed: ' + JSON.stringify(change))
+        resolve(change)
+      })
+      .on('error', error => reject(error))
   })
 }
 
