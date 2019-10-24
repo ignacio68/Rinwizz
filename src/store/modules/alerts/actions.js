@@ -15,21 +15,23 @@ export default {
     try {
       const user = rootGetters['user/USER']
       const alertsDb = rootGetters['alertsLocalDb/GET_ALERTS_LOCAL_DB']
+
+      // Damos formato a la alerta
+      let alert = setAlert(alertData)
+      console.log('alert: ' + JSON.stringify(alert))
+      for (let key in alert) {
+        alert.user[key] = user[key]
+        console.log(alert.user[key] + ':' + user[key])
+      }
+      console.log('alert user: ' + JSON.stringify(alert))
+
       // creamos el timeStamp
       const publishDate = Date.now()
-      // TODO: Revisar user------------------- //
-      alertData.user.name = user.name
-      alertData.user._id = user._id
-      alertData.user.screenName = user.screenName
-      alertData.user.avatar = user.avatar
-      alertData.user.location = user.location
-      // ------------------------------------- //
-      alertData._id = user._id + ':' + publishDate
-      alertData.creationDate = publishDate
-      alertData.endDate += publishDate
-      // Damos formato a la alerta
-      const alert = setAlert(alertData)
-      console.log('el alert es: ' + JSON.stringify(alert))
+      alert._id = user._id + ':' + publishDate
+      alert.creationDate = publishDate
+      alert.endDate += publishDate
+      console.log('el alert completo es: ' + JSON.stringify(alert))
+
       // Creamos la alerta en la base de datos local
       await createDoc(alertsDb, alert)
     } catch (error) {

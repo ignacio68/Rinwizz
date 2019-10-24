@@ -2,7 +2,11 @@
   <v-ons-card class="alertCard">
     <div class="content">
       <v-ons-row class="row">
-        <img class="alertCard__userAvatar" :src="userAvatar" :alt="altAvatar" />
+        <img
+          class="alertCard__userAvatar"
+          :src="userAvatar"
+          :alt="altAvatar"
+        />
         <h3 class="alertCard_userName">{{ userName }}</h3>
         <v-ons-icon
           v-if="isVerified"
@@ -14,6 +18,7 @@
 
       <v-ons-col class="columnRight">
         <v-ons-list class="alertList">
+
           <v-ons-list-item class="alertList__item">
             <!--label for="alertTitle" class="alertList__item-label">{{ $t('lang.components.alertScript.title')}}</label-->
             <input
@@ -25,6 +30,7 @@
               v-model="alertTitle"
             />
           </v-ons-list-item>
+
           <v-ons-list-item class="alertList__item">
             <!--label for="alertName" class="alertList__item-label">{{ $t('lang.components.alertScript.text') }}</label-->
             <textarea
@@ -39,6 +45,7 @@
               required
             ></textarea>
           </v-ons-list-item>
+
           <v-ons-list-item class="alertList__item">
             <label
               for="endDate"
@@ -57,6 +64,7 @@
               >{{ option.text }}</option>
             </v-ons-select>
           </v-ons-list-item>
+
           <v-ons-list-item class="alertList__item">
             <!--label for="alertLink" class="alertList__item-label">{{ $t('lang.components.alertScript.link') }}</label-->
             <input
@@ -68,6 +76,7 @@
               v-model="alertLink"
             />
           </v-ons-list-item>
+
         </v-ons-list>
       </v-ons-col>
     </div>
@@ -173,10 +182,10 @@ export default {
         endDate: this.alertEndDate,
         link: this.alertLink,
         // FIXME: valores actuales solo para desarrollo
-        phone: '',
+        // phone: '',
         location: '',
-        entities: '',
-        extendedEntities: '',
+        entities: {},
+        extendedEntities: {},
         favoriteCount: 0
       }
       console.log('alertScript alerta es: ' + JSON.stringify(alertData))

@@ -16,18 +16,14 @@ import {
 // TODO: Revisar completamente
 
 export const setDoc = docData => {
-  const doc = JSON.parse(JSON.stringify(userSample))
-  for (let key in doc) {
-    doc[key] = docData[key]
-  }
+  let doc = JSON.parse(JSON.stringify(userSample))
+  doc = { ...doc, ...docData }
   return doc
 }
 
 export const setAlert = docData => {
-  const doc = JSON.parse(JSON.stringify(alertSample))
-  for (let key in doc) {
-    doc[key] = docData[key]
-  }
+  let doc = JSON.parse(JSON.stringify(alertSample))
+  doc = { ...doc, ...docData }
   return doc
 }
 

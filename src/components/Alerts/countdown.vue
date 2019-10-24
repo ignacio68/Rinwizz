@@ -64,13 +64,13 @@ export default {
   },
   methods: {
     timerCount() {
-      let endTimer = this.startDate + this.endDate
-      console.log('timerCount.startDate es: ' + this.startDate)
-      console.log('timerCount.endDate es: ' + this.endDate)
-      console.log('timerCount.endTimer es: ' + endTimer)
-      console.log('timerCount.referenceDate es: ' + this.referenceDate)
+      const endTimer = this.startDate + this.endDate
+      // console.log('timerCount.startDate es: ' + this.startDate)
+      // console.log('timerCount.endDate es: ' + this.endDate)
+      // console.log('timerCount.endTimer es: ' + endTimer)
+      // console.log('timerCount.referenceDate es: ' + this.referenceDate)
       let timeRemaining = Math.floor((endTimer - this.referenceDate) / 1000)
-      console.log('timeRemaining es: ' + timeRemaining)
+      // console.log('timeRemaining es: ' + timeRemaining)
       if (timeRemaining >= 0) {
         // NOTA: repasar, el término del cálculo debe de ser en 1
         this.calcTime(timeRemaining)
