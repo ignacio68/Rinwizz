@@ -276,7 +276,6 @@ export const fetchAllDocs = (db, options) => {
     db.allDocs(options)
       .then(result => {
         console.log('fetchAllDocs: ' + JSON.stringify(result))
-        // let data = []
         let docs = result.rows.map(row => {
           data.push(row.doc)
         })

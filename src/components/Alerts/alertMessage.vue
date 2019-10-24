@@ -16,15 +16,8 @@
         ></countdown>
       </v-ons-row>
 
-      <v-ons-col
-        width="20%"
-        class="leftCol"
-      >
-        <img
-          :src="userAvatar"
-          :alt="altAvatar"
-          class="alertCard__userAvatar"
-        />
+      <v-ons-col width="20%" class="leftCol">
+        <img :src="userAvatar" :alt="altAvatar" class="alertCard__userAvatar" />
       </v-ons-col>
 
       <v-ons-col class="rigthCol">
@@ -53,10 +46,7 @@
               ripple="true"
               @click.prevent="onLinkClick()"
             >{{ linkButton }}</v-ons-button>
-            <v-ons-button
-              class="alertCard__button"
-              ripple="true"
-            >
+            <v-ons-button class="alertCard__button" ripple="true">
               <v-ons-icon icon="ion-share, material:md-share" />
             </v-ons-button>
           </div>
@@ -167,7 +157,7 @@ export default {
     // Convierte la fecha de término de la alarma a un entero
     alertEndDate() {
       const intEndDate = parseInt(this.endDate, 10)
-      console.log('Estoy en alertEndDate y intEndDate es: ' + intEndDate)
+      // console.log('Estoy en alertEndDate y intEndDate es: ' + intEndDate)
       return intEndDate
     }
   },

@@ -170,6 +170,7 @@ export default {
     }
   },
   methods: {
+    // ...mapActions('user', ['LOAD_USER']),
     ...mapActions('alertsLocalDb', ['CREATE_ALERTS_LOCAL_DB']),
     ...mapActions('alerts', ['LOAD_ALERTS']),
 

@@ -7,7 +7,7 @@ import {
 } from '@services/database'
 import {
   setConfig,
-  // setAlertsOptions,
+  setAlertsOptions,
   setFakeAlertsOptions,
   setFetchBatchOptions
 } from '@utils/database'
@@ -60,13 +60,13 @@ export default {
     // const fetchFollowings = rootGetters['user/USER_FOLLOWING']
 
     // Establecemos la configuración
-    const config = setConfig(null, 'alerts-fake')
-    // '4rOdkM3mVmW1rTM3nttoIbjMldc2:1570465573591-4rOdkM3mVmW1rTM3nttoIbjMldc2',
+    const config = setConfig(null, 'alerts')
+    // const config = setConfig(null, 'alerts-fake')
 
     // Establecemos las opciones
-    // const options = setAlertsOptions()
+    const options = setAlertsOptions()
     // TODO: Solo para producción
-    const options = setFakeAlertsOptions(null)
+    // const options = setFakeAlertsOptions(null)
     options.doc_ids = null
 
     const replyData = { db: alertsDb, config: config, options: options }
@@ -75,6 +75,7 @@ export default {
       .then(info => {
         console.log('ReplyDb realizada' + JSON.stringify(info))
         const syncData = replyData
+        dispatch('GET_ALERTS')
         dispatch('SYNC_ALERTS_DB', { syncData })
       })
       .catch(error => {

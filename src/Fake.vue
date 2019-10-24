@@ -12,7 +12,12 @@
         v-for="alert in fakeAlerts"
         :key="alert._id"
       >
-        <p>alerta_id: {{ alert._id }}</p>
+        <v-ons-row>
+          <h4>{{ alert.title }}</h4>
+        </v-ons-row>
+        <v-ons-row>
+          <p>{{ alert.text }}</p>
+        </v-ons-row>
       </v-ons-list-item>
     </div>
   </div>
