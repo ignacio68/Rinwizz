@@ -16,9 +16,10 @@
         ></countdown>
       </v-ons-row>
 
-      <v-ons-col width="20%" class="leftCol">
-        <img :src="userAvatar" :alt="altAvatar" class="alertCard__userAvatar" />
-      </v-ons-col>
+      <v-ons-col
+        width="20%"
+        class="leftCol"
+      ><img :src="userAvatar" :alt="altAvatar" class="alertCard__userAvatar" @click.prevent="onAvatarClick()/></v-ons-col>
 
       <v-ons-col class="rigthCol">
         <div></div>
@@ -179,6 +180,11 @@ export default {
      */
     onLinkClick() {
       this.$emit('linkButtonEvent')
+    },
+    /**
+     */
+    onAvatarClick() {
+      this.$emit('avatarEvent')
     }
   }
 }

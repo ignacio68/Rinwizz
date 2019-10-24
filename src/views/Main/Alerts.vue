@@ -69,10 +69,14 @@
         name="alertModal"
       >
         <alert-script
-          :userAvatar="user.avatar"
-          :altAvatar="user.avatar + ' icon'"
+          :userId="user._id"
           :userName="user.name"
-          :isVerified="user.isVerified"
+          :userScreenName="user.screenName"
+          :userAvatar="user.avatar"
+          :userLocation="user.location"
+          :userUrl="user.url"
+          :userDescription="user.description"
+          :isVerified="user.verified"
           :alertPhone="user.phone"
           ref="alertScript"
         ></alert-script>

@@ -13,21 +13,21 @@ export default {
     console.log('Estoy en createAlert')
     commit('shared/CLEAR_ERROR', null, { root: true })
     try {
-      const user = rootGetters['user/USER']
+      const userId = rootGetters['user/USER_ID']
       const alertsDb = rootGetters['alertsLocalDb/GET_ALERTS_LOCAL_DB']
 
       // Damos formato a la alerta
       let alert = setAlert(alertData)
       console.log('alert: ' + JSON.stringify(alert))
-      for (let key in alert) {
-        alert.user[key] = user[key]
-        console.log(alert.user[key] + ':' + user[key])
-      }
-      console.log('alert user: ' + JSON.stringify(alert))
+      // for (let key in alert) {
+      //   alert.user[key] = user[key]
+      //   console.log(alert.user[key] + ':' + user[key])
+      // }
+      // console.log('alert user: ' + JSON.stringify(alert))
 
       // creamos el timeStamp
       const publishDate = Date.now()
-      alert._id = user._id + ':' + publishDate
+      alert._id = userId + ':' + publishDate
       alert.creationDate = publishDate
       alert.endDate += publishDate
       console.log('el alert completo es: ' + JSON.stringify(alert))

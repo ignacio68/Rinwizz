@@ -74,7 +74,8 @@ export const alertSample = {
     avatar: '',
     location: '',
     url: '',
-    description: ''
+    description: '',
+    verified: false
   },
   creationDate: 0, // fecha de la creación de la alerta
   endDate: 0, // caducidad de la alerta

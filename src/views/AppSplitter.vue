@@ -1,10 +1,11 @@
 <template>
   <v-ons-splitter id="appSplitter">
     <v-ons-splitter-side
-      collapse
       swipeable
+      collapse
       width="75%"
       side="left"
+      options.animation="overlay"
       :swipe-target-width="md && 25"
       :animation="md ? 'overlay' : 'reveal'"
       :open.sync="isOpen"

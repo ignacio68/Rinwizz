@@ -2,11 +2,7 @@
   <v-ons-card class="alertCard">
     <div class="content">
       <v-ons-row class="row">
-        <img
-          class="alertCard__userAvatar"
-          :src="userAvatar"
-          :alt="altAvatar"
-        />
+        <img class="alertCard__userAvatar" :src="userAvatar" :alt="altAvatar" />
         <h3 class="alertCard_userName">{{ userName }}</h3>
         <v-ons-icon
           v-if="isVerified"
@@ -18,7 +14,6 @@
 
       <v-ons-col class="columnRight">
         <v-ons-list class="alertList">
-
           <v-ons-list-item class="alertList__item">
             <!--label for="alertTitle" class="alertList__item-label">{{ $t('lang.components.alertScript.title')}}</label-->
             <input
@@ -76,7 +71,6 @@
               v-model="alertLink"
             />
           </v-ons-list-item>
-
         </v-ons-list>
       </v-ons-col>
     </div>
@@ -89,12 +83,7 @@ import { mapActions } from 'vuex'
 export default {
   name: 'alert-script',
   props: {
-    userAvatar: {
-      type: String,
-      required: true,
-      default: ''
-    },
-    altAvatar: {
+    userId: {
       type: String,
       required: true,
       default: ''
@@ -104,10 +93,32 @@ export default {
       required: true,
       default: ''
     },
+    userScreenName: {
+      type: String,
+      required: true,
+      default: ''
+    },
+    userAvatar: {
+      type: String,
+      required: true,
+      default: ''
+    },
+    userLocation: {
+      type: String,
+      default: ''
+    },
+    userUrl: {
+      type: String,
+      default: 'rinwizz.com'
+    },
     isVerified: {
       type: Boolean,
       required: true,
       default: false
+    },
+    userDescription: {
+      type: String,
+      default: ''
     },
     alertPhone: {
       type: String,
@@ -120,6 +131,7 @@ export default {
       alertText: '',
       alertEndDate: 0,
       alertLink: '',
+      altAvatar: this.userName + ' icon',
       options: [
         { text: '10 segundos', value: 10000 },
         { text: '1 minuto', value: 60000 },
@@ -181,8 +193,18 @@ export default {
         text: this.alertText,
         endDate: this.alertEndDate,
         link: this.alertLink,
+        user: {
+          _id: this.userId,
+          name: this.userName,
+          screenName: this.userScreenName,
+          avatar: this.userAvatar,
+          location: this.userLocation,
+          url: this.userUrl,
+          description: this.userDescription,
+          verified: this.isVerified
+        },
         // FIXME: valores actuales solo para desarrollo
-        // phone: '',
+        phone: this.alertPhone,
         location: '',
         entities: {},
         extendedEntities: {},
