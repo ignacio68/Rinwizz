@@ -3,6 +3,7 @@ node_modules
 dist
 src/bak
 .VSCodeCounter
+md
 
 # local env files
 .env.local
