@@ -24,7 +24,8 @@ export const createDb = (nameDb, options) =>
  * Replicate and sync with the remote dataBase
  * @param remote { String } - remote database URL
  * @param options { Object }
- */ 
+ */
+
 export async function replyDb(replyData) {
   console.log('Estoy en replyDb')
   const db = replyData.db

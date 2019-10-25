@@ -4,7 +4,7 @@
     <div class="title"></div>
 
     <div class="content">
-      <v-ons-row>
+      <v-ons-row vertical-align="top" class="date_countdown">
         <p class="alertCard__emissionAlert">{{ shortDate }}</p>
         <!-- h4 class="alertCard__countDown">{{ days }}:{{ hours }}:{{ minutes }}:{{ seconds }}</h4 -->
         <countdown
@@ -16,20 +16,28 @@
         ></countdown>
       </v-ons-row>
 
-      <v-ons-col
-        width="20%"
-        class="leftCol"
-      ><img :src="userAvatar" :alt="altAvatar" class="alertCard__userAvatar" @click.prevent="onAvatarClick()/></v-ons-col>
+      <v-ons-row vertical-align="top">
+        <v-ons-col vertical-align="bottom" width="20%" class="leftCol">
+          <img
+            :src="userAvatar"
+            :alt="altAvatar"
+            class="alertCard__userAvatar"
+            @click.prevent="onAvatarClick()"
+          />
+        </v-ons-col>
 
-      <v-ons-col class="rigthCol">
+        <v-ons-col vertical-align="bottom" width="80%" class="rigthCol">
+          <v-ons-row>
+            <h3 class="alertCard__userName">{{ userName }}</h3>
+          </v-ons-row>
+          <v-ons-row>
+            <h2 class="alertCard__title">{{ alertTitle }}</h2>
+          </v-ons-row>
+        </v-ons-col>
+      </v-ons-row>
+
+      <v-ons-col width="80%" class="rigthColText">
         <div></div>
-        <v-ons-row>
-          <h3 class="alertCard__userName">{{ userName }}</h3>
-        </v-ons-row>
-
-        <v-ons-row>
-          <h2 class="alertCard__title">{{ alertTitle }}</h2>
-        </v-ons-row>
 
         <v-ons-row>
           <p class="alertCard__text">{{ alertText }}</p>
@@ -124,11 +132,11 @@ export default {
     },
     entities: {
       type: Object,
-      default: {}
+      default: null
     },
     extendedEntities: {
       type: Object,
-      default: {}
+      default: null
     },
     favoriteCount: {
       type: Number,
@@ -169,20 +177,29 @@ export default {
      * @event onPhoneClick
      * @public
      */
+
     onPhoneClick() {
       this.$emit('phonetButtonEvent')
     },
+
     /**
      * Acceder al enlace
      *
      * @event onLinkClick
      * @public
      */
+
     onLinkClick() {
       this.$emit('linkButtonEvent')
     },
+
     /**
+     * Lanza la configuración del emisor de la alerta
+     *
+     * @event onAvatarClick
+     * @public
      */
+
     onAvatarClick() {
       this.$emit('avatarEvent')
     }
@@ -195,8 +212,13 @@ export default {
   border: 2px solid darkslategrey;
 }
 .rigthCol {
-  margin: 5px;
+  height: 50px;
+  padding-left: 16px;
   border: 2px solid darkred;
+  text-align: center;
+}
+.rigthColText {
+  margin-left: 20%;
 }
 .alertCard {
   border: 2px solid red;
@@ -207,20 +229,29 @@ export default {
 .alertCard__countDown {
   text-align: right;
   font-size: 1em;
-  color: red;
+  color: rgba(15, 2, 2, 0.884);
   border: 1px solid blue;
 }
 .alertCard__userAvatar {
   height: 50px;
   width: 50px;
+  border-radius: 100%;
   border: 1px solid orange;
 }
 .alertCard__userName {
-  padding-left: 5px;
   text-align: left;
+  font-size: 16px;
   font-weight: bold;
-  color: black;
-  border: 1px solid lime;
+  margin-bottom: 0px;
+  color: rgba(0, 0, 0, 0.788);
+  border: 1px solid green;
+}
+.alertCard__title {
+  text-align: left;
+  font-size: 14px;
+  margin-top: 16px;
+  font-weight: bold;
+  border: 1px solid rgb(113, 0, 128);
 }
 .alertCard-buttons {
   float: right;

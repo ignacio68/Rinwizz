@@ -1,26 +1,23 @@
 <template>
   <div class="countdown">
     <v-ons-row>
-      <div v-if="days > 0" class="countdown__day">
-        <span class="number">{{ days }}</span>
+      <v-ons-col v-if="days > 0" class="countdown__day">
+        <p class="number">{{ days }}</p>
         <!--div class="format">{{ wordString.day }}</div-->
-        <div>Dias</div>
-      </div>
-      <div v-if="hours > 0" class="countdown__hour">
-        <span class="number">{{ hours }}</span>
-        <!--div class="format">{{ wordString.hours }}</div-->
-        <div>Horas</div>
-      </div>
-      <div v-if="minutes > 0" class="countdown__min">
-        <span class="number">{{ minutes }}</span>
-        <!--div class="format">{{ wordString.minutes }}</div-->
-        <div>Minutos</div>
-      </div>
-      <div v-if="seconds > 0" class="countdown__sec">
-        <span class="number">{{ seconds }}</span>
-        <!--div class="format">{{ wordString.seconds }}</div-->
-        <div>Seg</div>
-      </div>
+        <p>D</p>
+      </v-ons-col>
+      <v-ons-col v-if="hours > 0" class="countdown__hour">
+        <p class="number">{{ hours }}</p>
+        <p>H</p>
+      </v-ons-col>
+      <v-ons-col v-if="minutes > 0" class="countdown__minutes">
+        <p class="number">{{ minutes }}</p>
+        <p>M</p>
+      </v-ons-col>
+      <v-ons-col v-if="seconds > 0" class="countdown__seconds">
+        <p class="number">{{ seconds }}</p>
+        <p>S</p>
+      </v-ons-col>
       <div v-if="finish" class="finish">
         <!-- TODO: INTERNACIONALIZAR -->
         <h3>FINALIZADA</h3>
@@ -90,4 +87,11 @@ export default {
   }
 }
 </script>
-<style scoped></style>
+<style scoped>
+.countdown__day {
+  border: 1px solid blue;
+}
+.number {
+  border: 1px solid red;
+}
+</style>

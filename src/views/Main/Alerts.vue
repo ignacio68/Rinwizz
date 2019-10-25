@@ -1,38 +1,23 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar
-      id="customToolbar"
-      :pageTitle="$t('lang.views.alerts.toolbar')"
-    ></the-custom-toolbar>
+    <the-custom-toolbar id="customToolbar" :pageTitle="$t('lang.views.alerts.toolbar')"></the-custom-toolbar>
 
     <div class="content">
-      <v-ons-pull-hook
-        :action="onUpdatedAlerts"
-        id="pullHook"
-      >
+      <v-ons-pull-hook :action="onUpdatedAlerts" id="pullHook">
         <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
         <div id="dummy">
           <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
           <h5 class="dummyText">
             Este es tu Avatar
             <span>
-              <img
-                class="alertCard__userAvatar"
-                :src="user.avatar"
-              />
+              <img class="alertCard__userAvatar" :src="user.avatar" />
             </span>
           </h5>
-          <h5
-            v-if="!isVerified"
-            class="dummyText"
-          >No estás verificado</h5>
+          <h5 v-if="!isVerified" class="dummyText">No estás verificado</h5>
         </div>
 
         <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
-        <v-ons-list
-          v-if="alerts"
-          class="alertsList"
-        >
+        <v-ons-list v-if="alerts" class="alertsList">
           <v-ons-list-item
             :modifier="md ? 'nodivider' : ''"
             class="alertsList__item"
@@ -86,15 +71,8 @@
     </div>
 
     <!-- Botón para lanzar el editor de alertas -->
-    <v-ons-fab
-      position="bottom right"
-      ripple="true"
-      @click.prevent="isModalVisible = true"
-    >
-      <v-ons-icon
-        class="alertScript__icon"
-        icon="ion-edit, material:zmdi-email-open"
-      ></v-ons-icon>
+    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
+      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
