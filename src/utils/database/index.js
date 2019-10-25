@@ -1,6 +1,2 @@
-// export * from './userSample'
-// export * from './alertSample'
-// export * from './configSample'
-// export * from './replyOptionsSample'
 export * from './samples'
 export * from './helpers'
