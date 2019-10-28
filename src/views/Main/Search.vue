@@ -1,7 +1,7 @@
 <template>
   <v-ons-page id="search">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.views.search.toolbar')"></the-custom-toolbar>
-    <div class="content">
+    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.views.search.toolbar')" />
+    <div>
       <h1>Página de búsquedas</h1>
       <!-- <v-ons-col class="col">
         <div class="map">
@@ -34,22 +34,18 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import LocationMap from '@components/User/LocationMap'
+// import { mapGetters, mapActions } from 'vuex'
+// import LocationMap from '@components/User/LocationMap'
 
 export default {
-  name: 'search',
+  name: 'Search',
   components: {
-    LocationMap
+    // LocationMap
   },
   data() {
     return {
       showMarkers: true
     }
-  },
-  created() {
-    // this.getUserLocation()
-    // this.getUserAddress()
   },
   computed: {
     // ...mapGetters('location', {
@@ -57,6 +53,10 @@ export default {
     //   userAddress: 'USER_ADDRESS'
     // })
     // ----------------changeShowMarkers: () => return (this.showMarkers = !this.showMarkers)
+  },
+  created() {
+    // this.getUserLocation()
+    // this.getUserAddress()
   },
   methods: {
     // ...mapActions('userDb', ['UPDATE_USER_DB']),

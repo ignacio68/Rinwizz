@@ -6,13 +6,11 @@
     <div class="content">
       <v-ons-row vertical-align="top" class="date_countdown">
         <p class="alertCard__emissionAlert">{{ shortDate }}</p>
-        <!-- h4 class="alertCard__countDown">{{ days }}:{{ hours }}:{{ minutes }}:{{ seconds }}</h4 -->
         <countdown
           class="alertCard__countDown"
           :referenceDate="referenceDate"
-          :endDate="alertEndDate"
+          :endDate="endDateAlert"
           :startDate="startDate"
-          :trans="leyendas"
         ></countdown>
       </v-ons-row>
 
@@ -95,7 +93,6 @@ export default {
       type: String,
       default: ''
     },
-    referenceDate: [Number, String],
     /**
      * Fecha del comienzo de la alerta
      */
@@ -104,6 +101,10 @@ export default {
      * Fecha del fin de la alerta
      */
     endDate: [Number, String],
+    /**
+     * Fecha actual
+     */
+    referenceDate: [Number, String],
     /**
      * Título de la alerta
      */
@@ -144,18 +145,7 @@ export default {
     }
   },
   data() {
-    return {
-      interval: '',
-      leyendas: {
-        day: 'D',
-        hours: 'H',
-        minutes: 'M',
-        seconds: 'S'
-      }
-    }
-  },
-  created() {
-    console.log('alertMessage.vue created()')
+    return {}
   },
   computed: {
     // Establece la fecha de emisión de la alerta
@@ -164,9 +154,9 @@ export default {
       return shortDateFormat
     },
     // Convierte la fecha de término de la alarma a un entero
-    alertEndDate() {
+    endDateAlert() {
       const intEndDate = parseInt(this.endDate, 10)
-      // console.log('Estoy en alertEndDate y intEndDate es: ' + intEndDate)
+      // console.log('Estoy en endDateAlert y intEndDate es: ' + intEndDate)
       return intEndDate
     }
   },

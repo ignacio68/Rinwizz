@@ -46,7 +46,7 @@ import i18n from '@setup/i18n'
  * Import Timer
  * TODO: Revisar si importar directamente en el componente
  */
-import VueTimers from 'vue-timers'
+// import VueTimers from 'vue-timers'
 
 /* Cuando se utiliza ESM */
 /* TODO: ¡¡NO FUNCIONA!!
@@ -120,7 +120,7 @@ Vue.use(VueOnsen)
  * Load  Vue-Timer
  * TODO: cargar en el componente
  */
-Vue.use(VueTimers)
+// Vue.use(VueTimers)
 
 /**
  * Register components globally
@@ -134,16 +134,13 @@ Vue.component('the-custom-toolbar', TheCustomtoolbar)
 let app
 
 firebaseAuth().onAuthStateChanged(user => {
-  console.log('Estoy en firebase.auth().onAuthStateChanged')
   if (!app) {
     app = new Vue({
       el: '#app',
       i18n,
       store,
-      render: h => h(AppNavigator),
-      // render: h => h(Fake),
+
       beforeCreate() {
-        console.log('Main beforeCreate()')
         // Shortcut for Material Design, IOS & web
         Vue.prototype.md = this.$ons.platform.isAndroid()
         Vue.prototype.ios = this.$ons.platform.isIOS()
@@ -158,8 +155,6 @@ firebaseAuth().onAuthStateChanged(user => {
 
         // Check if we can use the internationalization API
         if (window.Intl && typeof window.Intl === 'object') {
-          // Assume it's supported, lets localize!
-          console.log('Se  puede utilizar la internacionalizacion')
           // Set app language
           const val = navigator.language
           const lang = val.slice(0, 2)
@@ -168,8 +163,6 @@ firebaseAuth().onAuthStateChanged(user => {
             // const lang = val.slice(0, 2)
             i18n.locale = lang
             this.$store.commit('shared/SET_LANGUAGE', lang)
-            // console.log('el lenguaje es ${i18n.locale}')
-            console.log('el lenguaje es ' + i18n.locale)
           } else {
             console.log('No se encuentra el idioma del navegador')
           }
@@ -183,12 +176,8 @@ firebaseAuth().onAuthStateChanged(user => {
           console.log('No existe el user')
         }
       },
-      beforeMount() {
-        console.log('Main beforeMount()')
-      },
-      mounted() {
-        console.log('Main mounted()')
-      }
+      render: h => h(AppNavigator)
+      // render: h => h(Fake),
     })
   }
 })

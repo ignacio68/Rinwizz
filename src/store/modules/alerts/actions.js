@@ -18,7 +18,7 @@ export default {
 
       // Damos formato a la alerta
       let alert = setAlert(alertData)
-      console.log('alert: ' + JSON.stringify(alert))
+      // console.log('alert: ' + JSON.stringify(alert))
       // for (let key in alert) {
       //   alert.user[key] = user[key]
       //   console.log(alert.user[key] + ':' + user[key])
@@ -30,7 +30,7 @@ export default {
       alert._id = userId + ':' + publishDate
       alert.creationDate = publishDate
       alert.endDate += publishDate
-      console.log('el alert completo es: ' + JSON.stringify(alert))
+      // console.log('el alert completo es: ' + JSON.stringify(alert))
 
       // Creamos la alerta en la base de datos local
       await createDoc(alertsDb, alert)
@@ -52,7 +52,7 @@ export default {
       root: true
     })
       .then(alerts => {
-        console.log('Recuperando las alertas!!' + JSON.stringify(alerts))
+        // console.log('Recuperando las alertas!!' + JSON.stringify(alerts))
         commit('SET_LOADED_ALERTS', alerts)
       })
       .catch(error => {

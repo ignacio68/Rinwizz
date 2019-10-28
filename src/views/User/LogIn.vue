@@ -12,9 +12,15 @@
         <v-ons-list class="form-list">
           <!-- EMAIL INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-ios-email, material:zmdi-email" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-ios-email, material:zmdi-email"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -31,9 +37,15 @@
 
           <!-- PASSWORD INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-locked, material:zmdi-lock" class="list-item__icon"></v-ons-icon>
+              <v-ons-icon
+                icon="ion-locked, material:zmdi-lock"
+                class="list-item__icon"
+              ></v-ons-icon>
             </div>
             <div class="center">
               <v-ons-input
@@ -74,10 +86,9 @@
           <!-- FORGOT PASSWORD -->
 
           <v-ons-list-item class="text__button">
-            <p
-              class="forgotPassword"
-              @click.prevent="onForgotPassword"
-            >{{ $t('lang.views.login.main.text1') }}</p>
+            <p class="forgotPassword" @click.prevent="onForgotPassword">
+              {{ $t('lang.views.login.main.text1') }}
+            </p>
           </v-ons-list-item>
         </v-ons-list>
       </form>
@@ -92,12 +103,15 @@
         :disabled="buttonActive"
         ripple="true"
         @click.prevent="onLognIn"
-      >{{ $t('lang.views.login.button') }}</v-ons-button>
+        >{{ $t('lang.views.login.button') }}</v-ons-button
+      >
 
       <!------ LOGIN WITH SOCIAL BUTTONS ------>
 
       <div class="socialText">
-        <p class="socialButtons__text">{{ $t('lang.views.login.main.socialText') }}</p>
+        <p class="socialButtons__text">
+          {{ $t('lang.views.login.main.socialText') }}
+        </p>
         <v-ons-row class="socialButtons__list">
           <circle-button
             v-for="(socialButton, $index) in socialButtons"
@@ -114,7 +128,9 @@
 
       <!-- SIGNUP BUTTON -->
       <div>
-        <p class="text__button" @click.prevent="toSignUp">{{ $t('lang.views.login.main.text2') }}</p>
+        <p class="text__button" @click.prevent="toSignUp">
+          {{ $t('lang.views.login.main.text2') }}
+        </p>
       </div>
     </div>
   </v-ons-page>

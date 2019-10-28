@@ -1,6 +1,10 @@
 <template>
   <v-ons-page id="homePage">
-    <v-ons-tabbar position="bottom" :tabs="tabs" :index.sync="index"></v-ons-tabbar>
+    <v-ons-tabbar
+      position="bottom"
+      :tabs="tabs"
+      :index.sync="index"
+    ></v-ons-tabbar>
   </v-ons-page>
 </template>
 

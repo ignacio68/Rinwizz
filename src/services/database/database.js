@@ -276,11 +276,11 @@ export const fetchAllDocs = (db, options) => {
   return new Promise(resolve => {
     db.allDocs(options)
       .then(result => {
-        console.log('fetchAllDocs: ' + JSON.stringify(result))
+        // console.log('fetchAllDocs: ' + JSON.stringify(result))
         let docs = result.rows.map(row => {
           data.push(row.doc)
         })
-        console.log('data: ' + JSON.stringify(data))
+        // console.log('data: ' + JSON.stringify(data))
         resolve(data)
       })
       .catch(error => console.log(error))

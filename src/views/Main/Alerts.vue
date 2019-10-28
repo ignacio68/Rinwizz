@@ -1,6 +1,9 @@
 <template>
   <v-ons-page id="alerts">
-    <the-custom-toolbar id="customToolbar" :pageTitle="$t('lang.views.alerts.toolbar')"></the-custom-toolbar>
+    <the-custom-toolbar
+      id="customToolbar"
+      :pageTitle="$t('lang.views.alerts.toolbar')"
+    ></the-custom-toolbar>
 
     <div class="content">
       <v-ons-pull-hook :action="onUpdatedAlerts" id="pullHook">
@@ -71,8 +74,15 @@
     </div>
 
     <!-- Botón para lanzar el editor de alertas -->
-    <v-ons-fab position="bottom right" ripple="true" @click.prevent="isModalVisible = true">
-      <v-ons-icon class="alertScript__icon" icon="ion-edit, material:zmdi-email-open"></v-ons-icon>
+    <v-ons-fab
+      position="bottom right"
+      ripple="true"
+      @click.prevent="isModalVisible = true"
+    >
+      <v-ons-icon
+        class="alertScript__icon"
+        icon="ion-edit, material:zmdi-email-open"
+      ></v-ons-icon>
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -81,26 +91,8 @@
 import { mapGetters, mapActions } from 'vuex'
 import alertMessage from '@components/Alerts/alertMessage'
 import alertScript from '@components/Alerts/alertScript'
-
-// document.addEventListener(
-//   'init',
-//   event => {
-//     if (event.target.matches('#alerts')) {
-//       console.log('alerts is initiated.')
-//     }
-//   },
-//   false
-// )
-
-// document.addEventListener(
-//   'show',
-//   event => {
-//     if (event.target.matches('#alerts')) {
-//       console.log('alerts is show.')
-//     }
-//   },
-//   false
-// )
+// import { timer } from 'vue-timers'
+import VueTimers from 'vue-timers/mixin'
 
 export default {
   name: 'alerts',
@@ -108,17 +100,18 @@ export default {
     alertMessage,
     alertScript
   },
+  mixins: [VueTimers],
   timers: {
     loadDate: {
       time: 1000,
-      autostart: false,
-      repeat: false
+      autostart: true,
+      repeat: true
     }
   },
   data() {
     return {
       isModalVisible: false,
-      referenceDate: ''
+      referenceDate: 0
     }
   },
   async created() {
@@ -158,15 +151,14 @@ export default {
       this.$refs.alertScript.onCreateAlert()
       // this.toHomePage()
     },
-    async onUpdatedAlerts() {
-      await this.LOAD_ALERTS()
-    },
     // Establece la fecha de referencia según la configuración del timer
     loadDate() {
       // TODO: Si no hay alertas o todas están caducadas parar el timer o no arrancar
       // TODO: utilizar nexTick para incrementar cada segundo
       this.referenceDate = Date.now()
-      // console.log('La fecha de referencia es:' + this.referenceDate)
+    },
+    async onUpdatedAlerts() {
+      await this.LOAD_ALERTS()
     },
     toHomePage() {
       let myModal = document.querySelector('.alertModal')

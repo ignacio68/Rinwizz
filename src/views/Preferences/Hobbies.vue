@@ -4,7 +4,9 @@
       <p>{{ $t('lang.views.hobbies.main') }}</p>
       <br />
       <!------ DEPORTES ------->
-      <v-ons-list-title class="preferences__list-title">Deportes</v-ons-list-title>
+      <v-ons-list-title class="preferences__list-title"
+        >Deportes</v-ons-list-title
+      >
       <v-ons-list class="sports__list">
         <v-ons-list-item
           class="preferences__list-item"
@@ -13,7 +15,11 @@
           tappable
         >
           <label class="left">
-            <v-ons-checkbox :input-id="'checkbox-' + $index" :value="sport" v-model="checkedSports"></v-ons-checkbox>
+            <v-ons-checkbox
+              :input-id="'checkbox-' + $index"
+              :value="sport"
+              v-model="checkedSports"
+            ></v-ons-checkbox>
           </label>
           <label class="center" :for="'checkbox-' + $index">{{ sport }}</label>
         </v-ons-list-item>
@@ -36,15 +42,15 @@
             ></v-ons-checkbox>
           </label>
           <label class="center" :for="'checkbox-' + $index">
-            {{
-            entertainment
-            }}
+            {{ entertainment }}
           </label>
         </v-ons-list-item>
       </v-ons-list>
 
       <!------ COMIDA Y BEBIDA ------->
-      <v-ons-list-title class="preferences__list-title">Comida y bebida</v-ons-list-title>
+      <v-ons-list-title class="preferences__list-title"
+        >Comida y bebida</v-ons-list-title
+      >
       <v-ons-list class="preferences__list">
         <v-ons-list-item
           class="preferences__list-item"
@@ -53,7 +59,11 @@
           tappable
         >
           <label class="left">
-            <v-ons-checkbox :input-id="'checkbox-' + $index" :value="food" v-model="checkedFoods"></v-ons-checkbox>
+            <v-ons-checkbox
+              :input-id="'checkbox-' + $index"
+              :value="food"
+              v-model="checkedFoods"
+            ></v-ons-checkbox>
           </label>
           <label class="center" :for="'checkbox-' + $index">{{ food }}</label>
         </v-ons-list-item>
@@ -67,7 +77,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="updateHobbies"
-        >{{ $t('lang.views.hobbies.button') }}</v-ons-button>
+          >{{ $t('lang.views.hobbies.button') }}</v-ons-button
+        >
       </div>
     </div>
   </v-ons-page>

@@ -7,18 +7,17 @@ module.exports = {
   },
   extends: [
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
-    'plugin:vue/essential',
+    'plugin:vue/recommended',
     'plugin:prettier/recommended',
     '@vue/standard'
   ],
   // required to lint *.vue files
-  plugins: [
-    'vue'
-  ],
+  plugins: ['vue', 'prettier'],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'space-before-function-paren': 0
+    'space-before-function-paren': 0,
+    'prettier/prettier': ['error']
   },
   parserOptions: {
     parser: 'babel-eslint'

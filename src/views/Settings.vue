@@ -10,7 +10,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="logOutUser"
-        >Logout User</v-ons-button>
+          >Logout User</v-ons-button
+        >
 
         <v-ons-button
           class="deleteButton__button"
@@ -18,7 +19,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="deleteUser"
-        >Delete User</v-ons-button>
+          >Delete User</v-ons-button
+        >
 
         <v-ons-button
           class="toJSON__button"
@@ -26,7 +28,8 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toJSON"
-        >User JSON</v-ons-button>
+          >User JSON</v-ons-button
+        >
       </div>
     </div>
   </v-ons-page>

@@ -33,7 +33,7 @@ export default {
     // Creamos la base de datos local
     createDb(nameDb, { auto_compaction: true })
       .then(alertsDb => {
-        console.log('alertsDb es: ' + JSON.stringify(alertsDb))
+        // console.log('alertsDb es: ' + JSON.stringify(alertsDb))
         // creamos la base de datos en caché
         commit('SET_ALERTS_LOCAL_DB', alertsDb)
       })
@@ -73,7 +73,7 @@ export default {
     // Replicamos y sincronizamos la base de datos
     await replyDb(replyData)
       .then(info => {
-        console.log('ReplyDb realizada' + JSON.stringify(info))
+        // console.log('ReplyDb realizada' + JSON.stringify(info))
         const syncData = replyData
         dispatch('GET_ALERTS')
         dispatch('SYNC_ALERTS_DB', { syncData })
@@ -153,7 +153,7 @@ export default {
         //   alerts.push(row.doc)
         // })
         commit('alerts/SET_LOADED_ALERTS', result, { root: true })
-        console.log('GET_ALERTS: ' + JSON.stringify(result))
+        // console.log('GET_ALERTS: ' + JSON.stringify(result))
       })
       // console.log('Las alertas son: ' + alerts)
       // commit('alerts/SET_LOADED_ALERTS', alerts, { root: true })
