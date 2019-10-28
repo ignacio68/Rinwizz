@@ -11,67 +11,54 @@
       <form class="form" autocomplete="off">
         <v-ons-list>
           <!-- NAME INPUT -->
-          <v-ons-list-item
-            :modifier="md ? 'nodivider' : ''"
-            class="form__input"
+          <v-ons-list-item 
+          :modifier="md ? 'nodivider' : ''" 
+          class="form__input"
           >
             <div class="left">
-              <v-ons-icon
-                icon="ion-person, material:zmdi-account"
-                class="list-item__icon"
-              ></v-ons-icon>
+              <v-ons-icon icon="ion-person, material:zmdi-account" class="list-item__icon" />
             </div>
             <div class="center">
               <v-ons-input
+                v-model="name"
                 type="name"
                 :placeholder="$t('lang.views.signup.input.name')"
                 float
                 modifier="underbar transparent"
-                v-model="name"
                 required
-              ></v-ons-input>
+              />
             </div>
           </v-ons-list-item>
 
           <!-- EMAIL INPUT -->
 
-          <v-ons-list-item
-            :modifier="md ? 'nodivider' : ''"
-            class="form__input"
-          >
+          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
             <div class="left">
-              <v-ons-icon
-                icon="ion-ios-email, material:zmdi-email"
-                class="list-item__icon"
-              ></v-ons-icon>
+              <v-ons-icon icon="ion-ios-email, material:zmdi-email" class="list-item__icon" />
             </div>
             <div class="center">
               <v-ons-input
+                v-model="email"
                 type="email"
                 minlength="6"
                 :placeholder="$t('lang.views.signup.input.email')"
                 required
                 float
                 modifier="underbar transparent"
-                v-model="email"
-              ></v-ons-input>
+              />
             </div>
           </v-ons-list-item>
 
           <!-- PASSWORD INPUT -->
 
-          <v-ons-list-item
-            :modifier="md ? 'nodivider' : ''"
-            class="form__input"
-          >
+          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
             <div class="left">
-              <v-ons-icon
-                icon="ion-locked, material:zmdi-lock"
-                class="list-item__icon"
-              ></v-ons-icon>
+              <v-ons-icon icon="ion-locked, material:zmdi-lock" class="list-item__icon" />
             </div>
             <div class="center">
               <v-ons-input
+                ref="passwordInput"
+                v-model="password"
                 type="text"
                 input-id="password"
                 minlength="8"
@@ -79,23 +66,21 @@
                 required
                 float
                 modifier="underbar transparent"
-                v-model="password"
                 v-bind="$attrs"
-                ref="passwordInput"
-              ></v-ons-input>
+              />
               <div class="right">
                 <v-ons-icon
                   v-if="!passwordVisible"
                   icon="ion-eye-disabled, material:zmdi-eye-off"
                   class="list-item__icon"
                   @click.prevent="togglePassword"
-                ></v-ons-icon>
+                />
                 <v-ons-icon
                   v-else
                   icon="ion-eye, material:zmdi-eye"
                   class="list-item__icon"
                   @click.prevent="togglePassword"
-                ></v-ons-icon>
+                />
               </div>
             </div>
           </v-ons-list-item>
@@ -118,16 +103,13 @@
           :disabled="false"
           ripple="true"
           @click.prevent="onSignUp"
-          >{{ $t('lang.views.signup.button') }}</v-ons-button
-        >
+        >{{ $t('lang.views.signup.button') }}</v-ons-button>
       </div>
 
       <!------ LOGIN WITH SOCIAL BUTTONS ------>
 
       <div class="socialText">
-        <p class="socialButtons__text">
-          {{ $t('lang.views.signup.main.socialText') }}
-        </p>
+        <p class="socialButtons__text">{{ $t('lang.views.signup.main.socialText') }}</p>
         <v-ons-row class="socialButtons__list">
           <circle-button
             v-for="(socialButton, $index) in socialButtons"
@@ -146,26 +128,14 @@
 
       <div class="privacy">
         <i18n class="privacy__text" path="lang.views.signup.main.text3">
-          <span
-            class="privacy__text-link"
-            @click.prevent="toTerms"
-            place="terms"
-            >{{ terms }}</span
-          >
-          <span
-            class="privacy__text-link"
-            @click.prevent="toPrivacy"
-            place="privacy"
-            >{{ privacy }}</span
-          >
+          <span class="privacy__text-link" place="terms" @click.prevent="toTerms">{{ terms }}</span>
+          <span class="privacy__text-link" place="privacy" @click.prevent="toPrivacy">{{ privacy }}</span>
         </i18n>
       </div>
 
       <!-- I HAVE A USER ACCOUNT -->
 
-      <p class="logInText" @click.prevent="toLogIn">
-        {{ $t('lang.views.signup.main.text2') }}
-      </p>
+      <p class="logInText" @click.prevent="toLogIn">{{ $t('lang.views.signup.main.text2') }}</p>
     </div>
 
     <!------ CONFIRM PASSWORD ALERT ------>
@@ -181,9 +151,7 @@
           class="alertDialog_button"
           ripple="true"
           @click.prevent="onClickAlertButton()"
-        >
-          {{ $t('lang.components.alertConfirmPassword.buttonText') }}
-        </v-ons-alert-dialog-button>
+        >{{ $t('lang.components.alertConfirmPassword.buttonText') }}</v-ons-alert-dialog-button>
       </template>
     </v-ons-alert-dialog>
   </v-ons-page>
@@ -206,7 +174,7 @@ import CircleButton from '@components/Shared/CircleButton'
  * @author Ignacio López-Amor <ignaciolopezamor@gmail.com>
  */
 export default {
-  name: 'sign-up',
+  name: 'SignUp',
   components: {
     // SignUpButton,
     CircleButton
@@ -223,9 +191,6 @@ export default {
       type: 'text',
       passwordVisible: true
     }
-  },
-  created() {
-    console.log('Estoy en SignUp.created')
   },
   computed: {
     ...mapGetters('errors', { errorMessage: 'ERROR_MESSAGE' }),

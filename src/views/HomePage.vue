@@ -1,10 +1,9 @@
 <template>
   <v-ons-page id="homePage">
     <v-ons-tabbar
-      position="bottom"
-      :tabs="tabs"
-      :index.sync="index"
-    ></v-ons-tabbar>
+position="bottom" :tabs="tabs"
+:index.sync="index"
+/>
   </v-ons-page>
 </template>
 
@@ -36,7 +35,7 @@ document.addEventListener(
 )
 
 export default {
-  name: 'homePage',
+  name: 'HomePage',
   data() {
     return {
       // tabs: [
@@ -68,9 +67,6 @@ export default {
       numAlerts: '8'
     }
   },
-  async created() {
-    console.log('homePage.created()')
-  },
   computed: {
     index: {
       get() {
@@ -80,6 +76,9 @@ export default {
         this.SET(newValue)
       }
     }
+  },
+  async created() {
+    console.log('homePage.created()')
   },
   methods: {
     ...mapMutations('navigator', ['SET'])

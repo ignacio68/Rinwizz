@@ -7,7 +7,7 @@
 </template>
 <script>
 export default {
-  name: 'confirmEmail',
+  name: 'ConfirmEmail',
   data() {
     return {}
   },

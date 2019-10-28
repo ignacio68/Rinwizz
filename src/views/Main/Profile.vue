@@ -2,12 +2,13 @@
   <v-ons-page id="profile">
     <the-custom-toolbar
       class="customToolbar"
-      :pageTitle="$t('lang.views.profile.toolbar')"
-    ></the-custom-toolbar>
+      :page-title="$t('lang.views.profile.toolbar')"
+    />
     <div class="content">
       <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
       <div class="picture">
-        <img :src="user.avatar" alt="user photo" class="picture__frame-photo" />
+        <img
+:src="user.avatar" alt="user photo" class="picture__frame-photo" />
         <!-- <img :src="../../assets/user_icon.png" alt="user photo" class="picture__frame-photo" /> -->
       </div>
       <form>
@@ -24,11 +25,11 @@
             <div class="center profileList__item-input">
               <v-ons-input
                 id="name"
+                v-model="name"
                 type="name"
                 :placeholder="user.name"
                 float
                 modifier="transparent"
-                v-model="name"
                 required
               />
             </div>
@@ -63,17 +64,17 @@
             <div class="center profileList__item-input">
               <v-ons-input
                 id="location"
+                v-model="location"
                 type="text"
                 :placeholder="user.location"
                 float
                 modifier="transparent"
-                v-model="location"
               />
             </div>
           </v-ons-list-item>
-          <v-ons-list-header class="profileList__header">{{
-            $t('lang.views.profile.main.list.header1')
-          }}</v-ons-list-header>
+          <v-ons-list-header class="profileList__header">
+            $t('lang.views.profile.main.list.header1') }}
+          </v-ons-list-header>
         </v-ons-list>
       </form>
 
@@ -84,8 +85,9 @@
         :disabled="false"
         ripple="true"
         @click.prevent="onSave"
-        >{{ $t('lang.views.profile.main.button') }}</v-ons-button
       >
+        {{ $t('lang.views.profile.main.button') }}
+      </v-ons-button>
     </div>
   </v-ons-page>
 </template>
@@ -94,7 +96,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'profile',
+  name: 'Profile',
   data() {
     return {
       name: '',

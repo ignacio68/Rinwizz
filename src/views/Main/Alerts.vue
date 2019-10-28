@@ -2,49 +2,54 @@
   <v-ons-page id="alerts">
     <the-custom-toolbar
       id="customToolbar"
-      :pageTitle="$t('lang.views.alerts.toolbar')"
-    ></the-custom-toolbar>
+      :page-title="$t('lang.views.alerts.toolbar')"
+    />
 
     <div class="content">
-      <v-ons-pull-hook :action="onUpdatedAlerts" id="pullHook">
+      <v-ons-pull-hook id="pullHook" :action="onUpdatedAlerts">
         <!-- Las siguientes líneas son de prueba -- Se pueden elminar  -->
         <div id="dummy">
           <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
           <h5 class="dummyText">
             Este es tu Avatar
             <span>
-              <img class="alertCard__userAvatar" :src="user.avatar" />
+              <img
+class="alertCard__userAvatar" :src="user.avatar" />
             </span>
           </h5>
-          <h5 v-if="!isVerified" class="dummyText">No estás verificado</h5>
+          <h5 v-if="!isVerified"
+class="dummyText">
+            No estás verificado
+          </h5>
         </div>
 
         <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
-        <v-ons-list v-if="alerts" class="alertsList">
+        <v-ons-list v-if="alerts"
+class="alertsList">
           <v-ons-list-item
-            :modifier="md ? 'nodivider' : ''"
-            class="alertsList__item"
             v-for="alert in alerts"
             :key="alert._id"
+            :modifier="md ? 'nodivider' : ''"
+            class="alertsList__item"
           >
             <alert-message
-              :userName="alert.user.name"
-              :userAvatar="alert.user.avatar"
-              :altAvatar="alert.user.name + ' icon'"
-              :referenceDate="referenceDate"
-              :startDate="alert.creationDate"
-              :endDate="alert.endDate"
-              :alertTitle="alert.title"
-              :alertText="alert.text"
-              :phoneButton="$t('lang.components.alerts.phoneButton')"
-              :linkButton="$t('lang.components.alerts.linkButton')"
-              @phoneButtonEvent="toPhone(alert.phone)"
-              @linkButtonEvent="toLink(alert.link)"
+              :user-name="alert.user.name"
+              :user-avatar="alert.user.avatar"
+              :alt-avatar="alert.user.name + ' icon'"
+              :reference-date="referenceDate"
+              :start-date="alert.creationDate"
+              :end-date="alert.endDate"
+              :alert-title="alert.title"
+              :alert-text="alert.text"
+              :phone-button="$t('lang.components.alerts.phoneButton')"
+              :link-button="$t('lang.components.alerts.linkButton')"
               :location="alert.location.city"
               :entities="alert.entities"
-              :extendedEntities="alert.extendedEntities"
-              :favoriteCount="alert.favoriteCount"
-            ></alert-message>
+              :extended-entities="alert.extendedEntities"
+              :favorite-count="alert.favoriteCount"
+              @phoneButtonEvent="toPhone(alert.phone)"
+              @linkButtonEvent="toLink(alert.link)"
+            />
           </v-ons-list-item>
         </v-ons-list>
       </v-ons-pull-hook>
@@ -57,19 +62,23 @@
         name="alertModal"
       >
         <alert-script
-          :userId="user._id"
-          :userName="user.name"
-          :userScreenName="user.screenName"
-          :userAvatar="user.avatar"
-          :userLocation="user.location"
-          :userUrl="user.url"
-          :userDescription="user.description"
-          :isVerified="user.verified"
-          :alertPhone="user.phone"
           ref="alertScript"
-        ></alert-script>
-        <v-ons-button @click.prevent="cancel">Cancel</v-ons-button>
-        <v-ons-button @click.prevent="createAlert">Ok</v-ons-button>
+          :user-id="user._id"
+          :user-name="user.name"
+          :user-screen-name="user.screenName"
+          :user-avatar="user.avatar"
+          :user-location="user.location"
+          :user-url="user.url"
+          :user-description="user.description"
+          :is-verified="user.verified"
+          :alert-phone="user.phone"
+        />
+        <v-ons-button @click.prevent="cancel">
+          Cancel
+        </v-ons-button>
+        <v-ons-button @click.prevent="createAlert">
+          Ok
+        </v-ons-button>
       </v-ons-modal>
     </div>
 
@@ -82,7 +91,7 @@
       <v-ons-icon
         class="alertScript__icon"
         icon="ion-edit, material:zmdi-email-open"
-      ></v-ons-icon>
+      />
     </v-ons-fab>
   </v-ons-page>
 </template>
@@ -95,7 +104,7 @@ import alertScript from '@components/Alerts/alertScript'
 import VueTimers from 'vue-timers/mixin'
 
 export default {
-  name: 'alerts',
+  name: 'Alerts',
   components: {
     alertMessage,
     alertScript

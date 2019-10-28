@@ -1,6 +1,9 @@
 <template>
   <v-ons-page id="search">
-    <the-custom-toolbar class="customToolbar" :pageTitle="$t('lang.views.search.toolbar')" />
+    <the-custom-toolbar
+      class="customToolbar"
+      :page-title="$t('lang.views.search.toolbar')"
+    />
     <div>
       <h1>Página de búsquedas</h1>
       <!-- <v-ons-col class="col">

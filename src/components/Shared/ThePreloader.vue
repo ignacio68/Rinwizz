@@ -9,13 +9,13 @@
         class="loader loader__ripple"
         :style="{ width: loaderRippleWidth, heigth: loaderRipperHeigth }"
         indeterminate
-      ></v-ons-progress-circular>
+      />
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'the-preloader',
+  name: 'ThePreloader',
   props: {
     loaderBackgroundColor: {
       type: String,

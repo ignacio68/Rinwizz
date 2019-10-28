@@ -2,7 +2,7 @@
   <v-ons-page id="personal">
     <div class="content">
       <h4>{{ $t('lang.views.personal.main') }}</h4>
-      <br />
+      <br >
       <div class="gender">
         <v-ons-button
           class="gender__button"
@@ -11,8 +11,9 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toAvatar"
-          >{{ $t('lang.views.personal.button') }}</v-ons-button
         >
+          {{ $t('lang.views.personal.button') }}
+        </v-ons-button>
       </div>
     </div>
   </v-ons-page>
@@ -22,7 +23,7 @@
 import { mapMutations } from 'vuex'
 import Gender from './Gender'
 export default {
-  name: 'personal',
+  name: 'Personal',
   data() {
     return {}
   },

@@ -6,14 +6,15 @@
     :center="location"
     :inertia="true"
   >
-    <v-tile-layer :url="maps.url" :atribution="maps.atribution" />
+    <v-tile-layer :url="maps.url"
+:atribution="maps.atribution" />
     <v-marker
       ref="marker"
       class="map__marker"
       alt="user position"
       :lat-lng="location"
       :draggable="true"
-      :autoPan="true"
+      :auto-pan="true"
       @drag="onDrag"
       @dragend="onDragEnd"
     >
@@ -26,9 +27,10 @@
       :stroke="circle.stroke"
       :weight="circle.weight"
       :opacity="circle.opacity"
-      :fillOpacity="circle.fillOpacity"
+      :fill-opacity="circle.fillOpacity"
     />
-    <v-feature-group v-if="showMarkers" class="groupMarkers" ref="markers">
+    <v-feature-group v-if="showMarkers"
+class="groupMarkers" ref="markers">
       <!----- SOLO ES UNA PRUEBA ----->
       <v-marker
         class="groupMarkers_marker"
@@ -65,7 +67,7 @@ Icon.Default.mergeOptions({
 })
 
 export default {
-  name: 'locationMap',
+  name: 'LocationMap',
   components: {
     'v-map': LMap,
     'v-tile-layer': LTileLayer,
@@ -117,6 +119,7 @@ export default {
       }
     }
   },
+  computed: {},
   mounted() {
     /**
      * Pone en funcionamiento el marcador de posición del usuario
@@ -127,7 +130,6 @@ export default {
       // console.log('Estoy en mounted y lat es: ' + this.markerLocation.lat)
     })
   },
-  computed: {},
 
   methods: {
     zoomUpdated(zoom) {

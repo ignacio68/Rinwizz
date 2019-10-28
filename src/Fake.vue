@@ -7,10 +7,10 @@
     </div>
     <div id="alerts">
       <v-ons-list-item
-        :modifier="md ? 'nodivider' : ''"
-        class="alertsList__item"
         v-for="alert in fakeAlerts"
         :key="alert._id"
+        :modifier="md ? 'nodivider' : ''"
+        class="alertsList__item"
       >
         <v-ons-row>
           <h4>{{ alert.title }}</h4>
@@ -25,7 +25,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'fake',
+  name: 'Fake',
   data() {
     return {
       fakeUser: {
@@ -35,14 +35,14 @@ export default {
     }
   },
   beforeCreate() {},
+  computed: {
+    // ...mapGetters('user', { fakeUser: 'USER' }),
+    ...mapGetters('alerts', { fakeAlerts: 'GET_ALERTS' })
+  },
   async created() {
     await this.CREATE_ALERTS_LOCAL_DB('alerts-fake')
     await this.LOAD_ALERTS()
     // await this.LOAD_USER()
-  },
-  computed: {
-    // ...mapGetters('user', { fakeUser: 'USER' }),
-    ...mapGetters('alerts', { fakeAlerts: 'GET_ALERTS' })
   },
   methods: {
     // ...mapActions('user', ['LOAD_USER']),

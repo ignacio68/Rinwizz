@@ -1,22 +1,25 @@
 <template>
   <v-ons-toolbar inline>
-    <template #left class="left">
+    <template #left
+class="left">
       <v-ons-back-button v-if="backLabel">
         {{ backLabel }}
       </v-ons-back-button>
     </template>
-    <template #default class="center">
+    <template #default
+class="center">
       <p>
         {{ pageTitle }}
       </p>
     </template>
-    <template #right class="rigth"></template>
+    <template
+#right class="rigth" />
   </v-ons-toolbar>
 </template>
 
 <script>
 export default {
-  name: 'the-custom-toolbar',
+  name: 'TheCustomToolbar',
 
   props: {
     backLabel: {

@@ -1,6 +1,6 @@
 <template>
   <v-ons-page>
-    <the-custom-toolbar :pageTitle="toolbarTitle"></the-custom-toolbar>
+    <the-custom-toolbar :page-title="toolbarTitle" />
     <div class="container">
       <form class="configurationForm">
         <v-ons-list class="configurationForm__list">
@@ -11,14 +11,14 @@
               >nombre</label
             >
             <v-ons-input
-              class="center configurationForm__list-input"
               id="name"
+              v-model="name"
+              class="center configurationForm__list-input"
               type="name"
               float
               modifier="transparent"
-              v-model="name"
               required
-            ></v-ons-input>
+            />
           </v-ons-list-item>
           <v-ons-list-item class="configurationForm__list-item">
             <label
@@ -27,14 +27,14 @@
               >Ubicación</label
             >
             <v-ons-input
-              class="center configurationForm__list-input"
               id="location"
+              v-model="location"
+              class="center configurationForm__list-input"
               type="text"
               float
               modifier="transparent"
-              v-model="location"
               required
-            ></v-ons-input>
+            />
           </v-ons-list-item>
         </v-ons-list>
       </form>
@@ -45,8 +45,9 @@
         :disabled="false"
         ripple="true"
         @click.prevent="onSave"
-        >{{ $t('lang.views.configuration.button') }}</v-ons-button
       >
+        {{ $t('lang.views.configuration.button') }}
+      </v-ons-button>
     </div>
   </v-ons-page>
 </template>
@@ -57,7 +58,7 @@ import { mapMutations, mapActions } from 'vuex'
 import HomePage from '@views/HomePage'
 
 export default {
-  name: 'configuration',
+  name: 'Configuration',
   data() {
     return {
       isActive: false,

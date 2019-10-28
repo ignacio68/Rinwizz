@@ -2,13 +2,14 @@
   <v-ons-page class="main">
     <the-custom-toolbar
       class="customToolbar"
-      :pageTitle="$t('lang.views.login.toolbar.title')"
-      :backLabel="volver"
-    ></the-custom-toolbar>
+      :page-title="$t('lang.views.login.toolbar.title')"
+      :back-label="volver"
+    />
     <div class="container">
       <!-------------------- LOG IN FORM ------------------------------------------------>
 
-      <form class="form" autocomplete="off">
+      <form class="form"
+autocomplete="off">
         <v-ons-list class="form-list">
           <!-- EMAIL INPUT -->
 
@@ -20,18 +21,18 @@
               <v-ons-icon
                 icon="ion-ios-email, material:zmdi-email"
                 class="list-item__icon"
-              ></v-ons-icon>
+              />
             </div>
             <div class="center">
               <v-ons-input
+                v-model="email"
                 type="email"
                 minlength="6"
                 :placeholder="$t('lang.views.login.input.email')"
                 required
                 float
                 modifier="underbar transparent"
-                v-model="email"
-              ></v-ons-input>
+              />
             </div>
           </v-ons-list-item>
 
@@ -45,10 +46,12 @@
               <v-ons-icon
                 icon="ion-locked, material:zmdi-lock"
                 class="list-item__icon"
-              ></v-ons-icon>
+              />
             </div>
             <div class="center">
               <v-ons-input
+                ref="passwordInput"
+                v-model="password"
                 type="text"
                 input-id="password"
                 minlength="8"
@@ -56,23 +59,21 @@
                 required
                 float
                 modifier="underbar transparent"
-                v-model="password"
                 v-bind="$attrs"
-                ref="passwordInput"
-              ></v-ons-input>
+              />
               <div class="right">
                 <v-ons-icon
                   v-if="!passwordVisible"
                   icon="ion-eye-disabled, material:zmdi-eye-off"
                   class="list-item__icon"
                   @click.prevent="togglePassword"
-                ></v-ons-icon>
+                />
                 <v-ons-icon
                   v-if="passwordVisible"
                   icon="ion-eye, material:zmdi-eye"
                   class="list-item__icon"
                   @click.prevent="togglePassword"
-                ></v-ons-icon>
+                />
               </div>
             </div>
           </v-ons-list-item>
@@ -80,13 +81,17 @@
           <!-- ERROR -->
 
           <v-ons-list-item>
-            <p v-if="isError" class="error">{{ errorMessage }}</p>
+            <p v-if="isError"
+class="error">
+              {{ errorMessage }}
+            </p>
           </v-ons-list-item>
 
           <!-- FORGOT PASSWORD -->
 
           <v-ons-list-item class="text__button">
-            <p class="forgotPassword" @click.prevent="onForgotPassword">
+            <p class="forgotPassword"
+@click.prevent="onForgotPassword">
               {{ $t('lang.views.login.main.text1') }}
             </p>
           </v-ons-list-item>
@@ -103,8 +108,9 @@
         :disabled="buttonActive"
         ripple="true"
         @click.prevent="onLognIn"
-        >{{ $t('lang.views.login.button') }}</v-ons-button
       >
+        {{ $t('lang.views.login.button') }}
+      </v-ons-button>
 
       <!------ LOGIN WITH SOCIAL BUTTONS ------>
 
@@ -128,7 +134,8 @@
 
       <!-- SIGNUP BUTTON -->
       <div>
-        <p class="text__button" @click.prevent="toSignUp">
+        <p class="text__button"
+@click.prevent="toSignUp">
           {{ $t('lang.views.login.main.text2') }}
         </p>
       </div>
@@ -142,7 +149,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 import SignUp from './SignUp'
 import CircleButton from '@components/Shared/CircleButton'
 export default {
-  name: 'log-in',
+  name: 'LogIn',
   components: {
     CircleButton
   },

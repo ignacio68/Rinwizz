@@ -2,12 +2,14 @@
   <v-ons-page id="userLocation">
     <div class="content">
       <v-ons-col class="col">
-        <h3 class="text">{{ $t('lang.views.userLocation.main') }}</h3>
+        <h3 class="text">
+          {{ $t('lang.views.userLocation.main') }}
+        </h3>
         <div class="map">
           <location-map
             :location="userLocation"
-            :initialZoom="17"
-            :showMarkers="showMarkers"
+            :initial-zoom="17"
+            :show-markers="showMarkers"
           />
         </div>
         <div class="address">
@@ -27,8 +29,9 @@
               :disabled="false"
               ripple="true"
               @click.prevent="updateUserLocation"
-              >{{ $t('lang.views.userLocation.button') }}</v-ons-button
             >
+              {{ $t('lang.views.userLocation.button') }}
+            </v-ons-button>
           </div>
           <div class="showMarkersButton">
             <v-ons-button
@@ -38,8 +41,9 @@
               :disabled="false"
               ripple="true"
               @click.prevent="changeShowMarkers"
-              >marcadores</v-ons-button
             >
+              marcadores
+            </v-ons-button>
             {{ showMarkers }}
           </div>
         </v-row>

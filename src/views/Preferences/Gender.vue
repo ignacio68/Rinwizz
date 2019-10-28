@@ -10,18 +10,19 @@
         >
           <label class="left">
             <v-ons-radio
+              v-model="selectedGender"
               :input-id="'radio-' + $index"
               :value="gender"
-              v-model="selectedGender"
-            ></v-ons-radio>
+            />
           </label>
-          <label :for="'radio-' + $index" class="center">{{ gender }}</label>
+          <label :for="'radio-' + $index"
+class="center">{{ gender }}</label>
         </v-ons-list-item>
         <v-ons-list-item>
           <div class="center">mi género es: {{ selectedGender }}!</div>
         </v-ons-list-item>
       </v-ons-list>
-      <br />
+      <br >
       <div class="userLocationButton">
         <v-ons-button
           class="userLocationButton__button"
@@ -30,8 +31,9 @@
           :disabled="false"
           ripple="true"
           @click.prevent="updateGender"
-          >{{ $t('lang.views.gender.button') }}</v-ons-button
         >
+          {{ $t('lang.views.gender.button') }}
+        </v-ons-button>
       </div>
     </div>
   </v-ons-page>
@@ -40,7 +42,7 @@
 import { mapMutations } from 'vuex'
 import Hobbies from './Hobbies'
 export default {
-  name: 'gender',
+  name: 'Gender',
   namespace: true,
   data() {
     return {

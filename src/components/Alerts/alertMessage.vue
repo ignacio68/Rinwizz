@@ -1,65 +1,66 @@
 <template>
-  <div>
-    <!--v-ons-card class="alertCard"-->
-    <div class="title"></div>
+  <div class="content">
+    <v-ons-row
+      vertical-align="top"
+      class="date_countdown"
+      >
+      <p class="alertCard__emissionAlert">{{ shortDate }}</p>
+      <countdown
+        class="alertCard__countDown"
+        :reference-date="referenceDate"
+        :end-date="endDateAlert"
+        :start-date="startDate"
+      />
+    </v-ons-row>
 
-    <div class="content">
-      <v-ons-row vertical-align="top" class="date_countdown">
-        <p class="alertCard__emissionAlert">{{ shortDate }}</p>
-        <countdown
-          class="alertCard__countDown"
-          :referenceDate="referenceDate"
-          :endDate="endDateAlert"
-          :startDate="startDate"
-        ></countdown>
-      </v-ons-row>
+    <v-ons-row vertical-align="top">
+      <v-ons-col
+        vertical-align="bottom"
+        width="20%"
+        class="leftCol">
+        <img
+          :src="userAvatar"
+          :alt="altAvatar"
+          class="alertCard__userAvatar"
+          @click.prevent="onAvatarClick()"
+        />
+      </v-ons-col>
 
-      <v-ons-row vertical-align="top">
-        <v-ons-col vertical-align="bottom" width="20%" class="leftCol">
-          <img
-            :src="userAvatar"
-            :alt="altAvatar"
-            class="alertCard__userAvatar"
-            @click.prevent="onAvatarClick()"
-          />
-        </v-ons-col>
-
-        <v-ons-col vertical-align="bottom" width="80%" class="rigthCol">
-          <v-ons-row>
-            <h3 class="alertCard__userName">{{ userName }}</h3>
-          </v-ons-row>
-          <v-ons-row>
-            <h2 class="alertCard__title">{{ alertTitle }}</h2>
-          </v-ons-row>
-        </v-ons-col>
-      </v-ons-row>
-
-      <v-ons-col width="80%" class="rigthColText">
-        <div></div>
-
+      <v-ons-col vertical-align="bottom" width="80%" class="rigthCol">
         <v-ons-row>
-          <p class="alertCard__text">{{ alertText }}</p>
+          <h3 class="alertCard__userName">{{ userName }}</h3>
         </v-ons-row>
-
         <v-ons-row>
-          <div class="alertCard-buttons">
-            <v-ons-button
-              class="alertCard__button"
-              ripple="true"
-              @click.prevent="onPhoneClick()"
-            >{{ phoneButton }}</v-ons-button>
-            <v-ons-button
-              class="alertCard__button"
-              ripple="true"
-              @click.prevent="onLinkClick()"
-            >{{ linkButton }}</v-ons-button>
-            <v-ons-button class="alertCard__button" ripple="true">
-              <v-ons-icon icon="ion-share, material:md-share" />
-            </v-ons-button>
-          </div>
+          <h2 class="alertCard__title">{{ alertTitle }}</h2>
         </v-ons-row>
       </v-ons-col>
-    </div>
+    </v-ons-row>
+
+    <v-ons-col width="80%" class="rigthColText">
+      <v-ons-row>
+        <p class="alertCard__text">{{ alertText }}</p>
+      </v-ons-row>
+
+      <v-ons-row>
+        <div class="alertCard-buttons">
+          <v-ons-button
+            class="alertCard__button"
+            ripple="true"
+            @click.prevent="onPhoneClick()"
+            >{{ phoneButton }}</v-ons-button>
+          <v-ons-button
+            class="alertCard__button"
+            ripple="true"
+            @click.prevent="onLinkClick()"
+            >{{ linkButton }}</v-ons-button>
+          <v-ons-button
+            class="alertCard__button"
+            ripple="true">
+            <v-ons-icon icon="ion-share, material:md-share" />
+          </v-ons-button>
+        </div>
+      </v-ons-row>
+    </v-ons-col>
   </div>
   <!-- /v-ons-card -->
 </template>
@@ -70,7 +71,7 @@
  */
 import countdown from './countdown'
 export default {
-  name: 'alert-message',
+  name: 'AlertMessage',
   components: {
     countdown
   },
@@ -96,15 +97,24 @@ export default {
     /**
      * Fecha del comienzo de la alerta
      */
-    startDate: [Number, String],
+    startDate: {
+      type: [Number, String],
+      default: null
+    },
     /**
      * Fecha del fin de la alerta
      */
-    endDate: [Number, String],
+    endDate: {
+      type: [Number, String],
+      default: null
+    },
     /**
      * Fecha actual
      */
-    referenceDate: [Number, String],
+    referenceDate: {
+      type: [Number, String],
+      default: null
+    },
     /**
      * Título de la alerta
      */

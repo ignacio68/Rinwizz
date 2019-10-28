@@ -2,8 +2,11 @@
   <v-ons-card class="alertCard">
     <div class="content">
       <v-ons-row class="row">
-        <img class="alertCard__userAvatar" :src="userAvatar" :alt="altAvatar" />
-        <h3 class="alertCard_userName">{{ userName }}</h3>
+        <img
+class="alertCard__userAvatar" :src="userAvatar" :alt="altAvatar" />
+        <h3 class="alertCard_userName">
+          {{ userName }}
+        </h3>
         <v-ons-icon
           v-if="isVerified"
           class="alertCard_verifiedIcon"
@@ -17,58 +20,60 @@
           <v-ons-list-item class="alertList__item">
             <!--label for="alertTitle" class="alertList__item-label">{{ $t('lang.components.alertScript.title')}}</label-->
             <input
+              id="alertTitle"
+              v-model="alertTitle"
               class="alertList__item-title"
               name="alertTitle"
               type="text"
-              id="alertTitle"
               :placeholder="$t('lang.components.alertScript.title')"
-              v-model="alertTitle"
             />
           </v-ons-list-item>
 
           <v-ons-list-item class="alertList__item">
             <!--label for="alertName" class="alertList__item-label">{{ $t('lang.components.alertScript.text') }}</label-->
             <textarea
+              id="alertText"
+              v-model="alertText"
               class="alertList__item-text"
               name="alertName"
               type="text"
-              id="alertText"
-              v-model="alertText"
               rows="3"
               maxlength="128"
               :placeholder="$t('lang.components.alertScript.text')"
               required
-            ></textarea>
+            />
           </v-ons-list-item>
 
           <v-ons-list-item class="alertList__item">
-            <label for="endDate" class="alertList__item-label">{{
+            <label for="endDate"
+class="alertList__item-label">{{
               $t('lang.components.alertScript.end')
             }}</label>
             <v-ons-select
+              v-model="alertEndDate"
               class="alertList__item-endDate"
               name="endDate"
-              v-model="alertEndDate"
               required
             >
               <option
                 v-for="option in options"
-                :value="option.value"
                 :key="option.id"
-                >{{ option.text }}</option
+                :value="option.value"
               >
+                {{ option.text }}
+              </option>
             </v-ons-select>
           </v-ons-list-item>
 
           <v-ons-list-item class="alertList__item">
             <!--label for="alertLink" class="alertList__item-label">{{ $t('lang.components.alertScript.link') }}</label-->
             <input
+              id="alertLink"
+              v-model="alertLink"
               class="alertList__item-link"
               name="alertLink"
               type="url"
-              id="alertLink"
               :placeholder="$t('lang.components.alertScript.link')"
-              v-model="alertLink"
             />
           </v-ons-list-item>
         </v-ons-list>
@@ -82,7 +87,7 @@ import { mapActions } from 'vuex'
 import { timeOptions, alertScriptProps } from '@utils/alerts'
 
 export default {
-  name: 'alert-script',
+  name: 'AlertScript',
   props: alertScriptProps,
   data() {
     return {
@@ -94,9 +99,6 @@ export default {
       altAvatar: this.userName + ' icon',
       options: timeOptions
     }
-  },
-  created() {
-    console.log('alertScript.vue created()')
   },
   computed: {
     /**
@@ -118,6 +120,9 @@ export default {
 
       return alertData
     }
+  },
+  created() {
+    console.log('alertScript.vue created()')
   },
   methods: {
     ...mapActions('alerts', ['CREATE_ALERT']),

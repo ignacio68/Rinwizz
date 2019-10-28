@@ -4,9 +4,9 @@
       <h1 style="text-align:center">
         {{ $t('lang.views.greetings.greetings') }}
       </h1>
-      <br />
+      <br >
       <h3>{{ $t('lang.views.greetings.main') }}</h3>
-      <br />
+      <br >
       <div class="homePageButton">
         <v-ons-button
           class="homePageButton__button"
@@ -15,8 +15,9 @@
           :disabled="false"
           ripple="true"
           @click.prevent="toHomePage"
-          >{{ $t('lang.views.greetings.button') }}</v-ons-button
         >
+          {{ $t('lang.views.greetings.button') }}
+        </v-ons-button>
       </div>
     </div>
   </v-ons-page>
@@ -28,7 +29,7 @@ import { updateDoc } from '@services/database'
 import AppSplitter from '@views/AppSplitter'
 
 export default {
-  name: 'greetings',
+  name: 'Greetings',
   namespace: true,
   data() {
     return {}

@@ -5,7 +5,7 @@
     :page-stack="pageStack"
     :pop-page="storePop"
     :options="options"
-  ></v-ons-navigator>
+  />
 </template>
 
 <script>

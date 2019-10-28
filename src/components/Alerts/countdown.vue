@@ -1,32 +1,47 @@
 <template>
   <div class="countdown">
     <v-ons-row>
-      <v-ons-col v-if="days > 0" class="countdown__day">
-        <p class="number">{{ days }}</p>
+      <v-ons-col v-if="days > 0"
+class="countdown__day">
+        <p class="number">
+          {{ days }}
+        </p>
         <p>D</p>
       </v-ons-col>
-      <v-ons-col v-if="hours > 0" class="countdown__hour">
-        <p class="number">{{ hours }}</p>
+      <v-ons-col v-if="hours > 0"
+class="countdown__hour">
+        <p class="number">
+          {{ hours }}
+        </p>
         <p>H</p>
       </v-ons-col>
-      <v-ons-col v-if="minutes > 0" class="countdown__minutes">
-        <p class="number">{{ minutes }}</p>
+      <v-ons-col v-if="minutes > 0"
+class="countdown__minutes">
+        <p class="number">
+          {{ minutes }}
+        </p>
         <p>M</p>
       </v-ons-col>
-      <v-ons-col v-if="seconds > 0" class="countdown__seconds">
-        <p class="number">{{ seconds }}</p>
+      <v-ons-col v-if="seconds > 0"
+class="countdown__seconds">
+        <p class="number">
+          {{ seconds }}
+        </p>
         <p>S</p>
       </v-ons-col>
     </v-ons-row>
     <!-- Decidir si hay que eliminar -->
     <!-- TODO: internacionalizar -->
-    <div v-if="!status" class="countdown__status">{{ statusText }}</div>
+    <div v-if="!status"
+class="countdown__status">
+      {{ statusText }}
+    </div>
   </div>
 </template>
 <script>
 import VueTimers from 'vue-timers/mixin'
 export default {
-  name: 'countdown',
+  name: 'Countdown',
   mixins: [VueTimers],
   props: {
     referenceDate: [Number, String],

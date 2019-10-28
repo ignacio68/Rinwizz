@@ -1,9 +1,8 @@
 <template>
   <v-ons-page>
     <the-custom-toolbar
-      :backLabel="volver"
-      :pageTitle="toolbarTitle"
-    ></the-custom-toolbar>
+:back-label="volver" :page-title="toolbarTitle"
+/>
     <div class="content">
       <v-ons-button
         name="returnButton"
@@ -12,8 +11,9 @@
         :disabled="false"
         ripple="true"
         @click.prevent="onReturn"
-        >{{ $t('lang.components.button.OK') }}</v-ons-button
       >
+        {{ $t('lang.components.button.OK') }}
+      </v-ons-button>
     </div>
   </v-ons-page>
 </template>
@@ -22,7 +22,7 @@
 import { mapMutations } from 'vuex'
 
 export default {
-  name: 'terms-service',
+  name: 'TermsService',
   data() {
     return {
       isActive: false,

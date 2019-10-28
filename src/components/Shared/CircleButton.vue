@@ -5,7 +5,8 @@
     ripple="true"
     @click.prevent="parentMethod()"
   >
-    <v-ons-icon class="signUp__button-icon" size="30px"></v-ons-icon>
+    <v-ons-icon
+class="signUp__button-icon" size="30px" />
   </v-ons-button>
 </template>
 
@@ -15,7 +16,7 @@ export default {
   /**
    * Botón para redes sociales
    */
-  name: 'circle-button',
+  name: 'CircleButton',
   props: {
     /**
      * Nombre de la red social
