@@ -11,7 +11,6 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 
-// import HomePage from '@views/HomePage'
 import AppSplitter from '@views/AppSplitter'
 import Welcome from '@views/Shared/Welcome'
 // import UserLocation from '@views/Preferences/UserLocation'
@@ -39,6 +38,7 @@ export default {
       this.PUSH(Welcome)
     } else {
       this.PUSH(AppSplitter)
+      // this.PUSH(Avatar)
     }
   },
   methods: {

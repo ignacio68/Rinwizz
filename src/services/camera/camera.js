@@ -2,6 +2,7 @@
  * Capture a photo with camera device
  */
 export function capturePhoto() {
+  console.log('EcapturePhoto')
   // Set the camera options
   const setOptions = cameraOptions(
     50,
@@ -25,6 +26,7 @@ export function capturePhoto() {
  * Get a photo from photo library
  */
 export function getPhoto() {
+  console.log('getPhoto')
   // Set the camera options
   const setOptions = cameraOptions(100, 1, 0, true, 0, 200, 200, 0, true, true)
 
