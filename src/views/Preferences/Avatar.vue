@@ -85,7 +85,7 @@ export default {
         // sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
         // sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM
         // })
-        this.image = await capturePhoto()
+        this.image = await capturePhoto()it
       } else {
         console.log('No hay camara')
         // TODO: revisar!!
