@@ -4,7 +4,7 @@
       <h5>{{ $t('lang.views.avatar.main') }}</h5>
       <!-- TODO: mostrar icono cuando no haya imágen elegida -->
       <img
-        v-if="imageUrl !== ''"
+        v-if="imageUrl !== null || imageUrl !== indefinied"
         id="avatar"
         :src="imageUrl"
         style="display:none"
@@ -53,10 +53,9 @@ export default {
   namespace: true,
   data() {
     return {
-      platform: '',
-      imageUrl: '',
-      image: null,
-      userId: this.userId
+      platform: null,
+      imageUrl: null,
+      image: null
     }
   },
   computed: {
@@ -77,7 +76,7 @@ export default {
   methods: {
     ...mapMutations('navigator', ['PUSH']),
     ...mapActions('cloudStorage', ['PUT_FILE']),
-
+    // TODO: revisar, hacer solo para Windows
     async getAvatar() {
       console.log('Estoy en getAvatar()')
       if (navigator.camera) {
@@ -86,11 +85,11 @@ export default {
         // sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
         // sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM
         // })
-        this.image = capturePhoto()
+        this.image = await capturePhoto()
       } else {
         console.log('No hay camara')
         // TODO: revisar!!
-        this.image = getPhoto()
+        this.image = await getPhoto()
       }
       console.log('La imagen es: ' + this.image)
       const userData = {
@@ -100,18 +99,23 @@ export default {
       }
       await this.PUT_FILE(userData)
     },
+    // Utilizar en Windows para elegir una imagen - pruducción
     async onFilePicked(event) {
-      const files = event.target.files
+      const files = await event.target.files
+
+      // Comprueba que es un archivo con el nombre válido
       let filename = files[0].name
       if (filename.lastIndexOf('.') <= 0) {
-        return alert('Elige un archivo válido')
+        return alert('Elige un archivo válido') // Internacionalizar
       }
+
       const fileReader = new FileReader()
       fileReader.onload = () => {
         this.imageUrl = fileReader.result
       }
-      await fileReader.readAsDataURL(files[0])
-      this.image = files[0]
+      const imageData = await fileReader.readAsDataURL(files[0])
+      this.image = imageData
+      // this.image = files[0]
     },
     setPicture(imageUrl) {
       this.imageUrl = imageUrl
