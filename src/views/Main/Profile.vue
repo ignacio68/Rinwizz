@@ -7,8 +7,7 @@
     <div class="content">
       <h5 class="dummyText">Hola {{ user.name }} estas son tus alertas</h5>
       <div class="picture">
-        <img
-:src="user.avatar" alt="user photo" class="picture__frame-photo" />
+        <img :src="user.avatar" alt="user photo" class="picture__frame-photo" />
         <!-- <img :src="../../assets/user_icon.png" alt="user photo" class="picture__frame-photo" /> -->
       </div>
       <form>
@@ -104,25 +103,6 @@ export default {
       location: ''
     }
   },
-  created() {
-    console.log('Profile.vue created()')
-  },
-  // watch: {
-  //   user() {
-  //     console.log('WATCH: El usuario ha cambiado')
-  //   }
-  // },
-  // watch: {
-  //   user(value) {
-  //     if (value) {
-  //       console.log('Hay que actualizar el user')
-  //     } else {
-  //       console.log('No ha cambiado nada')
-  //     }
-  //     deep: true
-  //   }
-  // },
-
   computed: {
     ...mapGetters('user', { user: 'USER' })
   },

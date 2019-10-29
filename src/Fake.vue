@@ -34,7 +34,6 @@ export default {
       // fakeAlerts: {}
     }
   },
-  beforeCreate() {},
   computed: {
     // ...mapGetters('user', { fakeUser: 'USER' }),
     ...mapGetters('alerts', { fakeAlerts: 'GET_ALERTS' })

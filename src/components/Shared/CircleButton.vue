@@ -5,8 +5,7 @@
     ripple="true"
     @click.prevent="parentMethod()"
   >
-    <v-ons-icon
-class="signUp__button-icon" size="30px" />
+    <v-ons-icon class="signUp__button-icon" size="30px" />
   </v-ons-button>
 </template>
 

@@ -253,25 +253,26 @@ export default {
     const providerId = state.user.providerId
     if (providerId) {
       switch (providerId) {
-        case 'facebook.com':
+        case 'facebook.com': {
           console.log('el provider es: ' + providerId)
           const facebook = firebaseAuth.FacebookAuthProvider.credential(idToken)
           commit('SET_CREDENTIAL', facebook)
           break
+        }
 
-        case 'google.com':
+        case 'google.com': {
           console.log('el provider es: ' + providerId)
           const google = firebaseAuth.GoogleAuthProvider.credential(idToken)
           commit('SET_CREDENTIAL', google)
           break
-
-        case 'twitter.com':
+        }
+        case 'twitter.com': {
           console.log('el provider es: ' + providerId)
           const twitter = firebaseAuth.TwitterAuthProvider.credential(idToken)
           commit('SET_CREDENTIAL', twitter)
           break
-
-        case 'password':
+        }
+        case 'password': {
           console.log('el provider es: ' + providerId)
           let email = state.user.email
           let userPassword = state.user.password
@@ -282,6 +283,7 @@ export default {
           console.log('la credencial es: ' + password)
           commit('SET_CREDENTIAL', password)
           break
+        }
 
         default:
           console.log('No hay providerId: ' + providerId)
@@ -343,7 +345,7 @@ export default {
    * @param {Object} user - datos del usuario para actualizar
    */
   // TODO: repasar todo, actualizar base de datos
-  [UPDATED_USER_PROFILE]: ({ getters, commit, __, rootGetters }, user) => {
+  [UPDATED_USER_PROFILE]: ({ _, commit, __, rootGetters }, user) => {
     console.log('Estoy en UPDATED_USER_PROFILE')
     commit('shared/CLEAR_ERROR', null, { root: true })
     const userUpdated = {

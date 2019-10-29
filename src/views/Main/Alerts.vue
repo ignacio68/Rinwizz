@@ -13,19 +13,16 @@
           <h5 class="dummyText">
             Este es tu Avatar
             <span>
-              <img
-class="alertCard__userAvatar" :src="user.avatar" />
+              <img class="alertCard__userAvatar" :src="user.avatar" />
             </span>
           </h5>
-          <h5 v-if="!isVerified"
-class="dummyText">
+          <h5 v-if="!isVerified" class="dummyText">
             No estás verificado
           </h5>
         </div>
 
         <!-- Alerts list -- Se oculta si no hay alertas disponibles -->
-        <v-ons-list v-if="alerts"
-class="alertsList">
+        <v-ons-list v-if="alerts" class="alertsList">
           <v-ons-list-item
             v-for="alert in alerts"
             :key="alert._id"
@@ -123,12 +120,6 @@ export default {
       referenceDate: 0
     }
   },
-  async created() {
-    console.log('Alerts.vue created()')
-    // Load the alerts
-    await this.CREATE_ALERTS_LOCAL_DB('alerts')
-    await this.LOAD_ALERTS()
-  },
   computed: {
     ...mapGetters('user', { user: 'USER' }),
     ...mapGetters('alerts', { alerts: 'GET_ALERTS' }),
@@ -138,6 +129,12 @@ export default {
     numAlerts() {
       return this.alerts.length
     }
+  },
+  async created() {
+    console.log('Alerts.vue created()')
+    // Load the alerts
+    await this.CREATE_ALERTS_LOCAL_DB('alerts')
+    await this.LOAD_ALERTS()
   },
   methods: {
     // ...mapActions('user', ['LOAD_USER']),

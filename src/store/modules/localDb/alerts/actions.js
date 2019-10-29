@@ -8,7 +8,6 @@ import {
 import {
   setConfig,
   setAlertsOptions,
-  setFakeAlertsOptions,
   setFetchBatchOptions
 } from '@utils/database'
 
@@ -51,7 +50,7 @@ export default {
    *
    * @param {}
    */
-  async [REPLY_ALERTS_DB]({ getters, commit, dispatch, rootGetters }) {
+  async [REPLY_ALERTS_DB]({ getters, commit, dispatch }) {
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })

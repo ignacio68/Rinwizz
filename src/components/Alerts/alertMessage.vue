@@ -1,68 +1,68 @@
 <template>
-  <div class="content">
-    <v-ons-row
-      vertical-align="top"
-      class="date_countdown"
-      >
-      <p class="alertCard__emissionAlert">{{ shortDate }}</p>
+  <v-ons-card class="alertMessage">
+    <!----------- FECHA DE EMISIÓN DE LA ALERTA Y CUENTAATRAS ----------->
+    <v-ons-row vertical-align="top" class="dateCountdown">
+      <p class="alertMessage__date">{{ shortDate }}</p>
       <countdown
-        class="alertCard__countDown"
+        class="alertMessage__countDown"
         :reference-date="referenceDate"
         :end-date="endDateAlert"
         :start-date="startDate"
       />
     </v-ons-row>
 
-    <v-ons-row vertical-align="top">
-      <v-ons-col
-        vertical-align="bottom"
-        width="20%"
-        class="leftCol">
+    <!----------- ICONO Y NOMBRE DEL EMISOR Y TITULO DE LA ALERTA ----------->
+    <v-ons-row vertical-align="top" class="iconNameTitle">
+      <v-ons-col vertical-align="bottom" width="20%" class="leftCol">
         <img
           :src="userAvatar"
           :alt="altAvatar"
-          class="alertCard__userAvatar"
+          class="alertMessage__userAvatar"
           @click.prevent="onAvatarClick()"
         />
       </v-ons-col>
 
       <v-ons-col vertical-align="bottom" width="80%" class="rigthCol">
         <v-ons-row>
-          <h3 class="alertCard__userName">{{ userName }}</h3>
+          <h3 class="alertMessage__userName">{{ userName }}</h3>
         </v-ons-row>
         <v-ons-row>
-          <h2 class="alertCard__title">{{ alertTitle }}</h2>
+          <h2 class="alertMessage__title">{{ alertTitle }}</h2>
         </v-ons-row>
       </v-ons-col>
     </v-ons-row>
 
-    <v-ons-col width="80%" class="rigthColText">
+    <!----------- TEXTO E IMAGENES DE LA ALERTA Y BOTONES ----------->
+    <v-ons-row class="textImagesButtons">
       <v-ons-row>
-        <p class="alertCard__text">{{ alertText }}</p>
+        <p class="alertMessage__text">{{ alertText }}</p>
       </v-ons-row>
-
       <v-ons-row>
-        <div class="alertCard-buttons">
+        <img src="#" class="alertMessage__textImage" />
+      </v-ons-row>
+      <v-ons-row>
+        <div class="alertMessage-buttons">
           <v-ons-button
-            class="alertCard__button"
+            class="alertMessage__button"
             ripple="true"
             @click.prevent="onPhoneClick()"
-            >{{ phoneButton }}</v-ons-button>
+          >
+            {{ phoneButton }}
+          </v-ons-button>
           <v-ons-button
-            class="alertCard__button"
+            class="alertMessage__button"
             ripple="true"
             @click.prevent="onLinkClick()"
-            >{{ linkButton }}</v-ons-button>
-          <v-ons-button
-            class="alertCard__button"
-            ripple="true">
+          >
+            {{ linkButton }}
+          </v-ons-button>
+          <v-ons-button class="alertMessage__button" ripple="true">
             <v-ons-icon icon="ion-share, material:md-share" />
           </v-ons-button>
         </div>
       </v-ons-row>
-    </v-ons-col>
-  </div>
-  <!-- /v-ons-card -->
+    </v-ons-row>
+  </v-ons-card>
 </template>
 
 <script>
@@ -220,25 +220,25 @@ export default {
 .rigthColText {
   margin-left: 20%;
 }
-.alertCard {
+.alertMessage {
   border: 2px solid red;
 }
-.alertCard__emissionAlert {
+.alertMessage__emissionAlert {
   border: 1px solid pink;
 }
-.alertCard__countDown {
+.alertMessage__countDown {
   text-align: right;
   font-size: 1em;
   color: rgba(15, 2, 2, 0.884);
   border: 1px solid blue;
 }
-.alertCard__userAvatar {
+.alertMessage__userAvatar {
   height: 50px;
   width: 50px;
   border-radius: 100%;
   border: 1px solid orange;
 }
-.alertCard__userName {
+.alertMessage__userName {
   text-align: left;
   font-size: 16px;
   font-weight: bold;
@@ -246,19 +246,19 @@ export default {
   color: rgba(0, 0, 0, 0.788);
   border: 1px solid green;
 }
-.alertCard__title {
+.alertMessage__title {
   text-align: left;
   font-size: 14px;
   margin-top: 16px;
   font-weight: bold;
   border: 1px solid rgb(113, 0, 128);
 }
-.alertCard-buttons {
+.alertMessage-buttons {
   float: right;
   right: 0px;
   border: 1px solid green;
 }
-.alertCard__button {
+.alertMessage__button {
   margin-left: 5px;
 }
 </style>

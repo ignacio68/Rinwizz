@@ -1,4 +1,5 @@
 # rinwizz
 
-## Estructura del proyecto
+Social network of alerts
 
+## Disclaimer

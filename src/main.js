@@ -75,12 +75,12 @@ import 'onsenui/esm/elements/ons-progress-circular' // TODO: REVISAR SU UTILIZAC
 /**
  * Página de navegación
  */
-// import AppNavigator from './AppNavigator'
+import AppNavigator from './AppNavigator'
 
 /**
  * TODO: Se utiliza para pruebas, en producción eliminar
  */
-import Fake from './Fake'
+// import Fake from './Fake'
 
 /**
  * Import Components
@@ -176,8 +176,8 @@ firebaseAuth().onAuthStateChanged(user => {
           console.log('No existe el user')
         }
       },
-      // render: h => h(AppNavigator)
-      render: h => h(Fake)
+      render: h => h(AppNavigator)
+      // render: h => h(Fake)
     })
   }
 })

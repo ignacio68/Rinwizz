@@ -1,29 +1,25 @@
 <template>
   <div class="countdown">
     <v-ons-row>
-      <v-ons-col v-if="days > 0"
-class="countdown__day">
+      <v-ons-col v-if="days > 0" class="countdown__day">
         <p class="number">
           {{ days }}
         </p>
         <p>D</p>
       </v-ons-col>
-      <v-ons-col v-if="hours > 0"
-class="countdown__hour">
+      <v-ons-col v-if="hours > 0" class="countdown__hour">
         <p class="number">
           {{ hours }}
         </p>
         <p>H</p>
       </v-ons-col>
-      <v-ons-col v-if="minutes > 0"
-class="countdown__minutes">
+      <v-ons-col v-if="minutes > 0" class="countdown__minutes">
         <p class="number">
           {{ minutes }}
         </p>
         <p>M</p>
       </v-ons-col>
-      <v-ons-col v-if="seconds > 0"
-class="countdown__seconds">
+      <v-ons-col v-if="seconds > 0" class="countdown__seconds">
         <p class="number">
           {{ seconds }}
         </p>
@@ -32,8 +28,7 @@ class="countdown__seconds">
     </v-ons-row>
     <!-- Decidir si hay que eliminar -->
     <!-- TODO: internacionalizar -->
-    <div v-if="!status"
-class="countdown__status">
+    <div v-if="!status" class="countdown__status">
       {{ statusText }}
     </div>
   </div>
@@ -44,9 +39,18 @@ export default {
   name: 'Countdown',
   mixins: [VueTimers],
   props: {
-    referenceDate: [Number, String],
-    startDate: [Number, String],
-    endDate: [Number, String]
+    referenceDate: {
+      type: [Number, String],
+      default: void 0
+    },
+    startDate: {
+      type: [Number, String],
+      default: void 0
+    },
+    endDate: {
+      type: [Number, String],
+      default: void 0
+    }
   },
   // Configuración del timer que sirve de base
   // para calcular la cuenat atras de cada alerta

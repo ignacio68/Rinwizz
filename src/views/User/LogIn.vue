@@ -8,8 +8,7 @@
     <div class="container">
       <!-------------------- LOG IN FORM ------------------------------------------------>
 
-      <form class="form"
-autocomplete="off">
+      <form class="form" autocomplete="off">
         <v-ons-list class="form-list">
           <!-- EMAIL INPUT -->
 
@@ -81,8 +80,7 @@ autocomplete="off">
           <!-- ERROR -->
 
           <v-ons-list-item>
-            <p v-if="isError"
-class="error">
+            <p v-if="isError" class="error">
               {{ errorMessage }}
             </p>
           </v-ons-list-item>
@@ -90,8 +88,7 @@ class="error">
           <!-- FORGOT PASSWORD -->
 
           <v-ons-list-item class="text__button">
-            <p class="forgotPassword"
-@click.prevent="onForgotPassword">
+            <p class="forgotPassword" @click.prevent="onForgotPassword">
               {{ $t('lang.views.login.main.text1') }}
             </p>
           </v-ons-list-item>
@@ -119,7 +116,7 @@ class="error">
           {{ $t('lang.views.login.main.socialText') }}
         </p>
         <v-ons-row class="socialButtons__list">
-          <circle-button
+          <CircleButton
             v-for="(socialButton, $index) in socialButtons"
             :key="socialButton.id"
             class="socialButtons__list-button"
@@ -134,8 +131,7 @@ class="error">
 
       <!-- SIGNUP BUTTON -->
       <div>
-        <p class="text__button"
-@click.prevent="toSignUp">
+        <p class="text__button" @click.prevent="toSignUp">
           {{ $t('lang.views.login.main.text2') }}
         </p>
       </div>
@@ -161,9 +157,6 @@ export default {
       type: 'text',
       passwordVisible: true
     }
-  },
-  created() {
-    console.log('LogIn.created')
   },
   computed: {
     ...mapGetters('errors', { errorMessage: 'ERROR_MESSAGE' }),

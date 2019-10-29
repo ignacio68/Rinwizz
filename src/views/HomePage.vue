@@ -1,9 +1,6 @@
 <template>
   <v-ons-page id="homePage">
-    <v-ons-tabbar
-position="bottom" :tabs="tabs"
-:index.sync="index"
-/>
+    <v-ons-tabbar position="bottom" :tabs="tabs" :index.sync="index" />
   </v-ons-page>
 </template>
 
@@ -11,8 +8,8 @@ position="bottom" :tabs="tabs"
 import { mapMutations } from 'vuex'
 
 import Alerts from './Main/Alerts'
-import Profile from './Main/Profile'
-import Search from './Main/Search'
+// import Profile from './Main/Profile'
+// import Search from './Main/Search'
 
 document.addEventListener(
   'init',

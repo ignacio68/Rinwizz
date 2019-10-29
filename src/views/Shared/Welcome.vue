@@ -5,22 +5,18 @@
         <h1 class="header">{{ $t('lang.views.welcome.header') }}</h1>
         <p class="secondary-text">{{ $t('lang.views.welcome.text') }}</p>
         <v-ons-list class="list" modifier>
-          <v-ons-list-item
-            class="list__item"
-            modifier="nodivider"
-          >{{ $t('lang.views.welcome.text1') }}</v-ons-list-item>
-          <v-ons-list-item
-            class="list__item"
-            modifier="nodivider"
-          >{{ $t('lang.views.welcome.text2') }}</v-ons-list-item>
-          <v-ons-list-item
-            class="list__item"
-            modifier="nodivider"
-          >{{ $t('lang.views.welcome.text3') }}</v-ons-list-item>
-          <v-ons-list-item
-            class="list__item"
-            modifier="nodivider"
-          >{{ $t('lang.views.welcome.text4') }}</v-ons-list-item>
+          <v-ons-list-item class="list__item" modifier="nodivider">{{
+            $t('lang.views.welcome.text1')
+          }}</v-ons-list-item>
+          <v-ons-list-item class="list__item" modifier="nodivider">{{
+            $t('lang.views.welcome.text2')
+          }}</v-ons-list-item>
+          <v-ons-list-item class="list__item" modifier="nodivider">{{
+            $t('lang.views.welcome.text3')
+          }}</v-ons-list-item>
+          <v-ons-list-item class="list__item" modifier="nodivider">{{
+            $t('lang.views.welcome.text4')
+          }}</v-ons-list-item>
         </v-ons-list>
         <v-ons-row class="buttons">
           <v-ons-button
@@ -28,7 +24,8 @@
             modifier
             ripple="true"
             @click.prevent="toSignUp"
-          >{{ $t('lang.views.welcome.signup') }}</v-ons-button>
+            >{{ $t('lang.views.welcome.signup') }}</v-ons-button
+          >
         </v-ons-row>
       </v-ons-col>
     </div>

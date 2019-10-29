@@ -10,11 +10,11 @@
       :animation="md ? 'overlay' : 'reveal'"
       :open.sync="isOpen"
     >
-      <settings />
+      <Settings />
     </v-ons-splitter-side>
 
     <v-ons-splitter-content>
-      <home-page />
+      <HomePage />
     </v-ons-splitter-content>
   </v-ons-splitter>
 </template>

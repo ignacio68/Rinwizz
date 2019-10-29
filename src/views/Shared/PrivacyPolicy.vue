@@ -1,8 +1,6 @@
 <template>
   <v-ons-page>
-    <the-custom-toolbar
-:back-label="volver" :page-title="toolbarTitle"
-/>
+    <the-custom-toolbar :back-label="volver" :page-title="toolbarTitle" />
     <div class="content">
       <v-ons-button
         name="returnButton"

@@ -6,7 +6,7 @@
           {{ $t('lang.views.userLocation.main') }}
         </h3>
         <div class="map">
-          <location-map
+          <LocationMap
             :location="userLocation"
             :initial-zoom="17"
             :show-markers="showMarkers"
@@ -54,7 +54,7 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
-import { updateDoc } from '@services/database'
+// import { updateDoc } from '@services/database'
 import LocationMap from '@components/User/LocationMap'
 import Greetings from './Greetings'
 
@@ -68,11 +68,6 @@ export default {
       showMarkers: true
     }
   },
-  created() {
-    this.getUserLocation()
-    this.getUserAddress()
-  },
-  mounted() {},
   computed: {
     // ...mapGetters('user', { user: 'USER' }),
     ...mapGetters('location', {
@@ -80,6 +75,10 @@ export default {
       userAddress: 'USER_ADDRESS'
     })
     // changeShowMarkers: () => return (this.showMarkers = !this.showMarkers)
+  },
+  created() {
+    this.getUserLocation()
+    this.getUserAddress()
   },
   methods: {
     ...mapActions('location', ['GET_CURRENT_POSITION', 'CURRENT_ADDRESS']),
@@ -101,7 +100,7 @@ export default {
       this.toGreetings()
     },
     toGreetings() {
-      console.log('Los datos de usuario son: ' + user)
+      // console.log('Los datos de usuario son: ' + user)
       // await updateDoc('users', this.user.id, this.user)
       this.REPLACE(Greetings)
     },

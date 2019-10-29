@@ -151,7 +151,9 @@ export default {
                     .linkAndRetrieveDataWithCredential(pendingCredential)
                     .then(userCredential => {
                       // Facebook account successfully linked to the existing Firebase user.
-                      console.log('Hacer algo')
+                      console.log(
+                        'Hacer algo con la credential: ' + userCredential
+                      )
                     })
                 })
             })

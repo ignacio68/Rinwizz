@@ -5,9 +5,9 @@
       <!-- TODO: mostrar icono cuando no haya imágen elegida -->
       <img
         v-if="imageUrl !== ''"
+        id="avatar"
         :src="imageUrl"
         style="display:none"
-        id="avatar"
         height="150px"
       />
       <!-- TODO: cambiar según plataforma -->
@@ -21,9 +21,9 @@
         {{ $t('lang.views.avatar.avatarButton') }}
         <v-ons-input
           v-if="platform === 'pc'"
+          ref="fileInput"
           style="display: none"
           type="file"
-          ref="fileInput"
           accept="image/*"
           @change="onFilePicked"
         />
@@ -38,7 +38,8 @@
         :disabled="false"
         ripple="true"
         @click.prevent="toGender"
-      >{{ $t('lang.views.avatar.button') }}</v-ons-button>
+        >{{ $t('lang.views.avatar.button') }}</v-ons-button
+      >
     </div>
   </v-ons-page>
 </template>
@@ -48,15 +49,18 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { capturePhoto, getPhoto } from '@services/camera/index'
 import gender from './Gender'
 export default {
-  name: 'avatar',
+  name: 'Avatar',
   namespace: true,
   data() {
     return {
       platform: '',
       imageUrl: '',
       image: null,
-      userId = this.$store.state.user['user']._id
+      userId: this.userId
     }
+  },
+  computed: {
+    ...mapGetters('user', { userId: 'USER_ID' })
   },
   created() {
     // this.$ons.platform.select('chrome')
@@ -69,9 +73,6 @@ export default {
       this.platform = 'pc'
       console.log('La plataforma es: ' + this.platform)
     }
-  },
-  computed: {
-    // ...mapGetters('user', { userId: 'USER_ID' })
   },
   methods: {
     ...mapMutations('navigator', ['PUSH']),

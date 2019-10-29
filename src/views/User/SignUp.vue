@@ -11,12 +11,15 @@
       <form class="form" autocomplete="off">
         <v-ons-list>
           <!-- NAME INPUT -->
-          <v-ons-list-item 
-          :modifier="md ? 'nodivider' : ''" 
-          class="form__input"
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
           >
             <div class="left">
-              <v-ons-icon icon="ion-person, material:zmdi-account" class="list-item__icon" />
+              <v-ons-icon
+                icon="ion-person, material:zmdi-account"
+                class="list-item__icon"
+              />
             </div>
             <div class="center">
               <v-ons-input
@@ -32,9 +35,15 @@
 
           <!-- EMAIL INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-ios-email, material:zmdi-email" class="list-item__icon" />
+              <v-ons-icon
+                icon="ion-ios-email, material:zmdi-email"
+                class="list-item__icon"
+              />
             </div>
             <div class="center">
               <v-ons-input
@@ -51,9 +60,15 @@
 
           <!-- PASSWORD INPUT -->
 
-          <v-ons-list-item :modifier="md ? 'nodivider' : ''" class="form__input">
+          <v-ons-list-item
+            :modifier="md ? 'nodivider' : ''"
+            class="form__input"
+          >
             <div class="left">
-              <v-ons-icon icon="ion-locked, material:zmdi-lock" class="list-item__icon" />
+              <v-ons-icon
+                icon="ion-locked, material:zmdi-lock"
+                class="list-item__icon"
+              />
             </div>
             <div class="center">
               <v-ons-input
@@ -103,15 +118,18 @@
           :disabled="false"
           ripple="true"
           @click.prevent="onSignUp"
-        >{{ $t('lang.views.signup.button') }}</v-ons-button>
+          >{{ $t('lang.views.signup.button') }}</v-ons-button
+        >
       </div>
 
       <!------ LOGIN WITH SOCIAL BUTTONS ------>
 
       <div class="socialText">
-        <p class="socialButtons__text">{{ $t('lang.views.signup.main.socialText') }}</p>
+        <p class="socialButtons__text">
+          {{ $t('lang.views.signup.main.socialText') }}
+        </p>
         <v-ons-row class="socialButtons__list">
-          <circle-button
+          <CircleButton
             v-for="(socialButton, $index) in socialButtons"
             :key="socialButton.id"
             class="socialButtons__list-button"
@@ -128,14 +146,26 @@
 
       <div class="privacy">
         <i18n class="privacy__text" path="lang.views.signup.main.text3">
-          <span class="privacy__text-link" place="terms" @click.prevent="toTerms">{{ terms }}</span>
-          <span class="privacy__text-link" place="privacy" @click.prevent="toPrivacy">{{ privacy }}</span>
+          <span
+            class="privacy__text-link"
+            place="terms"
+            @click.prevent="toTerms"
+            >{{ terms }}</span
+          >
+          <span
+            class="privacy__text-link"
+            place="privacy"
+            @click.prevent="toPrivacy"
+            >{{ privacy }}</span
+          >
         </i18n>
       </div>
 
       <!-- I HAVE A USER ACCOUNT -->
 
-      <p class="logInText" @click.prevent="toLogIn">{{ $t('lang.views.signup.main.text2') }}</p>
+      <p class="logInText" @click.prevent="toLogIn">
+        {{ $t('lang.views.signup.main.text2') }}
+      </p>
     </div>
 
     <!------ CONFIRM PASSWORD ALERT ------>
@@ -151,7 +181,10 @@
           class="alertDialog_button"
           ripple="true"
           @click.prevent="onClickAlertButton()"
-        >{{ $t('lang.components.alertConfirmPassword.buttonText') }}</v-ons-alert-dialog-button>
+          >{{
+            $t('lang.components.alertConfirmPassword.buttonText')
+          }}</v-ons-alert-dialog-button
+        >
       </template>
     </v-ons-alert-dialog>
   </v-ons-page>

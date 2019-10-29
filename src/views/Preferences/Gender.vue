@@ -15,14 +15,13 @@
               :value="gender"
             />
           </label>
-          <label :for="'radio-' + $index"
-class="center">{{ gender }}</label>
+          <label :for="'radio-' + $index" class="center">{{ gender }}</label>
         </v-ons-list-item>
         <v-ons-list-item>
           <div class="center">mi género es: {{ selectedGender }}!</div>
         </v-ons-list-item>
       </v-ons-list>
-      <br >
+      <br />
       <div class="userLocationButton">
         <v-ons-button
           class="userLocationButton__button"

@@ -23,6 +23,14 @@ export default {
   data() {
     return {}
   },
+  computed: {
+    ...mapGetters('user', { user: 'USER' }),
+    ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
+
+    userIsAuthenticated() {
+      return this.user !== null && this.user !== undefined
+    }
+  },
   created() {
     console.log('AppNavigator created()')
   },
@@ -31,14 +39,6 @@ export default {
       this.PUSH(Welcome)
     } else {
       this.PUSH(AppSplitter)
-    }
-  },
-  computed: {
-    ...mapGetters('user', { user: 'USER' }),
-    ...mapGetters('navigator', { pageStack: 'PAGE_STACK', options: 'OPTIONS' }),
-
-    userIsAuthenticated() {
-      return this.user !== null && this.user !== undefined
     }
   },
   methods: {

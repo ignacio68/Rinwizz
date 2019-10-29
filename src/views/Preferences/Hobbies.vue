@@ -2,7 +2,7 @@
   <v-ons-page id="preferences">
     <div class="content">
       <p>{{ $t('lang.views.hobbies.main') }}</p>
-      <br >
+      <br />
       <!------ DEPORTES ------->
       <v-ons-list-title class="preferences__list-title">
         Deportes
@@ -21,8 +21,7 @@
               :value="sport"
             />
           </label>
-          <label class="center"
-:for="'checkbox-' + $index">{{ sport }}</label>
+          <label class="center" :for="'checkbox-' + $index">{{ sport }}</label>
         </v-ons-list-item>
       </v-ons-list>
 
@@ -44,8 +43,7 @@
               :value="entertainment"
             />
           </label>
-          <label class="center"
-:for="'checkbox-' + $index">
+          <label class="center" :for="'checkbox-' + $index">
             {{ entertainment }}
           </label>
         </v-ons-list-item>
@@ -69,8 +67,7 @@
               :value="food"
             />
           </label>
-          <label class="center"
-:for="'checkbox-' + $index">{{ food }}</label>
+          <label class="center" :for="'checkbox-' + $index">{{ food }}</label>
         </v-ons-list-item>
       </v-ons-list>
 

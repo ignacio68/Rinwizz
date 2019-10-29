@@ -2,7 +2,7 @@
   <v-ons-page id="personal">
     <div class="content">
       <h4>{{ $t('lang.views.personal.main') }}</h4>
-      <br >
+      <br />
       <div class="gender">
         <v-ons-button
           class="gender__button"

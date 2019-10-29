@@ -6,8 +6,7 @@
     :center="location"
     :inertia="true"
   >
-    <v-tile-layer :url="maps.url"
-:atribution="maps.atribution" />
+    <v-tile-layer :url="maps.url" :atribution="maps.atribution" />
     <v-marker
       ref="marker"
       class="map__marker"
@@ -29,8 +28,7 @@
       :opacity="circle.opacity"
       :fill-opacity="circle.fillOpacity"
     />
-    <v-feature-group v-if="showMarkers"
-class="groupMarkers" ref="markers">
+    <v-feature-group v-if="showMarkers" ref="markers" class="groupMarkers">
       <!----- SOLO ES UNA PRUEBA ----->
       <v-marker
         class="groupMarkers_marker"
@@ -135,9 +133,9 @@ export default {
     zoomUpdated(zoom) {
       this.zoom = zoom
     },
-    centerUpdated(center) {
-      this.center = this.markerLocation
-    },
+    // centerUpdated(position) {
+    //   this.center = this.markerLocation
+    // },
     boundsUpdated(bounds) {
       this.bounds = bounds
     },
