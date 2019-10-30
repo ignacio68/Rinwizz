@@ -45,3 +45,7 @@ export default firebase
 
 // firebase collections
 // const alertsCollection = db.collection('alerts')
+
+export function isLoggedIn() {
+  return !!firebaseAuth().onAuthStateChanged
+}

@@ -178,6 +178,20 @@ firebaseAuth().onAuthStateChanged(user => {
       },
       render: h => h(AppNavigator)
       // render: h => h(Fake)
+
+      //       import routes from "./routes";
+      // import BackendService from "./services/backend-service";
+
+      // // Uncommment the following to see NativeScript-Vue output logs
+      // // Vue.config.silent = false;
+
+      // const backendService = new BackendService();
+      // Vue.prototype.$backendService = backendService;
+      //
+      // TODO: examinar la posibilidad de implantarlo con un servicio de Firebase
+      // new Vue({
+      //   render: h => h("frame", [h(backendService.isLoggedIn() ? routes.home : routes.login)])
+      // }).$start();
     })
   }
 })
