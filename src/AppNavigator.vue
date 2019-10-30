@@ -12,7 +12,7 @@
 import { mapGetters, mapMutations } from 'vuex'
 
 import AppSplitter from '@views/AppSplitter'
-import Welcome from '@views/Shared/Welcome'
+import Welcome from '@views/Welcome'
 // import UserLocation from '@views/Preferences/UserLocation'
 // import Avatar from '@views/Preferences/Avatar'
 

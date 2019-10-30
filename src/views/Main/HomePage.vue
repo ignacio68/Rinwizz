@@ -7,9 +7,9 @@
 <script>
 import { mapMutations } from 'vuex'
 
-import Alerts from './Main/Alerts'
-// import Profile from './Main/Profile'
-// import Search from './Main/Search'
+import Alerts from '@views/Alerts/Alerts'
+// import Profile from '@views/User/Profile'
+// import Search from '@views/Search/Search'
 
 document.addEventListener(
   'init',

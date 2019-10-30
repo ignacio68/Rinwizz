@@ -35,7 +35,7 @@
 <script>
 import { mapMutations } from 'vuex'
 
-import SignUp from '@views/User/SignUp'
+import SignUp from '@views/Auth/SignUp'
 
 export default {
   name: 'Welcome',

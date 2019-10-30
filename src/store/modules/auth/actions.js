@@ -17,8 +17,8 @@ import {
 } from '@store/types/actions_types'
 
 import AppSplitter from '@views/AppSplitter'
-import Welcome from '@views/Shared/Welcome'
-import LogIn from '@views/User/LogIn'
+import Welcome from '@views/Welcome'
+import LogIn from '@views/Auth/LogIn'
 
 export default {
   /**

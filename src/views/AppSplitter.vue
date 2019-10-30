@@ -21,8 +21,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import Settings from './Settings'
-import HomePage from './HomePage'
+import Settings from './Main//Settings'
+import HomePage from './Main/HomePage'
 import asyncDataStatus from '@mixins/asyncDataStatus'
 
 export default {

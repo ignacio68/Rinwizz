@@ -1,3 +1,4 @@
+// TODO: Comprobar si se utiliza
 <template>
   <v-ons-page>
     <the-custom-toolbar :page-title="toolbarTitle" />
@@ -55,7 +56,7 @@
 <script>
 import { mapMutations, mapActions } from 'vuex'
 
-import HomePage from '@views/HomePage'
+import HomePage from '@views/Main/HomePage'
 
 export default {
   name: 'Configuration',
