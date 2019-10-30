@@ -38,7 +38,7 @@
 
 <script>
 // import { mapGetters, mapActions } from 'vuex'
-// import LocationMap from '@components/User/LocationMap'
+// import LocationMap from '@components/Geolocation/LocationMap'
 
 export default {
   name: 'Search',

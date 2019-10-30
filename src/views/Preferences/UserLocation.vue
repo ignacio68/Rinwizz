@@ -57,7 +57,7 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 // import { updateDoc } from '@services/database'
-import LocationMap from '@components/User/LocationMap'
+import LocationMap from '@components/Geolocation/LocationMap'
 import Hobbies from './Hobbies'
 
 export default {
