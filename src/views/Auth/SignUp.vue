@@ -197,9 +197,7 @@ import Personal from '@views/Preferences/Personal'
 import TermsOfService from '@views/Shared/TermsOfService'
 import PrivacyPolicy from '@views/Shared/PrivacyPolicy'
 import LogIn from './LogIn'
-// import SignUpButton from '../../components/Shared/SignUpButton'
 import CircleButton from '@components/Shared/CircleButton'
-// import UserInputPassword from '../../components/Shared/UserInputPassword'
 
 /**
  * @description Página de registro de la aplicación
@@ -209,9 +207,7 @@ import CircleButton from '@components/Shared/CircleButton'
 export default {
   name: 'SignUp',
   components: {
-    // SignUpButton,
     CircleButton
-    // UserInputPassword
   },
   data() {
     /**
