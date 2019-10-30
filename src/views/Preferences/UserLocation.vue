@@ -2,15 +2,9 @@
   <v-ons-page id="userLocation">
     <div class="content">
       <v-ons-col class="col">
-        <h3 class="text">
-          {{ $t('lang.views.userLocation.main') }}
-        </h3>
+        <h3 class="text">{{ $t('lang.views.userLocation.main') }}</h3>
         <div class="map">
-          <LocationMap
-            :location="userLocation"
-            :initial-zoom="17"
-            :show-markers="showMarkers"
-          />
+          <LocationMap :location="userLocation" :initial-zoom="17" :show-markers="showMarkers" />
         </div>
         <div class="address">
           <p>
@@ -21,18 +15,6 @@
           </p>
         </div>
         <v-row class="row">
-          <div class="preferencesButton">
-            <v-ons-button
-              class="preferencesButton__button"
-              name="preferencesButton"
-              modifier="short"
-              :disabled="false"
-              ripple="true"
-              @click.prevent="updateUserLocation"
-            >
-              {{ $t('lang.views.userLocation.button') }}
-            </v-ons-button>
-          </div>
           <div class="showMarkersButton">
             <v-ons-button
               class="showMarkersButton__button"
@@ -41,13 +23,33 @@
               :disabled="false"
               ripple="true"
               @click.prevent="changeShowMarkers"
-            >
-              marcadores
-            </v-ons-button>
+            >marcadores</v-ons-button>
             {{ showMarkers }}
           </div>
         </v-row>
       </v-ons-col>
+
+      <v-ons-row class="buttons">
+        <v-ons-button
+          class="skip__button"
+          name="skipButton"
+          :disabled="false"
+          ripple="true"
+          @click.prevent="toHobbies"
+        >
+          {{ $t('lang.buttons.skip') }}
+        </v-ons-button>
+        <v-ons-button
+          class="preferencesButton__button"
+          name="preferencesButton"
+          modifier="short"
+          :disabled="false"
+          ripple="true"
+          @click.prevent="updateUserLocation"
+        >
+          {{ $t('lang.views.userLocation.button') }}
+        </v-ons-button>
+      </v-ons-row>
     </div>
   </v-ons-page>
 </template>
@@ -56,7 +58,7 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 // import { updateDoc } from '@services/database'
 import LocationMap from '@components/User/LocationMap'
-import Greetings from './Greetings'
+import Hobbies from './Hobbies'
 
 export default {
   name: 'UserLocation',
@@ -97,12 +99,12 @@ export default {
       userData.location = this.userLocation
       userData.address.push(this.userAddress)
       this.UPDATE_USER(userData)
-      this.toGreetings()
+      this.toGHobbies()
     },
-    toGreetings() {
+    toHobbies() {
       // console.log('Los datos de usuario son: ' + user)
       // await updateDoc('users', this.user.id, this.user)
-      this.REPLACE(Greetings)
+      this.REPLACE(Hobbies)
     },
     changeShowMarkers() {
       return (this.showMarkers = !this.showMarkers)

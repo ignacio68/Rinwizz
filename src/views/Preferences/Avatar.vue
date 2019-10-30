@@ -46,14 +46,22 @@
         </v-ons-button>
       </v-ons-row>
 
-      <v-ons-row>
+      <v-ons-row class="buttons">
         <v-ons-button
-          class="gender__button"
-          name="genderButton"
-          modifier="large"
+          class="skip__button"
+          name="skipButton"
           :disabled="false"
           ripple="true"
-          @click.prevent="toGender"
+          @click.prevent="toUserLocation"
+        >
+          {{ $t('lang.buttons.skip') }}
+        </v-ons-button>
+        <v-ons-button
+          class="confirm__button"
+          name="confirmButton"
+          :disabled="false"
+          ripple="true"
+          @click.prevent="toUserLocation"
           >{{ $t('lang.views.avatar.button') }}</v-ons-button
         >
       </v-ons-row>
@@ -65,7 +73,7 @@
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 // TODO: utilizar en el desarrollo de la app para movil
 import { capturePhoto, getPhoto } from '@services/camera/index'
-import gender from './Gender'
+import UserLocation from './UserLocation'
 export default {
   name: 'Avatar',
   namespace: true,
@@ -152,7 +160,7 @@ export default {
       console.log('Error')
     },
     toGender() {
-      this.PUSH(gender)
+      this.PUSH(UserLocation)
     }
   }
 }

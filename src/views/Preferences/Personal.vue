@@ -3,18 +3,26 @@
     <div class="content">
       <h4>{{ $t('lang.views.personal.main') }}</h4>
       <br />
-      <div class="gender">
+      <v-ons-row class="buttons">
         <v-ons-button
-          class="gender__button"
-          name="genderButton"
-          modifier="large"
+          class="skip__button"
+          name="skipButton"
           :disabled="false"
           ripple="true"
-          @click.prevent="toAvatar"
+          @click.prevent="toGreetings"
+        >
+          {{ $t('lang.buttons.skip') }}
+        </v-ons-button>
+        <v-ons-button
+          class="confirm__button"
+          name="confirmrButton"
+          :disabled="false"
+          ripple="true"
+          @click.prevent="toGender"
         >
           {{ $t('lang.views.personal.button') }}
         </v-ons-button>
-      </div>
+      </v-ons-row>
     </div>
   </v-ons-page>
 </template>
@@ -22,6 +30,7 @@
 <script>
 import { mapMutations } from 'vuex'
 import Gender from './Gender'
+import Greetings from './Greetings'
 export default {
   name: 'Personal',
   data() {
@@ -30,15 +39,18 @@ export default {
   methods: {
     ...mapMutations('navigator', ['REPLACE']),
 
-    async toAvatar() {
-      await this.REPLACE(Gender)
+    toGender() {
+      this.REPLACE(Gender)
+    },
+    toGreetings() {
+      this.REPLACE(Greetings)
     }
   }
 }
 </script>
 
 <style scoped>
-.container {
+.content {
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 24px;

@@ -71,7 +71,16 @@
         </v-ons-list-item>
       </v-ons-list>
 
-      <div class="homePageButton">
+      <v-ons-row class="buttons">
+        <v-ons-button
+          class="skip__button"
+          name="skipButton"
+          :disabled="false"
+          ripple="true"
+          @click.prevent="toGreetings"
+        >
+          {{ $t('lang.buttons.skip') }}
+        </v-ons-button>
         <v-ons-button
           class="homePageButton__button"
           name="homePageButton"
@@ -82,7 +91,7 @@
         >
           {{ $t('lang.views.hobbies.button') }}
         </v-ons-button>
-      </div>
+      </v-ons-row>
     </div>
   </v-ons-page>
 </template>

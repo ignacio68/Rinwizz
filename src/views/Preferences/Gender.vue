@@ -22,24 +22,32 @@
         </v-ons-list-item>
       </v-ons-list>
       <br />
-      <div class="userLocationButton">
+      <v-ons-row class="buttons">
         <v-ons-button
-          class="userLocationButton__button"
-          name="userLocationButton"
-          modifier="large"
+          class="skip__button"
+          name="skipButton"
+          :disabled="false"
+          ripple="true"
+          @click.prevent="toAvatar"
+        >
+          {{ $t('lang.buttons.skip') }}
+        </v-ons-button>
+        <v-ons-button
+          class="confirm__button"
+          name="confirmButton"
           :disabled="false"
           ripple="true"
           @click.prevent="updateGender"
         >
           {{ $t('lang.views.gender.button') }}
         </v-ons-button>
-      </div>
+      </v-ons-row>
     </div>
   </v-ons-page>
 </template>
 <script>
 import { mapMutations } from 'vuex'
-import Hobbies from './Hobbies'
+import Avatar from './Avatar'
 export default {
   name: 'Gender',
   namespace: true,
@@ -66,8 +74,8 @@ export default {
       this.UPDATE_USER(userData)
       this.toHobbies()
     },
-    toHobbies() {
-      this.PUSH(Hobbies)
+    toAvatar() {
+      this.PUSH(Avatar)
     }
   }
 }
