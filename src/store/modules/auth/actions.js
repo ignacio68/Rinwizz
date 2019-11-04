@@ -1,4 +1,4 @@
-import { firebaseAuth, firebaseDb } from '@services/firebase'
+import { firebaseAuth, firebaseDb, logIn } from '@services/firebase'
 
 import {
   SIGNUP_USER,
@@ -156,26 +156,29 @@ export default {
    * @param {*} commit
    * @param {String} user
    */
-  async [LOGIN_USER]({ commit, dispatch }, logInUser) {
+  async [LOGIN_USER]({ commit, dispatch }, userData) {
     console.log('LOGIN_USER')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // Comprueba que el usuario existe en Firebase
-    try {
-      const { user } = await firebaseAuth().signInWithEmailAndPassword(
-        logInUser.email,
-        logInUser.password
-      )
-      // Establecemos la información de usuario en caché
-      commit('user/SET_USER', user, { root: true })
-      // Lanzamos la página principal
-      commit('navigator/REPLACE', AppSplitter, {
-        root: true
+
+    // const { user } = await firebaseAuth().signInWithEmailAndPassword(
+    //   userData.email,
+    //   userData.password
+    // )
+    logIn(userData)
+      .then(user => {
+        // Establecemos la información de usuario en caché
+        commit('user/SET_USER', user, { root: true })
+        // Lanzamos la página principal
+        commit('navigator/REPLACE', AppSplitter, {
+          root: true
+        })
       })
-    } catch (error) {
-      console.log('logUserIn error: ' + error.message)
-      commit('shared/SET_ERROR', null, { root: true })
-      dispatch('errors/AUTH_ERROR', error.code, { root: true })
-    }
+      .catch(error => {
+        console.log('logUserIn error: ' + error.message)
+        commit('shared/SET_ERROR', null, { root: true })
+        dispatch('errors/AUTH_ERROR', error.code, { root: true })
+      })
   },
 
   /**

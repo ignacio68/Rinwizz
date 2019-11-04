@@ -4,7 +4,11 @@
       <v-ons-col class="col">
         <h3 class="text">{{ $t('lang.views.userLocation.main') }}</h3>
         <div class="map">
-          <LocationMap :location="userLocation" :initial-zoom="17" :show-markers="showMarkers" />
+          <LocationMap
+            :location="userLocation"
+            :initial-zoom="17"
+            :show-markers="showMarkers"
+          />
         </div>
         <div class="address">
           <p>
@@ -23,7 +27,9 @@
               :disabled="false"
               ripple="true"
               @click.prevent="changeShowMarkers"
-            >marcadores</v-ons-button>
+            >
+              marcadores
+            </v-ons-button>
             {{ showMarkers }}
           </div>
         </v-row>

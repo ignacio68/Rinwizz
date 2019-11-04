@@ -46,10 +46,16 @@ export default firebase
 // firebase collections
 // const alertsCollection = db.collection('alerts')
 
+// TODO: revisar su utilización
 export function isLoggedIn() {
   return !!firebaseAuth().onAuthStateChanged
 }
 
+/**
+ * Signup the user
+ *
+ * @param {object} userData
+ */
 export async function signUp(userData) {
   const { user } = await firebaseAuth().createUserWithEmailAndPassword(
     userData.email,
@@ -58,4 +64,25 @@ export async function signUp(userData) {
   return user
 }
 
-export async function logIn(userData) {}
+/**
+ * Update the user profile
+ *
+ * @param {object} userData
+ */
+export async function setUserProfile(userData) {
+  const { userActive } = firebaseAuth().currentUser
+  await userActive.updateProfile(userData)
+}
+
+/**
+ * Login the user
+ *
+ * @param {object} userData
+ */
+export async function logIn(userData) {
+  const { user } = await firebaseAuth().signInWithEmailAndPassword(
+    userData.email,
+    userData.password
+  )
+  return user
+}
