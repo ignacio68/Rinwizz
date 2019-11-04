@@ -4,7 +4,8 @@ import {
   signUp,
   setUserProfile,
   sendEmailVerification,
-  logIn
+  logIn,
+  logOut
 } from '@services/firebase'
 
 import {
@@ -19,8 +20,7 @@ import {
   FETCH_CREDENTIAL,
   REAUTHENTICATE_USER,
   DELETE_FIREBASE_USER_ACCOUNT,
-  UPDATED_USER_PROFILE,
-  IS_USER_ACTIVE
+  UPDATED_USER_PROFILE
 } from '@store/types/actions_types'
 
 import AppSplitter from '@views/AppSplitter'
@@ -181,10 +181,11 @@ export default {
    *
    * @param {*} commit
    */
-  [LOGOUT_USER]: ({ commit }) => {
+  async [LOGOUT_USER]({ commit }) {
     commit('shared/CLEAR_ERROR', null, { root: true })
-    firebaseAuth()
-      .signOut()
+    // firebaseAuth()
+    //   .signOut()
+    await logOut()
       .then(result => {
         commit('user/RESET_USER', null, { root: true })
         commit('alerts/RESET_ALERTS', null, { root: true })
@@ -361,21 +362,5 @@ export default {
         console.log('error en UPDATED_USER_PROFILE: ' + error)
         commit('shared/SET_ERROR', null, { root: true })
       })
-  },
-
-  /**
-   * Comprueba si hay algún usuario conectado
-   * Se utiliza a modo de test
-   * ELIMINAR EN PRODUCCION
-   */
-  [IS_USER_ACTIVE]: ({ commit }) => {
-    commit('shared/CLEAR_ERROR', null, { root: true })
-    const userActive = firebaseAuth().currentUser
-    if (userActive != null) {
-      console.log(userActive.displayName + ' está conectado')
-    } else {
-      console.log('No hay ningún usuario conectado')
-      commit('shared/SET_ERROR', null, { root: true })
-    }
   }
 }

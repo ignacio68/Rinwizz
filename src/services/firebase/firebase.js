@@ -107,6 +107,11 @@ export const sendEmailVerification = actionCodeSettings => {
   })
 }
 
+// TODO: revisar
+export async function applyActionCode(code) {
+  await firebaseAuth.applyActionCode(code)
+}
+
 /**
  * Login the user
  *
@@ -119,3 +124,30 @@ export async function logIn(userData) {
   )
   return user
 }
+
+/**
+ * Logout the user
+ *
+ */
+export async function logOut() {
+  const result = await firebaseAuth().signOut()
+  return result
+}
+
+/**
+ * User authorization changed event
+ */
+export const onAuthStateChange = () => {
+  return new Promise((resolve, reject) => {
+    firebaseAuth()
+      .onAuthstateChange()
+      .then(user => resolve(user))
+      .catch(error => {
+        reject(error.code)
+      })
+  })
+}
+
+/**
+ * the user is deleted
+ */
