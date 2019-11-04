@@ -176,8 +176,8 @@ firebaseAuth().onAuthStateChanged(user => {
           console.log('No existe el user')
         }
       },
-      render: h => h(AppNavigator).$start()
-      // render: h => h(Fake).$start()
+      render: h => h(AppNavigator)
+      // render: h => h(Fake)
       //       import routes from "./routes";
       // import BackendService from "./services/backend-service";
 

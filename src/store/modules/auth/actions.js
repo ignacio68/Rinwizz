@@ -1,4 +1,11 @@
-import { firebaseAuth, firebaseDb, logIn } from '@services/firebase'
+import {
+  firebaseAuth,
+  firebaseDb,
+  signUp,
+  setUserProfile,
+  sendEmailVerification,
+  logIn
+} from '@services/firebase'
 
 import {
   SIGNUP_USER,
@@ -28,7 +35,7 @@ export default {
    */
 
   // FIXME: desarrollar correctamente async y el catcher de errores.
-  async [SIGNUP_USER]({ state, commit, dispatch }, registeredUser) {
+  async [SIGNUP_USER]({ state, commit, dispatch }, userData) {
     console.log('Estoy en SIGNUP_USER')
     // TODO: revisar SET ACTION PASS
     commit('shared/CLEAR_ERROR', null, { root: true })
@@ -38,12 +45,8 @@ export default {
      * @param {String} registeredUser.email - email del usuario
      * @param {String} registeredUser.password - password del usuario
      */
-    try {
-      const { user } = await firebaseAuth().createUserWithEmailAndPassword(
-        registeredUser.email,
-        registeredUser.password
-      )
-      if (user) {
+    signUp(userData)
+      .then(async user => {
         console.log('Estoy en createUserWithEmailAndPassword')
         console.log(user)
         // Añadimos los datos del nuevo usuario
@@ -51,7 +54,7 @@ export default {
           _id: user.uid,
           email: user.email,
           // password: registeredUser.password,
-          name: registeredUser.name,
+          name: userData.name,
           phone: '',
           isVerified: user.emailVerified,
           isAnonymous: user.isAnonymous,
@@ -62,32 +65,29 @@ export default {
           creationDate: user.metadata.creationTime,
           lastSignInDate: user.metadata.lastSignInTime
         }
-
+        console.log('newUser: ' + JSON.stringify(newUser))
         // Actualizamos el perfil de firebase con el displayName
-        await dispatch('SET_USER_PROFILE', { displayName: newUser.name })
+        await setUserProfile({ displayName: newUser.name })
 
         // Creamos al nuevo usuario en caché
         commit('user/SET_USER', newUser, { root: true })
-
-        // Creamos la base del usuario (PouchDB)
-        // await dispatch('usersLocalDb/CREATE_USER_LOCAL_DB', newUser, {
-        //   root: true
-        // })
-
         console.log('Hay un nuevo usuario: ' + state.user.name)
         // Enviamos el email de confirmación
         const actionCodeSettings = state.actionCodeSettings
-        await dispatch('SEND_EMAIL_VERIFICATION', actionCodeSettings)
-      } else {
-        console.log('Hay un error')
+        await sendEmailVerification(actionCodeSettings)
+        // await dispatch('SEND_EMAIL_VERIFICATION', actionCodeSettings)
+      })
+      .catch(error => {
+        console.log('signUserUp error: ' + error.message)
         commit('shared/SET_ERROR', null, { root: true })
-        dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
-      }
-    } catch (error) {
-      console.log('signUserUp error: ' + error.message)
-      commit('shared/SET_ERROR', null, { root: true })
-      dispatch('errors/AUTH_ERROR', error.code, { root: true })
-    }
+        dispatch('errors/AUTH_ERROR', error.code, { root: true })
+      })
+
+    // } else {
+    //   console.log('Hay un error')
+    //   commit('shared/SET_ERROR', null, { root: true })
+    //   dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
+    // }
   },
 
   /**
@@ -160,11 +160,6 @@ export default {
     console.log('LOGIN_USER')
     commit('shared/CLEAR_ERROR', null, { root: true })
     // Comprueba que el usuario existe en Firebase
-
-    // const { user } = await firebaseAuth().signInWithEmailAndPassword(
-    //   userData.email,
-    //   userData.password
-    // )
     logIn(userData)
       .then(user => {
         // Establecemos la información de usuario en caché

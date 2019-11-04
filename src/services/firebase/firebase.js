@@ -70,8 +70,32 @@ export async function signUp(userData) {
  * @param {object} userData
  */
 export async function setUserProfile(userData) {
-  const { userActive } = firebaseAuth().currentUser
+  let userActive = firebaseAuth().currentUser
   await userActive.updateProfile(userData)
+}
+
+/**
+ * Send a verification email to the user
+ *
+ * @param {string} actionCodeSettings
+ */
+export const sendEmailVerification = actionCodeSettings => {
+  return new Promise((resolve, reject) => {
+    const currentUser = firebaseAuth().currentUser
+    if (currentUser) {
+      currentUser
+        .sendEmailVerification(actionCodeSettings)
+        .then(() => {
+          resolve()
+          console.log('email enviado')
+        })
+        .catch(error => {
+          reject(error.code)
+        })
+    } else {
+      reject('auth/user-empty')
+    }
+  })
 }
 
 /**
