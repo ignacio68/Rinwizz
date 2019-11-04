@@ -69,9 +69,18 @@ export async function signUp(userData) {
  *
  * @param {object} userData
  */
-export async function setUserProfile(userData) {
-  let userActive = firebaseAuth().currentUser
-  await userActive.updateProfile(userData)
+export const setUserProfile = userData => {
+  return new Promise((resolve, reject) => {
+    const currentUser = firebaseAuth().currentUser
+    if (currentUser) {
+      currentUser.updateProfile(userData).then(() => {
+        resolve()
+        console.log('User actualizado')
+      })
+    } else {
+      reject('auth/user-empty')
+    }
+  })
 }
 
 /**
