@@ -31,7 +31,6 @@ export default {
   async [SIGNUP_USER]({ state, commit, dispatch }, registeredUser) {
     console.log('Estoy en SIGNUP_USER')
     // TODO: revisar SET ACTION PASS
-    commit('shared/SET_ACTION_PASS', false, { root: true })
     commit('shared/CLEAR_ERROR', null, { root: true })
     /**
      * Crea el nuevo usuario en Firebase
@@ -47,9 +46,6 @@ export default {
       if (user) {
         console.log('Estoy en createUserWithEmailAndPassword')
         console.log(user)
-        // TODO: Revisar
-        commit('shared/SET_ACTION_PASS', true, { root: true })
-
         // Añadimos los datos del nuevo usuario
         const newUser = {
           _id: user.uid,
@@ -91,7 +87,6 @@ export default {
       console.log('signUserUp error: ' + error.message)
       commit('shared/SET_ERROR', null, { root: true })
       dispatch('errors/AUTH_ERROR', error.code, { root: true })
-      commit('shared/SET_ACTION_PASS', false, { root: true })
     }
   },
 

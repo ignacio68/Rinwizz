@@ -1,7 +1,6 @@
 import {
   SET_ERROR,
   CLEAR_ERROR,
-  SET_ACTION_PASS,
   SET_PLATFORM,
   SET_LANGUAGE
 } from '@store/types/mutations_types'
@@ -25,14 +24,6 @@ export default {
     state.error = false
     // const errorMessage = ''
     // commit('errors/SET_ERROR_MESSAGE', errorMessage, { root: true })
-  },
-  /**
-   * Comprueba si la acción ha sido ejecutada
-   *
-   * @param {Boolean} payload
-   */
-  [SET_ACTION_PASS]: (state, payload) => {
-    state.actionPass = payload
   },
   /**
    *Establece la plattaforma en la que corre la app

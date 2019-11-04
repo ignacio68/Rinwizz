@@ -235,7 +235,6 @@ export default {
   },
   methods: {
     ...mapMutations('navigator', ['PUSH', 'REPLACE']),
-    ...mapMutations('shared', ['SET_ACTION_PASS']),
     ...mapActions('social', ['DISPATCH_SIGNUP']),
     ...mapActions('auth', ['SIGNUP_USER']),
 
@@ -276,8 +275,6 @@ export default {
     },
     onClickAlertButton() {
       console.log('Estoy en el botón de la alerta de confirmación de password')
-      // TODO: revisar lo de SET_ACTION_PASS
-      this.SET_ACTION_PASS(false)
       this.REPLACE(Personal)
     }
   }

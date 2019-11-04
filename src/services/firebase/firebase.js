@@ -49,3 +49,13 @@ export default firebase
 export function isLoggedIn() {
   return !!firebaseAuth().onAuthStateChanged
 }
+
+export async function signUp(userData) {
+  const { user } = await firebaseAuth().createUserWithEmailAndPassword(
+    userData.email,
+    userData.password
+  )
+  return user
+}
+
+export async function logIn(userData) {}
