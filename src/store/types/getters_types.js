@@ -34,5 +34,6 @@ export const SOCIAL_BUTTONS = 'SOCIAL_BUTTONS'
 // user
 export const USER = 'USER'
 export const USER_ID = 'USER_ID'
+export const USER_PROVIDER_ID = 'USER_PROVIDER_ID'
 export const USER_IS_VERIFIED = 'USER_IS_VERIFIED'
 export const USER_FOLLOWING = 'USER_FOLLOWING'

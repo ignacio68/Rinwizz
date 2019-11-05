@@ -143,6 +143,7 @@
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 import SignUp from './SignUp'
+import AppSplitter from '@views/AppSplitter'
 import CircleButton from '@components/Shared/CircleButton'
 export default {
   name: 'LogIn',
@@ -160,7 +161,7 @@ export default {
   },
   computed: {
     ...mapGetters('errors', { errorMessage: 'ERROR_MESSAGE' }),
-    ...mapGetters('shared', { isError: 'ERROR' }),
+    ...mapGetters('shared', { isError: 'ERROR', loading: 'LOADING' }),
     ...mapGetters('social', { socialButtons: 'SOCIAL_BUTTONS' }),
 
     buttonActive() {
@@ -168,6 +169,14 @@ export default {
         return false
       } else {
         return true
+      }
+    }
+  },
+  watch: {
+    loading(newState, oldState) {
+      if (newState) {
+        console.log('Me voy a AppSplitter')
+        this.REPLACE(AppSplitter)
       }
     }
   },

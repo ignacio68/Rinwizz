@@ -53,10 +53,13 @@ export default firebase
  * @param {object} userData
  */
 export async function signUp(userData) {
-  const { user } = await firebaseAuth().createUserWithEmailAndPassword(
+  const user =await firebaseAuth().createUserWithEmailAndPassword(
     userData.email,
     userData.password
   )
+  // Actualizamos el perfil de firebase con el displayName
+  setUserProfile({ displayName: userData.name })
+  console.log('signUp: ' + JSON.stringify(user))
   return user
 }
 
@@ -65,17 +68,13 @@ export async function signUp(userData) {
  *
  * @param {object} userData
  */
-export const setUserProfile = userData => {
-  return new Promise((resolve, reject) => {
-    const userActive = firebaseAuth().currentUser
-    if (userActive) {
-      userActive.updateProfile(userData).then(() => {
-        resolve()
-      })
-    } else {
-      reject('auth/user-empty')
-    }
-  })
+export function setUserProfile (userData) {
+  const currentUser = firebaseAuth().currentUser
+  if (currentUser) {
+     currentUser.updateProfile(userData)
+  } else {
+    return('auth/user-empty')
+  }
 }
 
 /**
@@ -103,8 +102,10 @@ export const sendEmailVerification = actionCodeSettings => {
 }
 
 // TODO: revisar
-export async function applyActionCode(code) {
-  await firebaseAuth.applyActionCode(code)
+export const applyActionCode = code => {
+    firebaseAuth
+      .applyActionCode(code)
+      .catch(error => Promise.reject(error.code))
 }
 
 /**
@@ -133,18 +134,32 @@ export async function logOut() {
  * User authorization changed event
  */
 export const onAuthStateChange = () => {
-    console.log('Estoy en onAuthStateChange')
-    firebaseAuth().onAuthStateChanged(user => {
-      if (user) {
-        console.log('user: ' + user)
-        return user
-      } else {
-        console.log('No hay user')
-      }
-    })
+  console.log('Estoy en onAuthStateChange')
+  firebaseAuth().onAuthStateChanged(user => {
+    if (user) {
+      console.log('user: ' + user)
+      return user
+    } else {
+      console.log('No hay user')
+    }
+  })
 }
-
 
 /**
  * the user is deleted
  */
+export async function deleteUser(credential) {
+  const currentUser = firebaseAuth().currentUser
+  await currentUser.reauthenticateAndRetrieveDataWithCredential(credential)
+    .then(async () => {
+      await currentUser.delete()
+  })
+}
+
+/**
+ * Get the user TokenId
+ */
+export async function getTokenId() {
+  const currentUser = firebaseAuth().currentUser
+  const idToken = await currentUser.getIdToken().then(() => Promise.resolve(idToken))
+}

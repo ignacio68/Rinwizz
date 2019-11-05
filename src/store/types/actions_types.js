@@ -5,15 +5,11 @@ export const LOAD_ALERTS = 'LOAD_ALERTS'
 // TODO: realizar los cambios!!
 // authoritation
 export const SIGNUP_USER = 'SIGNUP_USER'
-export const SET_USER_PROFILE = 'SET_USER_PROFILE'
-export const APPLY_ACTION_CODE = 'APPLY_ACTION_CODE'
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
-export const ON_AUTH_STATE_CHANGE = 'ON_AUTH_STATE_CHANGE'
 export const DELETE_USER = 'DELETE_USER'
 export const FETCH_CREDENTIAL = 'FETCH_CREDENTIAL'
 export const REAUTHENTICATE_USER = 'REAUTHENTICATE_USER'
-export const DELETE_FIREBASE_USER_ACCOUNT = 'DELETE_FIREBASE_USER_ACCOUNT'
 export const UPDATED_USER_PROFILE = 'UPDATED_USER_PROFILE'
 
 // cloudStorage

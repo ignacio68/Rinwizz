@@ -39,20 +39,23 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
+import LogIn from '@views/Auth/LogIn'
+import Welcome from '@views/Welcome'
 export default {
   name: 'Settings',
   data() {
     return {}
   },
   methods: {
+    ...mapMutations('navigator', ['REPLACE']),
     ...mapActions('auth', ['LOGOUT_USER', 'DELETE_USER']),
     ...mapActions('user', ['TO_JSON']),
-    logOutUser() {
-      this.LOGOUT_USER()
+    async logOutUser() {
+      await this.LOGOUT_USER().then(() => this.REPLACE(LogIn))
     },
-    deleteUser() {
-      this.DELETE_USER()
+    async deleteUser() {
+      await this.DELETE_USER().then(() => this.REPLACE(Welcome))
     },
     toJSON() {
       this.TO_JSON()
