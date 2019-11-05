@@ -38,7 +38,6 @@ export default {
     }
   },
   async created() {
-    console.log('AppSplitter.created()')
     await this.LOAD_USER()
   },
   methods: {

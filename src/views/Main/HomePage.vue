@@ -11,25 +11,25 @@ import Alerts from '@views/Alerts/Alerts'
 // import Profile from '@views/User/Profile'
 // import Search from '@views/Search/Search'
 
-document.addEventListener(
-  'init',
-  event => {
-    if (event.target.matches('#homePage')) {
-      console.log('homePage is initiated.')
-    }
-  },
-  false
-)
+// document.addEventListener(
+//   'init',
+//   event => {
+//     if (event.target.matches('#homePage')) {
+//       console.log('homePage is initiated.')
+//     }
+//   },
+//   false
+// )
 
-document.addEventListener(
-  'show',
-  event => {
-    if (event.target.matches('#homePage')) {
-      console.log('homePage is show.')
-    }
-  },
-  false
-)
+// document.addEventListener(
+//   'show',
+//   event => {
+//     if (event.target.matches('#homePage')) {
+//       console.log('homePage is show.')
+//     }
+//   },
+//   false
+// )
 
 export default {
   name: 'HomePage',
@@ -73,9 +73,6 @@ export default {
         this.SET(newValue)
       }
     }
-  },
-  async created() {
-    console.log('homePage.created()')
   },
   methods: {
     ...mapMutations('navigator', ['SET'])

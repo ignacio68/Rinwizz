@@ -9,13 +9,14 @@ export default {
    */
   [SET_USER]: (state, newUser) => {
     // Si el usuario proviene de Firebase cambiamos uid por _id
-    console.log('mutation SET_USER')
     if (newUser.uid) {
       newUser._id = newUser.uid
       state.user = newUser
+      console.log('mutation SET_USER' + JSON.stringify(state.user))
       // state.user = { ...state.user, newUser }
     } else {
       state.user = newUser
+      console.log('mutation SET_USER' + JSON.stringify(state.user))
       // state.user = { ...state.user, newUser }
     }
   },

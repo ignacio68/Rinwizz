@@ -1,6 +1,7 @@
 import {
   SET_ERROR,
   CLEAR_ERROR,
+  LOAD_ACTION,
   SET_PLATFORM,
   SET_LANGUAGE
 } from '@store/types/mutations_types'
@@ -24,6 +25,14 @@ export default {
     state.error = false
     // const errorMessage = ''
     // commit('errors/SET_ERROR_MESSAGE', errorMessage, { root: true })
+  },
+  /**
+   * Indica que la acción se ha ejecutado
+   *
+   * @param {*} payload
+   */
+  [LOAD_ACTION]: (state, payload) => {
+    state.loading = payload
   },
   /**
    *Establece la plattaforma en la que corre la app

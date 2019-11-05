@@ -34,6 +34,7 @@ export const OPTIONS = 'OPTIONS'
 export const SET = 'SET'
 
 // shared
+export const LOAD_ACTION = 'LOAD_ACTION'
 export const SET_ERROR = 'SET_ERROR'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
 export const SET_PLATFORM = 'SET_PLATFORM'

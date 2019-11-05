@@ -11,7 +11,6 @@ import {
 import {
   SIGNUP_USER,
   SET_USER_PROFILE,
-  SEND_EMAIL_VERIFICATION,
   APPLY_ACTION_CODE,
   LOGIN_USER,
   LOGOUT_USER,
@@ -45,10 +44,9 @@ export default {
      * @param {String} registeredUser.email - email del usuario
      * @param {String} registeredUser.password - password del usuario
      */
+    // let newUser = void 0
     signUp(userData)
       .then(async user => {
-        console.log('Estoy en createUserWithEmailAndPassword')
-        console.log(user)
         // Añadimos los datos del nuevo usuario
         const newUser = {
           _id: user.uid,
@@ -65,20 +63,23 @@ export default {
           creationDate: user.metadata.creationTime,
           lastSignInDate: user.metadata.lastSignInTime
         }
-        console.log('newUser: ' + JSON.stringify(newUser))
+        // console.log('newUser: ' + JSON.stringify(newUser))
+        commit('user/SET_USER', newUser, { root: true })
         // Actualizamos el perfil de firebase con el displayName
         await setUserProfile({ displayName: newUser.name })
-
-        // Creamos al nuevo usuario en caché
-        commit('user/SET_USER', newUser, { root: true })
-        console.log('Hay un nuevo usuario: ' + state.user.name)
+      })
+      .then(async () => {
+        // console.log('Hay un nuevo usuario: ' + state.user.name)
         // Enviamos el email de confirmación
         const actionCodeSettings = state.actionCodeSettings
         await sendEmailVerification(actionCodeSettings)
         // await dispatch('SEND_EMAIL_VERIFICATION', actionCodeSettings)
       })
+      .then(() => {
+        commit('shared/LOAD_ACTION', true, { root: true })
+      })
       .catch(error => {
-        console.log('signUserUp error: ' + error.message)
+        console.log('SIGNUP_USER error: ' + error.message)
         commit('shared/SET_ERROR', null, { root: true })
         dispatch('errors/AUTH_ERROR', error.code, { root: true })
       })
@@ -106,31 +107,6 @@ export default {
     } catch (error) {
       commit('shared/SET_ERROR', null, { root: true })
       console.log('UPDATE PROFILE error: ' + error)
-      dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
-    }
-  },
-
-  /**
-   * Enviamos un email de confirmación de la cuenta de usuario
-   *
-   * @param {Object} actionCodeSettings - parametros necesarios para enviar el email de confirmación
-   */
-  [SEND_EMAIL_VERIFICATION]: ({ commit, dispatch }, actionCodeSettings) => {
-    console.log('Estoy en sendEmailVerification')
-    commit('shared/CLEAR_ERROR', null, { root: true })
-    const currentUser = firebaseAuth().currentUser
-    if (currentUser) {
-      currentUser
-        .sendEmailVerification(actionCodeSettings)
-        .then(() => {
-          console.log('email enviado')
-        })
-        .catch(error => {
-          dispatch('errors/AUTH_ERROR', error.code, { root: true })
-          console.log('sendEmailVerification error: ' + error.message)
-        })
-    } else {
-      commit('shared/SET_ERROR', null, { root: true })
       dispatch('errors/AUTH_ERROR', 'auth/user-empty', { root: true })
     }
   },

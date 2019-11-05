@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import firebase from '@firebase/app'
 import '@firebase/auth'
 import '@firebase/database'
@@ -46,11 +47,6 @@ export default firebase
 // firebase collections
 // const alertsCollection = db.collection('alerts')
 
-// TODO: revisar su utilización
-export function isLoggedIn() {
-  return !!firebaseAuth().onAuthStateChanged
-}
-
 /**
  * Signup the user
  *
@@ -71,11 +67,10 @@ export async function signUp(userData) {
  */
 export const setUserProfile = userData => {
   return new Promise((resolve, reject) => {
-    const currentUser = firebaseAuth().currentUser
-    if (currentUser) {
-      currentUser.updateProfile(userData).then(() => {
+    const userActive = firebaseAuth().currentUser
+    if (userActive) {
+      userActive.updateProfile(userData).then(() => {
         resolve()
-        console.log('User actualizado')
       })
     } else {
       reject('auth/user-empty')
@@ -138,15 +133,17 @@ export async function logOut() {
  * User authorization changed event
  */
 export const onAuthStateChange = () => {
-  return new Promise((resolve, reject) => {
-    firebaseAuth()
-      .onAuthstateChange()
-      .then(user => resolve(user))
-      .catch(error => {
-        reject(error.code)
-      })
-  })
+    console.log('Estoy en onAuthStateChange')
+    firebaseAuth().onAuthStateChanged(user => {
+      if (user) {
+        console.log('user: ' + user)
+        return user
+      } else {
+        console.log('No hay user')
+      }
+    })
 }
+
 
 /**
  * the user is deleted

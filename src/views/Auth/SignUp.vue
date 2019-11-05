@@ -174,7 +174,7 @@
       class="AlertDialog_text"
       modifier="rowfooter"
       :title="$t('lang.components.alertConfirmPassword.alertText')"
-      :visible.sync="actionPass"
+      :visible.sync="loading"
     >
       <template slot="footer">
         <v-ons-alert-dialog-button
@@ -223,7 +223,7 @@ export default {
   },
   computed: {
     ...mapGetters('errors', { errorMessage: 'ERROR_MESSAGE' }),
-    ...mapGetters('shared', { isError: 'ERROR', actionPass: 'ACTION_PASS' }),
+    ...mapGetters('shared', { isError: 'ERROR', loading: 'LOADING' }),
     ...mapGetters('social', { socialButtons: 'SOCIAL_BUTTONS' }),
 
     terms() {
@@ -235,6 +235,7 @@ export default {
   },
   methods: {
     ...mapMutations('navigator', ['PUSH', 'REPLACE']),
+    ...mapMutations('shared', ['LOAD_ACTION']),
     ...mapActions('social', ['DISPATCH_SIGNUP']),
     ...mapActions('auth', ['SIGNUP_USER']),
 
@@ -275,6 +276,7 @@ export default {
     },
     onClickAlertButton() {
       console.log('Estoy en el botón de la alerta de confirmación de password')
+      this.LOAD_ACTION(null)
       this.REPLACE(Personal)
     }
   }

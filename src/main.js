@@ -76,6 +76,8 @@ import 'onsenui/esm/elements/ons-progress-circular' // TODO: REVISAR SU UTILIZAC
  * Página de navegación
  */
 import AppNavigator from './AppNavigator'
+// import AppSplitter from './views/AppSplitter'
+// import Welcome from './views/Welcome'
 
 /**
  * TODO: Se utiliza para pruebas, en producción eliminar
@@ -131,15 +133,13 @@ Vue.use(VueOnsen)
 Vue.component('the-custom-toolbar', TheCustomtoolbar)
 // Vue.component('app-alert', AlertCmp) // Alerta de errores
 
-let app
-
+let app = void 0
 firebaseAuth().onAuthStateChanged(user => {
   if (!app) {
     app = new Vue({
       el: '#app',
       i18n,
       store,
-
       beforeCreate() {
         // Shortcut for Material Design, IOS & web
         Vue.prototype.md = this.$ons.platform.isAndroid()
@@ -176,21 +176,8 @@ firebaseAuth().onAuthStateChanged(user => {
           console.log('No existe el user')
         }
       },
+      // render: h => h('div', [h(user ? AppSplitter : Welcome)])
       render: h => h(AppNavigator)
-      // render: h => h(Fake)
-      //       import routes from "./routes";
-      // import BackendService from "./services/backend-service";
-
-      // // Uncommment the following to see NativeScript-Vue output logs
-      // // Vue.config.silent = false;
-
-      // const backendService = new BackendService();
-      // Vue.prototype.$backendService = backendService;
-      //
-      // TODO: examinar la posibilidad de implantarlo con un servicio de Firebase
-      // new Vue({
-      //   render: h => h("frame", [h(backendService.isLoggedIn() ? routes.home : routes.login)])
-      // }).$start();
     })
   }
 })
