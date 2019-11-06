@@ -11,6 +11,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "cordova-build-android": "vue-cli-service cordova-build-android",
     "cordova-build-browser": "vue-cli-service cordova-build-browser",
@@ -22,12 +24,9 @@
     "cordova-serve-ios": "vue-cli-service cordova-serve-ios",
     "cordova-serve-osx": "vue-cli-service cordova-serve-osx",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
-    "styleguide": "vue-cli-service styleguidist",
-    "styleguide:build": "vue-cli-service styleguidist:build",
-    "test:unit": "vue-cli-service test:unit",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "cy:open": "cypress open",
-    "cy:run": "cypres run --browser chrome"
+    "styleguide": "vue-cli-service styleguidist",
+    "styleguide:build": "vue-cli-service styleguidist:build"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -54,6 +53,7 @@
     "@kazupon/vue-i18n-loader": "^0.4.1",
     "@storybook/vue": "^5.2.5",
     "@vue/cli-plugin-babel": "^4.0.3",
+    "@vue/cli-plugin-e2e-cypress": "^4.0.5",
     "@vue/cli-plugin-eslint": "^4.0.5",
     "@vue/cli-plugin-unit-jest": "^4.0.3",
     "@vue/cli-service": "^4.0.3",
@@ -62,11 +62,9 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-preset-vue": "^2.0.2",
-    "cypress": "^3.6.0",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-loader": "^3.0.2",
-    "eslint-plugin-cypress": "^2.7.0",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^5.2.3",
     "jest": "^24.9.0",
@@ -79,15 +77,15 @@
     "vue-template-compiler": "^2.6.10",
     "webpack-bundle-analyzer": "^3.6.0"
   },
-  "homepage": "http://www.rinwizz.com",
-  "keywords": [
-    "social",
-    "alerts"
-  ],
   "engines": {
     "node": ">= 8.9.0",
     "npm": ">= 5.6.0",
     "yarn": ">= 1.6.0"
   },
+  "homepage": "http://www.rinwizz.com",
+  "keywords": [
+    "social",
+    "alerts"
+  ],
   "license": "MIT"
 }
