@@ -25,7 +25,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import { updateDoc } from '@services/database'
+// import { updateDoc } from '@services/database'
 import AppSplitter from '@views/AppSplitter'
 
 export default {
@@ -35,14 +35,14 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters('user', { user: 'USER' }),
-    ...mapGetters('usersLocalDb', { db: 'USERS_LOCAL_DB' })
+    ...mapGetters('user', { user: 'USER' })
+    // ...mapGetters('usersLocalDb', { db: 'USERS_LOCAL_DB' })
   },
   methods: {
     ...mapMutations('navigator', ['REPLACE']),
 
     toHomePage() {
-      updateDoc(this.db, this.user._id, this.user)
+      // updateDoc(this.db, this.user._id, this.user)
       this.REPLACE(AppSplitter)
     }
   }
