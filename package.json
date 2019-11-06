@@ -25,8 +25,7 @@
     "styleguide": "vue-cli-service styleguidist",
     "styleguide:build": "vue-cli-service styleguidist:build",
     "test:unit": "vue-cli-service test:unit",
-    "storybook": "start-storybook -p 9001 -c .storybook",
-    "cy:run": "cypress run --browser chrome"
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "dependencies": {
     "axios": "^0.19.0",
