@@ -249,13 +249,8 @@ export default {
      *
      * @public
      */
-    onSignUp() {
-      console.log('Estoy en onSignUp')
-      console.log('name es: ' + this.name)
-      console.log('email es: ' + this.email)
-      console.log('password es: ' + this.password)
-      // enviamos los datos del usuario para su registro
-      this.SIGNUP_USER({
+    async onSignUp() {
+      await this.SIGNUP_USER({
         name: this.name,
         email: this.email,
         password: this.password

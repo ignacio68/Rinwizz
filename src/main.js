@@ -34,7 +34,6 @@ import { store } from './store'
 /**
  *  Import languages
  */
-// import i18n from './locales'
 import i18n from '@setup/i18n'
 
 /**

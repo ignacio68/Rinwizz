@@ -1,11 +1,10 @@
 import {
-  firebaseAuth,
-  firebaseDb,
   signUp,
   sendEmailVerification,
   logIn,
   logOut,
-  deleteUser
+  deleteUser,
+  reauthenticateUser
 } from '@services/firebase'
 
 import {
@@ -13,11 +12,8 @@ import {
   LOGIN_USER,
   LOGOUT_USER,
   DELETE_USER,
-  FETCH_CREDENTIAL,
-  REAUTHENTICATE_USER,
-  UPDATED_USER_PROFILE
+  REAUTHENTICATE_USER
 } from '@store/types/actions_types'
-import { getTokenId } from '../../../services/firebase/firebase'
 
 export default {
   /**
@@ -120,14 +116,12 @@ export default {
   /**
    * Elimina el usuario
    */
-  [DELETE_USER]: ({ getters, commit, dispatch }) => {
+  [DELETE_USER]: ({ _, commit, dispatch, rootGetters }) => {
     console.log('Estoy en deleteUser')
     commit('shared/LOAD_ACTION', null, { root: true })
     commit('shared/CLEAR_ERROR', null, { root: true })
-    dispatch('FETCH_CREDENTIAL')
-    let credential = getters.GET_CREDENTIAL
-    console.log('myCredential es:' + credential)
-    deleteUser(credential)
+    // const providerId = rootGetters.USER_PROVIDER_ID
+    deleteUser()
       .then(() => {
         commit('user/RESET_USER', null, { root: true })
       })
@@ -139,120 +133,20 @@ export default {
   },
 
   /**
-   * TODO: refactoring en firebase
-   * Recupera la credencial del usuario
-   */
-  [FETCH_CREDENTIAL]: ({ state, commit, dispatch, rootGetters }) => {
-    console.log('Estoy en getCredential')
-    commit('shared/CLEAR_ERROR', null, { root: true })
-    getTokenId()
-      .then(idToken => {
-        console.log('El idToken es: ' + idToken)
-        const providerId = rootGetters.USER_PROVIDER_ID
-        if (providerId) {
-          switch (providerId) {
-            case 'facebook': {
-              console.log('el provider es: ' + providerId)
-              const facebook = firebaseAuth.FacebookAuthProvider.credential(
-                idToken
-              )
-              commit('SET_CREDENTIAL', facebook)
-              break
-            }
-
-            case 'google': {
-              console.log('el provider es: ' + providerId)
-              const google = firebaseAuth.GoogleAuthProvider.credential(idToken)
-              commit('SET_CREDENTIAL', google)
-              break
-            }
-            case 'twitter': {
-              console.log('el provider es: ' + providerId)
-              const twitter = firebaseAuth.TwitterAuthProvider.credential(
-                idToken
-              )
-              commit('SET_CREDENTIAL', twitter)
-              break
-            }
-            case 'password': {
-              console.log('el provider es: ' + providerId)
-              const email = state.user.email
-              const userPassword = state.user.password
-              const password = firebaseAuth.EmailAuthProvider.credential(
-                email,
-                userPassword
-              )
-              console.log('la credencial es: ' + password)
-              commit('SET_CREDENTIAL', password)
-              break
-            }
-
-            default:
-              console.log('No hay providerId: ' + providerId)
-          }
-        } else {
-          commit('shared/SET_ERROR', null, { root: true })
-          console.log('Error: No hay credencial')
-        }
-      })
-      .catch(error => {
-        console.log('FETCH_CREDENTIAL error: ' + error.message)
-        commit('shared/SET_ERROR', null, { root: true })
-        dispatch('errors/AUTH_ERROR', error.code, { root: true })
-      })
-  },
-
-  /**
-   * TODO: refactoring en firebase service
    * Reautenticación automática del usuario
    * Se utiliza para poder elimnar la cuenta de usuario
    */
-  [REAUTHENTICATE_USER]: ({ state, commit, dispatch }) => {
+  [REAUTHENTICATE_USER]: ({ commit, dispatch }) => {
     console.log('Estoy en reauthenticateUser')
     commit('shared/CLEAR_ERROR', null, { root: true })
-    const currentUser = firebaseAuth().currentUser
-    let credential = state.credential
-    currentUser
-      .reauthenticateAndRetrieveDataWithCredential(credential)
+    reauthenticateUser()
       .then(() => {
         dispatch('DELETE_FIREBASE_USER_ACCOUNT')
       })
       .catch(error => {
         console.log('REAUTHENTICATE_USER error: ' + error)
         commit('shared/SET_ERROR', null, { root: true })
-      })
-  },
-
-  /**
-   * Actualizamos la información del usuario y la base de datos
-   *
-   * @param {*} commit
-   * @param {*} state
-   * @param {Object} user - datos del usuario para actualizar
-   */
-  // TODO: repasar todo, actualizar base de datos
-  [UPDATED_USER_PROFILE]: ({ _, commit, __, rootGetters }, user) => {
-    console.log('Estoy en UPDATED_USER_PROFILE')
-    commit('shared/CLEAR_ERROR', null, { root: true })
-    const userUpdated = {
-      // userIcon: user.userIcon, // por el momento utilizar direcciones URL
-      userName: user.userName
-    }
-    const userId = rootGetters['user/USER_ID']
-    // Actualizamos los datos en Firebase Realtime Database
-    firebaseDb
-      .ref('users/' + userId)
-      .update(userUpdated)
-      .then(() => {
-        console.log(
-          'Actualizada en Firebase la base de datos del usuario: ' +
-            user.userName
-        )
-      })
-      // TODO: revisar y actualizar errores
-      .catch(error => {
-        console.log('error en UPDATED_USER_PROFILE: ' + error)
-        commit('shared/SET_ERROR', null, { root: true })
+        dispatch('errors/AUTH_ERROR', error.code, { root: true })
       })
   }
 }

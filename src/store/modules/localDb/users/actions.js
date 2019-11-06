@@ -31,21 +31,15 @@ export default {
    *
    * @param {}
    */
-  [CREATE_ALL_USERS_LOCAL_DB]: ({ commit }) => {
+  async [CREATE_ALL_USERS_LOCAL_DB]({ commit }) {
     console.log('estoy en CREATE_ALL_USER_LOCAL_DB')
     commit('shared/CLEAR_ERROR', null, {
       root: true
     })
-    createDb('users', { auto_compaction: true })
-      .then(userDb => {
-        // Guardamos la base de datos en caché
-        commit('SET_ALL_USERS_LOCAL_DB', userDb)
-        // return userDb
-      })
-      .catch(error => {
-        commit('shared/SET_ERROR', null, { root: true })
-        console.log('CREATE_ALL_USER_LOCAL_DB error: ' + error.message)
-      })
+    await createDb('users', { auto_compaction: true }).then(userDb => {
+      // Guardamos la base de datos en caché
+      commit('SET_ALL_USERS_LOCAL_DB', userDb)
+    })
   },
 
   /**

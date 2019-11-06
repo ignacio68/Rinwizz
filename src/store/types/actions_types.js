@@ -2,15 +2,12 @@
 export const CREATE_ALERT = 'CREATE_ALERT'
 export const LOAD_ALERTS = 'LOAD_ALERTS'
 
-// TODO: realizar los cambios!!
 // authoritation
 export const SIGNUP_USER = 'SIGNUP_USER'
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const DELETE_USER = 'DELETE_USER'
-export const FETCH_CREDENTIAL = 'FETCH_CREDENTIAL'
 export const REAUTHENTICATE_USER = 'REAUTHENTICATE_USER'
-export const UPDATED_USER_PROFILE = 'UPDATED_USER_PROFILE'
 
 // cloudStorage
 export const PUT_FILE = 'PUT_FILE'

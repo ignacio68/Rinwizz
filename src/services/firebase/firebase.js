@@ -56,7 +56,7 @@ export async function signUp(userData) {
     userData.password
   )
   // Actualizamos el perfil de firebase con el displayName
-  setUserProfile({ displayName: userData.name })
+  await this.setUserProfile({ displayName: userData.name })
   const { user } = result
   return user
 }
@@ -157,13 +157,66 @@ export const onAuthStateChange = () => {
 /**
  * TODO: añadir fetchUser para conseguir la credencial
  * the user is deleted
+ *
+ * @param {string} credential
  */
-export async function deleteUser(credential) {
+export async function deleteUser(providerId) {
   const currentUser = firebaseAuth().currentUser
-  await currentUser.reauthenticateAndRetrieveDataWithCredential(credential)
+  await this.fetchCredential(providerId)
+    .then(async credential => {
+      await currentUser.reauthenticateAndRetrieveDataWithCredential(credential)
+    })
     .then(async () => {
       await currentUser.delete()
-  })
+    })
+}
+
+/**
+ * TODO: refactoring password use argument
+ * Get the user credential
+ *
+ * @param {string} providerId
+ */
+export async function fetchCredential(password) {
+  const currentUser = firebaseAuth().currentUser
+  const providerId = currentUser.providerId
+  await this.getTokenId()
+    .then(idToken => {
+      // eslint-disable-next-line no-unused-vars
+      let credential
+        switch (providerId) {
+          case 'facebook.com': {
+           credential = firebaseAuth.FacebookAuthProvider.credential(
+              idToken
+            )
+            break
+          }
+          case 'google.com': {
+            credential = firebaseAuth.GoogleAuthProvider.credential(
+              idToken
+            )
+            break
+          }
+          case 'twitter.com': {
+            credential = firebaseAuth.TwitterAuthProvider.credential(
+              idToken
+            )
+            break
+          }
+          case 'password': {
+            const email = currentUser.email
+            const userPassword = password
+            credential = firebaseAuth.EmailAuthProvider.credential(
+              email ,
+              userPassword
+            )
+            break
+          }
+          default:
+            return('auth/user-empty')
+        }
+      }
+  )
 }
 
 /**
@@ -172,4 +225,29 @@ export async function deleteUser(credential) {
 export async function getTokenId() {
   const currentUser = firebaseAuth().currentUser
   const idToken = await currentUser.getIdToken().then(() => Promise.resolve(idToken))
+}
+
+/**
+ * TODO: pasar a firestore y repasar
+ * Update firebase users name database
+ *
+ * @param {string} userName
+ */
+export async function updateUserName(userName) {
+  await firebaseDb
+    .ref('usersNames/')
+    .update(userName)
+    .then(() => console.log('Actualizada la base de datos de nombres'))
+}
+
+/**
+ * reauthenticate the user
+ */
+export async function reauthenticateUser() {
+  const currentUser = firebaseAuth().currentUser
+  await this.fetchCredential()
+    .then(credential => {
+      currentUser
+      .reauthenticateAndRetrieveDataWithCredential(credential)
+  })
 }

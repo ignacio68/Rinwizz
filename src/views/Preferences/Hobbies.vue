@@ -135,18 +135,12 @@ export default {
 }
 </script>
 <style scoped>
-#preferences {
-}
-.peferences__list {
-}
 .preferences__list-title {
   background-color: rgb(193, 193, 193);
 }
 .preferences__list-header {
   background-color: rgb(215, 215, 215);
   font-size: 18px;
-}
-.preferences__list-item {
 }
 </style>
 
