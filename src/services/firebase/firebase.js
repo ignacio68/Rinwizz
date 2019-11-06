@@ -131,7 +131,7 @@ export async function logIn(userData) {
  *
  */
 export const logOut = () => {
-  new Promise((resolve, reject) > {
+  new Promise((resolve, reject) => {
     firebaseAuth().signOut()
       .then((result) => resolve()
     )
