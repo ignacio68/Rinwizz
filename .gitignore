@@ -37,5 +37,5 @@ src-cordova/google-services.json
 src-cordova/GoogleService-info.plist
 
 # Cypress
-test/cypress/screenshots
-test/cypress/videos
+tests/e2e/screenshots
+tests/e2e/videos
