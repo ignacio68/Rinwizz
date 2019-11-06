@@ -30,7 +30,6 @@ export default {
 
     signUp(userData)
       .then(user => {
-        console.log('SIGNUP_USER: ' + JSON.stringify(user))
         const newUser = {
           _id: user.uid,
           email: user.email,
@@ -51,6 +50,7 @@ export default {
       })
       .then(async () => {
         // Enviamos el email de confirmación
+        console.log('Enviamos el mensaje')
         const actionCodeSettings = state.actionCodeSettings
         await sendEmailVerification(actionCodeSettings)
       })

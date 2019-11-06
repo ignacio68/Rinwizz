@@ -186,11 +186,11 @@ export default {
     ...mapActions('auth', ['LOGIN_USER']),
 
     onLognIn() {
-      console.log('onLognIn')
-      this.LOGIN_USER({
+      const logInData = {
         email: this.email,
         password: this.password
-      })
+      }
+      this.LOGIN_USER(logInData)
     },
     togglePassword() {
       this.type = this.type === 'password' ? 'text' : 'password'

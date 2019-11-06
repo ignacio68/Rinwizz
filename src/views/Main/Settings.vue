@@ -23,16 +23,6 @@
         >
           Delete User
         </v-ons-button>
-
-        <v-ons-button
-          class="toJSON__button"
-          name="toJSONButton"
-          :disabled="false"
-          ripple="true"
-          @click.prevent="toJSON"
-        >
-          User JSON
-        </v-ons-button>
       </div>
     </div>
   </v-ons-page>
@@ -50,15 +40,12 @@ export default {
   methods: {
     ...mapMutations('navigator', ['REPLACE']),
     ...mapActions('auth', ['LOGOUT_USER', 'DELETE_USER']),
-    ...mapActions('user', ['TO_JSON']),
+
     async logOutUser() {
       await this.LOGOUT_USER().then(() => this.REPLACE(LogIn))
     },
     async deleteUser() {
       await this.DELETE_USER().then(() => this.REPLACE(Welcome))
-    },
-    toJSON() {
-      this.TO_JSON()
     }
   }
 }

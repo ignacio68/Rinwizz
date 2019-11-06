@@ -250,11 +250,12 @@ export default {
      * @public
      */
     async onSignUp() {
-      await this.SIGNUP_USER({
+      const signUpData = {
         name: this.name,
         email: this.email,
         password: this.password
-      })
+      }
+      await this.SIGNUP_USER(signUpData)
     },
     toTerms() {
       this.PUSH(TermsOfService)

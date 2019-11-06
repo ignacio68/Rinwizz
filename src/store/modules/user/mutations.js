@@ -12,11 +12,11 @@ export default {
     if (newUser.uid) {
       newUser._id = newUser.uid
       state.user = newUser
-      console.log('mutation SET_USER' + JSON.stringify(state.user))
+      // console.log('mutation SET_USER' + JSON.stringify(state.user))
       // state.user = { ...state.user, newUser }
     } else {
       state.user = newUser
-      console.log('mutation SET_USER' + JSON.stringify(state.user))
+      // console.log('mutation SET_USER' + JSON.stringify(state.user))
       // state.user = { ...state.user, newUser }
     }
   },

@@ -1,4 +1,4 @@
-import { LOAD_USER, TO_JSON } from '@store/types/actions_types'
+import { LOAD_USER } from '@store/types/actions_types'
 // import { onAuthStateChange } from '@services/firebase'
 export default {
   /**
@@ -28,9 +28,9 @@ export default {
         await dispatch('usersLocalDb/REPLY_USERS_DB', null, { root: true })
       })
       .catch(error => {
-        console.log('LOAD_USER error: ' + error)
+        console.log('LOAD_USER error: ' + error.message)
       })
-  },
+  }
   // await onAuthStateChange()
   // .then(async user => {
   //   commit('user/SET_USER', user)
@@ -49,11 +49,4 @@ export default {
   // .catch(error => {
   //   console.log('LOAD_USER error: ' + error)
   // })
-  /**
-   * TODO: Sólo para pruebas
-   * Mostramos los datos del usuario en formato JSON
-   */
-  [TO_JSON]: ({ state }) => {
-    console.log('Dato del usuario: ' + state.user.lastSignInDate)
-  }
 }

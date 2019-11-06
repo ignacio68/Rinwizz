@@ -51,7 +51,6 @@ export const SOCIAL_SIGNUP = 'SOCIAL_SIGNUP'
 
 // user
 export const LOAD_USER = 'LOAD_USER'
-export const TO_JSON = 'TO_JSON'
 
 // userDb
 export const CREATE_USER_DB = 'CREATE_USER_DB'

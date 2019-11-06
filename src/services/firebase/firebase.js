@@ -35,7 +35,6 @@ export { db }
 
 // - Database authorize
 export let firebaseAuth = firebase.auth
-export const currentUser = firebaseAuth().currentUser
 // export let functions = firebase.functions()
 // export let firebaseRef = firebaseDb().ref()
 
@@ -50,15 +49,12 @@ export default firebase
  *
  * @param {object} userData
  */
-export async function signUp(userData) {
-  const {result} = await firebaseAuth().createUserWithEmailAndPassword(
-    userData.email,
-    userData.password
-  )
-  // Actualizamos el perfil de firebase con el displayName
-  await this.setUserProfile({ displayName: userData.name })
-  const { user } = result
-  return user
+export async function signUp(signUpData) {
+  const { user } = await firebaseAuth()
+    .createUserWithEmailAndPassword(signUpData.email, signUpData.password)
+   // Actualizamos el perfil de firebase con el displayName
+  setUserProfile({ displayName: signUpData.name })
+  return Promise.resolve(user)
 }
 
 /**
@@ -68,10 +64,13 @@ export async function signUp(userData) {
  */
 export const setUserProfile = userData => {
   new Promise((resolve, reject) => {
+    console.log('Estoy en setUpProfile')
     const currentUser = firebaseAuth().currentUser
     if (currentUser) {
-      currentUser.updateProfile(userData)
-        .then(() => resolve())
+      currentUser.updateProfile(userData).then(() => {
+        console.log('setUpProfile: ' + currentUser.displayName)
+        resolve()
+      })
     } else {
       reject('auth/user-empty')
     }
@@ -94,7 +93,7 @@ export const sendEmailVerification = actionCodeSettings => {
           console.log('email enviado')
         })
         .catch(error => {
-          reject(error.code)
+          reject(error)
         })
     } else {
       reject('auth/user-empty')
@@ -108,7 +107,7 @@ export const applyActionCode = code => {
     firebaseAuth
       .applyActionCode(code)
       .then(() => resolve())
-      .catch(error =>reject(error))
+      .catch(error => reject(error))
   })
 }
 
@@ -117,13 +116,12 @@ export const applyActionCode = code => {
  *
  * @param {object} userData
  */
-export async function logIn(userData) {
-  const  result  = await firebaseAuth().signInWithEmailAndPassword(
-    userData.email,
-    userData.password
+export async function logIn(logInData) {
+  const { user } = await firebaseAuth().signInWithEmailAndPassword(
+    logInData.email,
+    logInData.password
   )
-  const { user } = result
-  return user
+  return Promise.resolve(user)
 }
 
 /**
@@ -131,11 +129,10 @@ export async function logIn(userData) {
  *
  */
 export const logOut = () => {
-  new Promise((resolve, reject) => {
-    firebaseAuth().signOut()
-      .then((result) => resolve()
-    )
-    .catch(error => reject (error))
+  new Promise(reject => {
+    firebaseAuth()
+      .signOut()
+      .catch(error => reject(error))
   })
 }
 
@@ -162,7 +159,7 @@ export const onAuthStateChange = () => {
  */
 export async function deleteUser(providerId) {
   const currentUser = firebaseAuth().currentUser
-  await this.fetchCredential(providerId)
+  await fetchCredential(providerId)
     .then(async credential => {
       await currentUser.reauthenticateAndRetrieveDataWithCredential(credential)
     })
@@ -180,43 +177,35 @@ export async function deleteUser(providerId) {
 export async function fetchCredential(password) {
   const currentUser = firebaseAuth().currentUser
   const providerId = currentUser.providerId
-  await this.getTokenId()
-    .then(idToken => {
-      // eslint-disable-next-line no-unused-vars
-      let credential
-        switch (providerId) {
-          case 'facebook.com': {
-           credential = firebaseAuth.FacebookAuthProvider.credential(
-              idToken
-            )
-            break
-          }
-          case 'google.com': {
-            credential = firebaseAuth.GoogleAuthProvider.credential(
-              idToken
-            )
-            break
-          }
-          case 'twitter.com': {
-            credential = firebaseAuth.TwitterAuthProvider.credential(
-              idToken
-            )
-            break
-          }
-          case 'password': {
-            const email = currentUser.email
-            const userPassword = password
-            credential = firebaseAuth.EmailAuthProvider.credential(
-              email ,
-              userPassword
-            )
-            break
-          }
-          default:
-            return('auth/user-empty')
-        }
+  await getTokenId().then(idToken => {
+    // eslint-disable-next-line no-unused-vars
+    let credential
+    switch (providerId) {
+      case 'facebook.com': {
+        credential = firebaseAuth.FacebookAuthProvider.credential(idToken)
+        break
       }
-  )
+      case 'google.com': {
+        credential = firebaseAuth.GoogleAuthProvider.credential(idToken)
+        break
+      }
+      case 'twitter.com': {
+        credential = firebaseAuth.TwitterAuthProvider.credential(idToken)
+        break
+      }
+      case 'password': {
+        const email = currentUser.email
+        const userPassword = password
+        credential = firebaseAuth.EmailAuthProvider.credential(
+          email,
+          userPassword
+        )
+        break
+      }
+      default:
+        return 'auth/user-empty'
+    }
+  })
 }
 
 /**
@@ -224,7 +213,9 @@ export async function fetchCredential(password) {
  */
 export async function getTokenId() {
   const currentUser = firebaseAuth().currentUser
-  const idToken = await currentUser.getIdToken().then(() => Promise.resolve(idToken))
+  const idToken = await currentUser
+    .getIdToken()
+    .then(() => Promise.resolve(idToken))
 }
 
 /**
@@ -245,9 +236,7 @@ export async function updateUserName(userName) {
  */
 export async function reauthenticateUser() {
   const currentUser = firebaseAuth().currentUser
-  await this.fetchCredential()
-    .then(credential => {
-      currentUser
-      .reauthenticateAndRetrieveDataWithCredential(credential)
+  await fetchCredential().then(credential => {
+    currentUser.reauthenticateAndRetrieveDataWithCredential(credential)
   })
 }
