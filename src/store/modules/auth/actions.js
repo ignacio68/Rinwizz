@@ -33,7 +33,7 @@ export default {
     commit('shared/CLEAR_ERROR', null, { root: true })
 
     signUp(userData)
-      .then(({ user }) => {
+      .then(user => {
         console.log('SIGNUP_USER: ' + JSON.stringify(user))
         const newUser = {
           _id: user.uid,
@@ -99,20 +99,21 @@ export default {
    *
    * @param {*} commit
    */
-  async [LOGOUT_USER]({ commit }) {
+  async [LOGOUT_USER]({ commit, dispatch }) {
     commit('shared/LOAD_ACTION', null, { root: true })
     commit('shared/CLEAR_ERROR', null, { root: true })
 
     await logOut()
-      .then(result => {
+      .then(() => {
         commit('user/RESET_USER', null, { root: true })
         commit('alerts/RESET_ALERTS', null, { root: true })
         console.log('LOGOUT_USER')
       })
       .then(commit('shared/LOAD_ACTION', true, { root: true }))
       .catch(error => {
-        console.log('LOGOUT_USER error: ' + error)
+        console.log('LOGOUT_USER error: ' + error.message)
         commit('shared/SET_ERROR', null, { root: true })
+        dispatch('errors/AUTH_ERROR', error.code, { root: true })
       })
   },
 
@@ -131,15 +132,17 @@ export default {
         commit('user/RESET_USER', null, { root: true })
       })
       .catch(error => {
-        console.log('DELETE_USER error: ' + error)
+        console.log('DELETE_USER error: ' + error.message)
         commit('shared/SET_ERROR', null, { root: true })
+        dispatch('errors/AUTH_ERROR', error.code, { root: true })
       })
   },
 
   /**
+   * TODO: refactoring en firebase
    * Recupera la credencial del usuario
    */
-  [FETCH_CREDENTIAL]: ({ state, commit, __, rootGetters }) => {
+  [FETCH_CREDENTIAL]: ({ state, commit, dispatch, rootGetters }) => {
     console.log('Estoy en getCredential')
     commit('shared/CLEAR_ERROR', null, { root: true })
     getTokenId()
@@ -193,12 +196,14 @@ export default {
         }
       })
       .catch(error => {
-        console.log('FETCH_CREDENTIAL error: ' + error)
+        console.log('FETCH_CREDENTIAL error: ' + error.message)
         commit('shared/SET_ERROR', null, { root: true })
+        dispatch('errors/AUTH_ERROR', error.code, { root: true })
       })
   },
 
   /**
+   * TODO: refactoring en firebase service
    * Reautenticación automática del usuario
    * Se utiliza para poder elimnar la cuenta de usuario
    */

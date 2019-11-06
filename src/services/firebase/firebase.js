@@ -16,9 +16,7 @@ try {
   }
   firebase.initializeApp(firebaseConfig)
 } catch (error) {
-  console.log('========Firebase initializer=============')
-  console.log('El error de inicialización de Firebase es: ' + error)
-  console.log('====================================')
+  console.log('initializeApp error: ' + error)
 }
 
 // - Storage reference
@@ -53,13 +51,13 @@ export default firebase
  * @param {object} userData
  */
 export async function signUp(userData) {
-  const user =await firebaseAuth().createUserWithEmailAndPassword(
+  const {result} = await firebaseAuth().createUserWithEmailAndPassword(
     userData.email,
     userData.password
   )
   // Actualizamos el perfil de firebase con el displayName
   setUserProfile({ displayName: userData.name })
-  console.log('signUp: ' + JSON.stringify(user))
+  const { user } = result
   return user
 }
 
@@ -68,13 +66,16 @@ export async function signUp(userData) {
  *
  * @param {object} userData
  */
-export function setUserProfile (userData) {
-  const currentUser = firebaseAuth().currentUser
-  if (currentUser) {
-     currentUser.updateProfile(userData)
-  } else {
-    return('auth/user-empty')
-  }
+export const setUserProfile = userData => {
+  new Promise((resolve, reject) => {
+    const currentUser = firebaseAuth().currentUser
+    if (currentUser) {
+      currentUser.updateProfile(userData)
+        .then(() => resolve())
+    } else {
+      reject('auth/user-empty')
+    }
+  })
 }
 
 /**
@@ -103,9 +104,12 @@ export const sendEmailVerification = actionCodeSettings => {
 
 // TODO: revisar
 export const applyActionCode = code => {
+  new Promise((resolve, reject) => {
     firebaseAuth
       .applyActionCode(code)
-      .catch(error => Promise.reject(error.code))
+      .then(() => resolve())
+      .catch(error =>reject(error))
+  })
 }
 
 /**
@@ -114,10 +118,11 @@ export const applyActionCode = code => {
  * @param {object} userData
  */
 export async function logIn(userData) {
-  const { user } = await firebaseAuth().signInWithEmailAndPassword(
+  const  result  = await firebaseAuth().signInWithEmailAndPassword(
     userData.email,
     userData.password
   )
+  const { user } = result
   return user
 }
 
@@ -125,9 +130,13 @@ export async function logIn(userData) {
  * Logout the user
  *
  */
-export async function logOut() {
-  const result = await firebaseAuth().signOut()
-  return result
+export const logOut = () => {
+  new Promise((resolve, reject) > {
+    firebaseAuth().signOut()
+      .then((result) => resolve()
+    )
+    .catch(error => reject (error))
+  })
 }
 
 /**
@@ -146,6 +155,7 @@ export const onAuthStateChange = () => {
 }
 
 /**
+ * TODO: añadir fetchUser para conseguir la credencial
  * the user is deleted
  */
 export async function deleteUser(credential) {
