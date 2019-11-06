@@ -35,3 +35,7 @@ src-cordova/res
 src-cordova/www
 src-cordova/google-services.json
 src-cordova/GoogleService-info.plist
+
+# Cypress
+test/cypress/screenshots
+test/cypress/videos
