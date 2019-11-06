@@ -35,7 +35,6 @@ export default {
     return {}
   },
   computed: {
-    // TODO: revisa la utilización de mapGetters mejor que mapState
     ...mapGetters('user', { user: 'USER' }),
     ...mapGetters('usersLocalDb', { db: 'USERS_LOCAL_DB' })
   },
