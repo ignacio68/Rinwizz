@@ -2,7 +2,7 @@ import {
   SET_USER,
   RESET_USER,
   UPDATE_USER,
-  IS_LOGGED
+  IS_NEW_USER
 } from '@store/types/mutations_types'
 
 export default {
@@ -48,9 +48,9 @@ export default {
   /**
    * Logged the user
    *
-   * @param {boolean} isLogged
+   * @param {boolean} isNewUser
    */
-  [IS_LOGGED]: (state, isLogged) => {
-    state.isLogged = isLogged
+  [IS_NEW_USER]: (state, isNewUser) => {
+    state.isNewUser = isNewUser
   }
 }

@@ -4,7 +4,7 @@ import {
   USER_PROVIDER_ID,
   USER_IS_VERIFIED,
   USER_FOLLOWING,
-  USER_IS_LOGGED
+  USER_IS_NEW
 } from '@store/types/getters_types'
 
 export default {
@@ -13,5 +13,5 @@ export default {
   [USER_PROVIDER_ID]: state => state.user.providerID,
   [USER_IS_VERIFIED]: state => state.user.isVerified,
   [USER_FOLLOWING]: state => state.user.following,
-  [USER_IS_LOGGED]: state => state.user.isLogged
+  [USER_IS_NEW]: state => state.user.isNewUser
 }

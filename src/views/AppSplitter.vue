@@ -38,10 +38,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', { isLogged: 'USER_IS_LOGGED' })
+    ...mapGetters('user', { isNewUser: 'USER_IS_NEW' })
   },
   async created() {
-    if (!isLogged) {
+    if (!isNewUser) {
       await this.LOAD_USER()
     }
   },
