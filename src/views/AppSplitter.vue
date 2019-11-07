@@ -41,7 +41,7 @@ export default {
     ...mapGetters('user', { isNewUser: 'USER_IS_NEW' })
   },
   async created() {
-    if (!isNewUser) {
+    if (!this.isNewUser) {
       await this.LOAD_USER()
     }
   },
