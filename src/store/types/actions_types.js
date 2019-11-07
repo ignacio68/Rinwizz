@@ -50,8 +50,10 @@ export const DISPATCH_SIGNUP = 'DISPATCH_SIGNUP'
 export const SOCIAL_SIGNUP = 'SOCIAL_SIGNUP'
 
 // user
+export const LOAD_NEW_USER = 'LOAD_NEW_USER'
 export const LOAD_USER = 'LOAD_USER'
 
+// TODO: revisar
 // userDb
 export const CREATE_USER_DB = 'CREATE_USER_DB'
 export const USER_NAME_DB = 'USER_NAME_DB'

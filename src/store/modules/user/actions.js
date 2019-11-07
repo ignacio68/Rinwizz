@@ -1,6 +1,25 @@
-import { LOAD_USER } from '@store/types/actions_types'
+import { LOAD_NEW_USER, LOAD_USER } from '@store/types/actions_types'
 // import { onAuthStateChange } from '@services/firebase'
 export default {
+  /**
+   * Create the database of the new user
+   *
+   * @param {object} user - new user data
+   */
+  async [LOAD_NEW_USER]({ commit, dispatch }, user) {
+    console.log('LOAD_NEW_USER')
+    commit('shared/CLEAR_ERROR', null, { root: true })
+    await dispatch('usersLocalDb/CREATE_ALL_USERS_LOCAL_DB', null, {
+      root: true
+    })
+    .then(async () => {
+      await dispatch('usersLocalDb/CREATE_USER_LOCAL_DB', user, { root: true })
+    })
+    .then(async () => {
+      await dispatch('usersLocalDb/REPLY_USERS_DB', null, { root: true })
+    })
+  },
+
   /**
    * Autoautenticación, el usuario ya está registrado
    *

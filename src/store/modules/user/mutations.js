@@ -1,4 +1,9 @@
-import { SET_USER, RESET_USER, UPDATE_USER } from '@store/types/mutations_types'
+import {
+  SET_USER,
+  RESET_USER,
+  UPDATE_USER,
+  IS_LOGGED
+} from '@store/types/mutations_types'
 
 export default {
   /**
@@ -39,5 +44,13 @@ export default {
     const user = state.user
     const updatedUser = { ...user, ...userData }
     state.user = updatedUser
+  },
+  /**
+   * Logged the user
+   *
+   * @param {boolean} isLogged
+   */
+  [IS_LOGGED]: (state, isLogged) => {
+    state.isLogged = isLogged
   }
 }

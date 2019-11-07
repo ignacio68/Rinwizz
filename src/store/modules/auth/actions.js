@@ -47,7 +47,9 @@ export default {
           lastSignInDate: user.metadata.lastSignInTime
         }
         commit('user/SET_USER', newUser, { root: true })
+        return newUser
       })
+      .then(async user => await dispatch ('user/LOAD_NEW_USER', user, { root: true }))
       .then(async () => {
         // Enviamos el email de confirmación
         console.log('Enviamos el mensaje')
@@ -55,6 +57,7 @@ export default {
         await sendEmailVerification(actionCodeSettings)
       })
       .then(() => {
+        commit ('user/IS_LOGGED', true, { root: true })
         commit('shared/LOAD_ACTION', true, { root: true })
       })
       .catch(error => {

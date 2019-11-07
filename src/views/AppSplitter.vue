@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Settings from './Main//Settings'
 import HomePage from './Main/HomePage'
 import asyncDataStatus from '@mixins/asyncDataStatus'
@@ -37,8 +37,13 @@ export default {
       isOpen: false
     }
   },
+  computed: {
+    ...mapGetters('user', { isLogged: 'USER_IS_LOGGED' })
+  },
   async created() {
-    await this.LOAD_USER()
+    if (!isLogged) {
+      await this.LOAD_USER()
+    }
   },
   methods: {
     ...mapActions('user', ['LOAD_USER'])
