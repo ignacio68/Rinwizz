@@ -2,4 +2,4 @@
 
 Social network of alerts
 
-## Disclaimer
+## ONLY FOR DEPLOYMENT
